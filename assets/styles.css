@@ -420,8 +420,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .print-link svg { width: 26px; height: 26px; color: var(--sunriver-blue); }
 .print-link:hover span { text-decoration: underline; text-underline-offset: 4px; }
 .plan-drawing-section { padding-top: 0; }
-.plan-drawing { max-width: 980px; margin-inline: auto; }
-.plan-drawing img { width: 100%; height: auto; }
+.plan-drawing { display: flex; justify-content: center; }
+.plan-drawing img { width: auto; height: auto; max-width: min(768px, 100%); max-height: 680px; object-fit: contain; }
 .plan-note { margin-top: 28px; max-width: 70ch; }
 .tour-section { background: var(--sunriver-blue); color: var(--riverbed-sand); border-radius: 0 0 30px 30px; padding-block: clamp(56px, 6vw, 88px); position: relative; z-index: 1; }
 .tour-section h2 { color: var(--riverbed-sand); }
