@@ -395,3 +395,47 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .skip { position: absolute; left: -9999px; top: 0; background: var(--sunriver-blue); color: var(--white); padding: 10px 16px; z-index: 100; }
 .skip:focus { left: 16px; top: 16px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- Floor plan detail pages (mirrors live plan page layout) ---------- */
+.plan-hero .wrap { min-height: clamp(300px, 34vw, 440px); }
+.plan-hero h1 { font-size: clamp(44px, 5.4vw, 71px); text-transform: uppercase; }
+.plan-hero .plan-back-wrap { position: absolute; left: 0; right: 0; bottom: 22px; min-height: 0; padding-block: 0; display: block; text-align: left; }
+.plan-back { color: var(--riverbed-sand); text-decoration: none; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; }
+.plan-back:hover { color: var(--sun-yellow); }
+.plan-top { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; max-width: calc(1100px + 2 * var(--gutter)); }
+.plan-side, .plan-main { display: grid; gap: 22px; min-width: 0; }
+.btn.block { width: 100%; }
+.spec-card { position: relative; background: var(--riverbed-sand); border-radius: var(--radius-img); overflow: hidden; box-shadow: 0 10px 30px rgba(21, 50, 80, 0.12); text-align: center; }
+.lot-badge { position: absolute; top: 16px; right: 16px; width: 54px; height: 54px; border-radius: 50%; background: var(--sun-yellow); color: var(--white); display: grid; place-items: center; font-weight: 900; font-size: 16px; }
+.spec-head { padding: 36px 24px 26px; display: grid; gap: 26px; justify-items: center; }
+.spec-head h2 { font-weight: 900; font-size: 28px; text-transform: uppercase; letter-spacing: -0.02em; }
+.plan-icon { width: 92px; height: 74px; color: rgba(51, 90, 151, 0.45); }
+.spec-sqft { background: var(--sun-yellow); color: var(--sunriver-blue); font-weight: 900; font-size: 26px; letter-spacing: -0.02em; padding: 12px 16px; }
+.spec-list { padding: 24px 22px 26px; display: grid; gap: 4px; font-weight: 900; font-size: 18px; line-height: 1.4; }
+.spec-list p { margin: 0 auto; }
+.spec-list .spec-lot { font-family: var(--font-serif); font-weight: 500; font-style: italic; font-size: 17px; opacity: 0.85; }
+.spec-price { background: var(--sunriver-blue); color: var(--riverbed-sand); font-family: var(--font-serif); font-size: 34px; letter-spacing: -0.02em; padding: 20px 16px; }
+.plan-features { font-size: 16px; line-height: 1.65; }
+.print-link { justify-self: start; display: inline-flex; align-items: center; gap: 10px; background: none; border: 0; padding: 4px 0; cursor: pointer; font: 900 14px var(--font-display); color: var(--sun-yellow-deep); text-transform: uppercase; letter-spacing: 0.04em; }
+.print-link svg { width: 26px; height: 26px; color: var(--sunriver-blue); }
+.print-link:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.plan-drawing-section { padding-top: 0; }
+.plan-drawing { max-width: 980px; margin-inline: auto; }
+.plan-drawing img { width: 100%; height: auto; }
+.plan-note { margin-top: 28px; max-width: 70ch; }
+.tour-section { background: var(--sunriver-blue); color: var(--riverbed-sand); border-radius: 0 0 30px 30px; padding-block: clamp(56px, 6vw, 88px); position: relative; z-index: 1; }
+.tour-section h2 { color: var(--riverbed-sand); }
+.tour-section .embed { aspect-ratio: 16 / 9; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+.tour-section + .banner { margin-top: -30px; padding-top: 30px; }
+.related-card { display: grid; background: var(--white); border-radius: var(--radius-img); overflow: hidden; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+.related-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-photo); }
+.related-img { aspect-ratio: 4 / 3; background: var(--riverbed-sand); }
+.related-img img { width: 100%; height: 100%; object-fit: cover; }
+.related-body { padding: 22px 28px 28px; display: grid; gap: 8px; justify-items: start; }
+.related-num { font-weight: 900; font-size: 13px; letter-spacing: 0.04em; }
+.related-body h3 { font-weight: 900; font-size: 26px; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1.05; padding-bottom: 4px; border-bottom: 4px solid var(--sun-yellow); }
+.related-sqft { font-weight: 900; font-size: 17px; margin-top: 6px; }
+.related-specs { font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.6; }
+.related-price { font-family: var(--font-serif); font-size: 28px; margin-block: 10px 6px; }
+@media (max-width: 760px) { .plan-top { grid-template-columns: 1fr; } .plan-side { max-width: 420px; width: 100%; margin-inline: auto; } }
+@media print { .site-header, .site-footer, .chat, .banner, .tour-section, .related-card, .print-link, .btn { display: none !important; } }
