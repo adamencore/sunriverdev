@@ -164,7 +164,7 @@ p { margin: 0; max-width: 68ch; }
 .photo-hero .wrap { position: relative; z-index: 1; padding-block: 80px 96px; display: grid; gap: 22px; }
 .photo-hero h1 { color: var(--white); font-weight: 900; font-size: clamp(40px, 5.4vw, 71px); line-height: 0.92; letter-spacing: -0.02em; max-width: 13ch; }
 .photo-hero .eyebrow { color: var(--white); font-size: 18px; }
-.photo-hero p { font-family: var(--font-serif); font-size: clamp(18px, 1.6vw, 22px); line-height: 1.2; max-width: 30ch; }
+.photo-hero p:not(.eyebrow) { font-family: var(--font-serif); font-size: clamp(18px, 1.6vw, 22px); line-height: 1.2; max-width: 30ch; }
 
 /* ---------- Sub-navigation tab bar ---------- */
 .subnav { background: var(--sunriver-blue); }
