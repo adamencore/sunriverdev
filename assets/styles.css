@@ -96,7 +96,7 @@ p { margin: 0; max-width: 68ch; }
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
   background: var(--white); box-shadow: var(--shadow-header);
 }
-.header-inner { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 128px; padding-top: 22px; }
+.header-inner { position: static; display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 128px; padding-top: 22px; }
 .logo img { width: 212px; height: auto; }
 .main-nav { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 40px); }
 .nav-item { position: static; }
@@ -112,20 +112,22 @@ p { margin: 0; max-width: 68ch; }
 
 .mega {
   position: absolute; left: 0; right: 0; top: 100%;
-  background: var(--white); border-radius: 0 0 20px 20px; box-shadow: 0 18px 30px rgba(21, 50, 80, 0.18);
+  background: var(--white); border-radius: 0 0 20px 20px; box-shadow: 0 18px 30px rgba(21, 50, 80, 0.16);
   overflow: hidden; display: none;
 }
 .nav-item[data-open="true"] .mega { display: block; }
-.mega-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 56px; padding-block: 40px 56px; position: relative; z-index: 1; }
-.mega-photo { border-radius: 0 0 30px 30px; overflow: hidden; aspect-ratio: 621 / 305; margin-top: -40px; }
+.mega-inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 621fr) minmax(0, 545fr); gap: clamp(32px, 5.2vw, 75px); min-height: 355px; padding-bottom: 50px; }
+.mega-photo { border-radius: 0 0 30px 30px; overflow: hidden; aspect-ratio: 621 / 305; align-self: start; }
 .mega-photo img { width: 100%; height: 100%; object-fit: cover; }
-.mega-groups { display: grid; gap: 22px; align-content: center; }
-.mega-group a { text-decoration: none; }
-.mega-tag { display: inline-block; background: var(--sun-yellow); color: var(--sunriver-blue); font-weight: 900; font-size: 22px; letter-spacing: -0.03em; padding: 0 9px; border-radius: 2.4px; line-height: 1.3; }
-.mega-links { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; }
-.mega-links a { color: rgba(51, 90, 151, 0.62); font-size: 15px; text-decoration: none; }
-.mega-links a:hover { color: var(--sunriver-blue); text-decoration: underline; text-decoration-color: var(--sun-yellow); text-underline-offset: 4px; }
-.mega-wave { position: absolute; left: -8%; right: -8%; bottom: -40px; height: 140px; pointer-events: none; }
+.mega-groups { display: grid; gap: 30px; align-content: start; padding-top: 54px; }
+.mega-group { display: grid; gap: 10px; justify-items: start; }
+.mega-tag { display: inline-block; background: var(--sun-yellow); color: var(--sunriver-blue); text-decoration: none; font-weight: 900; font-size: 22.95px; line-height: 30px; letter-spacing: -0.03em; padding: 0 8px; border-radius: 2.4px; transition: background .2s; }
+.mega-tag:hover { background: var(--sun-yellow-deep); }
+.mega-links { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.mega-links a { color: rgba(51, 90, 151, 0.5); font-size: 15px; line-height: 1.2; letter-spacing: -0.03em; text-decoration: none; }
+.mega-links a:hover { color: var(--sunriver-blue); }
+.mega-wave { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 62%; pointer-events: none; z-index: 0; }
+.nav-link .chev { display: none; }
 
 .menu-toggle { display: none; background: none; border: 0; cursor: pointer; width: 46px; height: 46px; padding: 11px; }
 .menu-toggle span { display: block; height: 3px; background: var(--sunriver-blue); border-radius: 2px; margin: 5px 0; transition: transform .2s, opacity .2s; }
@@ -143,6 +145,9 @@ p { margin: 0; max-width: 68ch; }
   .mega { position: static; box-shadow: none; border-radius: 0; }
   .mega-inner { grid-template-columns: 1fr; gap: 16px; padding: 16px 0; }
   .mega-photo, .mega-wave { display: none; }
+  .mega-inner { min-height: 0; padding-bottom: 8px; }
+  .mega-groups { padding-top: 0; gap: 18px; }
+  .nav-link .chev { display: inline-block; }
   .mega-tag { font-size: 18px; }
   .nav-cta { margin-top: 18px; align-self: flex-start; }
   .founders-tab { font-size: 10px; padding: 8px 18px 9px; }
