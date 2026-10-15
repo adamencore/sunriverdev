@@ -127,6 +127,9 @@ def main():
 
     for path, doc in lib.PAGES.items():
         for local, remote in fallback.items():
+            if local.startswith("/media/fg/"):
+                doc = doc.replace(local + "?", remote + "?")
+                continue
             doc = doc.replace('"%s"' % local, '"%s"' % remote).replace("(%s)" % local, "(%s)" % remote).replace("%s " % local, "%s " % remote)
         if path == "/404":
             out = DIST / "404.html"

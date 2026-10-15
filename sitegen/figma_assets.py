@@ -11,6 +11,7 @@ On Netlify the build fails if neither works, so a deploy never ships with missin
 To swap an image later, put a new export URL in FIGMA_IDS (or drop a file at assets/fg/<name>.webp,
 which always wins).
 """
+import hashlib
 import io
 import os
 import urllib.request
@@ -51,8 +52,12 @@ USED = set()
 
 
 def FG(name):
+    """Local URL for a homepage image. The query string changes whenever the crop or source changes,
+    so browsers holding a cached copy (media is cached for a year) fetch the new one."""
     USED.add(name)
-    return "/media/fg/%s.webp" % name
+    spec = SPECS[name]
+    v = hashlib.md5(repr((spec, FIGMA_IDS[spec[0]])).encode("utf-8")).hexdigest()[:8]
+    return "/media/fg/%s.webp?v=%s" % (name, v)
 
 
 def _get(url):
