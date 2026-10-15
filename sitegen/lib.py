@@ -7,8 +7,10 @@ Image helpers:
   S(ref)    a Sanity CMS image, hotlinked from cdn.sanity.io
   SQ(path)  an image on the current sunriver.com Squarespace CDN
 """
+import hashlib
 import html
 import re
+from pathlib import Path
 from datetime import datetime, timedelta
 
 VERCEL = "https://sunriver-website.vercel.app"
@@ -19,6 +21,13 @@ PHONE = "(435) 688-1000"
 PHONE_TEL = "tel:+14356881000"
 
 MIRROR = {}   # local path -> remote url
+_ASSETS = Path(__file__).resolve().parent.parent / "assets"
+
+
+def asset_v(name):
+    """Content hash for cache busting, so browsers pick up new CSS and JS right after a deploy."""
+    return hashlib.md5((_ASSETS / name).read_bytes()).hexdigest()[:10]
+
 PAGES = {}    # url path ("/", "/about", ...) -> html
 
 
@@ -230,7 +239,7 @@ def add(path, title, description, active, body, body_class=""):
 <link rel="preconnect" href="https://cdn.sanity.io">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@500;700;900&family=Source+Serif+4:opsz,wght@8..60,500&display=swap">
 %s
-<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/styles.css?v=%s">
 </head>
 <body%s>
 %s
@@ -238,11 +247,11 @@ def add(path, title, description, active, body, body_class=""):
 %s
 </main>
 %s
-<script src="/assets/site.js" defer></script>
+<script src="/assets/site.js?v=%s" defer></script>
 </body>
 </html>
-''' % (esc(full_title), esc(description), esc(full_title), esc(description), FONTS,
-       ' class="%s"' % body_class if body_class else "", header(active), body, footer())
+''' % (esc(full_title), esc(description), esc(full_title), esc(description), FONTS, asset_v("styles.css"),
+       ' class="%s"' % body_class if body_class else "", header(active), body, footer(), asset_v("site.js"))
     assert "—" not in doc, "em dash found on %s" % path
     PAGES[path] = doc
 
