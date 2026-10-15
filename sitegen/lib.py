@@ -157,7 +157,7 @@ def overlay_header():
       <a class="pill-cta" href="/sunriver-firelight">Visit</a>
     </nav>
   </div>
-</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members playing pool at the community center"))
+</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members playing pool at the community center", loading="eager"))
 
 
 def header(active):
