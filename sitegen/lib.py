@@ -129,7 +129,31 @@ LIFE = [
 NAV = [("homes", "Homes", "/homes-for-sale"), ("about", "About", "/about"), ("visit", "Visit", "/contact-us")]
 
 
+def overlay_header():
+    """Homepage header from Figma "Home Clark Life NAV 4": logo over the hero, translucent pill nav,
+    and a light blue Life at SunRiver dropdown with a photo."""
+    from .figma_assets import FG
+    items = "".join('<li><a href="%s">%s</a></li>' % (h, t) for t, h, _, _, _ in LIFE)
+    return '''<a class="skip" href="#main">Skip to content</a>
+<header class="site-header overlay" data-menu="closed">
+  <div class="wrap header-inner">
+    <a class="logo" href="/" aria-label="SunRiver Communities home">%s</a>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="main-nav pill-nav" aria-label="Main">
+      <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu">Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
+        <div class="pill-drop" id="life-menu"><ul>%s</ul><a class="pill-drop-photo" href="/live-in" tabindex="-1" aria-hidden="true">%s</a></div></div>
+      <div class="nav-item"><a class="nav-link" href="/homes-for-sale">Homes</a></div>
+      <div class="nav-item"><a class="nav-link" href="/about">About</a></div>
+      <div class="nav-item"><a class="nav-link" href="/contact-us">Contact</a></div>
+      <a class="pill-cta" href="/sunriver-firelight">Visit</a>
+    </nav>
+  </div>
+</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members at a SunRiver Villas home"))
+
+
 def header(active):
+    if active == "home-overlay":
+        return overlay_header()
     cards = "".join(
         '<a class="mega-card" href="%s"><span class="mega-photo">%s</span><span class="mega-tag">%s</span><span class="mega-sub">%s</span></a>'
         % (href, img(src, alt), t, sub) for t, href, sub, src, alt in LIFE)

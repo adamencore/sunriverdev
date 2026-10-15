@@ -23,7 +23,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-from sitegen import lib  # noqa: E402
+from sitegen import figma_assets, lib  # noqa: E402
 from sitegen.data import ON_NETLIFY, get_all  # noqa: E402
 from sitegen.pages_cms import build_blog, build_floor_plans, build_homes  # noqa: E402
 from sitegen.pages_main import build_main  # noqa: E402
@@ -100,6 +100,7 @@ def main():
 
     if DIST.exists():
         keep = DIST / "media"
+        shutil.rmtree(keep / "fg", ignore_errors=True)
         for p in DIST.iterdir():
             if p != keep:
                 shutil.rmtree(p) if p.is_dir() else p.unlink()
@@ -121,6 +122,8 @@ def main():
     else:
         failed = list(lib.MIRROR)
     fallback = {local: lib.MIRROR[local] for local in failed}
+    print("Building homepage images from Figma")
+    fallback.update(figma_assets.build(DIST, ON_NETLIFY))
 
     for path, doc in lib.PAGES.items():
         for local, remote in fallback.items():

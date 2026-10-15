@@ -101,6 +101,23 @@
     }
   });
 
+  // ---------- Homepage floor plan carousel
+  document.querySelectorAll('.hp-carousel').forEach(function (car) {
+    var track = car.querySelector('.hp-track'), prev = car.querySelector('.hp-prev'), next = car.querySelector('.hp-next');
+    if (!track) return;
+    var step = function () { var c = track.querySelector('.hp-card'); return c ? c.getBoundingClientRect().width + 29 : 400; };
+    var sync = function () {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.hidden = track.scrollLeft <= 2;
+      if (next) next.hidden = track.scrollLeft >= max;
+    };
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+    track.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  });
+
   // ---------- Homes for sale filters
   var form = document.getElementById('home-filters');
   if (form) {

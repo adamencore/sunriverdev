@@ -4,6 +4,7 @@ SunRiver Firelight, no golf at Firelight, no rates or percentages, no em dashes)
 from .lib import (FOUNDERS_BADGE, PHONE, PHONE_TEL, S, SQ, V, VP, add, banner, band, btn, chat_section, esc, faq, img,
                   photo, photo_hero, sand_hero, simg, star_list, ul, yellow_hero)
 from .pages_cms import min_price, plan_card
+from .pages_home import build_home
 
 
 def split(left, right, cls=""):
@@ -15,91 +16,9 @@ def build_main(plans, listings):
     start_price = min_price(plans)
     available = sum(1 for l in listings if l.get("community") == "SunRiver Firelight" and l.get("status") in ("Move in Ready", "For Sale"))
 
-    # ============================================================== HOME
-    picks = [by_slug[s] for s in ("hamlet", "august", "tara") if s in by_slug] or plans[:3]
-    live_cards = [
-        ("Live In", VP("/images/home-v2/icon-home.svg"), "Open kitchens built for gathering. Hobby rooms, because people at this stage are picking things back up, not putting them down. Extended three car garages, because you have bikes, kayaks and gear. Customization throughout, so you're building the home instead of just buying it.", "See All Floor Plans", "/floor-plans"),
-        ("Live Out", VP("/images/home-v2/icon-nature.svg"), "Zion is 31 minutes away. Snow Canyon is closer. Six national parks within a few hours. And Costco, banking, doctors and restaurants all within reach. You aren't trading convenience for the view. You get both.", "Explore Southern Utah", "/southern-utah"),
-        ("Live On", VP("/images/home-v2/icon-users.svg"), "Move. Connect. Grow. Real friendships don't happen by accident, so we build the conditions for them. Most people arrive planning to do one thing and end up doing five.", "Clubs &amp; Groups", "/why-sunriver"),
-    ]
-    live_html = "".join('<div class="live-card"><span class="live-icon">%s</span><h3>%s</h3><p>%s</p>%s</div>' % (img(ic, ""), t, d, btn(l, h)) for t, ic, d, l, h in live_cards)
-    steps = [("Visit SunRiver Firelight", "Walk the models. See the landscape. Meet people who live here."),
-             ("Find Your Home", "A lot to build on, or a home that's ready now."),
-             ("Become a Member", "Keys, a tour, and an invitation to your first event.")]
-    steps_html = "".join('<li><span class="step-num">%d</span><h3>%s</h3><p>%s</p></li>' % (i + 1, t, d) for i, (t, d) in enumerate(steps))
-    add("/", "SunRiver Firelight | 55+ Community in Southern Utah", "SunRiver Firelight is a 55+ community in Toquerville, Utah, for people who refuse to slow down. Zion is 31 minutes away and five model homes are open now.", "", '''
-<section class="home-hero">
-  <video class="home-hero-media" autoplay muted loop playsinline preload="metadata" poster="%s"><source src="%s" type="video/mp4"></video>
-  <div class="wrap">
-    <p class="eyebrow">SunRiver Firelight</p>
-    <h1>A 55+ community in Southern Utah for people who refuse to slow down.</h1>
-    <p class="home-hero-sub">Zion is 31 minutes away. Five model homes are open now in Toquerville, just off Exit 27 on I-15.</p>
-    <div class="btn-row">%s</div>
-  </div>
-</section>
+    # ============================================================== HOME (Figma "Home Clark Life NAV 4")
+    build_home(plans)
 
-<section class="section">
-  <div class="wrap split">
-    <div class="photo shadow ratio-1">%s</div>
-    <div class="stack">
-      <h2 class="display">Most people think retirement means <span class="yellow">slowing down.</span></h2>
-      <hr class="rule">
-      <p class="lede">You've watched how that goes. A beautiful home with nobody in it to share. Days without enough in them worth leaving for. A calendar that empties out and then stays empty.</p>
-      <p class="serif big-serif">Nobody sees it coming. It just happens, quietly, a little at a time.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section sand">
-  <div class="wrap stack-lg">
-    <div class="center stack"><p class="eyebrow">#LiveYoung</p><h2 class="serif-display">Here, it means <span class="yellow">more.</span></h2></div>
-    <div class="grid cols-3">%s</div>
-  </div>
-</section>
-
-%s
-
-<section class="section">
-  <div class="wrap split">
-    <div class="stack">
-      <h2 class="display">We've been doing this for <span class="yellow">25 years.</span></h2>
-      <hr class="rule">
-      <p class="lede">We understand what it feels like to be ready for this season, yet unsure where and how it happens. We've heard every hesitation: Will I fit in? Am I making the right call? Will the amenities really arrive?</p>
-      <p>We've built and sold over 2,500 homes across Southern Utah. Our members come back to visit years after they moved. What we've learned is people arrive here thinking they're buying a house, only to realize they're starting their best chapter.</p>
-      <p class="serif big-serif">This isn't theoretical. It's our record.</p>
-    </div>
-    <div class="mosaic">
-      <div class="photo">%s</div><div class="photo tall">%s</div><div class="photo">%s</div><div class="photo">%s</div>
-    </div>
-  </div>
-</section>
-
-<section class="section sand">
-  <div class="wrap stack-lg">
-    <div class="split"><h2 class="display">Find the home that <span class="yellow">suits you.</span></h2><p class="lede">Seven floor plans at SunRiver Firelight, five of them open as model homes. Every one is built for gathering, hobbies and gear.</p></div>
-    <div class="grid cols-3">%s</div>
-    <div class="center">%s</div>
-  </div>
-</section>
-
-<section class="begin">%s
-  <div class="wrap stack-lg">
-    <div class="center stack"><h2 class="display">Where you begin</h2><hr class="rule center"></div>
-    <ol class="steps">%s</ol>
-    <div class="center">%s</div>
-  </div>
-</section>
-%s''' % (S("bd280e7d0980644a031f82317734dc84c9081891-1152x768.jpg", 1920), VP("/videos/hero.mp4"), btn("Schedule a Visit", "/contact-us", "large"),
-         simg("7d32e190f5995ca8f2e70a7aebb665fa60e81dd0-1148x1064.webp", "SunRiver members laughing together outdoors", 900, sizes="(max-width: 860px) 100vw, 50vw"),
-         live_html,
-         banner("YOUR NEW <strong>LIFESTYLE AWAITS</strong>", S("cd94a92d75d1cdde6ab80ed77d28a959f0f54861-2000x354.jpg", 2000)),
-         simg("55bcaed09d2cee588c2417a83f50b56ccb5a6512-1000x667.jpg", "SunRiver members together at a community event", 600, sizes="25vw"),
-         simg("a9dda166b2c1bf8382f4a6450d1e926a6cd31515-800x1422.jpg", "A SunRiver member outdoors in Southern Utah", 600, sizes="25vw"),
-         simg("e0d006e849084a31f5b439c2e66bcc3b4869c36e-800x533.jpg", "SunRiver members enjoying a club activity", 600, sizes="25vw"),
-         simg("efd3149c6f1cf3ada2dd411490f5782699a133da-700x466.jpg", "A SunRiver home exterior", 600, sizes="25vw"),
-         "".join(plan_card(p) for p in picks), btn("View All Floor Plans", "/floor-plans"),
-         img(S("be9e62525f8ae10093a60c20db36c75772447445-1800x1200.jpg", 1800), "", "begin-bg"),
-         steps_html, btn("Schedule a Visit", "/contact-us"), chat_section()), body_class="home")
 
     # ============================================================== WHY SUNRIVER
     communities = [
