@@ -139,10 +139,10 @@ NAV = [("homes", "Homes", "/homes-for-sale"), ("about", "About", "/about"), ("vi
 
 
 def overlay_header():
-    """Homepage header from Figma "Home Clark Life NAV 4": logo over the hero, translucent pill nav,
-    and a light blue Life at SunRiver dropdown with a photo."""
+    """Homepage header: logo over the hero and translucent pill nav (Figma "Home Clark Life NAV 4"),
+    with the Life at SunRiver dropdown from "Home Clark Life NAV 6" (title, yellow rule, short line, photo)."""
     from .figma_assets import FG
-    items = "".join('<li><a href="%s">%s</a></li>' % (h, t) for t, h, _, _, _ in LIFE)
+    items = "".join('<li><a href="%s"><strong>%s</strong><span>%s</span></a></li>' % (h, t, sub) for t, h, sub, _, _ in LIFE)
     return '''<a class="skip" href="#main">Skip to content</a>
 <header class="site-header overlay" data-menu="closed">
   <div class="wrap header-inner">
@@ -157,7 +157,7 @@ def overlay_header():
       <a class="pill-cta" href="/sunriver-firelight">Visit</a>
     </nav>
   </div>
-</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members at a SunRiver Villas home"))
+</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members playing pool at the community center"))
 
 
 def header(active):

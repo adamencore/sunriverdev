@@ -1,4 +1,5 @@
-"""Homepage imagery exported from the Figma file "SunRiver Website 2026", frame "Home Clark Life NAV 4" (node 625:214).
+"""Homepage imagery exported from the Figma file "SunRiver Website 2026", frame "Home Clark Life NAV 4" (node 625:214);
+the nav dropdown photo follows "Home Clark Life NAV 6" (node 660:2).
 
 Each entry is cropped exactly the way the Figma layer frames it, then resized and saved as WebP into
 /media/fg at build time (Pillow, see requirements.txt).
@@ -43,7 +44,7 @@ SPECS = {
     "years-3": ("years3", 269, 298, -37.91, -0.11, 169.14, 101.8, 538, {}),
     "years-4": ("years4", 315, 527, -75.46, 0, 250.92, 100, 630, {}),
     "begin": ("begin", 1455, 760, -17.85, -31.43, 127.64, 162.89, 2400, {"mirror": True}),
-    "nav-photo": ("navphoto", 295.049, 205.597, 0, -0.16, 100, 95.68, 566, {"region": (0, 8, 283, 147)}),
+    "nav-photo": ("navphoto", 406, 283, 0, -0.16, 100, 95.68, 566, {"region": (14, 0, 283, 217)}),  # NAV 6 dropdown
 }
 
 USED = set()
