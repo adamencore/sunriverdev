@@ -1,0 +1,410 @@
+"""Pages driven by the Sanity CMS: floor plans, homes for sale, Bucketlist Living blog."""
+import math
+import re
+
+from .lib import (PAGES, PHONE, PHONE_TEL, S, V, VP, FOUNDERS_BADGE, add, btn, chat_section, clean, esc, img, money,
+                  nice_date, sand_hero, simg, slugify, star_list)
+
+STATUS_ORDER = {"Move in Ready": 0, "For Sale": 1, "Under Contract": 2, "Sold": 3}
+COMMUNITIES = ["SunRiver Firelight", "SunRiver Villas", "SunRiver St George"]
+COMMUNITY_LABEL = {"SunRiver St George": "SunRiver St. George"}
+SQFT_RANGES = [(1250, 1400), (1450, 1700), (1750, 1900)]
+DISCLAIMER = ("Prices are subject to change without notice and reflect standard homesites. Dimensions and square footage are approximate. "
+              "Renderings are artist's conceptions and are not meant to show specific detailing. Marketed by SunRiver St. George Realty, L.C.")
+ICON_BED, ICON_BATH, ICON_GARAGE = VP("/images/icons/bed.png"), VP("/images/icons/bath.png"), VP("/images/icons/garage.png")
+
+
+def num(v):
+    if v is None:
+        return ""
+    return ("%g" % float(v))
+
+
+# ================================================================== FLOOR PLANS
+def plan_image(p):
+    g = p.get("gallery") or []
+    return g[0]["asset"] if g else (p.get("planDiagram") or {}).get("asset")
+
+
+def plan_card(p, sizes="(max-width: 860px) 100vw, 33vw"):
+    badge = '<span class="badge">%s</span>' % esc(p["badge"]) if p.get("badge") else ""
+    ref = plan_image(p)
+    pic = simg(ref, "%s exterior rendering at SunRiver Firelight" % p["name"], 800, sizes=sizes) if ref else ""
+    return '''<a class="plan-card" href="/floor-plans/%s">
+  <div class="plan-img">%s%s</div>
+  <div class="plan-body"><span class="sqft">%s</span><span class="arrow" aria-hidden="true"></span>
+    <span class="name">%s</span><span class="meta">%s ft&sup2; | %s</span><span class="price">%s</span><span class="explore">Explore</span></div></a>''' % (
+        p["slug"], pic, badge, p["squareFootage"], esc(p["name"]), "{:,}".format(p["squareFootage"]), esc(p.get("specLine", "")), esc(p.get("priceRange", "")))
+
+
+def min_price(plans):
+    vals = []
+    for p in plans:
+        m = re.search(r"\$([\d,]+)", p.get("priceRange") or "")
+        if m:
+            vals.append(int(m.group(1).replace(",", "")))
+    return "${:,}".format(min(vals)) if vals else ""
+
+
+def build_floor_plans(plans):
+    grid = "".join(plan_card(p) for p in plans)
+    add("/floor-plans", "Floor Plans", "%d SunRiver Firelight floor plans in Toquerville, Utah, starting at %s." % (len(plans), min_price(plans)), "life", '''
+%s
+<section class="section">
+  <div class="wrap stack-lg">
+    <div class="grid cols-3">%s</div>
+    <p class="note center">%s</p>
+  </div>
+</section>
+%s''' % (sand_hero("", "SunRiver Firelight", "Floor Plans"), grid, DISCLAIMER, chat_section()))
+
+    for i, p in enumerate(plans):
+        name = esc(p["name"])
+        gallery = p.get("gallery") or []
+        main = gallery[0]["asset"] if gallery else None
+        thumbs = ""
+        if len(gallery) > 1:
+            thumbs = '<div class="thumbs">%s</div>' % "".join(
+                '<button type="button" class="thumb%s" data-src="%s" aria-label="Show image %d">%s</button>' % (
+                    " is-active" if k == 0 else "", S(g["asset"], 1600), k + 1, img(S(g["asset"], 240), g.get("alt") or p["name"]))
+                for k, g in enumerate(gallery))
+        tour_btn = '<a class="btn blue-btn tour-btn" href="#tour">3D Virtual Tour</a>' if p.get("matterportId") else ""
+        badge = '<span class="badge">%s</span>' % esc(p["badge"]) if p.get("badge") else ""
+        lot = ("<p class=\"lot\">Lot size: %s'</p>" % num(p["width"])) if p.get("width") else ""
+        features = star_list([esc(f) for f in (p.get("features") or [])], "cols-2")
+        diagram = p.get("planDiagram") or {}
+        diagram_html = ""
+        if diagram.get("asset"):
+            diagram_html = '''<section class="section sand plan-diagram-section">
+  <div class="wrap stack-lg">
+    <div class="center stack"><h2 class="h2">The %s Floor Plan</h2><hr class="rule center"><p class="note">Click the plan to enlarge</p></div>
+    <a class="plan-drawing" href="%s" data-lightbox>%s</a>
+    <p class="note center plan-note">%s</p>
+  </div>
+</section>''' % (name, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 900, sizes="(max-width: 800px) 100vw, 768px"), DISCLAIMER)
+        tour = ""
+        if p.get("matterportId"):
+            tour = '''<section class="tour-section" id="tour"><div class="wrap stack-lg"><div class="center stack"><h2 class="h2">Take a virtual tour</h2><hr class="rule center"></div>
+<div class="embed"><iframe src="https://my.matterport.com/show/?m=%s" title="%s virtual tour" allow="xr-spatial-tracking; fullscreen" allowfullscreen loading="lazy"></iframe></div></div></section>''' % (p["matterportId"], name)
+        others = [plans[(i + k) % len(plans)] for k in (1, 2, 3) if len(plans) > k]
+        like = "".join('<a class="like-link" href="/floor-plans/%s"><strong>%s</strong><span>{:,}ft&sup2; &middot; %s</span></a>'.format(q["squareFootage"])
+                       % (q["slug"], esc(q["name"]), esc(q.get("priceRange", ""))) for q in others)
+        main_img = simg(main, gallery[0].get("alt") or p["name"], 1200, loading="eager", sizes="(max-width: 860px) 100vw, 60vw") if main else ""
+        add("/floor-plans/%s" % p["slug"], "%s Floor Plan" % p["name"],
+            "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], "{:,}".format(p["squareFootage"]), p.get("specLine", ""), p.get("priceRange", "")), "life", '''
+<section class="section plan-detail">
+  <div class="wrap">
+    <a class="back-link" href="/floor-plans">&lsaquo; All floor plans</a>
+    <div class="detail-grid">
+      <div class="detail-media">
+        <div class="viewer"><div class="viewer-main">%s</div>%s</div>
+        %s
+      </div>
+      <aside class="detail-card">
+        <div class="detail-top"><span class="detail-num">%s</span>%s</div>
+        <h1>%s</h1>
+        <p class="detail-price">%s</p>
+        <p class="detail-sqft">%s ft&sup2;</p>
+        <p class="detail-spec">%s</p>
+        %s
+        <div class="detail-actions">%s%s</div>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="section tight">
+  <div class="wrap stack">
+    <h2 class="h3">Standard Luxury Features</h2>
+    %s
+  </div>
+</section>
+%s
+%s
+<section class="section like-section">
+  <div class="wrap stack">
+    <h2 class="h3">You may like these</h2>
+    <div class="like-row">%s</div>
+  </div>
+</section>''' % (main_img, thumbs, tour_btn, p["squareFootage"], badge, name, esc(p.get("priceRange", "")),
+                 "{:,}".format(p["squareFootage"]), esc(p.get("specLine", "")), lot,
+                 btn("Schedule a Tour", "/contact-us"), btn("Talk with an Agent", "/contact-us#team", "blue-btn"),
+                 features, diagram_html, tour, like))
+
+
+# ================================================================== HOMES FOR SALE
+def listing_sort_key(l):
+    return (STATUS_ORDER.get(l.get("status"), 9), -int((l.get("statusDate") or "0000-00-00").replace("-", "")), l.get("title") or "")
+
+
+def listing_price(l):
+    if l.get("askForPricing") or not l.get("price"):
+        return "Ask for pricing"
+    return money(l["price"])
+
+
+def status_chip(status):
+    return '<span class="status status-%s">%s</span>' % (slugify(status or ""), esc(status or ""))
+
+
+def spec_chips(l):
+    chips = []
+    if l.get("beds"):
+        chips.append('<span class="chip">%s%s Bed</span>' % (img(ICON_BED, "", "chip-icon"), num(l["beds"])))
+    if l.get("baths"):
+        chips.append('<span class="chip">%s%s Bath</span>' % (img(ICON_BATH, "", "chip-icon"), num(l["baths"])))
+    if l.get("garageSpaces"):
+        chips.append('<span class="chip">%s%s Car Garage</span>' % (img(ICON_GARAGE, "", "chip-icon"), num(l["garageSpaces"])))
+    if l.get("hobbyRooms"):
+        chips.append('<span class="chip">Hobby Room</span>')
+    return '<div class="chips">%s</div>' % "".join(chips)
+
+
+def listing_card(l):
+    photo = simg(l["photo"], l.get("photoAlt") or l.get("title"), 640, sizes="(max-width: 700px) 100vw, 30vw") if l.get("photo") else ""
+    data = 'data-community="%s" data-status="%s" data-sqft="%s" data-beds="%s" data-baths="%s" data-garage="%s" data-hobby="%s"' % (
+        esc(l.get("community", "")), esc(l.get("status", "")), l.get("squareFootage") or 0, l.get("beds") or 0,
+        l.get("baths") or 0, l.get("garageSpaces") or 0, 1 if l.get("hobbyRooms") else 0)
+    return '''<a class="home-card" href="/homes-for-sale/%s" %s>
+  <div class="home-img">%s%s</div>
+  <div class="home-body">
+    <div class="home-title"><h3>%s</h3><span>{:,} ft&sup2;</span></div>
+    <p class="home-address">%s</p>
+    <p class="home-price">%s</p>
+    %s
+  </div></a>'''.format(l.get("squareFootage") or 0) % (
+        l["slug"], data, photo, status_chip(l.get("status")), esc(l.get("title")), esc(l.get("address")), listing_price(l), spec_chips(l))
+
+
+def radio_group(name, label, options):
+    opts = '<label><input type="radio" name="%s" value="0" checked>Any</label>' % name + "".join(
+        '<label><input type="radio" name="%s" value="%s">%s+</label>' % (name, v, v) for v in options)
+    return '<fieldset><legend>%s</legend><div class="opts">%s</div></fieldset>' % (label, opts)
+
+
+def build_homes(listings):
+    ls = sorted(listings, key=listing_sort_key)
+    cards = "".join(listing_card(l) for l in ls)
+    comm = "".join('<label><input type="checkbox" name="community" value="%s"%s>%s</label>' % (c, " checked" if c == "SunRiver Firelight" else "", COMMUNITY_LABEL.get(c, c)) for c in COMMUNITIES)
+    stat = "".join('<label><input type="checkbox" name="status" value="%s">%s</label>' % (s, s) for s in STATUS_ORDER)
+    sqft = "".join('<label><input type="checkbox" name="sqft" value="%d-%d">%s-%s ft&sup2;</label>' % (a, b, "{:,}".format(a), "{:,}".format(b)) for a, b in SQFT_RANGES)
+    add("/homes-for-sale", "Homes for Sale", "Move-in ready and available homes at SunRiver Firelight, SunRiver Villas and SunRiver St. George.", "homes", '''
+<section class="hfs-band">%s<div class="wrap"><h1>Homes for sale</h1></div></section>
+<section class="section hfs">
+  <div class="wrap hfs-grid">
+    <aside class="filters" aria-label="Filter homes">
+      <form id="home-filters">
+        <p class="filters-title">Filter</p>
+        <fieldset><legend>Community</legend><div class="opts">%s</div></fieldset>
+        <fieldset><legend>Status</legend><div class="opts">%s</div></fieldset>
+        <fieldset><legend>SQFT</legend><div class="opts">%s</div></fieldset>
+        %s%s%s
+        <fieldset><legend>Hobby</legend><div class="opts"><label><input type="checkbox" name="hobby" value="1">Hobby room</label></div></fieldset>
+        <button type="reset" class="reset-link">Clear filters</button>
+      </form>
+    </aside>
+    <div class="hfs-results">
+      <p class="results-count" aria-live="polite"><span id="home-count">%d</span> homes</p>
+      <div class="home-grid" id="home-grid">%s</div>
+      <div class="empty-state" id="home-empty" hidden><h2 class="h3">No homes match those filters.</h2><p>Try widening your search, or talk with our sales team about homes coming soon.</p>%s</div>
+    </div>
+  </div>
+</section>
+%s''' % (img(V("homes-for-sale-band.0xngxouxyqbk_.jpg"), "", loading="eager"), comm, stat, sqft,
+         radio_group("beds", "Beds", [2, 3, 4]), radio_group("baths", "Bath", [2, 3]), radio_group("garage", "Garage", [2, 3]),
+         len(ls), cards, btn("Contact Sales", "/contact-us"), chat_section()))
+
+    for l in ls:
+        build_listing(l)
+
+
+def build_listing(l):
+    pics = ([l["photo"]] if l.get("photo") else []) + [g for g in (l.get("gallery") or []) if g != l.get("photo")]
+    alt = l.get("photoAlt") or l.get("title")
+    main = simg(pics[0], alt, 1400, loading="eager", sizes="(max-width: 860px) 100vw, 60vw") if pics else ""
+    thumbs = ""
+    if len(pics) > 1:
+        thumbs = '<div class="thumbs">%s</div>' % "".join(
+            '<button type="button" class="thumb%s" data-src="%s" aria-label="Show photo %d">%s</button>' % (
+                " is-active" if k == 0 else "", S(r, 1600), k + 1, img(S(r, 240), "%s photo %d" % (alt, k + 1))) for k, r in enumerate(pics))
+    m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
+    home_no = m.group(1) if m else ""
+    videos = ""
+    if l.get("youtubeShortIds"):
+        vids = "".join('<div class="short"><iframe src="https://www.youtube.com/embed/%s" title="Video tour of %s" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>' % (v, esc(l.get("title"))) for v in l["youtubeShortIds"])
+        videos = '<section class="section sand"><div class="wrap stack-lg"><div class="center stack"><h2 class="h2">Take a look inside%s</h2><hr class="rule center"></div><div class="shorts">%s</div></div></section>' % (
+            " Home %s" % home_no if home_no else "", vids)
+    addr = l.get("address") or ""
+    map_q = re.sub(r"^\s*Home\s+\d+,\s*", "", addr)
+    founders = ""
+    if l.get("community") == "SunRiver Firelight":
+        founders = '''<div class="founders-card">%s<div class="stack"><h2 class="h3">Join the SunRiver Firelight Founders Club</h2><p>The first 74 homeowners get two years of HOA dues paid by SunRiver and first pick of premium homesites.</p>%s</div></div>''' % (
+            img(V("founders-badge-tilt.3k3jxq99pwu_k.svg"), "SunRiver Firelight Founders Club badge"), btn("Learn more", "/founders-club"))
+    mls = '<p class="detail-meta">MLS# %s</p>' % esc(l["mlsNumber"]) if l.get("mlsNumber") else ""
+    title = clean(l.get("title"))
+    add("/homes-for-sale/%s" % l["slug"], "%s, %s" % (title, map_q or addr),
+        "%s at %s: %s sq ft, %s bed, %s bath. %s." % (title, addr, "{:,}".format(l.get("squareFootage") or 0), num(l.get("beds")), num(l.get("baths")), l.get("status", "")), "homes", '''
+<section class="section plan-detail">
+  <div class="wrap">
+    <a class="back-link" href="/homes-for-sale">&lsaquo; See all homes for sale</a>
+    <div class="detail-grid">
+      <div class="detail-media"><div class="viewer"><div class="viewer-main">%s</div>%s</div></div>
+      <aside class="detail-card">
+        <div class="detail-top">%s</div>
+        <p class="detail-price">%s</p>
+        <h1>%s</h1>
+        <p class="detail-sqft">%s ft&sup2;</p>
+        <p class="detail-address">%s</p>
+        <p class="detail-meta">%s</p>
+        %s
+        %s
+        <div class="detail-actions">%s%s</div>
+      </aside>
+    </div>
+  </div>
+</section>
+%s
+<section class="section">
+  <div class="wrap stack-lg">
+    <div class="center stack"><h2 class="h2">Location</h2><hr class="rule center"></div>
+    <div class="map"><iframe src="https://www.google.com/maps?q=%s&amp;output=embed" title="Map of %s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+  </div>
+</section>
+<section class="section sand">
+  <div class="wrap grid cols-2 listing-ctas">
+    %s
+    <div class="sales-card">%s<div class="stack"><h2 class="h3">Contact Our Sales Team</h2><p>Questions about this home? Our team is in the sales office seven days a week.</p><div class="btn-row">%s%s</div></div></div>
+  </div>
+</section>''' % (main, thumbs, status_chip(l.get("status")), listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), esc(addr),
+                 esc(COMMUNITY_LABEL.get(l.get("community"), l.get("community", ""))), mls, spec_chips(l),
+                 btn("Schedule a Tour", "/contact-us"), btn("Request Info", "/contact-us#team", "blue-btn"),
+                 videos, esc(map_q or addr).replace(" ", "+"), esc(addr), founders,
+                 img(V("sales-team.1o1zp-0ja31vz.jpg"), "The SunRiver sales team"), btn("Contact Us", "/contact-us"),
+                 '<a class="btn blue-btn" href="%s">Call %s</a>' % (PHONE_TEL, PHONE)))
+
+
+# ================================================================== BLOG
+PER_PAGE = 24
+
+
+def render_spans(children, mark_defs):
+    defs = {d.get("_key"): d for d in mark_defs or []}
+    out = []
+    for c in children or []:
+        t = esc(clean(c.get("text", ""))).replace("\n", "<br>")
+        for m in reversed(c.get("marks") or []):
+            if m == "strong":
+                t = "<strong>%s</strong>" % t
+            elif m == "em":
+                t = "<em>%s</em>" % t
+            elif m == "underline":
+                t = "<u>%s</u>" % t
+            elif m == "strike-through":
+                t = "<s>%s</s>" % t
+            elif m == "code":
+                t = "<code>%s</code>" % t
+            elif m in defs and defs[m].get("_type") == "link" and defs[m].get("href"):
+                href = defs[m]["href"]
+                ext = href.startswith("http") and "sunriver.com" not in href
+                t = '<a href="%s"%s>%s</a>' % (esc(href), ' target="_blank" rel="noopener"' if ext else "", t)
+        out.append(t)
+    return "".join(out)
+
+
+def portable_text(body):
+    out, list_type, items = [], None, []
+
+    def flush():
+        nonlocal list_type, items
+        if list_type:
+            tag = "ol" if list_type == "number" else "ul"
+            out.append("<%s>%s</%s>" % (tag, "".join("<li>%s</li>" % i for i in items), tag))
+        list_type, items = None, []
+
+    for b in body or []:
+        t = b.get("_type")
+        if t == "block" and b.get("listItem"):
+            if list_type != b["listItem"]:
+                flush()
+                list_type = b["listItem"]
+            items.append(render_spans(b.get("children"), b.get("markDefs")))
+            continue
+        flush()
+        if t == "block":
+            inner = render_spans(b.get("children"), b.get("markDefs"))
+            if not inner.strip():
+                continue
+            style = b.get("style") or "normal"
+            tag = {"h1": "h2", "h2": "h2", "h3": "h3", "h4": "h4", "h5": "h4", "h6": "h4", "blockquote": "blockquote"}.get(style, "p")
+            out.append("<%s>%s</%s>" % (tag, inner, tag))
+        elif t == "image" and (b.get("asset") or {}).get("_ref"):
+            ref = b["asset"]["_ref"]
+            out.append('<figure>%s</figure>' % simg(ref, b.get("alt") or "", 1000, sizes="(max-width: 820px) 100vw, 760px"))
+    flush()
+    return "\n".join(out)
+
+
+def post_card(p):
+    cat = (p.get("categories") or [None])[0]
+    cover = simg(p["cover"], p["title"], 640, sizes="(max-width: 700px) 100vw, 30vw") if p.get("cover") else ""
+    return '''<a class="post-card" href="/bucketlistliving/%s"><div class="photo">%s</div>%s<h3>%s</h3><time datetime="%s">%s</time></a>''' % (
+        p["slug"], cover, '<span class="post-cat">%s</span>' % esc(cat) if cat else "", esc(clean(p["title"])),
+        esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")))
+
+
+def blog_listing(posts, base, title_html, intro_html, page_title, description, cats, current_cat=None):
+    pages = max(1, math.ceil(len(posts) / float(PER_PAGE)))
+    chips = '<nav class="cat-chips" aria-label="Categories"><a href="/bucketlistliving"%s>All</a>%s</nav>' % (
+        ' aria-current="page"' if not current_cat else "",
+        "".join('<a href="/bucketlistliving/category/%s"%s>%s</a>' % (slugify(c), ' aria-current="page"' if c == current_cat else "", esc(c)) for c in cats))
+    for n in range(1, pages + 1):
+        chunk = posts[(n - 1) * PER_PAGE: n * PER_PAGE]
+        path = base if n == 1 else "%s/page/%d" % (base, n)
+        prev = '<a class="btn blue-btn" href="%s">Newer</a>' % (base if n == 2 else "%s/page/%d" % (base, n - 1)) if n > 1 else ""
+        nxt = '<a class="btn" href="%s/page/%d">Older</a>' % (base, n + 1) if n < pages else ""
+        pager = '<nav class="pager" aria-label="Pages">%s<span>Page %d of %d</span>%s</nav>' % (prev, n, pages, nxt) if pages > 1 else ""
+        add(path, page_title if n == 1 else "%s, page %d" % (page_title, n), description, "life", '''
+%s
+<section class="section blog">
+  <div class="wrap stack-lg">
+    %s
+    <div class="post-grid">%s</div>
+    %s
+  </div>
+</section>''' % (title_html + intro_html, chips, "".join(post_card(p) for p in chunk), pager))
+
+
+def build_blog(posts):
+    posts = sorted(posts, key=lambda p: p.get("publishDate") or "", reverse=True)
+    cats = sorted(set(c for p in posts for c in (p.get("categories") or []) if c))
+    banner = '''<section class="blog-banner">%s<div class="wrap">%s<p>Stories, events and guides from SunRiver Firelight and Southern Utah.</p></div></section>''' % (
+        img(V("bucketlist-banner.02if0nz4sgehw.webp"), "", loading="eager"), img(V("bucketlist-wordmark.3qnr5_89a42b3.png"), "Bucketlist Living", "wordmark", "eager"))
+    blog_listing(posts, "/bucketlistliving", banner, "", "#bucketlistliving", "Bucketlist Living: stories, events and guides from SunRiver Firelight and Southern Utah.", cats)
+    for c in cats:
+        cp = [p for p in posts if c in (p.get("categories") or [])]
+        blog_listing(cp, "/bucketlistliving/category/%s" % slugify(c), sand_hero("Category", esc(c)), "", "%s | #bucketlistliving" % c,
+                     "%s stories from Bucketlist Living at SunRiver." % c, cats, c)
+
+    for i, p in enumerate(posts):
+        more = [q for q in posts[max(0, i - 2): i + 6] if q is not p][:4]
+        chips = '<div class="post-chips"><a href="/bucketlistliving">#bucketlistliving</a>%s</div>' % "".join(
+            '<a href="/bucketlistliving/category/%s">%s</a>' % (slugify(c), esc(c)) for c in (p.get("categories") or []) if c)
+        cover = '<div class="post-cover">%s</div>' % simg(p["cover"], p["title"], 1400, loading="eager", sizes="(max-width: 1100px) 100vw, 1040px") if p.get("cover") else ""
+        desc = clean(p.get("excerpt")) or clean(" ".join(
+            "".join(c.get("text", "") for c in b.get("children", [])) for b in p["body"] if b.get("_type") == "block"))[:155]
+        add("/bucketlistliving/%s" % p["slug"], clean(p["title"]), desc, "life", '''
+<article class="section post">
+  <div class="wrap post-wrap">
+    %s
+    %s
+    <header class="post-head"><h1>%s</h1><time datetime="%s">%s</time></header>
+    <div class="post-body">%s</div>
+  </div>
+</article>
+<section class="section sand">
+  <div class="wrap stack-lg">
+    <div class="center stack"><h2 class="h2">More from #bucketlistliving</h2><hr class="rule center"></div>
+    <div class="post-grid cols-4">%s</div>
+    <div class="center">%s</div>
+  </div>
+</section>''' % (chips, cover, esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")),
+                 portable_text(p.get("body")), "".join(post_card(q) for q in more), btn("See all stories", "/bucketlistliving")))

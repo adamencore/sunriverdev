@@ -1,0 +1,15 @@
+[
+{"title":"Side by Side Through Red Rock Country","slug":"side-by-side-through-red-rock-country","publishDate":"2026-10-05T17:21:22.000Z","categories":["Events"],"cover":"image-d334a450e0ae790b13c8eff8383953ea90f6f25f-2012x1556-webp","excerpt":"SunRiver Firelight members ride side by sides through LaVerkin and Hurricane to the trails at Sand Hollow.","body":[
+{"_type":"block","style":"normal","markDefs":[],"children":[{"_type":"span","marks":[],"text":"Last weekend, a group of SunRiver Firelight members loaded up their side by sides and headed out for a day in the backcountry. The destination was Sand Hollow, with a scenic ride through LaVerkin and Hurricane to kick things off."}]},
+{"_type":"block","style":"h3","markDefs":[],"children":[{"_type":"span","marks":[],"text":"Your home is the basecamp"}]},
+{"_type":"block","style":"normal","markDefs":[],"children":[{"_type":"span","marks":[],"text":"The side by sides stay in the garage. The red rock is always waiting. Welcome to SunRiver Firelight."}]}
+]},
+{"title":"Live Jazz at Timber Park with the Red Rock Jazz Orchestra","slug":"live-jazz-at-timber-park-with-the-red-rock-jazz-orchestra","publishDate":"2026-09-28T22:52:55.000Z","categories":null,"cover":"image-4ecbc60ec2c428700d779b4b106ab37cf2c7fb13-2500x1405-jpg","excerpt":"Join SunRiver Firelight at Timber Park for a free outdoor concert with the Red Rock Jazz Orchestra.","body":[
+{"_type":"image","alt":"","asset":{"_ref":"image-99b54d6a08b7a73182cb1bcc5d86aee170501f5a-1200x2096-png"}},
+{"_type":"block","style":"normal","markDefs":[],"children":[{"_type":"span","marks":[],"text":"Bring a chair, bring a friend, and come hungry."}]},
+{"_type":"block","style":"normal","markDefs":[],"children":[{"_type":"span","marks":["strong"],"text":"The details"}]},
+{"_type":"block","style":"normal","listItem":"bullet","level":1,"markDefs":[],"children":[{"_type":"span","marks":["strong"],"text":"When: Saturday, October 10th, 4 to 6 PM"}]},
+{"_type":"block","style":"normal","listItem":"bullet","level":1,"markDefs":[{"_key":"l1","_type":"link","href":"https://maps.app.goo.gl/7UHACi3TetUqJnrLA"}],"children":[{"_type":"span","marks":["strong"],"text":"Where: "},{"_type":"span","marks":["l1","strong"],"text":"Timber Park"}]},
+{"_type":"block","style":"normal","markDefs":[{"_key":"l2","_type":"link","href":"http://sunriver.com"}],"children":[{"_type":"span","marks":[],"text":"Questions? Call 435-688-1000 or visit "},{"_type":"span","marks":["l2"],"text":"sunriver.com"},{"_type":"span","marks":[],"text":"."}]}
+]}
+]
