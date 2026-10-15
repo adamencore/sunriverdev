@@ -190,7 +190,7 @@ FONTS = '''<style>
 
 
 def add(path, title, description, active, body, body_class=""):
-    full_title = title if title.endswith(SITE_NAME) else "%s | %s" % (title, SITE_NAME)
+    full_title = title if SITE_NAME in title else "%s | %s" % (title, SITE_NAME)
     doc = '''<!doctype html>
 <html lang="en">
 <head>
