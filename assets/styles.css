@@ -1025,6 +1025,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .site-header.overlay.is-stuck { position: fixed; background: var(--white); box-shadow: var(--shadow-header); animation: header-in .28s cubic-bezier(.2, .8, .2, 1); }
 .site-header.overlay.is-stuck .header-inner { height: 84px; padding-top: 0; align-items: center; }
 .site-header.overlay.is-stuck .logo img { width: 146px; }
+.site-header.overlay .logo img { transition: none; }
 .site-header.overlay.is-stuck .pill-nav { margin-top: 0; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .site-header.overlay.is-stuck .founders-tab { display: none; }
 @keyframes header-in { from { transform: translateY(-100%); } to { transform: none; } }

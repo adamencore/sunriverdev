@@ -98,7 +98,7 @@
         el.addEventListener('transitionend', done);
         setTimeout(done, 1400);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }, { rootMargin: '0px 0px -5% 0px', threshold: 0.08 });
     items.forEach(function (el) {
       if (el.hidden || el.getBoundingClientRect().top < fold) return;
       el.classList.add('rv');
