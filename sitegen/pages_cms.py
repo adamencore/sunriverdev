@@ -106,7 +106,11 @@ def thumbs_html(refs, alt, contain=()):
         '<button type="button" class="see-more" aria-expanded="false">See more</button>' if len(refs) > 4 else "")
 
 
+ICON_HOBBY = '<svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l5-12 4 7 2-3 5 8z" fill="none" stroke="#335A97" stroke-width="1.8" stroke-linejoin="round"/><circle cx="17" cy="6" r="2" fill="none" stroke="#335A97" stroke-width="1.8"/></svg>'
+
+
 def plan_chips(p):
+    """Bed, Bath, Hobby, Garage chips, in the order of the Figma floor plan frame."""
     spec = p.get("specLine") or ""
     garage = re.search(r"(Ext\.\s*)?(\d+(?:\.\d+)?)\s*Car Garage", spec)
     chips = []
@@ -114,53 +118,79 @@ def plan_chips(p):
         chips.append('<span class="chip">%s%s Bed</span>' % (img(ICON_BED, "", "chip-icon"), num(p["bedrooms"])))
     if p.get("bathrooms"):
         chips.append('<span class="chip">%s%s Bath</span>' % (img(ICON_BATH, "", "chip-icon"), num(p["bathrooms"])))
+    if "hobby" in spec.lower():
+        chips.append('<span class="chip">%sHobby</span>' % ICON_HOBBY)
     if garage:
         chips.append('<span class="chip">%s%s%s Car Garage</span>' % (img(ICON_GARAGE, "", "chip-icon"), "Ext. " if garage.group(1) else "", garage.group(2)))
-    return '<span class="chips hd-chips">%s</span>' % "".join(chips)
+    return '<div class="chips pd-chips">%s</div>' % "".join(chips)
+
+
+def plan_link_card(q):
+    ref = plan_image(q)
+    pic = simg(ref, "%s exterior rendering" % q["name"], 760, sizes="(max-width: 860px) 100vw, 380px") if ref else ""
+    return '<a class="po-card" href="/floor-plans/%s"><span class="po-img">%s</span><span class="po-bar"><span class="po-sqft">%s</span><span class="po-name">%s</span><span class="po-go" aria-hidden="true"></span></span></a>' % (
+        q["slug"], pic, q["squareFootage"], esc(q["name"]))
 
 
 def build_plan(p, i, plans):
-    """Floor plan page, built exactly on the OFFICIAL "Homes for Sale Home Detail" frame (6:503):
-    back link, gallery with four thumbnails, price card, description card with map, Founders and sales cards.
-    The plan drawing joins the gallery so it stays one click away."""
+    """Floor plan page, built on the OFFICIAL Figma floor plan detail frame (the "Hamlet" version of
+    "Homes for Sale Home Detail"): number and big name, gallery, price card with features, floor plan
+    drawing card, virtual tour, other floor plans, Founders Club and sales team cards."""
     name = esc(p["name"])
     gallery = p.get("gallery") or []
     refs = [g["asset"] for g in gallery]
-    diagram = (p.get("planDiagram") or {}).get("asset")
-    if diagram:
-        refs.append(diagram)
     alt = gallery[0].get("alt") if gallery and gallery[0].get("alt") else "%s at SunRiver Firelight" % p["name"]
     main = simg(refs[0], alt, 1400, loading="eager", sizes="(max-width: 860px) 100vw, 667px") if refs else ""
     sqft = "{:,}".format(p["squareFootage"])
-    spec = p.get("specLine", "")
-    story = ("The %s is a %s sq ft single-story home at SunRiver Firelight with %s. Every SunRiver Firelight home includes our standard luxury features, "
-             "and you can make it yours at the Design Center. SunRiver Firelight is SunRiver's newest 55+ community, just west of Toquerville, "
-             "with mountain views in every direction and Zion 31 minutes away." % (p["name"], sqft, spec.lower().replace(" | ", ", ")))
+    beds, baths = num(p.get("bedrooms")), num(p.get("bathrooms"))
+    spec = (p.get("specLine") or "").lower()
+    extras = " and a hobby room" if "hobby" in spec else ""
+    story = ("The %s offers %s sq ft on one level with %s beds, %s baths%s around a bright great room, "
+             "in SunRiver Firelight, SunRiver's newest 55+ Active Adult community." % (p["name"], sqft, beds, baths, extras))
+    feats = "".join("<li>%s</li>" % esc(f) for f in (p.get("features") or []))
+    features = '<h2 class="pd-feat-title">Standard Luxury Features</h2><ul class="pd-feats">%s</ul>' % feats if feats else ""
+    diagram = p.get("planDiagram") or {}
+    drawing = ""
+    if diagram.get("asset"):
+        drawing = '''<div class="pd-plan">
+      <h2>The %s Floor Plan</h2>
+      <a class="pd-plan-img" href="%s" data-lightbox>%s</a>
+    </div>''' % (name, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 940, sizes="(max-width: 860px) 100vw, 470px"))
+    tour = ""
+    if p.get("matterportId"):
+        tour = '''<div class="pd-tour" id="tour">
+      <h2>Take a virtual tour</h2>
+      <div class="pd-tour-frame"><iframe src="https://my.matterport.com/show/?m=%s" title="%s 3D virtual tour" allow="xr-spatial-tracking; fullscreen" allowfullscreen loading="lazy"></iframe></div>
+    </div>''' % (p["matterportId"], name)
+    others = [plans[(i + k) % len(plans)] for k in (1, 2, 3) if len(plans) > k]
     add("/floor-plans/%s" % p["slug"], "%s Floor Plan" % p["name"],
-        "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], sqft, spec, p.get("priceRange", "")), "life", '''
-<section class="hd">
+        "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], sqft, p.get("specLine", ""), p.get("priceRange", "")), "life", '''
+<section class="hd pd">
   <div class="wrap">
     <a class="hd-back" href="/floor-plans">See all floor plans</a>
-    <div class="hd-top">
+    <p class="pd-num">%s</p>
+    <h1 class="pd-title">%s</h1>
+    <div class="pd-top">
       <div class="hd-media viewer"><div class="viewer-main">%s</div>%s</div>
-      <div class="hd-card">
-        <p class="hd-price">%s</p>
-        <p class="hd-name"><strong>%s</strong><span aria-hidden="true">|</span>%s sqft</p>
-        <h1 class="hd-address">The %s Floor Plan</h1>
-        <p class="hd-comm">SunRiver Firelight</p>
+      <div class="pd-card">
+        <p class="pd-price">%s</p>
+        <p class="pd-line"><span>%s ft<sup>2</sup></span><strong>Smart Single-Level Living</strong></p>
+        <p class="pd-story">%s</p>
         %s
-        <p class="hd-status">%s</p>
+        %s
         <div class="hd-actions"><a class="hd-btn solid" href="/contact-us">Schedule a Tour</a><a class="hd-btn" href="/contact-us#team">Request Info</a></div>
       </div>
     </div>
-    <div class="hd-desc">
-      <div class="hd-desc-text"><h2>Single Family Home in Toquerville</h2><p>%s</p></div>
-      <div class="hd-map"><iframe src="https://www.google.com/maps?q=SunRiver+Firelight,+Toquerville,+UT&amp;output=embed" title="Map of SunRiver Firelight" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    %s
+    %s
+    <div class="pd-others">
+      <h2>Check out other floor plans</h2>
+      <div class="pd-others-grid">%s</div>
     </div>
     %s
   </div>
-</section>''' % (main, thumbs_html(refs, alt, (diagram,)), esc(p.get("priceRange", "")), name, sqft, name,
-                   plan_chips(p), esc(p["badge"]) if p.get("badge") else "Available to build", esc(story), contact_row()), body_class="sand-page")
+</section>''' % (p["squareFootage"], name, main, thumbs_html(refs, alt), esc(p.get("priceRange", "")), sqft, esc(story),
+                 plan_chips(p), features, drawing, tour, "".join(plan_link_card(q) for q in others), contact_row()), body_class="sand-page")
 
 
 # ================================================================== HOMES FOR SALE

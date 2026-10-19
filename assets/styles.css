@@ -1053,23 +1053,66 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .home .h4-story-inner { min-height: 0; }
 }
 
-/* Floor plan pages on the "Home Detail" template: extra cards for features and the plan drawing */
-.hd-features, .hd-plan { margin-top: 44px; padding: 44px 39px 46px; background: var(--white); border-radius: 20px; color: #153250; }
-.hd-features h2, .hd-plan h2, .hd-like h2 { color: #335A97; font-weight: 500; font-size: 28px; line-height: 34px; letter-spacing: -0.03em; }
-.hd-features .star-list { margin-top: 24px; }
-.hd-features .star-list li { font-size: 16px; }
-.hd-plan { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: start; }
-.hd-plan-text p { margin-top: 14px; font-size: 16px; line-height: 25px; letter-spacing: -0.03em; }
-.hd-plan-text .hd-note { margin-top: 22px; font-size: 12px; line-height: 18px; opacity: .7; }
-.hd-plan-img { display: block; border-radius: 12px; overflow: hidden; background: var(--white); cursor: zoom-in; }
-.hd-plan-img img { width: 100%; height: auto; }
-.hd-tour { background: #153250; }
-.hd-like { padding: 0 0 100px; }
-.hd-like .fp-grid { margin-top: 28px; justify-content: start; gap: 40px 42px; }
-@media (max-width: 860px) {
-  .hd-plan { grid-template-columns: minmax(0, 1fr); padding: 28px 20px; }
-  .hd-features { padding: 28px 20px; }
-  .hd-like .fp-grid { justify-content: center; }
-}
 .viewer-main img.is-drawing { object-fit: contain; background: var(--white); padding: 10px; }
 .hd-thumbs .thumb[data-fit="contain"] img { object-fit: contain; background: var(--white); }
+
+/* =====================================================================
+   Floor plan pages: OFFICIAL Figma floor plan detail frame (the "Hamlet" version
+   of "Homes for Sale Home Detail"). Measurements from the 1440px frame.
+   ===================================================================== */
+.pd .hd-back { margin-bottom: 0; }
+.pd-num { margin-top: 56px; color: var(--sun-yellow); font-weight: 900; font-size: 16px; line-height: 18px; letter-spacing: -0.02em; }
+.pd-title { margin-top: 2px; color: #335A97; font-weight: 900; font-size: 88px; line-height: 0.9; letter-spacing: -0.03em; }
+.pd-top { display: grid; grid-template-columns: minmax(0, 667fr) minmax(0, 540fr); gap: 23px; margin-top: 30px; align-items: start; }
+.pd .hd-media .viewer-main { aspect-ratio: 667 / 525; }
+.pd-card { padding: 30px 37px 37px; background: var(--white); border-radius: 20px; color: #153250; }
+.pd-card p { max-width: none; }
+.pd-price { color: #335A97; font-weight: 900; font-size: 40px; line-height: 48px; letter-spacing: -0.03em; }
+.pd-line { margin-top: 6px; font-size: 16px; line-height: 22px; letter-spacing: -0.03em; }
+.pd-line sup { font-size: 9px; vertical-align: 6px; line-height: 0; }
+.pd-line strong { margin-left: 12px; font-weight: 900; }
+.pd-story { margin-top: 12px; max-width: 430px !important; font-size: 14.5px; line-height: 25px; letter-spacing: -0.03em; }
+.pd-chips { margin-top: 26px; padding: 0; gap: 10px 8px; }
+.pd-chips .chip { height: 37px; padding: 0 16px; gap: 8px; border: 1px solid #C8C4C0; border-radius: 30px; color: #335A97; font-size: 14px; }
+.pd-chips .chip-icon { width: 16px; height: 16px; filter: none; }
+.pd-feat-title { margin-top: 30px; color: #153250; font-weight: 500; font-size: 17px; line-height: 22px; letter-spacing: -0.03em; }
+.pd-feats { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 210px minmax(0, 1fr); column-gap: 0; }
+.pd-feats li { position: relative; padding-left: 16px; font-size: 12.5px; line-height: 33px; letter-spacing: -0.02em; }
+.pd-feats li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 5px; height: 5px; border-radius: 50%; background: var(--sun-yellow); }
+.pd-card .hd-actions { margin-top: 30px; gap: 12px; }
+.pd-card .hd-btn { width: 215px; height: 45px; }
+.pd-plan { margin-top: 50px; padding: 70px 24px 70px; background: var(--white); border-radius: 20px; text-align: center; }
+.pd-plan h2, .pd-tour h2, .pd-others h2 { color: #335A97; font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.03em; text-align: center; }
+.pd-plan-img { display: block; width: min(467px, 100%); margin: 60px auto 0; cursor: zoom-in; }
+.pd-plan-img img { width: 100%; height: auto; }
+.pd-tour { margin-top: 88px; }
+.pd-tour-frame { width: min(1025px, 100%); aspect-ratio: 1025 / 577; margin: 50px auto 0; border-radius: 20px; overflow: hidden; background: #153250; }
+.pd-tour-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.pd-others { margin-top: 140px; }
+.pd-others-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 380px)); justify-content: space-between; gap: 30px; margin-top: 80px; }
+.po-card { display: block; text-decoration: none; border-radius: 20px; overflow: hidden; transition: transform .2s ease, box-shadow .2s ease; }
+.po-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
+.po-img { display: block; height: 207px; background: var(--white); }
+.po-img img { width: 100%; height: 100%; object-fit: cover; }
+.po-bar { position: relative; display: block; height: 78px; padding: 10px 20px 0; background: #335A97; }
+.po-sqft { display: block; color: var(--sun-yellow); font-size: 13px; line-height: 18px; letter-spacing: -0.02em; }
+.po-name { display: block; margin-top: 4px; color: #FAF5EF; font-weight: 900; font-size: 30px; line-height: 30px; letter-spacing: -0.03em; text-transform: uppercase; }
+.po-go { position: absolute; right: 18px; top: 19px; width: 40px; height: 40px; border-radius: 50%; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 14'%3E%3Cpath d='M0 7h28M22 1l6 6-6 6' fill='none' stroke='%23335A97' stroke-width='1.8'/%3E%3C/svg%3E") center / 22px no-repeat; transition: transform .2s ease; }
+.po-card:hover .po-go { transform: translateX(3px); }
+.pd .hd-bottom { margin-top: 130px; }
+@media (max-width: 1100px) {
+  .pd-top { grid-template-columns: minmax(0, 1fr); }
+  .pd-title { font-size: 64px; }
+}
+@media (max-width: 860px) {
+  .pd-others-grid { grid-template-columns: minmax(0, 1fr); }
+  .pd-others { margin-top: 90px; }
+  .pd .hd-bottom { margin-top: 80px; }
+}
+@media (max-width: 560px) {
+  .pd-title { font-size: 48px; }
+  .pd-card { padding: 24px 20px 28px; }
+  .pd-feats { grid-template-columns: minmax(0, 1fr); }
+  .pd-card .hd-btn { width: 100%; }
+  .pd-plan h2, .pd-tour h2, .pd-others h2 { font-size: 28px; line-height: 32px; }
+}
