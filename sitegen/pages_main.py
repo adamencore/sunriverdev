@@ -3,7 +3,8 @@ with SunRiver brand rules applied to the copy (SunRiver members, Zion 31 minutes
 SunRiver Firelight, no golf at Firelight, no rates or percentages, no em dashes)."""
 from .lib import (FOUNDERS_BADGE, PHONE, PHONE_TEL, S, SQ, V, VP, add, banner, band, btn, chat_section, esc, faq, img,
                   photo, photo_hero, sand_hero, simg, star_list, ul, yellow_hero)
-from .pages_cms import min_price, plan_card
+from .figma_assets import FG
+from .pages_cms import fp_card, min_price, plan_card
 from .pages_home import build_home
 
 
@@ -154,14 +155,32 @@ def build_main(plans, listings):
     fc_html = "".join('''<div class="community-card on-sand"><div class="community-img">%s</div><div class="community-body">%s<p>%s</p>%s<div class="btn-row">%s%s</div></div></div>''' % (
         img(card, "%s homes" % t), img(logo, t, "community-logo"), d, '<p class="starting">Starting at <strong>%s</strong></p>' % sp if sp else "",
         btn("Explore Community", h, "small"), btn(l2[0], l2[1], "small blue-btn")) for t, h, logo, card, d, sp, l2 in find_comm)
-    add("/find-a-home", "Find a Home", "Find your home at SunRiver Firelight: %d floor plans starting at %s and %d homes available now." % (len(plans), start_price, available), "homes", '''
-%s
-<section class="section">
-  <div class="wrap grid cols-2">
-    <a class="choice-card" href="/floor-plans"><div class="photo ratio-32">%s</div><div class="choice-body"><p class="eyebrow">%d home designs</p><h2 class="h2">Floor Plans</h2><p>Explore every SunRiver Firelight floor plan, starting at %s.</p><span class="btn">View Floor Plans</span></div></a>
-    <a class="choice-card" href="/homes-for-sale"><div class="photo ratio-32">%s</div><div class="choice-body"><p class="eyebrow">%d available now</p><h2 class="h2">Homes for Sale</h2><p>Browse homes you can buy today, including move-in ready homes.</p><span class="btn">Browse Homes</span></div></a>
+    # Figma OFFICIAL "Homes for Sale / Model Homes" (6:206): photo hero with the Founders tab, every floor plan as a
+    # card, then the two big link cards. The sections after that are carried over from the Netlify build.
+    hfs_pick = next((l for l in sorted(listings, key=lambda l: l.get("status") != "Move in Ready") if l.get("photo") and l.get("community") == "SunRiver Firelight"), None)
+    hfs_img = simg(hfs_pick["photo"], "A SunRiver Firelight home for sale", 998, sizes="(max-width: 600px) 100vw, 499px") if hfs_pick else img(V("parade-home.05ayhbavvyl2k.jpg"), "A SunRiver Firelight home for sale")
+    add("/find-a-home", "Find a Home", "Find your home at SunRiver Firelight: %d floor plans starting at %s and %d homes available now." % (len(plans), start_price, available), "homes-overlay", '''
+<section class="fah-hero">
+  %s
+  <div class="wrap fah-hero-inner">
+    <h1>Find your home at SunRiver Firelight</h1>
+    <p>New home sales are focused at<br> SunRiver Firelight in Toquerville.<br> Jump straight to what you&rsquo;re looking for.</p>
   </div>
 </section>
+<section class="fah-plans">
+  <div class="wrap">
+    <h2 class="visually-hidden">SunRiver Firelight floor plans</h2>
+    <div class="fp-grid">%s</div>
+  </div>
+</section>
+<section class="fah-links">
+  <div class="wrap fah-links-grid">
+    <a class="fl-card" href="/floor-plans"><span class="fl-img">%s</span><span class="fl-bar"><span class="fl-kicker">%d unique</span><span class="fl-title">Floor Plans</span><span class="fl-arrow" aria-hidden="true"></span></span></a>
+    <a class="fl-card tall" href="/homes-for-sale"><span class="fl-img">%s</span><span class="fl-bar"><span class="fl-kicker">%d available now</span><span class="fl-title">Homes for Sale</span><span class="fl-btn">View all homes for sale</span></span></a>
+  </div>
+</section>
+''' % (img(FG("fah-hero"), "SunRiver Firelight homes with red rock mesas behind them", "fah-hero-img", "eager"),
+         "".join(fp_card(p) for p in plans), img(FG("fah-card"), "A SunRiver Firelight model home"), len(plans), hfs_img, available) + '''
 <section class="section sand">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Find the community <span class="yellow">that fits you</span></h2><hr class="rule center"></div>
@@ -173,12 +192,6 @@ def build_main(plans, listings):
     <div class="stack"><p class="eyebrow">SunRiver Firelight Founders Club</p><h2 class="display">Be part of history at SunRiver Firelight</h2>
       <p class="lede">Become a member of the SunRiver Firelight Founders Club and be among the first 74 homeowners to help shape this new community.</p><div class="btn-row">%s</div></div>
     <div class="badge-wrap">%s</div>
-  </div>
-</section>
-<section class="section">
-  <div class="wrap split">
-    <div class="photo ratio-43 shadow sold-wrap">%s%s</div>
-    <div class="stack"><h2 class="display">Looking for a quick <span class="yellow">move-in ready</span> home?</h2><hr class="rule"><div class="btn-row">%s</div></div>
   </div>
 </section>
 <section class="section sand">
@@ -197,12 +210,9 @@ def build_main(plans, listings):
     <div class="embed narrow-embed"><iframe src="https://player.vimeo.com/video/350204945" title="SunRiver Villas community commercial" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
   </div>
 </section>
-%s''' % (sand_hero("SunRiver Firelight", "Find your home at SunRiver Firelight", "New home sales are focused at SunRiver Firelight in Toquerville. Jump straight to what you're looking for."),
-         img(V("card-firelight.3s9-nzz50zfg3.jpg"), "SunRiver Firelight model home"), len(plans), start_price,
-         img(V("parade-home.05ayhbavvyl2k.jpg"), "A move-in ready SunRiver Firelight home"), available, fc_html,
+%s''' % (fc_html,
          img(V("founders-band.41tlj-oascbvv.jpg"), "", "founders-bg"), btn("Learn more", "/founders-club"), img(FOUNDERS_BADGE, "SunRiver Firelight Founders Club badge"),
-         img(V("move-in-ready.2ams9oh5zq4bt.jpg"), "A move-in ready SunRiver home"), img(V("sold-sign.00i99uced5e_r.png"), "", "sold-sign"),
-         btn("See All Homes for Sale", "/homes-for-sale"), btn("Learn More", "/no-mortgage-payments-for-life"),
+         btn("Learn More", "/no-mortgage-payments-for-life"),
          img(V("no-mortgage.1br4wnm6v72gl.jpg"), "Brandon Hansen with SunRiver members"),
          banner("The grass is <strong>greener!</strong>", V("golf-band.3n4euz5zc69-k.jpg"), '<a class="btn" href="https://www.sunrivergolf.com/">Explore SunRiver Golf Course</a>', True),
          chat_section()))

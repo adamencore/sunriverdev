@@ -101,6 +101,15 @@
     }
   });
 
+  // ---------- Listing thumbnails: "See more" shows the rest
+  document.querySelectorAll('.hd-thumbs .see-more').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.parentNode, open = t.classList.toggle('show-all');
+      b.textContent = open ? 'See less' : 'See more';
+      b.setAttribute('aria-expanded', String(open));
+    });
+  });
+
   // ---------- Homepage floor plan carousel
   document.querySelectorAll('.hp-carousel').forEach(function (car) {
     var track = car.querySelector('.hp-track'), prev = car.querySelector('.hp-prev'), next = car.querySelector('.hp-next');
@@ -127,15 +136,15 @@
     var checked = function (name) { return Array.prototype.slice.call(form.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; }); };
     var radio = function (name) { var r = form.querySelector('input[name="' + name + '"]:checked'); return r ? parseFloat(r.value) : 0; };
     var apply = function () {
-      var comm = checked('community'), stat = checked('status'), sq = checked('sqft'), hobby = checked('hobby').length > 0;
-      var beds = radio('beds'), baths = radio('baths'), garage = radio('garage'), shown = 0;
+      var comm = checked('community'), stat = checked('status'), sq = checked('sqft');
+      var beds = radio('beds'), baths = radio('baths'), garage = radio('garage'), hobby = radio('hobby'), shown = 0;
       cards.forEach(function (c) {
         var d = c.dataset, n = parseFloat(d.sqft);
         var ok = (!comm.length || comm.indexOf(d.community) > -1) &&
           (!stat.length || stat.indexOf(d.status) > -1) &&
           (!sq.length || sq.some(function (r) { var p = r.split('-'); return n >= +p[0] && n <= +p[1]; })) &&
           parseFloat(d.beds) >= beds && parseFloat(d.baths) >= baths && parseFloat(d.garage) >= garage &&
-          (!hobby || d.hobby === '1');
+          parseFloat(d.hobby) >= hobby;
         c.hidden = !ok;
         if (ok) shown++;
       });
@@ -145,8 +154,7 @@
     var syncUrl = function () {
       var params = new URLSearchParams();
       ['community', 'status', 'sqft'].forEach(function (k) { checked(k).forEach(function (v) { params.append(k, v); }); });
-      ['beds', 'baths', 'garage'].forEach(function (k) { if (radio(k)) params.set(k, radio(k)); });
-      if (checked('hobby').length) params.set('hobby', '1');
+      ['beds', 'baths', 'garage', 'hobby'].forEach(function (k) { if (radio(k)) params.set(k, radio(k)); });
       var q = params.toString();
       history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
     };
@@ -154,9 +162,19 @@
     var initial = new URLSearchParams(location.search);
     if (Array.from(initial.keys()).length) {
       form.querySelectorAll('input[type="checkbox"]').forEach(function (i) { i.checked = initial.getAll(i.name).indexOf(i.value) > -1; });
-      form.querySelectorAll('input[type="radio"]').forEach(function (i) { i.checked = (initial.get(i.name) || '0') === i.value; });
     }
+    // "2+ / 3+ / 4+" groups are square boxes like the design, but only one can be on at a time.
+    form.querySelectorAll('[data-single]').forEach(function (g) {
+      g.addEventListener('change', function (e) {
+        if (e.target.checked) g.querySelectorAll('input').forEach(function (i) { if (i !== e.target) i.checked = false; });
+      });
+    });
     form.addEventListener('change', function () { apply(); syncUrl(); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); apply(); syncUrl();
+      var res = document.querySelector('.hfs-results');
+      if (res && window.matchMedia('(max-width: 860px)').matches) res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     form.addEventListener('reset', function () {
       setTimeout(function () {
         form.querySelectorAll('input[type="checkbox"]').forEach(function (i) { i.checked = false; });

@@ -17,7 +17,7 @@ QUERIES = {
     "floorPlans": '*[_type=="floorPlan" && %s]|order(squareFootage asc){name,"slug":slug.current,badge,bedrooms,bathrooms,features,'
                   'gallery[]{alt,"asset":asset._ref},matterportId,planDiagram{alt,"asset":asset._ref},priceRange,specLine,squareFootage,width}' % NOT_DRAFT,
     "homeListings": '*[_type=="homeListing" && %s]{title,"slug":slug.current,address,baths,beds,community,garageSpaces,hobbyRooms,'
-                    'mlsNumber,price,squareFootage,status,statusDate,askForPricing,isNew,youtubeShortIds,"photo":photo.asset._ref,'
+                    'mlsNumber,description,price,squareFootage,status,statusDate,askForPricing,isNew,youtubeShortIds,"photo":photo.asset._ref,'
                     '"photoAlt":photo.alt,"gallery":gallery[].asset._ref}' % NOT_DRAFT,
     "posts": '*[_type=="post" && %s && defined(body)]|order(publishDate desc){title,"slug":slug.current,publishDate,excerpt,categories,'
              '"cover":coverImage.asset._ref,body}' % NOT_DRAFT,

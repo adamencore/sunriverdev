@@ -138,49 +138,45 @@ LIFE = [
 NAV = [("homes", "Homes", "/homes-for-sale"), ("about", "About", "/about"), ("visit", "Visit", "/contact-us")]
 
 
-def overlay_header():
-    """Homepage header: logo over the hero and translucent pill nav (Figma "Home Clark Life NAV 4"),
-    with the Life at SunRiver dropdown from "Home Clark Life NAV 6" (title, yellow rule, short line, photo)."""
+def pill_header(active, variant="bar"):
+    """Site header from the OFFICIAL SunRiver Website Figma file: logo plus the pill nav with the
+    Life at SunRiver dropdown ("Home Clark Life NAV 6").
+      variant "home"    : over the homepage hero, no tab ("Home Clark Life NAV 6")
+      variant "overlay" : over a photo hero with the yellow Founders Club tab ("Homes for Sale / Model Homes")
+      variant "bar"     : white 168px bar with shadow ("Homes for Sale Filter Simple", "Home Detail")"""
     from .figma_assets import FG
     items = "".join('<li><a href="%s"><strong>%s</strong><span>%s</span></a></li>' % (h, t, sub) for t, h, sub, _, _ in LIFE)
+    cur = lambda k: ' aria-current="page"' if k == active else ""
+    tab = '<a class="founders-tab" href="/founders-club">Join the Firelight Founders Club</a>' if variant == "overlay" else ""
+    cls = {"home": "site-header overlay", "overlay": "site-header overlay has-tab", "bar": "site-header pill-bar"}[variant]
     return '''<a class="skip" href="#main">Skip to content</a>
-<header class="site-header overlay" data-menu="closed">
+<header class="%s" data-menu="closed">
+  %s
   <div class="wrap header-inner">
     <a class="logo" href="/" aria-label="SunRiver Communities home">%s</a>
     <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="main-nav pill-nav" aria-label="Main">
-      <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu">Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
+      <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu"%s>Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
         <div class="pill-drop" id="life-menu"><ul>%s</ul><a class="pill-drop-photo" href="/live-in" tabindex="-1" aria-hidden="true">%s</a></div></div>
-      <div class="nav-item"><a class="nav-link" href="/homes-for-sale">Homes</a></div>
-      <div class="nav-item"><a class="nav-link" href="/about">About</a></div>
-      <div class="nav-item"><a class="nav-link" href="/contact-us">Contact</a></div>
+      <div class="nav-item"><a class="nav-link" href="/homes-for-sale"%s>Homes</a></div>
+      <div class="nav-item"><a class="nav-link" href="/about"%s>About</a></div>
+      <div class="nav-item"><a class="nav-link" href="/contact-us"%s>Contact</a></div>
       <a class="pill-cta" href="/sunriver-firelight">Visit</a>
     </nav>
   </div>
-</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), items, img(FG("nav-photo"), "SunRiver members playing pool at the community center", loading="eager"))
+</header>''' % (cls, tab, img(LOGO, "SunRiver Communities", loading="eager"), cur("life"), items,
+       img(FG("nav-photo"), "SunRiver members playing pool at the community center", loading="eager"),
+       cur("homes"), cur("about"), cur("visit"))
 
 
 def header(active):
+    """Every page uses the pill nav. "home-overlay" is the homepage; an active key ending in "-overlay"
+    puts the header over that page's photo hero with the Founders tab; everything else gets the white bar."""
     if active == "home-overlay":
-        return overlay_header()
-    cards = "".join(
-        '<a class="mega-card" href="%s"><span class="mega-photo">%s</span><span class="mega-tag">%s</span><span class="mega-sub">%s</span></a>'
-        % (href, img(src, alt), t, sub) for t, href, sub, src, alt in LIFE)
-    cur = ' aria-current="page"' if active == "life" else ""
-    life = ('<div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu"%s>'
-            'Life at SunRiver<span class="chev" aria-hidden="true"></span></button>'
-            '<div class="mega" id="life-menu"><div class="wrap mega-cards">%s</div></div></div>') % (cur, cards)
-    links = "".join('<div class="nav-item"><a class="nav-link" href="%s"%s>%s</a></div>'
-                    % (h, ' aria-current="page"' if k == active else "", t) for k, t, h in NAV)
-    return '''<a class="skip" href="#main">Skip to content</a>
-<header class="site-header" data-menu="closed">
-  <a class="founders-tab" href="/founders-club">Join The Founders Club</a>
-  <div class="wrap header-inner">
-    <a class="logo" href="/" aria-label="SunRiver Communities home">%s</a>
-    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
-    <nav class="main-nav" aria-label="Main">%s%s<a class="btn nav-cta" href="/contact-us">Contact Us</a></nav>
-  </div>
-</header>''' % (img(LOGO, "SunRiver Communities", loading="eager"), life, links)
+        return pill_header("", "home")
+    if active.endswith("-overlay"):
+        return pill_header(active[:-8], "overlay")
+    return pill_header(active, "bar")
 
 
 SOCIAL = '''<div class="social">
@@ -224,6 +220,8 @@ FONTS = '''<style>
 
 def add(path, title, description, active, body, body_class=""):
     full_title = title if SITE_NAME in title else "%s | %s" % (title, SITE_NAME)
+    if active.endswith("-overlay") and active != "home-overlay":
+        body_class = (body_class + " overlay-page").strip()
     doc = '''<!doctype html>
 <html lang="en">
 <head>

@@ -1,5 +1,8 @@
-"""Homepage imagery exported from the Figma file "SunRiver Website 2026", frame "Home Clark Life NAV 4" (node 625:214);
-the nav dropdown photo follows "Home Clark Life NAV 6" (node 660:2).
+"""Imagery exported from Figma.
+Homepage: file "SunRiver Website 2026", frame "Home Clark Life NAV 4" (node 625:214); nav dropdown photo from
+"Home Clark Life NAV 6" (node 660:2).
+Find a Home, Homes for Sale and the listing template: file "OFFICIAL SunRiver Website" (P3Ozmr47Say3ms57lX4htZ),
+frames "Homes for Sale / Model Homes" (6:206), "Homes for Sale Filter Simple" (6:267), "Homes for Sale Home Detail" (6:503).
 
 Each entry is cropped exactly the way the Figma layer frames it, then resized and saved as WebP into
 /media/fg at build time (Pillow, see requirements.txt).
@@ -31,6 +34,11 @@ FIGMA_IDS = {
     "years4": "c604a917-32e7-4e93-ab19-cff90f5bf2cd",    # collage, Rectangle 190
     "begin": "10979461-908c-472f-ba95-06b4be7fd098",     # Where you begin background
     "navphoto": "bb3e9fb1-6b96-49fe-a1dd-2464d4a7f94d",  # 20190613_SunRiverVillas_2990, nav dropdown
+    # OFFICIAL file, exports issued 2026-10-19 (expire about 2026-10-26; the live-site copy takes over after that)
+    "fah_hero": "9d943a9d-39c2-4942-a3eb-4cda27c34448",  # Discovery Villas Row 1, Find a Home hero
+    "fah_card": "1cdb7ead-eb9a-4826-97b8-e94300fe4170",  # Rectangle 202, FLOOR PLANS card
+    "hfs_band": "eac1e2af-712e-4c45-971b-f762936946b7",  # Rectangle 133, Homes for sale band
+    "sales_team": "87d320a1-aa84-40ac-bb9b-cba4b8e53d03",  # SunRiver Sales Team 2 (cut out)
 }
 
 # name: (source, frame w, frame h, image left %, top %, width %, height %, output width, options)
@@ -46,6 +54,10 @@ SPECS = {
     "years-4": ("years4", 315, 527, -75.46, 0, 250.92, 100, 630, {}),
     "begin": ("begin", 1455, 760, -17.85, -31.43, 127.64, 162.89, 2400, {"mirror": True}),
     "nav-photo": ("navphoto", 406, 283, 0, -0.16, 100, 95.68, 566, {"region": (14, 0, 283, 217)}),  # NAV 6 dropdown
+    "fah-hero": ("fah_hero", 1440, 611, -44.55, -3.18, 156.08, 206.54, 2400, {}),
+    "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
+    "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
+    "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
 }
 
 USED = set()
@@ -123,7 +135,7 @@ def build(dist, on_netlify):
                 pass
         if not done:
             if on_netlify:
-                raise RuntimeError("Homepage image %s could not be built from Figma or the live site" % name)
+                raise RuntimeError("Figma image %s could not be built from Figma or the live site" % name)
             failed[local] = SELF + local
     print("  homepage images: %d built, %d linked to the live site" % (len(USED) - len(failed), len(failed)))
     return failed
