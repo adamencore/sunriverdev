@@ -1116,3 +1116,24 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .pd-card .hd-btn { width: 100%; }
   .pd-plan h2, .pd-tour h2, .pd-others h2 { font-size: 28px; line-height: 32px; }
 }
+
+/* =====================================================================
+   Floor Plans page: OFFICIAL Figma "Homes for Sale / Model Homes NEW" (6:206).
+   Three 391px cards per row, 32px apart, 27px between rows.
+   ===================================================================== */
+.mh-section { padding: 45px 0 140px; }
+.mh-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 27px 32px; }
+.mh-card { position: relative; display: flex; flex-direction: column; min-height: 378px; border-radius: 20px; overflow: hidden; background: #F9F5F1; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+.mh-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
+.mh-img { position: relative; display: block; height: 215px; background: var(--riverbed-sand); }
+.mh-img img { width: 100%; height: 100%; object-fit: cover; }
+.mh-tag { position: absolute; left: 10px; top: 18px; display: grid; place-items: center; height: 26px; padding: 0 22px; border-radius: 20px; background: var(--sun-yellow); color: var(--white); font-weight: 900; font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase; }
+.mh-body { position: relative; display: block; padding: 13px 22px 22px; }
+.mh-num { display: block; color: #153250; font-size: 12px; line-height: 16px; letter-spacing: -0.02em; }
+.mh-name { display: block; margin-top: 4px; color: var(--sun-yellow); font-weight: 900; font-size: 28px; line-height: 30px; letter-spacing: -0.02em; text-transform: uppercase; }
+.mh-spec { display: block; margin-top: 4px; color: #335A97; font-size: 13px; line-height: 18px; letter-spacing: -0.02em; }
+.mh-price { display: block; margin-top: 12px; color: #335A97; font-family: var(--font-serif); font-size: 30px; line-height: 34px; letter-spacing: -0.03em; }
+.mh-go { position: absolute; right: 26px; bottom: 30px; width: 10px; height: 10px; border-right: 2px solid #E2DBD2; border-top: 2px solid #E2DBD2; transform: rotate(45deg); transition: border-color .2s, transform .2s; }
+.mh-card:hover .mh-go { border-color: #335A97; transform: translateX(3px) rotate(45deg); }
+@media (max-width: 1000px) { .mh-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .mh-grid { grid-template-columns: minmax(0, 1fr); } }

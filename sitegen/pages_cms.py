@@ -63,17 +63,37 @@ def min_price(plans):
     return "${:,}".format(min(vals)) if vals else ""
 
 
+def mh_card(p):
+    """Plan card from the OFFICIAL Figma "Homes for Sale / Model Homes NEW" frame: photo with a yellow tag,
+    number, name in yellow, size and spec line, serif price on sand."""
+    ref = plan_image(p)
+    pic = simg(ref, "%s exterior rendering at SunRiver Firelight" % p["name"], 782, sizes="(max-width: 700px) 100vw, 391px") if ref else ""
+    tag = '<span class="mh-tag">%s</span>' % esc(p["badge"]) if p.get("badge") else ""
+    spec = " &nbsp;|&nbsp; ".join(["%s ft" % p["squareFootage"]] + [esc(x.strip()) for x in (p.get("specLine") or "").split("|") if x.strip()])
+    return '''<a class="mh-card" href="/floor-plans/%s">
+  <span class="mh-img">%s%s</span>
+  <span class="mh-body"><span class="mh-num">%s</span><span class="mh-name">%s</span><span class="mh-spec">%s</span><span class="mh-price">%s</span><span class="mh-go" aria-hidden="true"></span></span>
+</a>''' % (p["slug"], pic, tag, p["squareFootage"], esc(p["name"]), spec, esc(p.get("priceRange", "")))
+
+
 def build_floor_plans(plans):
-    grid = "".join(fp_card(p) for p in plans)
-    add("/floor-plans", "Floor Plans", "%d SunRiver Firelight floor plans in Toquerville, Utah, starting at %s." % (len(plans), min_price(plans)), "life", '''
-%s
-<section class="section">
-  <div class="wrap stack-lg">
-    <div class="fp-grid">%s</div>
-    <p class="note center">%s</p>
+    """Floor Plans main page: OFFICIAL Figma "Homes for Sale / Model Homes NEW" (6:206).
+    Photo hero with the Founders tab, then every plan in a three-column grid."""
+    grid = "".join(mh_card(p) for p in plans)
+    add("/floor-plans", "Floor Plans", "%d SunRiver Firelight floor plans in Toquerville, Utah, starting at %s." % (len(plans), min_price(plans)), "life-overlay", '''
+<section class="fah-hero">
+  %s
+  <div class="wrap fah-hero-inner">
+    <h1>Find your home at SunRiver Firelight</h1>
+    <p>New home sales are focused at<br> SunRiver Firelight in Toquerville.<br> Jump straight to what you&rsquo;re looking for.</p>
   </div>
 </section>
-%s''' % (sand_hero("", "SunRiver Firelight", "Floor Plans"), grid, DISCLAIMER, chat_section()))
+<section class="mh-section">
+  <div class="wrap">
+    <h2 class="visually-hidden">SunRiver Firelight floor plans</h2>
+    <div class="mh-grid">%s</div>
+  </div>
+</section>''' % (img(FG("fah-hero"), "SunRiver Firelight homes with red rock mesas behind them", "fah-hero-img", "eager"), grid))
 
     for i, p in enumerate(plans):
         build_plan(p, i, plans)
