@@ -613,16 +613,16 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .site-header.overlay { position: absolute; background: transparent; box-shadow: none; }
 .overlay .header-inner { height: auto; padding-top: 54px; align-items: center; }
 .overlay .logo img { width: 212px; }
-.pill-nav { position: relative; height: 46px; padding: 0 6px 0 26px; gap: 30px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pill-nav { position: relative; width: 517px; justify-content: space-between; height: 46px; padding: 0 6px 0 26px; gap: 20px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .pill-nav .nav-link { font-size: 13px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
 .pill-nav .nav-link:hover { color: var(--sun-yellow-deep); }
 .pill-nav .chev { display: none; }
 .pill-cta { display: grid; place-items: center; width: 138px; height: 34px; border-radius: 14px; background: var(--sun-yellow); color: var(--white); font-size: 13px; letter-spacing: -0.03em; text-decoration: none; transition: background .2s; }
 .pill-cta:hover { background: var(--sun-yellow-deep); }
-/* Life at SunRiver dropdown, OFFICIAL "Home NAV Live In / Out / On": 513 x 290 panel, photo flush right.
+/* Life at SunRiver dropdown, OFFICIAL "Home NAV Live In / Out / On": 290 tall, same width as the pill nav above it, photo flush right.
    Opens with a quick fade and drop; the photo crossfades to match the item under the pointer. */
 .pill-drop {
-  display: grid; position: absolute; left: 4px; top: 52px; width: 513px; height: 290px; padding: 0 0 0 29px;
+  display: grid; position: absolute; left: 0; right: 0; top: 52px; width: auto; height: 290px; padding: 0 0 0 29px;
   background: #E1EAF9; border-radius: 20px; overflow: hidden; grid-template-columns: minmax(0, 1fr) 274px; align-items: start;
   box-shadow: 0 14px 34px rgba(20, 50, 80, 0.2);
   visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px) scale(.985); transform-origin: 20% 0;
@@ -763,7 +763,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .overlay .logo img { width: 150px; }
   .overlay .menu-toggle { background: rgba(255, 255, 255, 0.7); border-radius: 50%; }
   .site-header.overlay[data-menu="open"] { background: var(--white); }
-  .pill-nav { height: auto; padding: 8px var(--gutter) 24px; border-radius: 0; background: var(--white); -webkit-backdrop-filter: none; backdrop-filter: none; gap: 0; }
+  .pill-nav { width: auto; justify-content: flex-start; height: auto; padding: 8px var(--gutter) 24px; border-radius: 0; background: var(--white); -webkit-backdrop-filter: none; backdrop-filter: none; gap: 0; }
   .pill-nav .nav-link { font-size: 17px; padding: 16px 0; }
   .pill-nav .chev { display: inline-block; }
   .pill-drop { display: none; position: static; width: auto; height: auto; padding: 12px 16px; margin-bottom: 8px; grid-template-columns: 1fr; box-shadow: none; visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition: none; }
