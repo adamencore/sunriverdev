@@ -81,11 +81,11 @@ def build_floor_plans(plans):
     Photo hero with the Founders tab, then every plan in a three-column grid."""
     grid = "".join(mh_card(p) for p in plans)
     add("/floor-plans", "Floor Plans", "%d SunRiver Firelight floor plans in Toquerville, Utah, starting at %s." % (len(plans), min_price(plans)), "life-overlay", '''
-<section class="fah-hero">
+<section class="fah-hero fp-banner">
   %s
   <div class="wrap fah-hero-inner">
-    <h1>Find your home at SunRiver Firelight</h1>
-    <p>New home sales are focused at<br> SunRiver Firelight in Toquerville.<br> Jump straight to what you&rsquo;re looking for.</p>
+    <h1>Floor Plans</h1>
+    <p>Find your home at SunRiver Firelight</p>
   </div>
 </section>
 <section class="mh-section">

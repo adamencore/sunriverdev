@@ -1137,3 +1137,12 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .mh-card:hover .mh-go { border-color: #335A97; transform: translateX(3px) rotate(45deg); }
 @media (max-width: 1000px) { .mh-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .mh-grid { grid-template-columns: minmax(0, 1fr); } }
+/* Floor Plans banner (updated frame): "Floor Plans" with a one-line serif subtitle */
+.fp-banner .fah-hero-inner { padding-top: 330px; }
+.fp-banner h1 { max-width: none; font-size: 60px; line-height: 60px; }
+.fp-banner p { max-width: none; margin-top: 14px; font-size: 24px; line-height: 28px; }
+@media (max-width: 860px) {
+  .fp-banner .fah-hero-inner { padding-top: 230px; }
+  .fp-banner h1 { font-size: 44px; line-height: 46px; }
+  .fp-banner p { font-size: 20px; }
+}
