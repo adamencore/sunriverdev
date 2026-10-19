@@ -76,76 +76,111 @@ def build_floor_plans(plans):
 %s''' % (sand_hero("", "SunRiver Firelight", "Floor Plans"), grid, DISCLAIMER, chat_section()))
 
     for i, p in enumerate(plans):
-        name = esc(p["name"])
-        gallery = p.get("gallery") or []
-        main = gallery[0]["asset"] if gallery else None
-        thumbs = ""
-        if len(gallery) > 1:
-            thumbs = '<div class="thumbs">%s</div>' % "".join(
-                '<button type="button" class="thumb%s" data-src="%s" aria-label="Show image %d">%s</button>' % (
-                    " is-active" if k == 0 else "", S(g["asset"], 1600), k + 1, img(S(g["asset"], 240), g.get("alt") or p["name"]))
-                for k, g in enumerate(gallery))
-        tour_btn = '<a class="btn blue-btn tour-btn" href="#tour">3D Virtual Tour</a>' if p.get("matterportId") else ""
-        badge = '<span class="badge">%s</span>' % esc(p["badge"]) if p.get("badge") else ""
-        lot = ("<p class=\"lot\">Lot size: %s'</p>" % num(p["width"])) if p.get("width") else ""
-        features = star_list([esc(f) for f in (p.get("features") or [])], "cols-2")
-        diagram = p.get("planDiagram") or {}
-        diagram_html = ""
-        if diagram.get("asset"):
-            diagram_html = '''<section class="section sand plan-diagram-section">
-  <div class="wrap stack-lg">
-    <div class="center stack"><h2 class="h2">The %s Floor Plan</h2><hr class="rule center"><p class="note">Click the plan to enlarge</p></div>
-    <a class="plan-drawing" href="%s" data-lightbox>%s</a>
-    <p class="note center plan-note">%s</p>
-  </div>
-</section>''' % (name, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 900, sizes="(max-width: 800px) 100vw, 768px"), DISCLAIMER)
-        tour = ""
-        if p.get("matterportId"):
-            tour = '''<section class="tour-section" id="tour"><div class="wrap stack-lg"><div class="center stack"><h2 class="h2">Take a virtual tour</h2><hr class="rule center"></div>
-<div class="embed"><iframe src="https://my.matterport.com/show/?m=%s" title="%s virtual tour" allow="xr-spatial-tracking; fullscreen" allowfullscreen loading="lazy"></iframe></div></div></section>''' % (p["matterportId"], name)
-        others = [plans[(i + k) % len(plans)] for k in (1, 2, 3) if len(plans) > k]
-        like = "".join('<a class="like-link" href="/floor-plans/%s"><strong>%s</strong><span>{:,}ft&sup2; &middot; %s</span></a>'.format(q["squareFootage"])
-                       % (q["slug"], esc(q["name"]), esc(q.get("priceRange", ""))) for q in others)
-        main_img = simg(main, gallery[0].get("alt") or p["name"], 1200, loading="eager", sizes="(max-width: 860px) 100vw, 60vw") if main else ""
-        add("/floor-plans/%s" % p["slug"], "%s Floor Plan" % p["name"],
-            "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], "{:,}".format(p["squareFootage"]), p.get("specLine", ""), p.get("priceRange", "")), "life", '''
-<section class="section plan-detail">
+        build_plan(p, i, plans)
+
+
+def contact_row(founders=True):
+    """Founders Club card and Contact Our Sales Team card (OFFICIAL "Homes for Sale Home Detail", 6:503)."""
+    fc = ""
+    if founders:
+        fc = '''<a class="hd-founders" href="/founders-club"><h2>Join the <span>SunRiver Firelight Founders Club</span></h2><p>Reserve your homesite now and lock in Founders Club pricing.</p>%s</a>''' % (
+            img(V("founders-badge-tilt.3k3jxq99pwu_k.svg"), "", "hd-badge"))
+    return '''<div class="hd-bottom%s">
+      %s
+      <div class="hd-sales">
+        <div class="hd-sales-text"><h2>Contact Our Sales Team</h2><p class="hd-q">Questions? Inquiries?</p>
+          <p class="hd-contact"><a href="mailto:info@sunriver.com">info@sunriver.com</a><span aria-hidden="true">|</span><a href="%s">%s</a></p>
+          <a class="hd-btn yellow" href="/contact-us">Contact Us Today</a></div>
+        <div class="hd-team">%s</div>
+      </div>
+    </div>''' % ("" if fc else " solo", fc, PHONE_TEL, PHONE, img(FG("sales-team"), "The SunRiver sales team"))
+
+
+def thumbs_html(refs, alt):
+    if len(refs) < 2:
+        return ""
+    return '<div class="hd-thumbs%s">%s%s</div>' % (
+        " has-more" if len(refs) > 4 else "",
+        "".join('<button type="button" class="thumb%s" data-src="%s" aria-label="Show image %d">%s</button>' % (
+            " is-active" if k == 0 else "", S(r, 1600), k + 1, img(S(r, 320), "%s %d" % (alt, k + 1))) for k, r in enumerate(refs)),
+        '<button type="button" class="see-more" aria-expanded="false">See more</button>' if len(refs) > 4 else "")
+
+
+def plan_chips(p):
+    spec = p.get("specLine") or ""
+    garage = re.search(r"(Ext\.\s*)?(\d+(?:\.\d+)?)\s*Car Garage", spec)
+    chips = []
+    if p.get("bedrooms"):
+        chips.append('<span class="chip">%s%s Bed</span>' % (img(ICON_BED, "", "chip-icon"), num(p["bedrooms"])))
+    if p.get("bathrooms"):
+        chips.append('<span class="chip">%s%s Bath</span>' % (img(ICON_BATH, "", "chip-icon"), num(p["bathrooms"])))
+    if garage:
+        chips.append('<span class="chip">%s%s%s Car Garage</span>' % (img(ICON_GARAGE, "", "chip-icon"), "Ext. " if garage.group(1) else "", garage.group(2)))
+    if "hobby" in spec.lower():
+        chips.append('<span class="chip">Hobby Room</span>')
+    return '<span class="chips hd-chips">%s</span>' % "".join(chips)
+
+
+def build_plan(p, i, plans):
+    """Floor plan page on the OFFICIAL "Homes for Sale Home Detail" template (6:503)."""
+    name = esc(p["name"])
+    gallery = p.get("gallery") or []
+    refs = [g["asset"] for g in gallery]
+    alt = gallery[0].get("alt") if gallery and gallery[0].get("alt") else "%s at SunRiver Firelight" % p["name"]
+    main = simg(refs[0], alt, 1400, loading="eager", sizes="(max-width: 860px) 100vw, 667px") if refs else ""
+    sqft = "{:,}".format(p["squareFootage"])
+    spec = p.get("specLine", "")
+    status = esc(p["badge"]) if p.get("badge") else "Available to build"
+    lot = " &middot; Lot width %s'" % num(p["width"]) if p.get("width") else ""
+    story = ("The %s is a %s sq ft single-story home at SunRiver Firelight: %s. Every SunRiver Firelight home comes with our standard luxury features, "
+             "and you can make it yours at the Design Center. SunRiver Firelight is SunRiver's newest 55+ community, just west of Toquerville, "
+             "with mountain views in every direction and Zion 31 minutes away." % (p["name"], sqft, spec.lower().replace(" | ", ", ")))
+    if p.get("matterportId"):
+        side = '<div class="hd-map hd-tour"><iframe src="https://my.matterport.com/show/?m=%s" title="%s 3D virtual tour" allow="xr-spatial-tracking; fullscreen" allowfullscreen loading="lazy"></iframe></div>' % (p["matterportId"], name)
+    else:
+        side = '<div class="hd-map"><iframe src="https://www.google.com/maps?q=SunRiver+Firelight,+Toquerville,+UT&amp;output=embed" title="Map of SunRiver Firelight" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>'
+    diagram = p.get("planDiagram") or {}
+    drawing = ""
+    if diagram.get("asset"):
+        drawing = '''<div class="hd-plan">
+      <div class="hd-plan-text"><h2>The %s Floor Plan</h2><p>Click the plan to enlarge it.</p><p class="hd-note">%s</p></div>
+      <a class="hd-plan-img" href="%s" data-lightbox>%s</a>
+    </div>''' % (name, DISCLAIMER, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 900, sizes="(max-width: 860px) 100vw, 420px"))
+    features = ""
+    if p.get("features"):
+        features = '<div class="hd-features"><h2>Standard Luxury Features</h2>%s</div>' % star_list([esc(f) for f in p["features"]], "cols-2")
+    others = [plans[(i + k) % len(plans)] for k in (1, 2, 3) if len(plans) > k]
+    like = '<section class="hd-like"><div class="wrap"><h2>You may like these</h2><div class="fp-grid">%s</div></div></section>' % "".join(fp_card(q) for q in others)
+    tour_link = '<p class="hd-mls"><a href="#tour-card">Take the 3D virtual tour</a></p>' if p.get("matterportId") else ""
+    add("/floor-plans/%s" % p["slug"], "%s Floor Plan" % p["name"],
+        "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], sqft, spec, p.get("priceRange", "")), "life", '''
+<section class="hd">
   <div class="wrap">
-    <a class="back-link" href="/floor-plans">&lsaquo; All floor plans</a>
-    <div class="detail-grid">
-      <div class="detail-media">
-        <div class="viewer"><div class="viewer-main">%s</div>%s</div>
+    <a class="hd-back" href="/floor-plans">See all floor plans</a>
+    <div class="hd-top">
+      <div class="hd-media viewer"><div class="viewer-main">%s</div>%s</div>
+      <div class="hd-card">
+        <p class="hd-price">%s</p>
+        <p class="hd-name"><strong>%s</strong><span aria-hidden="true">|</span>%s sqft</p>
+        <h1 class="hd-address">The %s Floor Plan</h1>
+        <p class="hd-comm">SunRiver Firelight%s</p>
+        %s
+        <p class="hd-status">%s</p>
+        <div class="hd-actions"><a class="hd-btn solid" href="/contact-us">Schedule a Tour</a><a class="hd-btn" href="/contact-us#team">Request Info</a></div>
         %s
       </div>
-      <aside class="detail-card">
-        <div class="detail-top"><span class="detail-num">%s</span>%s</div>
-        <h1>%s</h1>
-        <p class="detail-price">%s</p>
-        <p class="detail-sqft">%s ft&sup2;</p>
-        <p class="detail-spec">%s</p>
-        %s
-        <div class="detail-actions">%s%s</div>
-      </aside>
     </div>
-  </div>
-</section>
-<section class="section tight">
-  <div class="wrap stack">
-    <h2 class="h3">Standard Luxury Features</h2>
+    <div class="hd-desc" id="tour-card">
+      <div class="hd-desc-text"><h2>Single Family Home in Toquerville</h2><p>%s</p></div>
+      %s
+    </div>
+    %s
+    %s
     %s
   </div>
 </section>
-%s
-%s
-<section class="section like-section">
-  <div class="wrap stack">
-    <h2 class="h3">You may like these</h2>
-    <div class="like-row">%s</div>
-  </div>
-</section>''' % (main_img, thumbs, tour_btn, p["squareFootage"], badge, name, esc(p.get("priceRange", "")),
-                 "{:,}".format(p["squareFootage"]), esc(p.get("specLine", "")), lot,
-                 btn("Schedule a Tour", "/contact-us"), btn("Talk with an Agent", "/contact-us#team", "blue-btn"),
-                 features, diagram_html, tour, like))
+%s''' % (main, thumbs_html(refs, alt), esc(p.get("priceRange", "")), name, sqft, name, lot, plan_chips(p), status, tour_link,
+         esc(story), side, features, drawing, contact_row(), like), body_class="sand-page")
 
 
 # ================================================================== HOMES FOR SALE
@@ -298,10 +333,6 @@ def build_listing(l):
     head, story = listing_story(l)
     comm = COMMUNITY_LABEL.get(l.get("community"), l.get("community", ""))
     mls = '<p class="hd-mls">MLS# %s</p>' % esc(l["mlsNumber"]) if l.get("mlsNumber") else ""
-    founders = ""
-    if l.get("community") == "SunRiver Firelight":
-        founders = '''<a class="hd-founders" href="/founders-club"><h2>Join the <span>SunRiver Firelight Founders Club</span></h2><p>Reserve your homesite now and lock in Founders Club pricing.</p>%s</a>''' % (
-            img(V("founders-badge-tilt.3k3jxq99pwu_k.svg"), "", "hd-badge"))
     add("/homes-for-sale/%s" % l["slug"], "%s, %s" % (title, addr),
         "%s at %s: %s sq ft, %s bed, %s bath. %s." % (title, l.get("address") or "", "{:,}".format(l.get("squareFootage") or 0), num(l.get("beds")), num(l.get("baths")), l.get("status", "")), "homes", '''
 <section class="hd">
@@ -324,22 +355,13 @@ def build_listing(l):
       <div class="hd-desc-text"><h2>%s</h2><p>%s</p></div>
       <div class="hd-map"><iframe src="https://www.google.com/maps?q=%s&amp;output=embed" title="Map of %s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
-    <div class="hd-bottom%s">
-      %s
-      <div class="hd-sales">
-        <div class="hd-sales-text"><h2>Contact Our Sales Team</h2><p class="hd-q">Questions? Inquiries?</p>
-          <p class="hd-contact"><a href="mailto:info@sunriver.com">info@sunriver.com</a><span aria-hidden="true">|</span><a href="%s">%s</a></p>
-          <a class="hd-btn yellow" href="/contact-us">Contact Us Today</a></div>
-        <div class="hd-team">%s</div>
-      </div>
-    </div>
+    %s
   </div>
 </section>
 %s''' % (main, thumbs, listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), esc(addr),
          esc(comm), spec_chips(l, "chips hd-chips"), esc(l.get("status") or ""), mls,
          esc(head), esc(story), esc(addr).replace(" ", "+"), esc(addr),
-         "" if founders else " solo", founders, PHONE_TEL, PHONE,
-         img(FG("sales-team"), "The SunRiver sales team"), videos), body_class="sand-page")
+         contact_row(l.get("community") == "SunRiver Firelight"), videos), body_class="sand-page")
 
 
 # ================================================================== BLOG

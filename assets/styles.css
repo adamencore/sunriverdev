@@ -1052,3 +1052,22 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 @media (max-width: 760px) {
   .home .h4-story-inner { min-height: 0; }
 }
+
+/* Floor plan pages on the "Home Detail" template: extra cards for features and the plan drawing */
+.hd-features, .hd-plan { margin-top: 44px; padding: 44px 39px 46px; background: var(--white); border-radius: 20px; color: #153250; }
+.hd-features h2, .hd-plan h2, .hd-like h2 { color: #335A97; font-weight: 500; font-size: 28px; line-height: 34px; letter-spacing: -0.03em; }
+.hd-features .star-list { margin-top: 24px; }
+.hd-features .star-list li { font-size: 16px; }
+.hd-plan { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: start; }
+.hd-plan-text p { margin-top: 14px; font-size: 16px; line-height: 25px; letter-spacing: -0.03em; }
+.hd-plan-text .hd-note { margin-top: 22px; font-size: 12px; line-height: 18px; opacity: .7; }
+.hd-plan-img { display: block; border-radius: 12px; overflow: hidden; background: var(--white); cursor: zoom-in; }
+.hd-plan-img img { width: 100%; height: auto; }
+.hd-tour { background: #153250; }
+.hd-like { padding: 0 0 100px; }
+.hd-like .fp-grid { margin-top: 28px; justify-content: start; gap: 40px 42px; }
+@media (max-width: 860px) {
+  .hd-plan { grid-template-columns: minmax(0, 1fr); padding: 28px 20px; }
+  .hd-features { padding: 28px 20px; }
+  .hd-like .fp-grid { justify-content: center; }
+}
