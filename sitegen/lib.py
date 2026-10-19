@@ -145,7 +145,12 @@ def pill_header(active, variant="bar"):
       variant "overlay" : over a photo hero with the yellow Founders Club tab ("Homes for Sale / Model Homes")
       variant "bar"     : white 168px bar with shadow ("Homes for Sale Filter Simple", "Home Detail")"""
     from .figma_assets import FG
-    items = "".join('<li><a href="%s"><strong>%s</strong><span>%s</span></a></li>' % (h, t, sub) for t, h, sub, _, _ in LIFE)
+    items = "".join('<li><a href="%s" data-i="%d"><strong>%s</strong><span>%s</span></a></li>' % (h, k, t, sub) for k, (t, h, sub, _, _) in enumerate(LIFE))
+    # Dropdown photo per item (OFFICIAL "Home NAV Live In/Out/On"): it swaps as you hover each one.
+    # Live On uses the Figma photo, which is also what shows when the menu first opens.
+    shots = [(LIFE[0][3], LIFE[0][4]), (LIFE[1][3], LIFE[1][4]), (FG("nav-photo"), "SunRiver members playing pickleball")]
+    photos = "".join('<span class="pd-shot%s" data-i="%d">%s</span>' % (" is-on" if k == 2 else "", k, img(src, alt, loading="eager"))
+                     for k, (src, alt) in enumerate(shots))
     cur = lambda k: ' aria-current="page"' if k == active else ""
     tab = '<a class="founders-tab" href="/founders-club">Join the Firelight Founders Club</a>' if variant == "overlay" else ""
     cls = {"home": "site-header overlay", "overlay": "site-header overlay has-tab", "bar": "site-header pill-bar"}[variant]
@@ -157,15 +162,14 @@ def pill_header(active, variant="bar"):
     <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="main-nav pill-nav" aria-label="Main">
       <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu"%s>Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
-        <div class="pill-drop" id="life-menu"><ul>%s</ul><a class="pill-drop-photo" href="/live-in" tabindex="-1" aria-hidden="true">%s</a></div></div>
+        <div class="pill-drop" id="life-menu" data-active="2"><ul>%s</ul><div class="pill-drop-photo" aria-hidden="true">%s</div></div></div>
       <div class="nav-item"><a class="nav-link" href="/homes-for-sale"%s>Homes</a></div>
       <div class="nav-item"><a class="nav-link" href="/about"%s>About</a></div>
       <div class="nav-item"><a class="nav-link" href="/contact-us"%s>Contact</a></div>
       <a class="pill-cta" href="/sunriver-firelight">Visit</a>
     </nav>
   </div>
-</header>''' % (cls, tab, img(LOGO, "SunRiver Communities", loading="eager"), cur("life"), items,
-       img(FG("nav-photo"), "SunRiver members playing pool at the community center", loading="eager"),
+</header>''' % (cls, tab, img(LOGO, "SunRiver Communities", loading="eager"), cur("life"), items, photos,
        cur("homes"), cur("about"), cur("visit"))
 
 

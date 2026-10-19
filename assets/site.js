@@ -36,6 +36,20 @@
       item.addEventListener('mouseenter', function () { if (!hoverable.matches) return; clearTimeout(t); closeAll(item); item.setAttribute('data-open', 'true'); btn.setAttribute('aria-expanded', 'true'); });
       item.addEventListener('mouseleave', function () { if (!hoverable.matches) return; t = setTimeout(function () { item.setAttribute('data-open', 'false'); btn.setAttribute('aria-expanded', 'false'); }, 160); });
     });
+    // Life at SunRiver dropdown: the photo follows the item under the pointer (or keyboard focus).
+    header.querySelectorAll('.pill-drop').forEach(function (drop) {
+      var shots = drop.querySelectorAll('.pd-shot');
+      var show = function (i) {
+        if (drop.getAttribute('data-active') === i) return;
+        drop.setAttribute('data-active', i);
+        shots.forEach(function (s) { s.classList.toggle('is-on', s.getAttribute('data-i') === i); });
+      };
+      drop.querySelectorAll('ul a[data-i]').forEach(function (a) {
+        var i = a.getAttribute('data-i');
+        a.addEventListener('mouseenter', function () { show(i); });
+        a.addEventListener('focus', function () { show(i); });
+      });
+    });
     document.addEventListener('click', function (e) { if (!header.contains(e.target)) closeAll(null); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAll(null); header.setAttribute('data-menu', 'closed'); } });
   }

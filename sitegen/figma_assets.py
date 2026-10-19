@@ -33,7 +33,7 @@ FIGMA_IDS = {
     "years3": "ccd5576c-7388-4d7f-8d5a-c00f13eea312",    # collage, Rectangle 194
     "years4": "c604a917-32e7-4e93-ab19-cff90f5bf2cd",    # collage, Rectangle 190
     "begin": "10979461-908c-472f-ba95-06b4be7fd098",     # Where you begin background
-    "navphoto": "bb3e9fb1-6b96-49fe-a1dd-2464d4a7f94d",  # 20190613_SunRiverVillas_2990, nav dropdown
+    "navphoto": "3fd9cc08-4015-4170-b19e-d7f9a7f52030",  # 20190613_SunRiverVillas_2990, nav dropdown (OFFICIAL "Home NAV Live In/Out/On", 14:1198)
     # OFFICIAL file, exports issued 2026-10-19 (expire about 2026-10-26; the live-site copy takes over after that)
     "fah_hero": "9d943a9d-39c2-4942-a3eb-4cda27c34448",  # Discovery Villas Row 1, Find a Home hero
     "fah_card": "1cdb7ead-eb9a-4826-97b8-e94300fe4170",  # Rectangle 202, FLOOR PLANS card
@@ -53,7 +53,7 @@ SPECS = {
     "years-3": ("years3", 269, 298, -37.91, -0.11, 169.14, 101.8, 538, {}),
     "years-4": ("years4", 315, 527, -75.46, 0, 250.92, 100, 630, {}),
     "begin": ("begin", 1455, 760, -17.85, -31.43, 127.64, 162.89, 2400, {"mirror": True}),
-    "nav-photo": ("navphoto", 406, 283, 0, -0.16, 100, 95.68, 566, {"region": (14, 0, 283, 217)}),  # NAV 6 dropdown
+    "nav-photo": ("navphoto", 503, 351, -15.69, -8.44, 100, 95.68, 548, {"region": (50, 12, 274, 290)}),  # Home NAV Live In/Out/On dropdown
     "fah-hero": ("fah_hero", 1440, 611, -44.55, -3.18, 156.08, 206.54, 2400, {}),
     "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),

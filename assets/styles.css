@@ -619,17 +619,35 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .pill-nav .chev { display: none; }
 .pill-cta { display: grid; place-items: center; width: 138px; height: 34px; border-radius: 14px; background: var(--sun-yellow); color: var(--white); font-size: 13px; letter-spacing: -0.03em; text-decoration: none; transition: background .2s; }
 .pill-cta:hover { background: var(--sun-yellow-deep); }
-.pill-drop { display: none; position: absolute; left: 4px; top: 52px; width: 513px; height: 242px; padding: 11px 10px 14px 29px; background: #E1EAF9; border-radius: 20px; grid-template-columns: minmax(0, 1fr) 283px; align-items: start; column-gap: 12px; box-shadow: 0 12px 30px rgba(20, 50, 80, 0.18); }
-.nav-item[data-open="true"] .pill-drop { display: grid; }
-.pill-drop ul { list-style: none; margin: 21px 0 0; padding: 0; display: grid; gap: 19px; }
-.pill-drop ul a { display: grid; gap: 0; text-decoration: none; color: var(--sunriver-blue); }
-.pill-drop ul strong { font-weight: 900; font-size: 16px; line-height: 18px; letter-spacing: -0.03em; }
-.pill-drop ul strong::after { content: ""; display: block; width: 49px; height: 2px; margin: 2px 0 5px 6px; background: var(--sun-yellow); transition: width .2s ease; }
-.pill-drop ul span { display: block; max-width: 169px; margin-left: 6px; font-size: 11px; line-height: 13px; letter-spacing: -0.03em; }
-.pill-drop ul a:hover strong { color: var(--sun-yellow-deep); }
-.pill-drop ul a:hover strong::after { width: 80px; }
-.pill-drop-photo { display: block; width: 283px; height: 217px; border-radius: 10px; overflow: hidden; }
-.pill-drop-photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Life at SunRiver dropdown, OFFICIAL "Home NAV Live In / Out / On": 513 x 290 panel, photo flush right.
+   Opens with a quick fade and drop; the photo crossfades to match the item under the pointer. */
+.pill-drop {
+  display: grid; position: absolute; left: 4px; top: 52px; width: 513px; height: 290px; padding: 0 0 0 29px;
+  background: #E1EAF9; border-radius: 20px; overflow: hidden; grid-template-columns: minmax(0, 1fr) 274px; align-items: start;
+  box-shadow: 0 14px 34px rgba(20, 50, 80, 0.2);
+  visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px) scale(.985); transform-origin: 20% 0;
+  transition: opacity .14s ease, transform .18s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .18s;
+}
+.nav-item[data-open="true"] .pill-drop {
+  visibility: visible; opacity: 1; pointer-events: auto; transform: none;
+  transition: opacity .16s ease, transform .22s cubic-bezier(.2, .8, .2, 1), visibility 0s;
+}
+.pill-drop ul { list-style: none; margin: 35px 0 0; padding: 0; display: grid; gap: 23px; }
+.pill-drop li { opacity: 0; transform: translateY(6px); transition: opacity .14s ease, transform .14s ease; }
+.nav-item[data-open="true"] .pill-drop li { opacity: 1; transform: none; transition: opacity .2s ease, transform .24s cubic-bezier(.2, .8, .2, 1); }
+.nav-item[data-open="true"] .pill-drop li:nth-child(1) { transition-delay: .03s; }
+.nav-item[data-open="true"] .pill-drop li:nth-child(2) { transition-delay: .06s; }
+.nav-item[data-open="true"] .pill-drop li:nth-child(3) { transition-delay: .09s; }
+.pill-drop ul a { display: block; width: 191px; min-height: 60px; text-decoration: none; color: var(--sunriver-blue); }
+.pill-drop ul strong { display: inline-block; font-weight: 900; font-size: 17px; line-height: 20px; letter-spacing: -0.03em; }
+.pill-drop ul strong::after { content: ""; display: block; width: 100%; height: 3px; margin-top: 1px; background: var(--sun-yellow); border-radius: 2px; transform-origin: left; transition: transform .2s ease; }
+.pill-drop ul span { display: block; max-width: 170px; margin-top: 5px; font-size: 11.5px; line-height: 14px; letter-spacing: -0.02em; color: var(--deep-river); }
+.pill-drop ul a:hover strong, .pill-drop ul a:focus-visible strong { color: var(--sun-yellow-deep); }
+.pill-drop ul a:hover strong::after, .pill-drop ul a:focus-visible strong::after { transform: scaleX(1.25); }
+.pill-drop-photo { position: relative; display: block; width: 274px; height: 290px; overflow: hidden; background: #C9D7EE; }
+.pd-shot { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity .25s ease, transform .45s cubic-bezier(.2, .8, .2, 1); }
+.pd-shot.is-on { opacity: 1; transform: none; }
+.pd-shot img { width: 100%; height: 100%; object-fit: cover; }
 
 /* Hero */
 .h4-hero { position: relative; z-index: 3; height: clamp(560px, 63.75vw, 918px); border-radius: 0 0 30px 30px; overflow: hidden; background: #CFE0F2; box-shadow: 0 4px 30px rgba(21, 50, 80, 0.57); }
@@ -748,7 +766,10 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .pill-nav { height: auto; padding: 8px var(--gutter) 24px; border-radius: 0; background: var(--white); -webkit-backdrop-filter: none; backdrop-filter: none; gap: 0; }
   .pill-nav .nav-link { font-size: 17px; padding: 16px 0; }
   .pill-nav .chev { display: inline-block; }
-  .pill-drop { position: static; width: auto; height: auto; padding: 12px 16px; margin-bottom: 8px; grid-template-columns: 1fr; box-shadow: none; }
+  .pill-drop { display: none; position: static; width: auto; height: auto; padding: 12px 16px; margin-bottom: 8px; grid-template-columns: 1fr; box-shadow: none; visibility: visible; opacity: 1; transform: none; pointer-events: auto; transition: none; }
+  .nav-item[data-open="true"] .pill-drop { display: grid; }
+  .pill-drop li { opacity: 1; transform: none; }
+  .pill-drop ul a { width: auto; min-height: 0; }
   .pill-drop ul { gap: 14px; }
   .pill-drop ul { margin-top: 0; gap: 14px; }
   .pill-drop ul span { max-width: none; font-size: 13px; line-height: 1.3; }
