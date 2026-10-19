@@ -1013,3 +1013,30 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .hd-sales-text { padding: 32px 24px; }
   .hd-btn.yellow { width: 100%; }
 }
+
+/* =====================================================================
+   Scrolling: a header that tucks into a slim bar, and content that settles
+   in once as it enters the screen. Nothing loops, nothing follows the pointer,
+   and all of it switches off for people who ask for reduced motion.
+   ===================================================================== */
+.site-header .header-inner, .site-header .logo img { transition: height .25s ease, padding .25s ease, width .25s ease; }
+.site-header.pill-bar.is-compact .header-inner { height: 84px; padding-top: 0; }
+.site-header.pill-bar.is-compact .logo img { width: 146px; }
+.site-header.overlay.is-stuck { position: fixed; background: var(--white); box-shadow: var(--shadow-header); animation: header-in .28s cubic-bezier(.2, .8, .2, 1); }
+.site-header.overlay.is-stuck .header-inner { height: 84px; padding-top: 0; align-items: center; }
+.site-header.overlay.is-stuck .logo img { width: 146px; }
+.site-header.overlay.is-stuck .pill-nav { margin-top: 0; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.site-header.overlay.is-stuck .founders-tab { display: none; }
+@keyframes header-in { from { transform: translateY(-100%); } to { transform: none; } }
+@media (max-width: 1020px) {
+  .site-header.pill-bar.is-compact .header-inner, .site-header.overlay.is-stuck .header-inner { height: 70px; }
+  .site-header.pill-bar.is-compact .logo img, .site-header.overlay.is-stuck .logo img { width: 116px; }
+  .site-header.overlay.is-stuck .menu-toggle { background: none; }
+}
+
+.rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); }
+.rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; }
+  .site-header.overlay.is-stuck { animation: none; }
+}

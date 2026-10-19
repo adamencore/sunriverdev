@@ -54,6 +54,58 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAll(null); header.setAttribute('data-menu', 'closed'); } });
   }
 
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Header on scroll: the white bar slims down; photo-page headers come back as a slim white bar.
+  if (header) {
+    var overlay = header.classList.contains('overlay'), ticking = false;
+    var onScroll = function () {
+      ticking = false;
+      var y = window.scrollY || window.pageYOffset;
+      if (overlay) {
+        if (y > 220) header.classList.add('is-stuck');
+        else if (y <= 8) header.classList.remove('is-stuck');
+      } else {
+        header.classList.toggle('is-compact', y > 40);
+      }
+    };
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
+  }
+
+  // ---------- Content settles in once as it scrolls into view (skipped for reduced motion
+  // and for anything already on screen when the page loads).
+  if (!reduced && 'IntersectionObserver' in window) {
+    var groups = ['.fp-grid', '.home-grid', '.grid', '.post-grid', '.h4-live-cards', '.fah-links-grid', '.h4-steps', '.hd-bottom', '.like-row', '.team-grid', '.star-grid', '.amenities', '.hub-links'];
+    var singles = 'main section h2, main .lede, main .split > *, .hd-desc, .h4-years-stage > *, .h4-sky h2, .chat .wrap > *';
+    var items = [];
+    document.querySelectorAll(groups.join(',')).forEach(function (g) {
+      Array.prototype.forEach.call(g.children, function (c, i) { c.dataset.rvDelay = Math.min(i % 4, 3) * 70; items.push(c); });
+    });
+    document.querySelectorAll(singles).forEach(function (el) {
+      if (el.closest('.site-header') || items.some(function (it) { return it === el || it.contains(el) || el.contains(it); })) return;
+      items.push(el);
+    });
+    var fold = window.innerHeight;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        io.unobserve(el);
+        el.style.transitionDelay = (el.dataset.rvDelay || 0) + 'ms';
+        el.classList.add('in');
+        var done = function () { el.classList.remove('rv', 'in'); el.style.transitionDelay = ''; el.removeEventListener('transitionend', done); };
+        el.addEventListener('transitionend', done);
+        setTimeout(done, 1400);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.forEach(function (el) {
+      if (el.hidden || el.getBoundingClientRect().top < fold) return;
+      el.classList.add('rv');
+      io.observe(el);
+    });
+  }
+
   // ---------- Hero video: respect reduced motion
   var vid = document.querySelector('.home-hero-media');
   if (vid && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { vid.removeAttribute('autoplay'); vid.pause(); }
