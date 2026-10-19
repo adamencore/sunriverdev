@@ -1041,3 +1041,14 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .rv { opacity: 1; transform: none; }
   .site-header.overlay.is-stuck { animation: none; }
 }
+
+/* Homepage: more breathing room between sections (about 40% more than the Figma frame) */
+.home .h4-story-inner { padding-top: clamp(72px, 8.3vw, 120px); min-height: 680px; }
+.home .h4-live { padding: clamp(150px, 19vw, 280px) 0 clamp(110px, 12.5vw, 180px); }
+.home .h4-years { padding-block: clamp(40px, 5.5vw, 80px); }
+.home .h4-homes { padding: clamp(80px, 9vw, 130px) 0 clamp(120px, 15vw, 220px); }
+.home .h4-begin-inner { padding-block: clamp(90px, 8.3vw, 120px); }
+.home .chat { padding-block: clamp(80px, 10vw, 150px); }
+@media (max-width: 760px) {
+  .home .h4-story-inner { min-height: 0; }
+}
