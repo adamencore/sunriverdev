@@ -652,7 +652,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 /* Hero */
 .h4-hero { position: relative; z-index: 3; height: clamp(560px, 63.75vw, 918px); border-radius: 0 0 30px 30px; overflow: hidden; background: #CFE0F2; box-shadow: 0 4px 30px rgba(21, 50, 80, 0.57); }
 .h4-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top; }
-.h4-hero-inner { position: absolute; left: 0; right: 0; top: 35.3%; padding-left: max(var(--gutter), calc((100vw - 1440px) / 2 + 101px)); }
+.h4-hero-inner { position: absolute; left: 0; right: 0; top: 35.3%; }
 .h4-hero h1 { max-width: 682px; color: var(--sunriver-blue); font-weight: 900; font-size: clamp(40px, 4.93vw, 71px); line-height: 0.817; letter-spacing: -0.02em; }
 .h4-eyebrow { margin-top: 21px; color: var(--white); font-weight: 900; font-size: 18px; line-height: 25px; letter-spacing: -0.03em; text-transform: uppercase; }
 .h4-hero-btn { margin-top: 34px; width: 302px; min-height: 53px; font-size: 14.6px; }
