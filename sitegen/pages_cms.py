@@ -96,13 +96,13 @@ def contact_row(founders=True):
     </div>''' % ("" if fc else " solo", fc, PHONE_TEL, PHONE, img(FG("sales-team"), "The SunRiver sales team"))
 
 
-def thumbs_html(refs, alt):
+def thumbs_html(refs, alt, contain=()):
     if len(refs) < 2:
         return ""
     return '<div class="hd-thumbs%s">%s%s</div>' % (
         " has-more" if len(refs) > 4 else "",
-        "".join('<button type="button" class="thumb%s" data-src="%s" aria-label="Show image %d">%s</button>' % (
-            " is-active" if k == 0 else "", S(r, 1600), k + 1, img(S(r, 320), "%s %d" % (alt, k + 1))) for k, r in enumerate(refs)),
+        "".join('<button type="button" class="thumb%s" data-src="%s"%s aria-label="Show image %d">%s</button>' % (
+            " is-active" if k == 0 else "", S(r, 1600), ' data-fit="contain"' if r in contain else "", k + 1, img(S(r, 320), "%s %d" % (alt, k + 1))) for k, r in enumerate(refs)),
         '<button type="button" class="see-more" aria-expanded="false">See more</button>' if len(refs) > 4 else "")
 
 
@@ -116,42 +116,26 @@ def plan_chips(p):
         chips.append('<span class="chip">%s%s Bath</span>' % (img(ICON_BATH, "", "chip-icon"), num(p["bathrooms"])))
     if garage:
         chips.append('<span class="chip">%s%s%s Car Garage</span>' % (img(ICON_GARAGE, "", "chip-icon"), "Ext. " if garage.group(1) else "", garage.group(2)))
-    if "hobby" in spec.lower():
-        chips.append('<span class="chip">Hobby Room</span>')
     return '<span class="chips hd-chips">%s</span>' % "".join(chips)
 
 
 def build_plan(p, i, plans):
-    """Floor plan page on the OFFICIAL "Homes for Sale Home Detail" template (6:503)."""
+    """Floor plan page, built exactly on the OFFICIAL "Homes for Sale Home Detail" frame (6:503):
+    back link, gallery with four thumbnails, price card, description card with map, Founders and sales cards.
+    The plan drawing joins the gallery so it stays one click away."""
     name = esc(p["name"])
     gallery = p.get("gallery") or []
     refs = [g["asset"] for g in gallery]
+    diagram = (p.get("planDiagram") or {}).get("asset")
+    if diagram:
+        refs.append(diagram)
     alt = gallery[0].get("alt") if gallery and gallery[0].get("alt") else "%s at SunRiver Firelight" % p["name"]
     main = simg(refs[0], alt, 1400, loading="eager", sizes="(max-width: 860px) 100vw, 667px") if refs else ""
     sqft = "{:,}".format(p["squareFootage"])
     spec = p.get("specLine", "")
-    status = esc(p["badge"]) if p.get("badge") else "Available to build"
-    lot = " &middot; Lot width %s'" % num(p["width"]) if p.get("width") else ""
-    story = ("The %s is a %s sq ft single-story home at SunRiver Firelight: %s. Every SunRiver Firelight home comes with our standard luxury features, "
+    story = ("The %s is a %s sq ft single-story home at SunRiver Firelight with %s. Every SunRiver Firelight home includes our standard luxury features, "
              "and you can make it yours at the Design Center. SunRiver Firelight is SunRiver's newest 55+ community, just west of Toquerville, "
              "with mountain views in every direction and Zion 31 minutes away." % (p["name"], sqft, spec.lower().replace(" | ", ", ")))
-    if p.get("matterportId"):
-        side = '<div class="hd-map hd-tour"><iframe src="https://my.matterport.com/show/?m=%s" title="%s 3D virtual tour" allow="xr-spatial-tracking; fullscreen" allowfullscreen loading="lazy"></iframe></div>' % (p["matterportId"], name)
-    else:
-        side = '<div class="hd-map"><iframe src="https://www.google.com/maps?q=SunRiver+Firelight,+Toquerville,+UT&amp;output=embed" title="Map of SunRiver Firelight" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>'
-    diagram = p.get("planDiagram") or {}
-    drawing = ""
-    if diagram.get("asset"):
-        drawing = '''<div class="hd-plan">
-      <div class="hd-plan-text"><h2>The %s Floor Plan</h2><p>Click the plan to enlarge it.</p><p class="hd-note">%s</p></div>
-      <a class="hd-plan-img" href="%s" data-lightbox>%s</a>
-    </div>''' % (name, DISCLAIMER, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 900, sizes="(max-width: 860px) 100vw, 420px"))
-    features = ""
-    if p.get("features"):
-        features = '<div class="hd-features"><h2>Standard Luxury Features</h2>%s</div>' % star_list([esc(f) for f in p["features"]], "cols-2")
-    others = [plans[(i + k) % len(plans)] for k in (1, 2, 3) if len(plans) > k]
-    like = '<section class="hd-like"><div class="wrap"><h2>You may like these</h2><div class="fp-grid">%s</div></div></section>' % "".join(fp_card(q) for q in others)
-    tour_link = '<p class="hd-mls"><a href="#tour-card">Take the 3D virtual tour</a></p>' if p.get("matterportId") else ""
     add("/floor-plans/%s" % p["slug"], "%s Floor Plan" % p["name"],
         "The %s at SunRiver Firelight: %s sq ft, %s, %s." % (p["name"], sqft, spec, p.get("priceRange", "")), "life", '''
 <section class="hd">
@@ -163,24 +147,20 @@ def build_plan(p, i, plans):
         <p class="hd-price">%s</p>
         <p class="hd-name"><strong>%s</strong><span aria-hidden="true">|</span>%s sqft</p>
         <h1 class="hd-address">The %s Floor Plan</h1>
-        <p class="hd-comm">SunRiver Firelight%s</p>
+        <p class="hd-comm">SunRiver Firelight</p>
         %s
         <p class="hd-status">%s</p>
         <div class="hd-actions"><a class="hd-btn solid" href="/contact-us">Schedule a Tour</a><a class="hd-btn" href="/contact-us#team">Request Info</a></div>
-        %s
       </div>
     </div>
-    <div class="hd-desc" id="tour-card">
+    <div class="hd-desc">
       <div class="hd-desc-text"><h2>Single Family Home in Toquerville</h2><p>%s</p></div>
-      %s
+      <div class="hd-map"><iframe src="https://www.google.com/maps?q=SunRiver+Firelight,+Toquerville,+UT&amp;output=embed" title="Map of SunRiver Firelight" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
     </div>
     %s
-    %s
-    %s
   </div>
-</section>
-%s''' % (main, thumbs_html(refs, alt), esc(p.get("priceRange", "")), name, sqft, name, lot, plan_chips(p), status, tour_link,
-         esc(story), side, features, drawing, contact_row(), like), body_class="sand-page")
+</section>''' % (main, thumbs_html(refs, alt, (diagram,)), esc(p.get("priceRange", "")), name, sqft, name,
+                   plan_chips(p), esc(p["badge"]) if p.get("badge") else "Available to build", esc(story), contact_row()), body_class="sand-page")
 
 
 # ================================================================== HOMES FOR SALE
@@ -332,7 +312,7 @@ def build_listing(l):
     title = clean(l.get("title"))
     head, story = listing_story(l)
     comm = COMMUNITY_LABEL.get(l.get("community"), l.get("community", ""))
-    mls = '<p class="hd-mls">MLS# %s</p>' % esc(l["mlsNumber"]) if l.get("mlsNumber") else ""
+    mls = ""
     add("/homes-for-sale/%s" % l["slug"], "%s, %s" % (title, addr),
         "%s at %s: %s sq ft, %s bed, %s bath. %s." % (title, l.get("address") or "", "{:,}".format(l.get("squareFootage") or 0), num(l.get("beds")), num(l.get("baths")), l.get("status", "")), "homes", '''
 <section class="hd">

@@ -812,7 +812,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .pill-bar .header-inner { padding-top: 28px; }
 .pill-bar .logo img, .has-tab .logo img { width: 189px; }
 .pill-bar .pill-nav { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.pill-nav .nav-link[aria-current="page"] { color: var(--sun-yellow-deep); }
+.pill-nav .nav-link[aria-current="page"] { color: var(--sunriver-blue); }
 .overlay.has-tab .header-inner { padding-top: 63px; align-items: flex-start; }
 .overlay.has-tab .pill-nav { margin-top: 9px; }
 .has-tab .founders-tab { display: grid; place-items: center; width: 382px; height: 41px; padding: 0; font-size: 14px; letter-spacing: -0.03em; }
@@ -1071,3 +1071,5 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .hd-features { padding: 28px 20px; }
   .hd-like .fp-grid { justify-content: center; }
 }
+.viewer-main img.is-drawing { object-fit: contain; background: var(--white); padding: 10px; }
+.hd-thumbs .thumb[data-fit="contain"] img { object-fit: contain; background: var(--white); }

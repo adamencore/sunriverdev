@@ -156,6 +156,7 @@
         if (!main) return;
         main.removeAttribute('srcset');
         main.src = th.getAttribute('data-src');
+        main.classList.toggle('is-drawing', th.getAttribute('data-fit') === 'contain');
         var ti = th.querySelector('img');
         if (ti) main.alt = ti.alt;
         viewer.querySelectorAll('.thumb').forEach(function (o) { o.classList.toggle('is-active', o === th); });
