@@ -946,8 +946,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .hd-map iframe { width: 100%; height: 100%; border: 0; display: block; }
 .hd-bottom { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 23px; margin-top: 44px; }
 .hd-bottom.solo { grid-template-columns: minmax(0, 1fr); }
-.hd-founders { position: relative; min-height: 276px; padding: 39px 24px 24px; border-radius: 20px; background: #335A97; color: #FAF5EF; text-decoration: none; }
-.hd-founders h2 { max-width: 260px; color: #FAF5EF; font-weight: 900; font-size: 30.2px; line-height: 27.2px; letter-spacing: -0.05em; }
+.hd-founders { position: relative; min-height: 276px; padding: 39px 14px 24px 24px; border-radius: 20px; background: #335A97; color: #FAF5EF; text-decoration: none; }
+.hd-founders h2 { max-width: 262px; color: #FAF5EF; font-weight: 900; font-size: 30.2px; line-height: 27.2px; letter-spacing: -0.05em; }
 .hd-founders h2 span { color: #F6AF1D; }
 .hd-founders p { max-width: 117px; margin-top: 14px; font-size: 16px; line-height: 20.4px; letter-spacing: -0.03em; }
 .hd-badge { position: absolute; right: 2px; bottom: -10px; width: 160px; transition: transform .3s ease; }
