@@ -62,8 +62,8 @@ SPECS = {
     "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
-    "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {}),
-    "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {}),
+    "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
+    "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True}),
     "fl-smart": ("fl_smart", None, None, 0, 0, 100, 100, 1536, {}),
 }
 

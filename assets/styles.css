@@ -1152,7 +1152,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .fl-founders, .fl-smart { position: relative; overflow: hidden; }
 .fl-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .fl-founders { height: 524px; background: #335A97; }
-.fl-founders .fl-bg { object-position: 50% 30%; }
+.fl-founders .fl-bg { object-position: 50% 44%; }
 .fl-founders::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(51, 90, 151, 0.74); }
 .fl-founders-inner { position: relative; z-index: 2; height: 100%; display: flex; align-items: flex-start; gap: 16px; padding-top: 116px; }
 .fl-founders-text { width: 486px; margin-left: 100px; }
@@ -1167,7 +1167,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .fl-badge { width: 204px; margin-top: 154px; margin-left: -16px; flex: none; }
 .fl-trails { padding-top: 212px; text-align: center; background: var(--white); }
 .fl-trails h2 { color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 61px; line-height: 70px; letter-spacing: -0.02em; }
-.fl-trails-img { display: block; width: 100%; height: 392px; margin-top: 64px; object-fit: cover; object-position: 50% 35%; }
+.fl-trails-img { display: block; width: 100%; height: 392px; margin-top: 64px; object-fit: cover; object-position: 50% 30%; }
 .fl-smart { height: 632px; background: #E9E1D6; }
 .fl-smart .fl-bg { object-position: 50% 40%; }
 .fl-smart-inner { position: relative; z-index: 1; padding-top: 118px; padding-left: calc(var(--gutter) + 100px); }
