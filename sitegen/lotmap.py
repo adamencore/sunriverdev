@@ -1,75 +1,89 @@
 """SunRiver Firelight interactive lot map.
 
-Shapes come from sitegen/lotmap_geo.json (traced from the Illustrator map).
-Status and colors come from data/lots.json, so marking a lot sold is a one-word edit there.
+The art is Adam's Illustrator export (sitegen/lotmap_template.svg). Each lot shape carries data-lot="N";
+the baked-in numbers, number circles and SOLD labels were stripped so they can be drawn from data.
+Status and plan colors live in data/lots.json: marking a lot sold is a one-word edit there.
 """
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 GEO = json.loads((ROOT / "sitegen" / "lotmap_geo.json").read_text())
-STATUS_LABEL = {"available": "Available", "sold": "Sold", "model": "Model home", "future": "Future model", "sales": "Sales Center"}
-# Strip lots along Honey Mesquite Dr carry their numbers outside the lot, already drawn on the base art.
-OUTSIDE_NUMBER = {4, 5, 6, 7, 8, 9, 67, 68, 69, 70, 71}
+TEMPLATE = (ROOT / "sitegen" / "lotmap_template.svg").read_text()
+
+RED = "#D91E37"
+WHITE = "#FFFFFF"
+NUM_LIGHT = "#F3F0E8"
+BADGE = {"slate": "#33637A", "sage": "#819F85", "orange": "#E07E35", "gray": "#8A8F99"}
+STATUS_LABEL = {"available": "Available", "sold": "Sold", "model": "Model home", "future": "Future model",
+                "sales": "Sales Center", "upcoming": "Future release"}
 
 
 def load():
     return json.loads((ROOT / "data" / "lots.json").read_text())
 
 
-def _label(n, cx, cy, lines, cls):
-    if len(lines) == 1:
-        return '<text class="%s" x="%d" y="%d">%s</text>' % (cls, cx, cy, lines[0])
-    return '<text class="%s" x="%d" y="%d"><tspan x="%d" dy="-0.55em">%s</tspan><tspan x="%d" dy="1.1em">%s</tspan></text>' % (
-        cls, cx, cy, cx, lines[0], cx, lines[1])
-
-
 def svg():
     data = load()
     colors = data["colors"]
-    out = []
-    for e in data["lots"]:
-        n = e["lot"]
+    lots = {e["lot"]: e for e in data["lots"]}
+    out = TEMPLATE
+    marks = []
+    for n, e in lots.items():
         g = GEO.get(str(n))
         if not g:
             continue
         st = e.get("status", "available")
-        cx, cy = g["label"]
-        cls = ["lm-lot", "is-" + st]
-        style = ""
-        if st == "available" and e.get("color") in colors:
-            cls.append("has-plan")
-            style = ' style="--lot:%s"' % colors[e["color"]]["hex"]
-            if e["color"] == "yellow":
-                cls.append("light")
-        plan = e.get("plan") or (colors.get(e.get("color"), {}).get("plan") if e.get("color") else None)
+        plan_key = e.get("color") if st == "available" and e.get("color") in colors else None
+        plan = e.get("plan") or (colors[plan_key]["plan"] if plan_key else None)
         tip = "Lot %d: %s" % (n, STATUS_LABEL.get(st, st.title()))
-        if plan and st != "sold":
-            tip += " (%s)" % plan
-        inner = '<polygon points="%s"/>' % g["pts"]
-        if st == "model":
-            inner += _label(n, cx, cy, [e.get("plan", "")], "lot-name")
-        elif st == "future":
-            inner += _label(n, cx, cy, ["Future", "Model"], "lot-name")
-        elif st == "sales":
-            inner += _label(n, cx, cy, ["Sales", "Center"], "lot-name")
-        elif n not in OUTSIDE_NUMBER:
-            if "has-plan" in cls:
-                inner += '<text class="lot-num" x="%d" y="%d">%d</text>' % (cx, cy, n)
-            else:
-                inner += '<circle class="lot-badge %s" cx="%d" cy="%d" r="23"/><text class="lot-num" x="%d" y="%d">%d</text>' % (
-                    "b-" + e.get("badge", "slate"), cx, cy, cx, cy, n)
-        out.append('<g class="%s" data-lot="%d" data-tip="%s" tabindex="0" role="img" aria-label="%s"%s>%s</g>' % (
-            " ".join(cls), n, tip, tip, style, inner))
-    avail = sum(1 for e in data["lots"] if e.get("status") == "available")
-    sold = sum(1 for e in data["lots"] if e.get("status") == "sold")
+        if plan and st not in ("sold", "model"):
+            tip += " (%s plan)" % plan
+        elif st == "model":
+            tip = "Lot %d: %s model home" % (n, plan)
+        fill = None
+        if st == "sold":
+            fill = RED
+        elif plan_key:
+            fill = colors[plan_key]["hex"]
+        elif st in ("available", "upcoming"):
+            fill = WHITE
+        attrs = ' data-tip="%s" tabindex="0" role="img" aria-label="%s"' % (tip, tip)
+        if fill:
+            attrs += ' style="fill:%s"' % fill
+
+        def tag(m, attrs=attrs, st=st, n=n):
+            head = re.sub(r'\sclass="([^"]*)"', lambda c: ' class="%s lm-lot is-%s"' % (c.group(1), st), m.group(2))
+            if "lm-lot" not in head:
+                head += ' class="lm-lot is-%s"' % st
+            return m.group(1) + head + ' data-lot="%d"%s' % (n, attrs)
+        # tag the lot's shape in the Illustrator art
+        out, k = re.subn(r'(<(?:path|polygon|rect|polyline)\b)([^>]*?)\sdata-lot="%d"' % n, tag, out, count=1)
+        if not k or g.get("strip") and st != "sold":
+            continue
+        if "c" not in g:
+            continue
+        cx, cy = g["c"]
+        if st == "sold":
+            marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, WHITE))
+            marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, RED, n))
+            dx, dy = g.get("s", [1.0, 13.5])  # SOLD sits where the Illustrator art put it
+            marks.append('<text class="lm-sold" x="%.2f" y="%.2f" fill="%s">SOLD</text>' % (cx + dx, cy + dy + 3.45, WHITE))
+        elif plan_key:
+            marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, WHITE, n))
+        else:
+            badge = "gray" if st == "upcoming" else e.get("badge", "slate")
+            marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, BADGE.get(badge, BADGE["slate"])))
+            marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, NUM_LIGHT, n))
+    out = out.replace("</svg>", '<g class="lm-marks" aria-hidden="true">%s</g></svg>' % "".join(marks))
+    avail = sum(1 for e in lots.values() if e.get("status") == "available")
+    sold = sum(1 for e in lots.values() if e.get("status") == "sold")
+    out = re.sub(r"<svg\b", '<svg class="lotmap-svg" role="group" aria-label="SunRiver Firelight lot map: %d homesites available, %d sold"' % (avail, sold), out, count=1)
+    out = re.sub(r"<\?xml[^>]*>", "", out)
     return '''<div class="lotmap">
   <div class="lotmap-scroll">
-    <svg class="lotmap-svg" viewBox="0 0 1500 1726" aria-labelledby="lotmap-title">
-      <title id="lotmap-title">SunRiver Firelight lot map: %d homesites available, %d sold</title>
-      <image href="/assets/lotmap/base.webp" width="1500" height="1726"/>
-      %s
-    </svg>
+    %s
     <div class="lotmap-tip" hidden></div>
   </div>
   <ul class="lotmap-key">
@@ -79,4 +93,4 @@ def svg():
     <li><span class="sw sw-future"></span>Future model</li>
     <li><span class="sw sw-plan"></span>Plan selected</li>
   </ul>
-</div>''' % (avail, sold, "\n      ".join(out))
+</div>''' % out.strip()

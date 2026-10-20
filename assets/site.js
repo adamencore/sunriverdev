@@ -263,7 +263,7 @@
       tip.style.top = (r.top - b.top + 6) + "px";
       tip.hidden = false;
     }
-    box.querySelectorAll(".lm-lot").forEach(function (g) {
+    box.querySelectorAll(".lm-lot[data-tip]").forEach(function (g) {
       g.addEventListener("mouseenter", function () { show(g); });
       g.addEventListener("focus", function () { show(g); });
       g.addEventListener("click", function () { show(g); });

@@ -1,48 +1,40 @@
 {
- "_readme": "SunRiver Firelight lot map. Change a lot's status to 'sold' (renders red) or 'available'. Other statuses: model, future, sales. 'color' is the plan color from the Illustrator map; 'plan' names the floor plan when known. 'badge' is the number-circle color (sage and orange mark lot premiums). 'premium' is stored but not shown on the site.",
+ "_readme": "SunRiver Firelight lot map (Live In page). To mark a lot sold, set its status to \"sold\" and it turns red with a SOLD label. Statuses: available, sold, model, future (future model), sales (Sales Center), upcoming (lots 75-84, grey badges on the Illustrator map). 'color' is the plan color when a plan is assigned; 'badge' is the number-circle color (sage and orange mark lot premiums). 'premium' is stored but not shown on the site.",
  "colors": {
   "navy": {
-   "hex": "#4077A2",
+   "hex": "#297AA7",
    "plan": null
   },
   "pink": {
-   "hex": "#B46487",
+   "hex": "#C16089",
    "plan": null
   },
   "purple": {
-   "hex": "#7D70AA",
+   "hex": "#8070AF",
    "plan": "August"
   },
   "yellow": {
-   "hex": "#E8E193",
+   "hex": "#EAE188",
    "plan": null
-  },
-  "teal": {
-   "hex": "#538378",
-   "plan": "Evergreen"
   },
   "orange": {
-   "hex": "#E1A16C",
-   "plan": null
-  },
-  "ltblue": {
-   "hex": "#98C3DA",
+   "hex": "#EE9E63",
    "plan": null
   }
  },
  "lots": [
   {"lot": 1, "status": "available", "color": "purple"},
-  {"lot": 2, "status": "available", "color": "teal"},
-  {"lot": 3, "status": "available", "badge": "orange"},
+  {"lot": 2, "status": "sold"},
+  {"lot": 3, "status": "sold"},
   {"lot": 4, "status": "future"},
   {"lot": 5, "status": "future"},
   {"lot": 6, "status": "future"},
   {"lot": 7, "status": "future"},
   {"lot": 8, "status": "future"},
   {"lot": 9, "status": "sales"},
-  {"lot": 13, "status": "available"},
-  {"lot": 14, "status": "available", "color": "teal"},
-  {"lot": 15, "status": "available", "color": "teal"},
+  {"lot": 13, "status": "available", "color": "yellow"},
+  {"lot": 14, "status": "sold"},
+  {"lot": 15, "status": "sold"},
   {"lot": 16, "status": "sold"},
   {"lot": 17, "status": "sold"},
   {"lot": 18, "status": "sold"},
@@ -53,24 +45,24 @@
   {"lot": 23, "status": "available"},
   {"lot": 24, "status": "available"},
   {"lot": 25, "status": "available"},
-  {"lot": 26, "status": "available"},
-  {"lot": 27, "status": "available", "color": "navy"},
-  {"lot": 28, "status": "available", "badge": "sage"},
+  {"lot": 26, "status": "available", "color": "navy"},
+  {"lot": 27, "status": "sold"},
+  {"lot": 28, "status": "sold"},
   {"lot": 29, "status": "available", "badge": "sage"},
-  {"lot": 30, "status": "available", "color": "ltblue"},
+  {"lot": 30, "status": "available"},
   {"lot": 31, "status": "sold", "premium": 5000},
-  {"lot": 32, "status": "sold", "premium": 5000},
+  {"lot": 32, "status": "available", "badge": "sage", "premium": 5000},
   {"lot": 33, "status": "available", "badge": "sage", "premium": 5000},
   {"lot": 34, "status": "sold"},
   {"lot": 35, "status": "available"},
-  {"lot": 36, "status": "available"},
+  {"lot": 36, "status": "sold"},
   {"lot": 37, "status": "sold"},
   {"lot": 38, "status": "sold"},
   {"lot": 39, "status": "available", "badge": "orange"},
   {"lot": 40, "status": "available", "badge": "orange", "premium": 5000},
-  {"lot": 41, "status": "sold"},
+  {"lot": 41, "status": "available"},
   {"lot": 42, "status": "sold"},
-  {"lot": 43, "status": "available", "color": "orange"},
+  {"lot": 43, "status": "sold"},
   {"lot": 44, "status": "available"},
   {"lot": 45, "status": "available"},
   {"lot": 46, "status": "available", "color": "orange"},
@@ -78,7 +70,7 @@
   {"lot": 48, "status": "available", "color": "yellow"},
   {"lot": 49, "status": "sold"},
   {"lot": 50, "status": "sold"},
-  {"lot": 51, "status": "available"},
+  {"lot": 51, "status": "sold"},
   {"lot": 52, "status": "sold", "premium": 35000},
   {"lot": 53, "status": "sold", "premium": 30000},
   {"lot": 54, "status": "sold", "premium": 25000},
@@ -88,7 +80,7 @@
   {"lot": 58, "status": "available", "color": "purple"},
   {"lot": 59, "status": "available", "color": "pink"},
   {"lot": 60, "status": "available", "color": "yellow"},
-  {"lot": 61, "status": "available", "color": "navy"},
+  {"lot": 61, "status": "sold"},
   {"lot": 62, "status": "sold"},
   {"lot": 63, "status": "available", "color": "pink"},
   {"lot": 64, "status": "available"},
@@ -101,6 +93,16 @@
   {"lot": 71, "status": "model", "plan": "Astoria"},
   {"lot": 72, "status": "sold"},
   {"lot": 73, "status": "sold"},
-  {"lot": 74, "status": "sold"}
+  {"lot": 74, "status": "sold"},
+  {"lot": 75, "status": "upcoming"},
+  {"lot": 76, "status": "upcoming"},
+  {"lot": 77, "status": "upcoming"},
+  {"lot": 78, "status": "upcoming"},
+  {"lot": 79, "status": "upcoming"},
+  {"lot": 80, "status": "upcoming"},
+  {"lot": 81, "status": "upcoming"},
+  {"lot": 82, "status": "upcoming"},
+  {"lot": 83, "status": "upcoming"},
+  {"lot": 84, "status": "upcoming"}
  ]
 }

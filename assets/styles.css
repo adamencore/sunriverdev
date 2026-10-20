@@ -1260,42 +1260,27 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .li-lots { padding-bottom: 90px; }
 }
 
-/* Lot map (Live In, "Pick your spot.") */
-.lotmap { margin-top: 48px; display: flex; gap: 40px; align-items: flex-start; }
-.lotmap-scroll { position: relative; flex: 0 1 900px; min-width: 0; background: #F8F8F8; border-radius: 16px; }
-.lotmap-svg { display: block; width: 100%; height: auto; border-radius: 16px; }
-.lm-lot polygon { fill: #fff; transition: fill .2s ease, filter .2s ease; }
-.lm-lot.has-plan polygon { fill: var(--lot); }
-.lm-lot.is-sold polygon { fill: #C7363D; }
-.lm-lot.is-model polygon { fill: #98C3DA; }
-.lm-lot.is-future polygon { fill: #BECDD5; }
-.lm-lot.is-sales polygon { fill: #F2EFE9; stroke: #2E4A87; stroke-width: 4; }
-.lm-lot text { font-family: var(--font-display); font-style: normal; font-weight: 700; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
-.lot-num { font-size: 26px; fill: #fff; }
-.lm-lot.light .lot-num { fill: #3C5A6E; }
-.lot-badge { fill: #3C5A6E; }
-.lot-badge.b-sage { fill: #8AA08A; }
-.lot-badge.b-orange { fill: #D3843C; }
-.lm-lot.is-sold .lot-badge { fill: #fff; }
-.lm-lot.is-sold .lot-num { fill: #C7363D; }
-.lot-name { font-size: 24px; fill: #3C5A6E; }
-.lm-lot.is-future .lot-name { fill: #7E8C9C; }
-.lm-lot.is-sales .lot-name { fill: #2E4A87; font-size: 28px; }
-.lm-lot { cursor: default; outline: none; }
-.lm-lot.is-available { cursor: pointer; }
-.lm-lot:hover polygon, .lm-lot:focus-visible polygon { filter: brightness(.93); stroke: #335A97; stroke-width: 4; }
+/* Lot map (Live In, "Pick your spot."), art from the Illustrator export */
+.lotmap { margin-top: 48px; display: flex; gap: 48px; align-items: flex-start; }
+.lotmap-scroll { position: relative; flex: 0 1 640px; min-width: 0; }
+.lotmap-svg { display: block; width: 100%; height: auto; }
+.lotmap-svg .lm-lot { cursor: default; outline: none; transition: filter .2s ease; }
+.lotmap-svg .lm-lot.is-available { cursor: pointer; }
+.lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.9); stroke: #335A97; stroke-width: 1.6px; }
+.lm-marks { pointer-events: none; }
+.lm-marks text { font-family: var(--font-display); font-weight: 500; font-size: 9.93px; text-anchor: middle; }
 .lotmap-tip { position: absolute; z-index: 2; transform: translate(-50%, calc(-100% - 12px)); background: #335A97; color: #fff; font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 6px; white-space: nowrap; pointer-events: none; }
 .lotmap-key { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; flex: none; color: #335A97; font-size: 15px; font-weight: 700; }
 .lotmap-key li { display: flex; align-items: center; gap: 10px; }
 .lotmap-key .sw { width: 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(51, 90, 151, .2); }
 .sw-open { background: #fff; }
-.sw-sold { background: #C7363D; }
-.sw-model { background: #98C3DA; }
-.sw-future { background: #BECDD5; }
-.sw-plan { background: linear-gradient(135deg, #4077A2 0 25%, #B46487 25% 50%, #7D70AA 50% 75%, #538378 75%); }
+.sw-sold { background: #D91E37; }
+.sw-model { background: #8EC4DD; }
+.sw-future { background: #BACED6; }
+.sw-plan { background: linear-gradient(135deg, #297AA7 0 25%, #C16089 25% 50%, #8070AF 50% 75%, #EAE188 75%); }
 @media (max-width: 860px) {
   .lotmap { flex-direction: column; gap: 24px; }
   .lotmap-scroll { flex: none; width: 100%; overflow-x: auto; }
-  .lotmap-svg { min-width: 620px; }
+  .lotmap-svg { min-width: 520px; }
   .lotmap-key { grid-template-columns: repeat(2, auto); }
 }
