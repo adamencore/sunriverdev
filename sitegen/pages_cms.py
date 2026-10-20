@@ -93,7 +93,33 @@ def build_floor_plans(plans):
     <h2 class="visually-hidden">SunRiver Firelight floor plans</h2>
     <div class="mh-grid">%s</div>
   </div>
-</section>''' % (img(FG("fah-hero"), "SunRiver Firelight homes with red rock mesas behind them", "fah-hero-img", "eager"), grid))
+</section>
+<section class="fl-founders">
+  %s
+  <div class="wrap fl-founders-inner">
+    <div class="fl-founders-text">
+      <h2>Be part of <span>history</span> at SunRiver Firelight</h2>
+      <p>Become a member of the SunRiver Firelight Founders Club and be among the first 74 homeowners to help shape this exciting new community!</p>
+      <a class="fl-btn light" href="/founders-club">Learn more</a>
+    </div>
+    %s
+  </div>
+</section>
+<section class="fl-trails">
+  <h2>Over 22 miles of trails</h2>
+  %s
+</section>
+<section class="fl-smart">
+  %s
+  <div class="wrap fl-smart-inner">
+    <h2>Explore our <span>Smart Home</span> options</h2>
+    <p>Working alongside our talented designers, you can create a home that captures your imagination and leaves your home just plain smart.</p>
+    <a class="fl-btn" href="/energy">Learn more</a>
+  </div>
+</section>''' % (img(FG("fah-hero"), "SunRiver Firelight homes with red rock mesas behind them", "fah-hero-img", "eager"), grid,
+         img(FG("fl-founders"), "", "fl-bg"), img(V("founders-badge-tilt.3k3jxq99pwu_k.svg"), "SunRiver Firelight Founders Club badge", "fl-badge"),
+         img(FG("fl-trails"), "Red rock and mountain trail country near SunRiver Firelight", "fl-trails-img"),
+         img(FG("fl-smart"), "", "fl-bg")))
 
     for i, p in enumerate(plans):
         build_plan(p, i, plans)

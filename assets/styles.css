@@ -1146,3 +1146,46 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .fp-banner h1 { font-size: 44px; line-height: 46px; }
   .fp-banner p { font-size: 20px; }
 }
+
+/* Floor Plans page, lower sections (updated "Model Homes NEW" frame) */
+.mh-section { padding-bottom: 196px; }
+.fl-founders, .fl-smart { position: relative; overflow: hidden; }
+.fl-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fl-founders { height: 524px; background: #335A97; }
+.fl-founders .fl-bg { object-position: 50% 30%; }
+.fl-founders::before { content: ""; position: absolute; inset: 0; z-index: 1; background: rgba(51, 90, 151, 0.74); }
+.fl-founders-inner { position: relative; z-index: 2; height: 100%; display: flex; align-items: flex-start; gap: 16px; padding-top: 116px; }
+.fl-founders-text { width: 486px; }
+.fl-founders h2, .fl-smart h2 { font-weight: 900; font-size: 64px; line-height: 62px; letter-spacing: -0.03em; text-wrap: wrap; }
+.fl-founders h2 { width: 720px; max-width: none; color: var(--white); }
+.fl-founders h2 span { color: var(--sun-yellow); }
+.fl-founders p { max-width: 470px; margin-top: 14px; color: var(--white); font-size: 14px; line-height: 18px; letter-spacing: -0.02em; }
+.fl-btn { display: inline-grid; place-items: center; width: 300px; height: 48px; margin-top: 42px; border: 2px solid #335A97; border-radius: 30px; color: #335A97; font-weight: 900; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: background .2s, color .2s; }
+.fl-btn:hover { background: #335A97; color: var(--white); }
+.fl-btn.light { border-color: var(--white); color: var(--white); }
+.fl-btn.light:hover { background: var(--white); color: #335A97; }
+.fl-badge { width: 204px; margin-top: 154px; margin-left: -20px; flex: none; }
+.fl-trails { padding-top: 212px; text-align: center; background: var(--white); }
+.fl-trails h2 { color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 61px; line-height: 70px; letter-spacing: -0.02em; }
+.fl-trails-img { display: block; width: 100%; height: 392px; margin-top: 64px; object-fit: cover; object-position: 50% 35%; }
+.fl-smart { height: 632px; background: #E9E1D6; }
+.fl-smart .fl-bg { object-position: 50% 40%; }
+.fl-smart-inner { position: relative; z-index: 1; padding-top: 118px; }
+.fl-smart h2 { max-width: 440px; color: #335A97; }
+.fl-smart h2 span { position: relative; display: inline-block; }
+.fl-smart h2 span::after { content: ""; position: absolute; left: -6px; right: -6px; bottom: -6px; height: 12px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 12' preserveAspectRatio='none'%3E%3Cpath d='M2 9 C 60 3, 150 2, 218 7' fill='none' stroke='%23F5AF1C' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.fl-smart p { max-width: 410px; margin-top: 20px; color: #153250; font-size: 14px; line-height: 18px; letter-spacing: -0.02em; }
+@media (max-width: 860px) {
+  .mh-section { padding-bottom: 100px; }
+  .fl-founders { height: auto; }
+  .fl-founders-inner { flex-direction: column; padding-block: 70px; }
+  .fl-founders-text, .fl-founders h2 { width: auto; }
+  .fl-badge { margin: 10px 0 0; width: 150px; }
+  .fl-founders h2, .fl-smart h2 { font-size: 42px; line-height: 42px; }
+  .fl-trails { padding-top: 100px; }
+  .fl-trails h2 { font-size: 40px; line-height: 46px; padding-inline: 16px; }
+  .fl-trails-img { height: 240px; margin-top: 40px; }
+  .fl-smart { height: auto; padding-bottom: 260px; }
+  .fl-smart-inner { padding-top: 70px; }
+  .fl-smart .fl-bg { object-position: 75% 50%; }
+}
