@@ -25,7 +25,7 @@ sys.path.insert(0, str(ROOT))
 
 from sitegen import figma_assets, lib  # noqa: E402
 from sitegen.data import ON_NETLIFY, get_all  # noqa: E402
-from sitegen.pages_cms import build_blog, build_floor_plans, build_homes  # noqa: E402
+from sitegen.pages_cms import build_blog, build_floor_plans, build_homes, build_live_in  # noqa: E402
 from sitegen.pages_main import build_main  # noqa: E402
 
 DIST = ROOT / "dist"
@@ -96,6 +96,7 @@ def main():
     build_main(plans, listings)
     build_floor_plans(plans)
     build_homes(listings)
+    build_live_in(plans, listings)  # replaces the older Live In page with the Figma version
     build_blog(posts)
 
     if DIST.exists():

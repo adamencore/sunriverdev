@@ -42,6 +42,7 @@ FIGMA_IDS = {
     # Full-size originals read from the Figma file in the browser (signed links, valid to about 2026-11-02)
     "fl_founders": "https://s3-alpha-sig.figma.com/img/fd9f/7abe/de346e9455042f21a68b4c8ae301db70?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=YPmnYtHA4agoa8Q2QtxD3NhwNnVnctzfBynAwAINEqKv5hH~iagQHLgsepW2KblzdeNxKxWUaWRi8H2qihhomeMs~Ne~kJglJe2L5VQoXWJycxXcmR83UNNIru8zaJAajTlzdOua78wTHe-0zqE3lgM0h7vNtlAiAECtvKI-gAiZD6AoxbgMyfA9ef339dRoT0V3dX8AftA0l3lTIcn-Ra~ys1DUcUTYAmCFKsAx4qMe8cWA-v7NjKS~Gbiacx515yX3wv6~Rf58w3D~E3HjGP6jvOsol7WBSnct0AlU4Qx6B9Njs~cUDScisQf8nmqHJSielk~Ml~FFwztT~wwKhg__",
     "fl_smart": "https://s3-alpha-sig.figma.com/img/270c/d40a/707fa627e86465d4c80c7f845c21a219?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=NrO9GO~lihKhrwkPl3Pzd-OwoORYCDhEWMKTN2vgI-A~2YRFujqn4Sm8rTxocVq1wq67LyQhJ~ZgBykk3GShyvHixakUszXaN8hMGQU3aXHP3Rpee8fgi3sDJeVFZtcbPjlVkJ12lAheiruwEX6D5dowawcSJmxz8LKsqyJTfFy3khMyemhHAWt0wtAr2bfQfOEZ9t7tcg~vFgQ23U1sIANoIJGMt5b2zygR8xoud6r-MZIhZXyuS41OqkpWX1nvT7cdAiv3xbMYn7ZKYm4Uaw~qXcEGA0yHR32RBMsZTmmjhDakNi1ESHm0FuHtXylY34Tnqn8Wddnd8RudxbrZMw__",
+    "li_hero": "https://s3-alpha-sig.figma.com/img/7883/f3a5/247799052dce918b2474e9de97e2fda4?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=X-NTor9119a6Q3pUOJXMXkKsdKOdXnWDmDjIjLLq0SLeudvLxeGShn7hJgUFo1VHbDOLoFHEwF5NkDrOfZ03SekOoc5OxhmcHQImZM4hjJBzdmzzQGSHj67Ew9HbtBexATst5InaZ9VrC0o-LyUWggBy7-YpfTpK-dtRocgwnVxobWiVUBCbiD4oVMw5I8eXbTdlayPDHLb8382Bo9HSWN8wt3NSiNyQ6aoGZJgj7RfTVD2pNT12GkxjJHNmtxxYDE9rSU-h5MyLrpyBBfElW~w375CYVbLV81~bAkQEThXZn2uELhk2ONUB0E4y88WosNkBkyaqNNu7eX8SKvGJNw__",
     "fl_trails": "https://s3-alpha-sig.figma.com/img/20de/bfe4/e9f6cdf4c07e2d8c2925b3d0b7dbe921?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=W8~8tUJpQcbxR7qCtBx4lBAen6QV2rhcYRhpi4lixh2O0j-URjWrFl4yr85EwfCpKSVY~ykrTQ2uftEUhGxsntjoK3LTAN~ub49q5SORqHFwZGOmyaGjbO~j75JpzR7qxokGwKMqVmdogLpuYXFNYV6Wp0FcTKFGYCXEqDhW6kh-09~qmZt3Iz-1iYLLRnEdq~gb2qre4jLoJEFOVC5nLFvry~y3BBGdHf1S5xtFTcwa6bRfpZWqSUY9wlJxJxevy4yasmev-g0tPyhtvP1sSNutv1FkN4h~1SFSDwI3wPJXigiIzjf1Or-TBkPnxOMWXCVlzbFjLkHDqVC0U-1UxA__",
 }
 
@@ -64,6 +65,7 @@ SPECS = {
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
     "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
     "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True, "trim": (0, 0.27, 0, 0)}),  # empty sky above the peaks trimmed
+    "li-hero": ("li_hero", None, None, 0, 0, 100, 100, 1536, {}),
     "fl-smart": ("fl_smart", None, None, 0, 0, 100, 100, 1536, {}),
 }
 

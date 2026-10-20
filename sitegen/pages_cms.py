@@ -546,3 +546,65 @@ def build_blog(posts):
   </div>
 </section>''' % (chips, cover, esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")),
                  portable_text(p.get("body")), "".join(post_card(q) for q in more), btn("See all stories", "/bucketlistliving")))
+
+
+# ================================================================== LIVE IN (OFFICIAL Figma "Live In", work in progress)
+def build_live_in(plans, listings):
+    """Live In page from the OFFICIAL Figma "Live In" frame: photo hero, intro, the floor plans,
+    a yellow visit band, homes ready now, and the available lots section (lot map to come)."""
+    cards = []
+    for k, p in enumerate(plans):
+        cards.append(plan_link_card(p))
+    rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2]))
+                   for r in range((len(cards) + 1) // 2))
+    ready = sorted([l for l in listings if l.get("status") in ("Move in Ready", "For Sale")], key=listing_sort_key)[:6]
+    sizes = sorted(p["squareFootage"] for p in plans)
+    add("/live-in", "Live In", "Live In at SunRiver Firelight: seven floor plans, homes ready now and homesites to choose from.", "life-overlay", '''
+<section class="fah-hero li-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>Live In</h1></div>
+</section>
+<section class="li-intro">
+  <div class="wrap li-in">
+    <h2>A home for<br> what comes next.</h2>
+    <p class="li-serif">Thoughtful floor plans, room for the things you love,<br> and the freedom to make this place your own.</p>
+    <div class="li-btns"><a class="li-btn solid" href="/floor-plans">Explore floor plans</a><a class="li-btn" href="/homes-for-sale">See homes for sale</a></div>
+  </div>
+</section>
+<section class="li-plans">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">01 / Floor plans</p>
+    <h2 class="li-title">Seven floor plans. Every one built<br> for how you actually live.</h2>
+    <p class="li-copy">Sizes run from {:,} to {:,} square feet, two to three bedrooms, and garages up to an extended three-car. Every plan includes custom-crafted cabinetry, solid-surface countertops, Moen fixtures, GE appliances, structured wiring, hybrid gas and electric heating and cooling, low-E windows, and concrete roof tile. Standard, not upgrades.</p>
+    <div class="li-plan-grid">%s</div>
+  </div>
+</section>
+<section class="li-visit">
+  <svg class="li-wave" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C 260 120, 520 120, 760 210 S 1220 300, 1440 160 L1440 360 L0 360 Z" fill="#fff" fill-opacity=".07"/><path d="M0 110 C 300 30, 560 60, 820 140 S 1260 200, 1440 60 L1440 0 L0 0 Z" fill="#fff" fill-opacity=".05"/></svg>
+  <div class="wrap li-visit-inner">
+    <h2>Come see how it feels.</h2>
+    <div class="li-btns center"><a class="li-btn light" href="/contact-us">Schedule a visit</a><a class="li-btn white" href="/homes-for-sale">See homes for sale</a></div>
+  </div>
+</section>
+<section class="li-ready">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">02 / Homes for sale</p>
+    <h2 class="li-title">Homes ready now.</h2>
+    <p class="li-copy">Some people want to choose every finish. Some people are ready to move. See the actual house instead of a rendering, and begin living here in weeks rather than months.</p>
+    <div class="li-home-grid">%s</div>
+    <div class="li-step">
+      <h2>Step inside a real home.</h2>
+      <p>Ask about availability and the estimated completion date.</p>
+      <a class="li-btn solid" href="/contact-us">Schedule a visit</a>
+    </div>
+  </div>
+</section>
+<section class="li-lots">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">03 / Available lots</p>
+    <h2 class="li-title">Pick your spot.</h2>
+    <p class="li-copy">Some homesites back to open desert, some sit higher for the view, and others put you closer to the community center and trailheads. What you can build on each one varies.</p>
+  </div>
+</section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
+        img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
+        rows, "".join(listing_card(l) for l in ready)))
