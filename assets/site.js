@@ -251,3 +251,24 @@
     apply();
   }
 })();
+
+// Lot map tooltip
+(function () {
+  document.querySelectorAll(".lotmap-scroll").forEach(function (box) {
+    var tip = box.querySelector(".lotmap-tip");
+    function show(g) {
+      var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
+      tip.textContent = g.getAttribute("data-tip");
+      tip.style.left = (r.left - b.left + box.scrollLeft + r.width / 2) + "px";
+      tip.style.top = (r.top - b.top + 6) + "px";
+      tip.hidden = false;
+    }
+    box.querySelectorAll(".lm-lot").forEach(function (g) {
+      g.addEventListener("mouseenter", function () { show(g); });
+      g.addEventListener("focus", function () { show(g); });
+      g.addEventListener("click", function () { show(g); });
+      g.addEventListener("mouseleave", function () { tip.hidden = true; });
+      g.addEventListener("blur", function () { tip.hidden = true; });
+    });
+  });
+})();

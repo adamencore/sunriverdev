@@ -1,0 +1,106 @@
+{
+ "_readme": "SunRiver Firelight lot map. Change a lot's status to 'sold' (renders red) or 'available'. Other statuses: model, future, sales. 'color' is the plan color from the Illustrator map; 'plan' names the floor plan when known. 'badge' is the number-circle color (sage and orange mark lot premiums). 'premium' is stored but not shown on the site.",
+ "colors": {
+  "navy": {
+   "hex": "#4077A2",
+   "plan": null
+  },
+  "pink": {
+   "hex": "#B46487",
+   "plan": null
+  },
+  "purple": {
+   "hex": "#7D70AA",
+   "plan": "August"
+  },
+  "yellow": {
+   "hex": "#E8E193",
+   "plan": null
+  },
+  "teal": {
+   "hex": "#538378",
+   "plan": "Evergreen"
+  },
+  "orange": {
+   "hex": "#E1A16C",
+   "plan": null
+  },
+  "ltblue": {
+   "hex": "#98C3DA",
+   "plan": null
+  }
+ },
+ "lots": [
+  {"lot": 1, "status": "available", "color": "purple"},
+  {"lot": 2, "status": "available", "color": "teal"},
+  {"lot": 3, "status": "available", "badge": "orange"},
+  {"lot": 4, "status": "future"},
+  {"lot": 5, "status": "future"},
+  {"lot": 6, "status": "future"},
+  {"lot": 7, "status": "future"},
+  {"lot": 8, "status": "future"},
+  {"lot": 9, "status": "sales"},
+  {"lot": 13, "status": "available"},
+  {"lot": 14, "status": "available", "color": "teal"},
+  {"lot": 15, "status": "available", "color": "teal"},
+  {"lot": 16, "status": "sold"},
+  {"lot": 17, "status": "sold"},
+  {"lot": 18, "status": "sold"},
+  {"lot": 19, "status": "sold"},
+  {"lot": 20, "status": "sold"},
+  {"lot": 21, "status": "sold"},
+  {"lot": 22, "status": "available", "color": "purple"},
+  {"lot": 23, "status": "available"},
+  {"lot": 24, "status": "available"},
+  {"lot": 25, "status": "available"},
+  {"lot": 26, "status": "available"},
+  {"lot": 27, "status": "available", "color": "navy"},
+  {"lot": 28, "status": "available", "badge": "sage"},
+  {"lot": 29, "status": "available", "badge": "sage"},
+  {"lot": 30, "status": "available", "color": "ltblue"},
+  {"lot": 31, "status": "sold", "premium": 5000},
+  {"lot": 32, "status": "sold", "premium": 5000},
+  {"lot": 33, "status": "available", "badge": "sage", "premium": 5000},
+  {"lot": 34, "status": "sold"},
+  {"lot": 35, "status": "available"},
+  {"lot": 36, "status": "available"},
+  {"lot": 37, "status": "sold"},
+  {"lot": 38, "status": "sold"},
+  {"lot": 39, "status": "available", "badge": "orange"},
+  {"lot": 40, "status": "available", "badge": "orange", "premium": 5000},
+  {"lot": 41, "status": "sold"},
+  {"lot": 42, "status": "sold"},
+  {"lot": 43, "status": "available", "color": "orange"},
+  {"lot": 44, "status": "available"},
+  {"lot": 45, "status": "available"},
+  {"lot": 46, "status": "available", "color": "orange"},
+  {"lot": 47, "status": "sold"},
+  {"lot": 48, "status": "available", "color": "yellow"},
+  {"lot": 49, "status": "sold"},
+  {"lot": 50, "status": "sold"},
+  {"lot": 51, "status": "available"},
+  {"lot": 52, "status": "sold", "premium": 35000},
+  {"lot": 53, "status": "sold", "premium": 30000},
+  {"lot": 54, "status": "sold", "premium": 25000},
+  {"lot": 55, "status": "sold"},
+  {"lot": 56, "status": "available", "color": "navy"},
+  {"lot": 57, "status": "available", "color": "pink"},
+  {"lot": 58, "status": "available", "color": "purple"},
+  {"lot": 59, "status": "available", "color": "pink"},
+  {"lot": 60, "status": "available", "color": "yellow"},
+  {"lot": 61, "status": "available", "color": "navy"},
+  {"lot": 62, "status": "sold"},
+  {"lot": 63, "status": "available", "color": "pink"},
+  {"lot": 64, "status": "available"},
+  {"lot": 65, "status": "available"},
+  {"lot": 66, "status": "available", "color": "pink"},
+  {"lot": 67, "status": "model", "plan": "Hamlet"},
+  {"lot": 68, "status": "model", "plan": "Tara"},
+  {"lot": 69, "status": "model", "plan": "Evergreen"},
+  {"lot": 70, "status": "model", "plan": "Elmwood"},
+  {"lot": 71, "status": "model", "plan": "Astoria"},
+  {"lot": 72, "status": "sold"},
+  {"lot": 73, "status": "sold"},
+  {"lot": 74, "status": "sold"}
+ ]
+}

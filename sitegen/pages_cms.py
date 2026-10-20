@@ -1,4 +1,5 @@
 """Pages driven by the Sanity CMS: floor plans, homes for sale, Bucketlist Living blog."""
+from . import lotmap
 import math
 import re
 
@@ -605,6 +606,7 @@ def build_live_in(plans, listings):
     <h2 class="li-title">Pick your spot.</h2>
     <p class="li-copy">Some homesites back to open desert, some sit higher for the view, and others put you closer to the community center and trailheads. What you can build on each one varies.</p>
   </div>
+  <div class="wrap li-in">%s</div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
-        rows, "".join(listing_card(l) for l in ready)))
+        rows, "".join(listing_card(l) for l in ready), lotmap.svg()))
