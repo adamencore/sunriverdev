@@ -1199,7 +1199,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
    ===================================================================== */
 .li-hero { background: #E9E4DD; }
 .li-hero .fah-hero-img { opacity: 1; object-position: 50% 23%; }
-.li-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 32%), rgba(20, 50, 80, 0.08); }
+.li-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.6) 28%, rgba(255, 255, 255, 0.28) 52%, rgba(255, 255, 255, 0) 72%); }
+.li-btns.li-plans-more { margin-top: 48px; }
 .li-hero .fah-hero-inner { z-index: 2; padding-top: 250px; }
 .li-hero h1 { display: inline-block; max-width: none; font-size: 84px; line-height: 84px; text-shadow: 0 2px 18px rgba(20, 50, 80, 0.25); }
 .li-hero h1::after { content: ""; display: block; height: 5px; margin-top: 6px; background: var(--sun-yellow); border-radius: 3px; }

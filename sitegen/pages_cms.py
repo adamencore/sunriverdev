@@ -554,7 +554,7 @@ def build_live_in(plans, listings):
     """Live In page from the OFFICIAL Figma "Live In" frame: photo hero, intro, the floor plans,
     a yellow visit band, homes ready now, and the available lots section (lot map to come)."""
     cards = []
-    for k, p in enumerate(plans):
+    for p in plans[:4]:  # the design shows four plans, then a See all floor plans button
         cards.append(plan_link_card(p))
     rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2]))
                    for r in range((len(cards) + 1) // 2))
@@ -578,6 +578,7 @@ def build_live_in(plans, listings):
     <h2 class="li-title">Seven floor plans. Every one built<br> for how you actually live.</h2>
     <p class="li-copy">Sizes run from {:,} to {:,} square feet, two to three bedrooms, and garages up to an extended three-car. Every plan includes custom-crafted cabinetry, solid-surface countertops, Moen fixtures, GE appliances, structured wiring, hybrid gas and electric heating and cooling, low-E windows, and concrete roof tile. Standard, not upgrades.</p>
     <div class="li-plan-grid">%s</div>
+    <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a></div>
   </div>
 </section>
 <section class="li-visit">
