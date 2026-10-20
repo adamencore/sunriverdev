@@ -63,7 +63,7 @@ SPECS = {
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
     "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
-    "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True}),
+    "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True, "trim": (0, 0.27, 0, 0)}),  # empty sky above the peaks trimmed
     "fl-smart": ("fl_smart", None, None, 0, 0, 100, 100, 1536, {}),
 }
 
@@ -98,6 +98,10 @@ def _render(Image, ImageOps, raw, spec):
                (rx + rw - off_x) / disp_w * iw, (ry + rh - off_y) / disp_h * ih)
         box = tuple(int(round(v)) for v in (max(0, box[0]), max(0, box[1]), min(iw, box[2]), min(ih, box[3])))
         im = im.crop(box)
+    if opt.get("trim"):  # fractions of the source to cut away: (left, top, right, bottom)
+        l, t, r, b = opt["trim"]
+        w0, h0 = im.size
+        im = im.crop((int(w0 * l), int(h0 * t), int(w0 * (1 - r)), int(h0 * (1 - b))))
     if opt.get("mirror"):
         im = ImageOps.mirror(im)
     if im.width > out_w:

@@ -1167,9 +1167,11 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .fl-badge { width: 204px; margin-top: 154px; margin-left: -16px; flex: none; }
 .fl-trails { padding-top: 212px; text-align: center; background: var(--white); }
 .fl-trails h2 { color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 61px; line-height: 70px; letter-spacing: -0.02em; }
-.fl-trails-img { display: block; width: 100%; height: 392px; margin-top: 64px; object-fit: cover; object-position: 50% 58%; }
+.fl-trails-img { display: block; width: 100%; height: 392px; margin-top: 64px; object-fit: cover; object-position: 50% 0; }
 .fl-smart { height: 632px; background: #E9E1D6; }
 .fl-smart .fl-bg { object-position: 50% 40%; }
+.fl-smart::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(250, 245, 240, 0.78) 0%, rgba(250, 245, 240, 0.55) 40%, rgba(250, 245, 240, 0.3) 100%); }
+.fl-smart-inner { z-index: 2; }
 .fl-smart-inner { position: relative; z-index: 1; padding-top: 118px; padding-left: calc(var(--gutter) + 100px); }
 .fl-smart h2 { max-width: 440px; color: #335A97; }
 .fl-smart h2 span { position: relative; display: inline-block; }
