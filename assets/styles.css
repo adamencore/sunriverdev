@@ -1411,3 +1411,39 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .fh-sub { font-size: 19px; line-height: 24px; }
   .fh-badge { width: 110px; bottom: auto; top: 120px; }
 }
+
+/* Live In: "Walk the ground." card under the lot map */
+.li-walk { display: flex; align-items: center; justify-content: space-between; gap: 24px; width: 706px; max-width: 100%; margin: 56px 0 0 50px; padding: 26px 30px 26px 36px; background: var(--white); border-radius: 24px; }
+.li-walk h3 { color: #335A97; font-weight: 900; font-size: 30px; line-height: 32px; letter-spacing: -0.03em; }
+.li-walk p { margin-top: 4px; color: #335A97; font-size: 13.5px; }
+.li-walk .li-btn { flex: none; width: 238px; height: 44px; }
+
+/* Live In: 04 / The Design Center */
+.li-dc { padding: 104px 0 140px; background: var(--white); }
+.li-dc-feature { display: grid; grid-template-columns: 354px minmax(0, 1fr); gap: 28px; align-items: center; max-width: 806px; margin-top: 76px; }
+.li-dc-img { aspect-ratio: 354 / 237; overflow: hidden; border-radius: 20px; }
+.li-dc-img img { width: 100%; height: 100%; object-fit: cover; }
+.li-dc-text h3 { color: #335A97; font-weight: 900; font-size: 28px; line-height: 32px; letter-spacing: -0.03em; }
+.li-dc-text p { margin-top: 12px; max-width: 400px; color: #335A97; font-size: 13.5px; line-height: 18px; }
+.li-flips { display: grid; grid-template-columns: repeat(3, 250px); gap: 28px; margin-top: 92px; }
+.li-flip { height: 304px; perspective: 1200px; outline: none; cursor: pointer; }
+.li-flip-in { position: relative; height: 100%; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.2, .8, .2, 1); }
+.li-flip:hover .li-flip-in, .li-flip:focus-visible .li-flip-in, .li-flip.is-flipped .li-flip-in { transform: rotateY(180deg); }
+.li-flip-front, .li-flip-back { position: absolute; inset: 0; overflow: hidden; border-radius: 20px; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.li-flip-front { display: flex; flex-direction: column; align-items: center; padding: 34px 26px 0; background: #FAF5F0; text-align: center; }
+.li-flip-num { color: #EDB443; font-family: var(--font-serif); font-size: 50px; line-height: 50px; }
+.li-flip-front h3 { margin-top: 28px; color: #335A97; font-weight: 900; font-size: 26px; line-height: 28px; letter-spacing: -0.03em; }
+.li-flip-front p { margin-top: 12px; color: #335A97; font-size: 13px; line-height: 17px; }
+.li-flip-back { transform: rotateY(180deg); background: #335A97; }
+.li-flip-back img { width: 100%; height: 100%; object-fit: cover; }
+.li-flip-back span { position: absolute; left: 16px; right: 16px; bottom: 16px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, .92); color: #335A97; font-weight: 900; font-size: 15px; line-height: 18px; letter-spacing: -0.02em; text-align: center; }
+@media (prefers-reduced-motion: reduce) {
+  .li-flip-in { transition: none; transform: none !important; }
+  .li-flip-back { transform: none; opacity: 0; transition: opacity .25s ease; }
+  .li-flip:hover .li-flip-back, .li-flip:focus-visible .li-flip-back, .li-flip.is-flipped .li-flip-back { opacity: 1; }
+}
+@media (max-width: 960px) {
+  .li-walk { margin-left: 0; flex-direction: column; align-items: flex-start; }
+  .li-dc-feature { grid-template-columns: minmax(0, 1fr); }
+  .li-flips { grid-template-columns: minmax(0, 300px); }
+}

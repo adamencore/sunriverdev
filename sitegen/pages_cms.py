@@ -560,6 +560,16 @@ def build_live_in(plans, listings):
                    for r in range((len(cards) + 1) // 2))
     ready = sorted([l for l in listings if l.get("status") in ("Move in Ready", "For Sale")], key=listing_sort_key)[:6]
     sizes = sorted(p["squareFootage"] for p in plans)
+    # 04 / The Design Center: three cards that flip on hover (or tap) to a photo
+    steps = [("1", "Choose your plan and lot", "Start with the footprint and place you want to call home.",
+              FG("hfs-hero"), "Aerial view of homesites at SunRiver Firelight"),
+             ("2", "See full-size samples", "Cabinetry, countertops, flooring, tile, fixtures, lighting, and paint, with a designer beside you.",
+              "/assets/img/design-center-samples.webp", "A SunRiver designer showing full-size countertop samples at the Design Center"),
+             ("3", "Know what it costs", "Leave knowing what your home will look like and what each selection costs.",
+              S("image-4002cc30c79b533f3eab3b908037c2757c646f0e-2000x1333-jpg", 900), "The finished kitchen in the Astoria model home")]
+    flips = "".join('''<div class="li-flip" tabindex="0"><div class="li-flip-in">
+      <div class="li-flip-front"><span class="li-flip-num">%s</span><h3>%s</h3><p>%s</p></div>
+      <div class="li-flip-back" aria-hidden="true">%s<span>%s</span></div></div></div>''' % (n, t, d, img(src, alt), t) for n, t, d, src, alt in steps)
     add("/live-in", "Live In", "Live In at SunRiver Firelight: seven floor plans, homes ready now and homesites to choose from.", "life-overlay", '''
 <section class="fah-hero li-hero">
   %s
@@ -607,10 +617,27 @@ def build_live_in(plans, listings):
     <h2 class="li-title">Pick your spot.</h2>
     <p class="li-copy">Some homesites back to open desert, some sit higher for the view, and others put you closer to the community center and trailheads. What you can build on each one varies.</p>
   </div>
-  <div class="wrap li-in">%s</div>
+  <div class="wrap li-in">%s
+    <div class="li-walk"><div><h3>Walk the ground.</h3><p>The right location makes more sense in person.</p></div><a class="li-btn solid" href="/contact-us">Meet with an agent</a></div>
+  </div>
+</section>
+<section class="li-dc">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">04 / The Design Center</p>
+    <h2 class="li-title">You are not buying the home.<br> You are building it.</h2>
+    <p class="li-copy">Most builders hand you three packages and call it a choice. We hand you a room.</p>
+    <div class="li-dc-feature">
+      <div class="li-dc-img">%s</div>
+      <div class="li-dc-text"><h3>Choices with real life in mind.</h3>
+        <p>Where the light lands in the morning. Which counter you will stand at when there are twelve people over. Whether the hobby room is for pottery or a workbench, because those need different outlets.</p>
+        <p>The point of the appointment is not to upsell you. It is to make the house match the way you live.</p></div>
+    </div>
+    <div class="li-flips">%s</div>
+  </div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
-        rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans)))
+        rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans),
+        img(FG("li-bedroom"), "A finished bedroom in a SunRiver Firelight home"), flips))
 
 
 def build_live_out():

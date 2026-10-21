@@ -604,3 +604,10 @@
   window.addEventListener("resize", later);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
 })();
+
+// Live In flip cards: hover flips them on desktop; a tap flips them on touch screens
+document.querySelectorAll(".li-flip").forEach(function (c) {
+  c.addEventListener("click", function () { c.classList.toggle("is-flipped"); });
+  c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.classList.toggle("is-flipped"); } });
+  c.addEventListener("mouseleave", function () { c.classList.remove("is-flipped"); });
+});

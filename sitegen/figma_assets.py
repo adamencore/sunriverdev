@@ -38,6 +38,7 @@ FIGMA_IDS = {
     "fah_hero": "9d943a9d-39c2-4942-a3eb-4cda27c34448",  # Discovery Villas Row 1, Find a Home hero
     "fah_card": "1cdb7ead-eb9a-4826-97b8-e94300fe4170",  # Rectangle 202, FLOOR PLANS card
     "hfs_band": "eac1e2af-712e-4c45-971b-f762936946b7",  # Rectangle 133, Homes for sale band
+    "li_bedroom": "https://s3-alpha-sig.figma.com/img/344f/a386/5f6b6a2704e33ef7c82c80dfbd29ead3?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Oje4m6hKwL7HaUGOZHLt7xdt4O-7KE0ja-EqDJpt7GPOf8TzF8NsRlXa8T-FfytjiUjRcrlhyup5DQu6u0UYDmlg6ywIBfPw2FT3Zhi3hzsC~n-YXU0OV~myE-4WGsQnnJ1MauyWYuYlcQrPh1IvtqpZg5UmsCAYNpN1GrUJ~050iPhkB5hFOruCI1TXMogggiSssVmMAkH5wKjvK5j4aW0BHioo5u9wrxCj-16rhs8ByCIznxDG~pcK6YNYSuiSkWuP6ChCYQIASRq~-O1lxbmAfBC0Pl~DrIkV1PyYpLfRSKEwUSBUqFD7h6YZzSb4C652Sh2QSN~xGviSZ7xaVg__",  # Live In, 04 / The Design Center
     "sales_team": "87d320a1-aa84-40ac-bb9b-cba4b8e53d03",  # SunRiver Sales Team 2 (cut out)
     # Full-size originals read from the Figma file in the browser (signed links, valid to about 2026-11-02)
     "fl_founders": "https://s3-alpha-sig.figma.com/img/fd9f/7abe/de346e9455042f21a68b4c8ae301db70?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=YPmnYtHA4agoa8Q2QtxD3NhwNnVnctzfBynAwAINEqKv5hH~iagQHLgsepW2KblzdeNxKxWUaWRi8H2qihhomeMs~Ne~kJglJe2L5VQoXWJycxXcmR83UNNIru8zaJAajTlzdOua78wTHe-0zqE3lgM0h7vNtlAiAECtvKI-gAiZD6AoxbgMyfA9ef339dRoT0V3dX8AftA0l3lTIcn-Ra~ys1DUcUTYAmCFKsAx4qMe8cWA-v7NjKS~Gbiacx515yX3wv6~Rf58w3D~E3HjGP6jvOsol7WBSnct0AlU4Qx6B9Njs~cUDScisQf8nmqHJSielk~Ml~FFwztT~wwKhg__",
@@ -63,6 +64,7 @@ SPECS = {
     "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
     "hfs-hero": ("hfs_band", None, None, 0, 0, 100, 100, 2400, {"fallback": "hfs-band"}),
+    "li-bedroom": ("li_bedroom", None, None, 0, 0, 100, 100, 1200, {}),
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
     "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
     "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True, "trim": (0, 0.27, 0, 0)}),  # empty sky above the peaks trimmed
