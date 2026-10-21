@@ -510,16 +510,25 @@
     var a = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
     return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
   }
+  function lab(c) {
+    var v = c.map(function (x) { x /= 255; return x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    var X = (v[0] * 0.4124 + v[1] * 0.3576 + v[2] * 0.1805) / 0.95047, Y = v[0] * 0.2126 + v[1] * 0.7152 + v[2] * 0.0722, Z = (v[0] * 0.0193 + v[1] * 0.1192 + v[2] * 0.9505) / 1.08883;
+    var f = function (t) { return t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116; };
+    return [116 * f(Y) - 16, 500 * (f(X) - f(Y)), 200 * (f(Y) - f(Z))];
+  }
+  // how different two colors look (CIE76): yellow on a blue sky reads even at similar brightness; yellow on tan does not
+  function dE(a, b) { var p = lab(a), q = lab(b); return Math.sqrt(Math.pow(p[0] - q[0], 2) + Math.pow(p[1] - q[1], 2) + Math.pow(p[2] - q[2], 2)); }
   function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
   function hex(c) { return "rgb(" + c.join(",") + ")"; }
   function apply(wordBg, accentBg) {
     var word = contrast(BLUE, wordBg) >= 3 || contrast(BLUE, wordBg) >= contrast(WHITE, wordBg) ? BLUE : WHITE;
     // brand yellow unless it would wash out (very light or yellow-toned spots); then match the wordmark
-    var accent = contrast(YELLOW, accentBg) >= 1.6 ? YELLOW : (contrast(word, accentBg) >= contrast(YELLOW, accentBg) ? word : YELLOW);
+    var yOk = contrast(YELLOW, accentBg) >= 2 || dE(YELLOW, accentBg) >= 60;
+    var accent = yOk ? YELLOW : (contrast(word, accentBg) >= contrast(YELLOW, accentBg) ? word : YELLOW);
     header.style.setProperty("--logo-word", hex(word));
     header.style.setProperty("--logo-accent", hex(accent));
     header.setAttribute("data-logo", (word === WHITE ? "light" : "dark") + "-" + (accent === YELLOW ? "yellow" : "mono"));
-    header.setAttribute("data-logo-bg", wordBg.join(",") + "|" + accentBg.join(",") + "|" + contrast(YELLOW, accentBg).toFixed(2));
+    header.setAttribute("data-logo-bg", wordBg.join(",") + "|" + accentBg.join(",") + "|" + contrast(YELLOW, accentBg).toFixed(2) + "|dE" + dE(YELLOW, accentBg).toFixed(0));
   }
   function parseColor(str) { var m = str && str.match(/\d+(\.\d+)?/g); return m ? m.slice(0, 4).map(Number) : null; }
   function pageColor(el) {
