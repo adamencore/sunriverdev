@@ -252,23 +252,115 @@
   }
 })();
 
-// Lot map tooltip
+// Lot map: hover card for each lot (two styles while we choose), click goes to the lot's floor plan
 (function () {
-  document.querySelectorAll(".lotmap-scroll").forEach(function (box) {
-    var tip = box.querySelector(".lotmap-tip");
-    function show(g) {
-      var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
-      tip.textContent = g.getAttribute("data-tip");
-      tip.style.left = (r.left - b.left + box.scrollLeft + r.width / 2) + "px";
-      tip.style.top = (r.top - b.top + 6) + "px";
-      tip.hidden = false;
+  document.querySelectorAll(".lotmap").forEach(function (map) {
+    var box = map.querySelector(".lotmap-scroll");
+    var card = map.querySelector(".lotmap-card");
+    var data = {};
+    try { data = JSON.parse(map.querySelector(".lotmap-plans").textContent); } catch (e) {}
+    var hideTimer = null, current = null;
+    var LABEL = { available: "Available", sold: "Sold", model: "Model home", future: "Future model", sales: "Sales Center", upcoming: "Future release" };
+    var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+
+    function target(g) {
+      var p = data[g.getAttribute("data-plan")], st = g.getAttribute("data-status");
+      if (p) return p.url;
+      if (st === "sales") return "/contact-us";
+      if (st === "available" || st === "upcoming") return "/floor-plans";
+      if (st === "sold") return "/homes-for-sale";
+      return null;
     }
+
+    function html(g) {
+      var n = g.getAttribute("data-lot"), st = g.getAttribute("data-status"), p = data[g.getAttribute("data-plan")];
+      var url = target(g), label = LABEL[st] || st;
+      var detail = map.classList.contains("card-detail");
+      var tag = url ? "a" : "div", href = url ? ' href="' + url + '"' : "";
+      if (!detail) {
+        var name = p ? p.name : (st === "available" ? "Choose your plan" : st === "sold" ? "Sold" : label);
+        var meta = "Lot " + n + (p ? " &middot; " + p.sqft + " ft&sup2;" : " &middot; " + label);
+        return "<" + tag + ' class="lmc-card"' + href + ">" +
+          (p && p.img ? '<span class="lmc-img"><img src="' + p.img + '" alt=""></span>' : "") +
+          '<span class="lmc-bar"><span class="lmc-meta">' + meta + '</span><span class="lmc-name">' + esc(name) + "</span>" +
+          (url ? '<span class="po-go" aria-hidden="true"></span>' : "") + "</span></" + tag + ">";
+      }
+      var body;
+      if (p) {
+        body = '<span class="lmc-eyebrow">Lot ' + n + "</span>" +
+          '<span class="lmc-title">The ' + esc(p.name) + "</span>" +
+          '<span class="lmc-spec">' + p.sqft + " ft&sup2; | " + esc(p.spec) + "</span>" +
+          (st === "sold" ? '<span class="lmc-note">This homesite has sold. The ' + esc(p.name) + " is still available on other homesites.</span>"
+                         : '<span class="lmc-price">' + esc(p.price) + "</span>") +
+          '<span class="lmc-cta">View the floor plan<span class="lmc-arrow" aria-hidden="true"></span></span>';
+      } else if (st === "available" || st === "upcoming") {
+        body = '<span class="lmc-eyebrow">Lot ' + n + "</span>" +
+          '<span class="lmc-title">' + (st === "upcoming" ? "Coming in a future release" : "Ready for your plan") + "</span>" +
+          '<span class="lmc-note">Pair this homesite with one of our seven floor plans, from the Hamlet to the Amberly.</span>' +
+          '<span class="lmc-cta">Explore floor plans<span class="lmc-arrow" aria-hidden="true"></span></span>';
+      } else if (st === "sold") {
+        body = '<span class="lmc-eyebrow">Lot ' + n + '</span><span class="lmc-title">This homesite has sold.</span>' +
+          '<span class="lmc-cta">See homes for sale<span class="lmc-arrow" aria-hidden="true"></span></span>';
+      } else {
+        body = '<span class="lmc-eyebrow">Lot ' + n + '</span><span class="lmc-title">' + label + "</span>" +
+          (url ? '<span class="lmc-cta">Talk with our sales team<span class="lmc-arrow" aria-hidden="true"></span></span>' : "");
+      }
+      return "<" + tag + ' class="lmc-card lmc-detail"' + href + ">" +
+        (p && p.img ? '<span class="lmc-img"><img src="' + p.img + '" alt=""><span class="lmc-pill is-' + st + '">' + label + "</span></span>"
+                    : '<span class="lmc-pill is-' + st + ' solo">' + label + "</span>") +
+        '<span class="lmc-body">' + body + "</span></" + tag + ">";
+    }
+
+    function show(g) {
+      clearTimeout(hideTimer);
+      if (current) current.classList.remove("is-hot");
+      current = g; g.classList.add("is-hot");
+      card.innerHTML = html(g);
+      card.hidden = false;
+      var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
+      var cw = card.offsetWidth, ch = card.offsetHeight;
+      var x = r.left - b.left + box.scrollLeft + r.width / 2 - cw / 2;
+      x = Math.max(box.scrollLeft + 6, Math.min(x, box.scrollLeft + b.width - cw - 6));
+      var y = r.top - b.top - ch - 10;
+      var below = y < -b.top + 90;  // no room above (under the sticky header): open below the lot
+      if (below) y = r.bottom - b.top + 10;
+      card.style.left = x + "px"; card.style.top = y + "px";
+      card.classList.toggle("is-below", below);
+    }
+    function hideSoon() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(function () { card.hidden = true; if (current) current.classList.remove("is-hot"); current = null; }, 180);
+    }
+    card.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
+    card.addEventListener("mouseleave", hideSoon);
+
+    var touch = false;
+    box.addEventListener("pointerdown", function (e) { touch = e.pointerType !== "mouse"; });
     box.querySelectorAll(".lm-lot[data-tip]").forEach(function (g) {
-      g.addEventListener("mouseenter", function () { show(g); });
+      g.addEventListener("mouseenter", function () { if (!touch) show(g); });
+      g.addEventListener("mouseleave", hideSoon);
       g.addEventListener("focus", function () { show(g); });
-      g.addEventListener("click", function () { show(g); });
-      g.addEventListener("mouseleave", function () { tip.hidden = true; });
-      g.addEventListener("blur", function () { tip.hidden = true; });
+      g.addEventListener("blur", hideSoon);
+      g.addEventListener("click", function () {
+        // mouse: straight to the floor plan. touch: first tap opens the card, the card is the link
+        if (!touch && target(g)) { location.href = target(g); return; }
+        show(g);
+      });
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter" && target(g)) location.href = target(g); });
     });
+    document.addEventListener("click", function (e) { if (!map.contains(e.target)) { card.hidden = true; } });
+
+    // preview switch between the two card styles
+    var prev = map.previousElementSibling;
+    function setStyle(k) {
+      map.classList.toggle("card-light", k === "light");
+      map.classList.toggle("card-detail", k === "detail");
+      if (prev) prev.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-card") === k ? "true" : "false"); });
+      if (current && !card.hidden) show(current);
+    }
+    if (prev && prev.classList.contains("lotmap-preview")) {
+      prev.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { setStyle(b.getAttribute("data-card")); }); });
+    }
+    if (/[?&]card=detail/.test(location.search)) setStyle("detail");
   });
 })();

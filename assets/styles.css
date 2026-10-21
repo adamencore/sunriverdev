@@ -1265,11 +1265,47 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lotmap-scroll { position: relative; flex: 0 1 640px; min-width: 0; }
 .lotmap-svg { display: block; width: 100%; height: auto; }
 .lotmap-svg .lm-lot { cursor: default; outline: none; transition: filter .2s ease; }
-.lotmap-svg .lm-lot.is-available { cursor: pointer; }
-.lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.9); stroke: #335A97; stroke-width: 1.6px; }
+.lotmap-svg .lm-lot[data-plan], .lotmap-svg .lm-lot.is-available, .lotmap-svg .lm-lot.is-sold, .lotmap-svg .lm-lot.is-sales, .lotmap-svg .lm-lot.is-upcoming { cursor: pointer; }
+.lotmap-svg .lm-lot.is-hot, .lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.9); stroke: #335A97; stroke-width: 1.6px; }
 .lm-marks { pointer-events: none; }
 .lm-marks text { font-family: var(--font-display); font-weight: 500; font-size: 9.93px; text-anchor: middle; }
-.lotmap-tip { position: absolute; z-index: 2; transform: translate(-50%, calc(-100% - 12px)); background: #335A97; color: #fff; font-size: 14px; font-weight: 700; padding: 8px 12px; border-radius: 6px; white-space: nowrap; pointer-events: none; }
+/* Lot card that floats over the map */
+.lotmap-card { position: absolute; z-index: 3; animation: lmc-in .16s ease-out; }
+.lotmap-card[hidden] { display: none; }
+@keyframes lmc-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.lotmap-card.is-below { animation-name: lmc-in-below; }
+@keyframes lmc-in-below { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.lmc-card { display: block; overflow: hidden; border-radius: 18px; text-decoration: none; box-shadow: 0 14px 34px rgba(20, 40, 80, .28); }
+.lmc-img { position: relative; display: block; aspect-ratio: 16 / 9; background: #E9E4DD; }
+.lmc-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Option 1: light, a small version of the floor plan card */
+.card-light .lotmap-card { width: 240px; }
+.lmc-bar { position: relative; display: block; padding: 10px 62px 12px 16px; background: #335A97; }
+.lmc-meta { display: block; color: var(--sun-yellow); font-size: 12px; line-height: 16px; letter-spacing: -0.01em; }
+.lmc-name { display: block; margin-top: 2px; color: #FAF5EF; font-weight: 900; font-size: 22px; line-height: 24px; letter-spacing: -0.03em; text-transform: uppercase; }
+.lmc-bar .po-go { top: 50%; right: 14px; width: 34px; height: 34px; margin-top: -17px; background-size: 18px; }
+.lmc-card:hover .po-go { transform: translateX(3px); }
+/* Option 2: more info */
+.card-detail .lotmap-card { width: 300px; }
+.lmc-detail { background: var(--white); }
+.lmc-pill { position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 20px; background: var(--white); color: #335A97; font-weight: 900; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
+.lmc-pill.is-sold { background: #D91E37; color: var(--white); }
+.lmc-pill.is-available { background: var(--sun-yellow); color: var(--white); }
+.lmc-pill.solo { position: static; display: inline-block; margin: 18px 0 0 20px; border: 1px solid rgba(51, 90, 151, .2); }
+.lmc-body { display: grid; gap: 6px; padding: 16px 20px 20px; }
+.lmc-eyebrow { color: #335A97; font-weight: 900; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; opacity: .7; }
+.lmc-title { color: #335A97; font-weight: 900; font-size: 24px; line-height: 26px; letter-spacing: -0.03em; }
+.lmc-spec { color: #335A97; font-size: 13px; line-height: 17px; }
+.lmc-price { margin-top: 2px; color: #335A97; font-family: var(--font-serif); font-size: 24px; line-height: 28px; letter-spacing: -0.02em; }
+.lmc-note { color: #335A97; font-size: 13px; line-height: 18px; }
+.lmc-cta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding-top: 14px; border-top: 1px solid rgba(51, 90, 151, .14); color: #EDB443; font-weight: 900; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+.lmc-arrow { width: 34px; height: 34px; border-radius: 50%; background: #335A97 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 14'%3E%3Cpath d='M0 7h28M22 1l6 6-6 6' fill='none' stroke='%23fff' stroke-width='1.8'/%3E%3C/svg%3E") center / 18px no-repeat; transition: transform .2s ease; }
+.lmc-detail:hover .lmc-arrow { transform: translateX(3px); }
+/* Preview switch (temporary, while choosing a card style) */
+.lotmap-preview { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 40px; color: #335A97; font-size: 13px; font-weight: 700; }
+.lotmap-preview button { padding: 8px 16px; border: 2px solid #335A97; border-radius: 30px; background: transparent; color: #335A97; font: inherit; font-weight: 900; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.lotmap-preview button[aria-pressed="true"] { background: #335A97; color: var(--white); }
+.lotmap-preview + .lotmap { margin-top: 24px; }
 .lotmap-key { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; flex: none; color: #335A97; font-size: 15px; font-weight: 700; }
 .lotmap-key li { display: flex; align-items: center; gap: 10px; }
 .lotmap-key .sw { width: 22px; height: 22px; border-radius: 4px; border: 1px solid rgba(51, 90, 151, .2); }

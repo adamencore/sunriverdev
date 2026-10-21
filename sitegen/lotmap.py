@@ -8,6 +8,8 @@ import json
 import re
 from pathlib import Path
 
+from .lib import S
+
 ROOT = Path(__file__).resolve().parent.parent
 GEO = json.loads((ROOT / "sitegen" / "lotmap_geo.json").read_text())
 TEMPLATE = (ROOT / "sitegen" / "lotmap_template.svg").read_text()
@@ -24,8 +26,9 @@ def load():
     return json.loads((ROOT / "data" / "lots.json").read_text())
 
 
-def svg():
+def svg(plans=()):
     data = load()
+    by_name = {q["name"].lower(): q for q in plans}
     colors = data["colors"]
     lots = {e["lot"]: e for e in data["lots"]}
     out = TEMPLATE
@@ -49,7 +52,10 @@ def svg():
             fill = colors[plan_key]["hex"]
         elif st in ("available", "upcoming"):
             fill = WHITE
-        attrs = ' data-tip="%s" tabindex="0" role="img" aria-label="%s"' % (tip, tip)
+        q = by_name.get((plan or "").lower())
+        attrs = ' data-tip="%s" data-status="%s" tabindex="0" role="link" aria-label="%s"' % (tip, st, tip)
+        if q:
+            attrs += ' data-plan="%s"' % q["slug"]
         if fill:
             attrs += ' style="fill:%s"' % fill
 
@@ -77,14 +83,26 @@ def svg():
             marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, BADGE.get(badge, BADGE["slate"])))
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, NUM_LIGHT, n))
     out = out.replace("</svg>", '<g class="lm-marks" aria-hidden="true">%s</g></svg>' % "".join(marks))
+    cards = {}
+    for q in plans:
+        ref = q.get("gallery") and q["gallery"][0]["asset"]
+        cards[q["slug"]] = {"name": q["name"], "sqft": "{:,}".format(q["squareFootage"]), "price": q.get("priceRange", ""),
+                            "spec": q.get("specLine", ""), "img": S(ref, 640) if ref else "", "url": "/floor-plans/%s" % q["slug"]}
+    plan_json = json.dumps(cards, separators=(",", ":")).replace("</", "<\\/")
     avail = sum(1 for e in lots.values() if e.get("status") == "available")
     sold = sum(1 for e in lots.values() if e.get("status") == "sold")
     out = re.sub(r"<svg\b", '<svg class="lotmap-svg" role="group" aria-label="SunRiver Firelight lot map: %d homesites available, %d sold"' % (avail, sold), out, count=1)
     out = re.sub(r"<\?xml[^>]*>", "", out)
-    return '''<div class="lotmap">
+    return '''<div class="lotmap-preview" role="group" aria-label="Lot card preview">
+  <span>Preview the lot card:</span>
+  <button type="button" data-card="light" aria-pressed="true">Option 1: Light</button>
+  <button type="button" data-card="detail" aria-pressed="false">Option 2: More info</button>
+</div>
+<div class="lotmap card-light">
   <div class="lotmap-scroll">
     %s
-    <div class="lotmap-tip" hidden></div>
+    <div class="lotmap-card" hidden></div>
+    <script type="application/json" class="lotmap-plans">%s</script>
   </div>
   <ul class="lotmap-key">
     <li><span class="sw sw-open"></span>Available</li>
@@ -93,4 +111,4 @@ def svg():
     <li><span class="sw sw-future"></span>Future model</li>
     <li><span class="sw sw-plan"></span>Plan selected</li>
   </ul>
-</div>''' % out.strip()
+</div>''' % (out.strip(), plan_json)

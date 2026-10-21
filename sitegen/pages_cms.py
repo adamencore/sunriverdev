@@ -610,7 +610,7 @@ def build_live_in(plans, listings):
   <div class="wrap li-in">%s</div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
-        rows, "".join(listing_card(l) for l in ready), lotmap.svg()))
+        rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans)))
 
 
 def build_live_out():
