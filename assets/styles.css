@@ -1268,17 +1268,20 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lotmap-svg { -webkit-user-select: none; user-select: none; }
 .lotmap-svg * { pointer-events: none; }
 .lotmap-svg .lm-lot { pointer-events: auto; }
-.lotmap-svg .lm-lot { cursor: default; outline: none; transition: filter .2s ease; }
+.lotmap-svg .lm-lot { cursor: default; outline: none; stroke: rgba(51, 90, 151, 0); stroke-width: 1.6px; transition: filter .22s cubic-bezier(.22, .61, .36, 1), stroke .22s cubic-bezier(.22, .61, .36, 1); }
 .lotmap-svg .lm-lot[data-plan], .lotmap-svg .lm-lot.is-available, .lotmap-svg .lm-lot.is-sold, .lotmap-svg .lm-lot.is-sales, .lotmap-svg .lm-lot.is-upcoming { cursor: pointer; }
-.lotmap-svg .lm-lot.is-hot, .lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.9); stroke: #335A97; stroke-width: 1.6px; }
+.lotmap-svg .lm-lot.is-hot, .lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.93); stroke: rgba(51, 90, 151, .9); }
 .lm-marks { pointer-events: none; }
 .lm-marks text { font-family: var(--font-display); font-weight: 500; font-size: 9.93px; text-anchor: middle; }
 /* Lot card that floats over the map */
-.lotmap-card { position: absolute; z-index: 3; animation: lmc-in .16s ease-out; }
+.lotmap-card { position: absolute; z-index: 3; opacity: 0; transform: translateY(8px) scale(.97); transform-origin: 50% 100%; pointer-events: none;
+  transition: opacity .2s cubic-bezier(.22, .61, .36, 1), transform .24s cubic-bezier(.22, .61, .36, 1); }
+.lotmap-card.is-below { transform: translateY(-8px) scale(.97); transform-origin: 50% 0; }
+.lotmap-card.is-open { opacity: 1; transform: none; pointer-events: auto; }
+.lotmap-card.is-moving { transition: opacity .2s cubic-bezier(.22, .61, .36, 1), transform .24s cubic-bezier(.22, .61, .36, 1), left .22s cubic-bezier(.22, .61, .36, 1), top .22s cubic-bezier(.22, .61, .36, 1); }
 .lotmap-card[hidden] { display: none; }
-@keyframes lmc-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.lotmap-card.is-below { animation-name: lmc-in-below; }
-@keyframes lmc-in-below { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+.lmc-card { transition: box-shadow .2s ease; }
+@media (prefers-reduced-motion: reduce) { .lotmap-card, .lotmap-card.is-moving, .lotmap-svg .lm-lot { transition: opacity .12s linear; transform: none; } }
 .lmc-card { display: block; overflow: hidden; border-radius: 18px; text-decoration: none; box-shadow: 0 14px 34px rgba(20, 40, 80, .28); }
 .lmc-img { position: relative; display: block; aspect-ratio: 16 / 9; background: #E9E4DD; }
 .lmc-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

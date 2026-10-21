@@ -315,8 +315,10 @@
       clearTimeout(hideTimer);
       if (current) current.classList.remove("is-hot");
       current = g; g.classList.add("is-hot");
+      var wasOpen = card.classList.contains("is-open");
       card.innerHTML = html(g);
       card.hidden = false;
+      card.classList.toggle("is-moving", wasOpen);  // already open: glide to the new lot instead of popping
       var r = g.getBoundingClientRect(), b = box.getBoundingClientRect();
       var cw = card.offsetWidth, ch = card.offsetHeight;
       var x = r.left - b.left + box.scrollLeft + r.width / 2 - cw / 2;
@@ -326,10 +328,18 @@
       if (below) y = r.bottom - b.top + 10;
       card.style.left = x + "px"; card.style.top = y + "px";
       card.classList.toggle("is-below", below);
+      if (!wasOpen) { void card.offsetWidth; }
+      card.classList.add("is-open");
+    }
+    function close() {
+      card.classList.remove("is-open");
+      if (current) current.classList.remove("is-hot");
+      current = null;
+      setTimeout(function () { if (!card.classList.contains("is-open")) card.hidden = true; }, 200);
     }
     function hideSoon() {
       clearTimeout(hideTimer);
-      hideTimer = setTimeout(function () { card.hidden = true; if (current) current.classList.remove("is-hot"); current = null; }, 180);
+      hideTimer = setTimeout(close, 140);
     }
     card.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
     card.addEventListener("mouseleave", hideSoon);
@@ -348,7 +358,7 @@
       });
       g.addEventListener("keydown", function (e) { if (e.key === "Enter" && target(g)) location.href = target(g); });
     });
-    document.addEventListener("click", function (e) { if (!map.contains(e.target)) { card.hidden = true; } });
+    document.addEventListener("click", function (e) { if (!map.contains(e.target)) close(); });
 
     // preview switch between the two card styles
     var prev = map.previousElementSibling;
