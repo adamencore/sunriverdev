@@ -165,11 +165,11 @@ def pill_header(active, variant="bar"):
         <div class="pill-drop" id="life-menu" data-active="2"><ul>%s</ul><div class="pill-drop-photo" aria-hidden="true">%s</div></div></div>
       <div class="nav-item"><a class="nav-link" href="/homes-for-sale"%s>Homes</a></div>
       <div class="nav-item"><a class="nav-link" href="/discovery-villas"%s>Discovery Villas</a></div>
-      <a class="pill-cta" href="/sunriver-firelight">Visit</a>
+      <a class="pill-cta" href="/contact-us"%s>Visit</a>
     </nav>
   </div>
 </header>''' % (cls, tab, img(LOGO, "SunRiver Communities", loading="eager"), cur("life"), items, photos,
-       cur("homes"), cur("villas"))
+       cur("homes"), cur("villas"), cur("visit"))
 
 
 def header(active):
