@@ -646,10 +646,10 @@ def build_live_out():
     close = [("Quail Creek Reservoir", "8 min"), ("Red Cliffs National Conservation Area", "10 min"),
              ("Sky Mountain Golf Course, Hurricane", "12 min"), ("Sand Hollow State Park", "22 min"),
              ("St. George", "about 30 min"), ("Zion National Park", "31 min"), ("St. George Regional Airport", "36 min")]
-    far = [("Zion National Park", "31 minutes", "/assets/img/lo-zion.webp"),
-           ("Utah Shakespeare Festival, Cedar City", "About 50 minutes", "/assets/img/lo-shakespeare.webp"),
-           ("Bryce Canyon", "About 2 hours", "/assets/img/lo-bryce.webp"),
-           ("Grand Canyon North Rim", "About 2.5 hours", "/assets/img/lo-grand-canyon.webp")]
+    far = [("Zion National Park", "31 min", "/assets/img/lo-zion.webp"),
+           ("Utah Shakespeare Festival", "Cedar City, about 50 min", "/assets/img/lo-shakespeare.webp"),
+           ("Bryce Canyon", "about 2 hrs", "/assets/img/lo-bryce.webp"),
+           ("Grand Canyon North Rim", "about 2.5 hrs", "/assets/img/lo-grand-canyon.webp")]
     also = "Brian Head for snow, about an hour away, so you can see it without living in it. Las Vegas, about 2 hours."
     rows = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in close)
     cards = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
