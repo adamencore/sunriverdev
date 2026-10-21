@@ -153,7 +153,8 @@ def pill_header(active, variant="bar"):
                      for k, (src, alt) in enumerate(shots))
     cur = lambda k: ' aria-current="page"' if k == active else ""
     tab = '<a class="founders-tab" href="/founders-club">Join the Firelight Founders Club</a>' if variant == "overlay" else ""
-    cls = {"home": "site-header overlay", "overlay": "site-header overlay has-tab", "bar": "site-header pill-bar"}[variant]
+    # One header everywhere: logo plus the floating pill, no white bar behind it.
+    cls = {"home": "site-header overlay", "overlay": "site-header overlay has-tab", "bar": "site-header overlay on-light"}[variant]
     return '''<a class="skip" href="#main">Skip to content</a>
 <header class="%s" data-menu="closed">
   %s

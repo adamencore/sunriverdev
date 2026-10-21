@@ -29,7 +29,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
 
 body {
@@ -809,9 +809,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* Header: white bar (inner pages) and photo overlay with the Founders tab */
-.pill-bar .header-inner { padding-top: 28px; }
-.pill-bar .logo img, .has-tab .logo img { width: 189px; }
-.pill-bar .pill-nav { background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.has-tab .logo img { width: 189px; }
+.on-light .pill-nav { background: rgba(255, 255, 255, .8); box-shadow: 0 4px 18px rgba(20, 40, 80, .08), inset 0 0 0 1px rgba(51, 90, 151, .08); }
 .pill-nav .nav-link[aria-current="page"] { color: var(--sunriver-blue); }
 .overlay.has-tab .header-inner { padding-top: 63px; align-items: flex-start; }
 .overlay.has-tab .pill-nav { margin-top: 9px; }
@@ -976,8 +975,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 1020px) {
-  .pill-bar .header-inner { padding-top: 0; }
-  .pill-bar .logo img, .has-tab .logo img { width: 150px; }
+  .has-tab .logo img { width: 150px; }
   .overlay.has-tab .header-inner { padding-top: 46px; align-items: center; }
   .overlay.has-tab .pill-nav { margin-top: 0; }
   .has-tab .founders-tab { width: auto; height: 32px; padding: 0 22px; font-size: 11px; }
@@ -1019,27 +1017,26 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
    in once as it enters the screen. Nothing loops, nothing follows the pointer,
    and all of it switches off for people who ask for reduced motion.
    ===================================================================== */
-.site-header .header-inner, .site-header .logo img { transition: height .25s ease, padding .25s ease, width .25s ease; }
-.site-header.pill-bar.is-compact .header-inner { height: 84px; padding-top: 0; }
-.site-header.pill-bar.is-compact .logo img { width: 146px; }
-.site-header.overlay.is-stuck { position: fixed; background: var(--white); box-shadow: var(--shadow-header); animation: header-in .28s cubic-bezier(.2, .8, .2, 1); }
-.site-header.overlay.is-stuck .header-inner { height: 84px; padding-top: 0; align-items: center; }
-.site-header.overlay.is-stuck .logo img { width: 146px; }
-.site-header.overlay .logo img { transition: none; }
-.site-header.overlay.is-stuck .pill-nav { margin-top: 0; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
-.site-header.overlay.is-stuck .founders-tab { display: none; }
-@keyframes header-in { from { transform: translateY(-100%); } to { transform: none; } }
+/* Header on scroll (like tripointehomes.com): the logo and nav scroll away with the page;
+   scrolling back up brings the nav pill back on its own, floating, without the logo. */
+.site-header.overlay { transition: none; }
+.site-header.is-fixed { position: fixed; transform: translateY(-110%); }
+.site-header.is-fixed.is-shown { transform: none; }
+.site-header.is-fixed.is-anim { transition: transform .32s cubic-bezier(.22, .61, .36, 1); }
+.site-header.is-fixed .header-inner { padding-top: 16px; }
+.site-header.is-fixed .logo { visibility: hidden; opacity: 0; pointer-events: none; }
+.site-header.is-fixed .founders-tab { display: none; }
+.site-header.is-fixed .pill-nav { margin-top: 0; background: rgba(255, 255, 255, .92); box-shadow: 0 8px 28px rgba(20, 40, 80, .14); }
 @media (max-width: 1020px) {
-  .site-header.pill-bar.is-compact .header-inner, .site-header.overlay.is-stuck .header-inner { height: 70px; }
-  .site-header.pill-bar.is-compact .logo img, .site-header.overlay.is-stuck .logo img { width: 116px; }
-  .site-header.overlay.is-stuck .menu-toggle { background: none; }
+  .site-header.is-fixed .header-inner { padding-top: 12px; }
+  .site-header.is-fixed .menu-toggle { background: rgba(255, 255, 255, .92); border-radius: 50%; box-shadow: 0 6px 20px rgba(20, 40, 80, .14); }
 }
 
 .rv { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); }
 .rv.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .rv { opacity: 1; transform: none; }
-  .site-header.overlay.is-stuck { animation: none; }
+  .site-header.is-fixed.is-anim { transition: none; }
 }
 
 /* Homepage: more breathing room between sections (about 40% more than the Figma frame) */

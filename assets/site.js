@@ -56,18 +56,27 @@
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Header on scroll: the white bar slims down; photo-page headers come back as a slim white bar.
+  // ---------- Header on scroll (like tripointehomes.com): logo and nav scroll away with the page.
+  // Scrolling back up brings the nav pill back, floating at the top, without the logo; at the very top
+  // the full header (logo included) is back in place.
   if (header) {
-    var overlay = header.classList.contains('overlay'), ticking = false;
+    var lastY = window.scrollY || 0, ticking = false, H = function () { return header.offsetHeight + 40; };
     var onScroll = function () {
       ticking = false;
-      var y = window.scrollY || window.pageYOffset;
-      if (overlay) {
-        if (y > 220) header.classList.add('is-stuck');
-        else if (y <= 8) header.classList.remove('is-stuck');
-      } else {
-        header.classList.toggle('is-compact', y > 40);
+      var y = window.scrollY || window.pageYOffset, dy = y - lastY;
+      var menuOpen = header.getAttribute('data-menu') === 'open';
+      if (y <= 4) {
+        header.classList.remove('is-fixed', 'is-shown', 'is-anim');
+      } else if (!header.classList.contains('is-fixed')) {
+        if (y > H()) { header.classList.add('is-fixed'); void header.offsetWidth; header.classList.add('is-anim'); }
+      } else if (Math.abs(dy) > 4 && !menuOpen) {
+        if (dy < 0) header.classList.add('is-shown');
+        else {
+          header.classList.remove('is-shown');
+          header.querySelectorAll('.nav-item[data-open="true"]').forEach(function (n) { n.setAttribute('data-open', 'false'); var b = n.querySelector('.nav-link'); if (b) b.setAttribute('aria-expanded', 'false'); });
+        }
       }
+      if (Math.abs(dy) > 4) lastY = y;
     };
     window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
