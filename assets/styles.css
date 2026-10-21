@@ -613,7 +613,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .site-header.overlay { position: absolute; background: transparent; box-shadow: none; }
 .overlay .header-inner { height: auto; padding-top: 54px; align-items: center; }
 .overlay .logo img { width: 212px; }
-.pill-nav { position: relative; width: 517px; justify-content: space-between; height: 46px; padding: 0 6px 0 26px; gap: 20px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pill-nav { position: relative; width: auto; justify-content: flex-start; height: 46px; padding: 0 7px 0 30px; gap: 38px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .pill-nav .nav-link { font-size: 15px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
 .pill-nav .nav-link:hover { color: var(--sun-yellow-deep); }
 .pill-nav .chev { display: none; }
