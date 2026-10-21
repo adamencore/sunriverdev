@@ -632,7 +632,13 @@ def build_live_in(plans, listings):
         <p>Where the light lands in the morning. Which counter you will stand at when there are twelve people over. Whether the hobby room is for pottery or a workbench, because those need different outlets.</p>
         <p>The point of the appointment is not to upsell you. It is to make the house match the way you live.</p></div>
     </div>
-    <div class="li-flips">%s</div>
+    <div class="li-flip-preview" role="group" aria-label="Card animation preview"><span>Preview the card animation:</span>
+      <button type="button" data-anim="flip" aria-pressed="true">1. Classic flip</button>
+      <button type="button" data-anim="flipx" aria-pressed="false">2. Vertical flip</button>
+      <button type="button" data-anim="lift" aria-pressed="false">3. Lift and flip</button>
+      <button type="button" data-anim="slide" aria-pressed="false">4. Slide up</button>
+      <button type="button" data-anim="fade" aria-pressed="false">5. Fade and zoom</button></div>
+    <div class="li-flips" data-anim="flip">%s</div>
   </div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),

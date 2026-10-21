@@ -611,3 +611,14 @@ document.querySelectorAll(".li-flip").forEach(function (c) {
   c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.classList.toggle("is-flipped"); } });
   c.addEventListener("mouseleave", function () { c.classList.remove("is-flipped"); });
 });
+
+// Flip card animation preview switch (temporary)
+document.querySelectorAll(".li-flip-preview").forEach(function (bar) {
+  var grid = bar.nextElementSibling;
+  bar.querySelectorAll("button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      grid.setAttribute("data-anim", b.getAttribute("data-anim"));
+      bar.querySelectorAll("button").forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+    });
+  });
+});

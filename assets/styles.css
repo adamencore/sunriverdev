@@ -1447,3 +1447,31 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .li-dc-feature { grid-template-columns: minmax(0, 1fr); }
   .li-flips { grid-template-columns: minmax(0, 300px); }
 }
+
+/* Flip card animation options (temporary preview switch above the cards) */
+.li-flip-preview { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 72px; color: #335A97; font-size: 13px; font-weight: 700; }
+.li-flip-preview button { padding: 8px 16px; border: 2px solid #335A97; border-radius: 30px; background: transparent; color: #335A97; font: inherit; font-weight: 900; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
+.li-flip-preview button[aria-pressed="true"] { background: #335A97; color: var(--white); }
+.li-flip-preview + .li-flips { margin-top: 28px; }
+/* 2. Vertical flip: turns top over bottom */
+.li-flips[data-anim="flipx"] .li-flip-back { transform: rotateX(180deg); }
+.li-flips[data-anim="flipx"] .li-flip:hover .li-flip-in, .li-flips[data-anim="flipx"] .li-flip:focus-visible .li-flip-in, .li-flips[data-anim="flipx"] .li-flip.is-flipped .li-flip-in { transform: rotateX(180deg); }
+/* 3. Lift and flip: the card rises toward you as it turns, a shade quicker, with a shadow */
+.li-flips[data-anim="lift"] .li-flip-in { transition: transform .6s cubic-bezier(.34, 1.3, .64, 1); }
+.li-flips[data-anim="lift"] .li-flip:hover .li-flip-in, .li-flips[data-anim="lift"] .li-flip:focus-visible .li-flip-in, .li-flips[data-anim="lift"] .li-flip.is-flipped .li-flip-in { transform: translateY(-10px) rotateY(180deg); }
+.li-flips[data-anim="lift"] .li-flip-front, .li-flips[data-anim="lift"] .li-flip-back { transition: box-shadow .5s ease; }
+.li-flips[data-anim="lift"] .li-flip:hover .li-flip-back, .li-flips[data-anim="lift"] .li-flip.is-flipped .li-flip-back { box-shadow: 0 22px 40px rgba(20, 40, 80, .25); }
+/* 4 and 5 do not turn the card: the photo comes in over the front */
+.li-flips[data-anim="slide"] .li-flip-in, .li-flips[data-anim="fade"] .li-flip-in { transform: none !important; transition: none; }
+.li-flips[data-anim="slide"] .li-flip-back, .li-flips[data-anim="fade"] .li-flip-back { -webkit-backface-visibility: visible; backface-visibility: visible; }
+/* 4. Slide up: the photo rises from the bottom edge and covers the card */
+.li-flips[data-anim="slide"] .li-flip-back { transform: translateY(101%); transition: transform .55s cubic-bezier(.22, .61, .36, 1); }
+.li-flips[data-anim="slide"] .li-flip:hover .li-flip-back, .li-flips[data-anim="slide"] .li-flip:focus-visible .li-flip-back, .li-flips[data-anim="slide"] .li-flip.is-flipped .li-flip-back { transform: none; }
+.li-flips[data-anim="slide"] .li-flip-front { transition: transform .55s cubic-bezier(.22, .61, .36, 1); }
+.li-flips[data-anim="slide"] .li-flip:hover .li-flip-front, .li-flips[data-anim="slide"] .li-flip.is-flipped .li-flip-front { transform: translateY(-14%); }
+/* 5. Fade and zoom: the photo fades in while easing from a slight zoom to rest */
+.li-flips[data-anim="fade"] .li-flip-back { transform: none; opacity: 0; transition: opacity .45s ease; }
+.li-flips[data-anim="fade"] .li-flip-back img { transform: scale(1.12); transition: transform .9s cubic-bezier(.22, .61, .36, 1); }
+.li-flips[data-anim="fade"] .li-flip:hover .li-flip-back, .li-flips[data-anim="fade"] .li-flip:focus-visible .li-flip-back, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back { opacity: 1; }
+.li-flips[data-anim="fade"] .li-flip:hover .li-flip-back img, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back img { transform: none; }
+.li-flips[data-anim="slide"] .li-flip, .li-flips[data-anim="fade"] .li-flip { overflow: hidden; border-radius: 20px; }
