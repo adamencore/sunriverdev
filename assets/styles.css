@@ -1407,6 +1407,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .fh-badge img { width: 100%; height: auto; }
 .fh-blog .wordmark { display: block; width: min(520px, 80vw); height: auto; margin: 0 auto; filter: drop-shadow(0 2px 14px rgba(20, 50, 80, .3)); }
 .fh-blog h1::after { margin-top: 10px; }
+.fh-blog::before { background: linear-gradient(180deg, rgba(255, 255, 255, .55) 0%, rgba(255, 255, 255, 0) 30%); }
+.fh-blog h1, .fh-blog .fh-sub, .fh-blog .fh-eyebrow { color: #335A97; text-shadow: none; }
 .fh-hero + .tabbar { margin-top: 0; }
 @media (max-width: 860px) {
   .fh-hero { height: 500px; }

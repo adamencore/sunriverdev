@@ -520,7 +520,7 @@ def build_blog(posts):
     blog_listing(posts, "/bucketlistliving", banner, "", "#bucketlistliving", "Bucketlist Living: stories, events and guides from SunRiver Firelight and Southern Utah.", cats)
     for c in cats:
         cp = [p for p in posts if c in (p.get("categories") or [])]
-        blog_listing(cp, "/bucketlistliving/category/%s" % slugify(c), sand_hero("Category", esc(c), src=V("bucketlist-banner.02if0nz4sgehw.webp")), "", "%s | #bucketlistliving" % c,
+        blog_listing(cp, "/bucketlistliving/category/%s" % slugify(c), full_hero(esc(c), eyebrow="Category", src=V("bucketlist-banner.02if0nz4sgehw.webp"), cls="fh-blog"), "", "%s | #bucketlistliving" % c,
                      "%s stories from Bucketlist Living at SunRiver." % c, cats, c)
 
     for i, p in enumerate(posts):
