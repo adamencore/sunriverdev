@@ -617,7 +617,10 @@ document.querySelectorAll(".li-flip-preview").forEach(function (bar) {
   var grid = bar.nextElementSibling;
   bar.querySelectorAll("button").forEach(function (b) {
     b.addEventListener("click", function () {
+      grid.classList.add("no-anim");  // switch styles without animating the change itself
       grid.setAttribute("data-anim", b.getAttribute("data-anim"));
+      void grid.offsetWidth;
+      requestAnimationFrame(function () { requestAnimationFrame(function () { grid.classList.remove("no-anim"); }); });
       bar.querySelectorAll("button").forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
     });
   });

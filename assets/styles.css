@@ -1475,3 +1475,4 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back, .li-flips[data-anim="fade"] .li-flip:focus-visible .li-flip-back, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back { opacity: 1; }
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back img, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back img { transform: none; }
 .li-flips[data-anim="slide"] .li-flip, .li-flips[data-anim="fade"] .li-flip { overflow: hidden; border-radius: 20px; }
+.li-flips.no-anim, .li-flips.no-anim * { transition: none !important; }
