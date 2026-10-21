@@ -589,10 +589,11 @@
     if (img.src.indexOf(location.origin) === 0 || img.src.charAt(0) === "/") {
       if (img.complete && img.naturalWidth) go(img); else img.addEventListener("load", function () { go(img); }, { once: true });
     } else {
-      // photos from the image CDN: read a CORS copy (same file, small size) so the canvas can see it
+      // photos from the image CDN
       if (!probe || probe.dataset.for !== img.currentSrc) {
-        probe = new Image(); probe.crossOrigin = "anonymous"; probe.dataset.for = img.currentSrc;
-        probe.src = (img.currentSrc || img.src).replace(/([?&])w=\d+/, "$1w=800") + ((img.currentSrc || img.src).indexOf("?") > -1 ? "&" : "?") + "cors=1";
+        probe = new Image(); probe.dataset.for = img.currentSrc;
+        // same file, small, through the site's own /cdn-img/ proxy (netlify.toml) so the canvas may read it
+        probe.src = (img.currentSrc || img.src).replace(/^https:\/\/cdn\.sanity\.io\/images\/[^/]+\/[^/]+\//, "/cdn-img/").replace(/([?&])w=\d+/, "$1w=800");
       }
       if (probe.complete && probe.naturalWidth) go(probe); else probe.onload = function () { go(probe); };
     }
