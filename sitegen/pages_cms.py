@@ -611,3 +611,85 @@ def build_live_in(plans, listings):
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
         rows, "".join(listing_card(l) for l in ready), lotmap.svg()))
+
+
+def build_live_out():
+    """Live Out page, patterned on the Figma "Live In" page (no Live Out frame yet). Copy from Adam's Live Out doc.
+    Drive times marked as estimates in that doc still need verifying."""
+    close = [("Quail Creek Reservoir", "8 min"), ("Red Cliffs National Conservation Area", "10 min"),
+             ("Sky Mountain Golf Course, Hurricane", "12 min"), ("Sand Hollow State Park", "22 min"),
+             ("St. George", "about 30 min"), ("Zion National Park", "31 min"), ("St. George Regional Airport", "36 min")]
+    far = [("Zion National Park", "31 minutes", V("zion.3lmfdu4qx4jcf.png")),
+           ("Utah Shakespeare Festival, Cedar City", "About 50 minutes", V("shakespeare.1kcokbih9lyah.png")),
+           ("Bryce Canyon", "About 2 hours", V("bryce.3wvrrj9gm1xpt.png")),
+           ("Grand Canyon North Rim", "About 2.5 hours", V("grand-canyon.0h96i5x02d6f4.png"))]
+    also = "Brian Head for snow, about an hour away, so you can see it without living in it. Las Vegas, about 2 hours."
+    rows = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in close)
+    cards = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
+        img(p, t), esc(t), d) for t, d, p in far)
+    trails = [("Inside the community", "Twenty-two miles of trail run through and around SunRiver Firelight, with trailheads within walking distance of most homesites."),
+              ("Ten minutes out", "Toquerville Falls. Confluence Park. The Virgin River. Quail Creek, where the water is warm by April. Red Cliffs, where the slot canyons and petroglyphs are."),
+              ("Twenty to thirty minutes out", "Sand Hollow for boating and side-by-sides. Zion National Park, 31 minutes from your front door.")]
+    trail_cols = "".join('<div class="lo-col"><h3>%s</h3><p>%s</p></div>' % (a, b) for a, b in trails)
+    nearby = [("Groceries", [("Lin's Marketplace, Hurricane", "15 min"), ("Walmart Supercenter, Hurricane", "15 min"), ("Costco, Washington", "28 min")]),
+              ("Healthcare", [("Intermountain Hurricane Valley Clinic and InstaCare", "15 min"), ("St. George Regional Hospital, the region's Level II trauma center", "32 min")]),
+              ("Dining", [("River Rock Roasting Company, La Verkin", "4 min"), ("Pigs Ear American Bistro", "10 min"), ("The Hurricane restaurant strip", "15 min")])]
+    near_html = "".join('<div class="lo-near"><h3>%s</h3><ul>%s</ul></div>' % (
+        c, "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in items)) for c, items in nearby)
+    add("/live-out", "Live Out", "Live Out at SunRiver Firelight: Zion 31 minutes away, 22 miles of trails, and everything you need close by.", "life-overlay", '''
+<section class="fah-hero li-hero lo-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>Live Out</h1></div>
+</section>
+<section class="li-intro">
+  <div class="wrap li-in">
+    <h2>Zion is<br> 31 minutes away.</h2>
+    <p class="li-serif">Not a scenic drive away. Not a day trip. Decide to go at breakfast<br> and be walking the Pa&rsquo;rus Trail before the shuttle line builds.</p>
+    <div class="li-btns"><a class="li-btn solid" href="/contact-us">Schedule a visit</a><a class="li-btn" href="#nearby">See what is nearby</a></div>
+  </div>
+</section>
+<section class="li-plans lo-region">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">01 / Southern Utah</p>
+    <h2 class="li-title">The landscape is the daily backdrop,<br> not the weekend plan.</h2>
+    <p class="li-copy">That is the reason to be on this side of Southern Utah. SunRiver Firelight sits on the Zion side, north of Hurricane, where red rock and open desert are part of every day instead of an occasional outing.</p>
+    <div class="lo-region-grid">
+      <div class="lo-times"><h3>What is close</h3><ul>%s</ul></div>
+      <div class="lo-far"><h3>And farther out</h3><div class="lo-cards">%s</div><p class="lo-also">%s</p></div>
+    </div>
+    <div class="lo-weather">
+      <h3>The weather is the quiet reason people move here.</h3>
+      <div class="lo-stats">
+        <div><strong>300</strong><span>Days of sunshine, give or take</span></div>
+        <div><strong>50s</strong><span>Winter afternoons</span></div>
+        <div><strong>500 ft</strong><span>Higher than St. George, so summer runs a few degrees cooler, and it never turns into a place that snows</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="li-visit">
+  <svg class="li-wave" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C 260 120, 520 120, 760 210 S 1220 300, 1440 160 L1440 360 L0 360 Z" fill="#fff" fill-opacity=".07"/><path d="M0 110 C 300 30, 560 60, 820 140 S 1260 200, 1440 60 L1440 0 L0 0 Z" fill="#fff" fill-opacity=".05"/></svg>
+  <div class="wrap li-visit-inner">
+    <h2>Come see it for yourself.</h2>
+    <div class="li-btns center"><a class="li-btn light" href="/contact-us">Schedule a visit</a><a class="li-btn white" href="/discovery-villas">Stay a few nights</a></div>
+  </div>
+</section>
+<section class="li-ready lo-trails">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">02 / Trails and adventure</p>
+    <h2 class="li-title">The trails start where<br> the driveway ends.</h2>
+    <p class="li-copy">Twenty-two miles of trail run through and around SunRiver Firelight. Not a paved loop around a retention pond. Real desert trail, with the kind of grade and view that makes you want to go again tomorrow.</p>
+    <div class="lo-cols">%s</div>
+  </div>
+  <div class="lo-trail-img">%s</div>
+</section>
+<section class="li-lots lo-nearby" id="nearby">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">03 / What is nearby</p>
+    <h2 class="li-title">Live a little closer.</h2>
+    <p class="li-copy">Groceries, healthcare and a good cup of coffee are a short drive from your front door.</p>
+    <div class="lo-near-grid">%s</div>
+    <div class="li-btns"><a class="li-btn solid" href="/contact-us">Schedule a visit</a></div>
+  </div>
+</section>''' % (img(V("live-out.2z9c8sf8gogme.jpg"), "SunRiver members hiking in red rock country", "fah-hero-img", "eager"),
+                 rows, cards, also, trail_cols, img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html))
