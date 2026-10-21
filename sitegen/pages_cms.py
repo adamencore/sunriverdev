@@ -627,7 +627,7 @@ def build_live_out():
     rows = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in close)
     cards = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
         img(p, t), esc(t), d) for t, d, p in far)
-    trails = [("Inside the community", "Twenty-two miles of trail run through and around SunRiver Firelight, with trailheads within walking distance of most homesites."),
+    trails = [("Inside the community", "Trailheads within walking distance of most homesites, so a morning hike starts at your front door."),
               ("Ten minutes out", "Toquerville Falls. Confluence Park. The Virgin River. Quail Creek, where the water is warm by April. Red Cliffs, where the slot canyons and petroglyphs are."),
               ("Twenty to thirty minutes out", "Sand Hollow for boating and side-by-sides. Zion National Park, 31 minutes from your front door.")]
     trail_cols = "".join('<div class="lo-col"><h3>%s</h3><p>%s</p></div>' % (a, b) for a, b in trails)
