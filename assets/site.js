@@ -528,7 +528,6 @@
     header.style.setProperty("--logo-word", hex(word));
     header.style.setProperty("--logo-accent", hex(accent));
     header.setAttribute("data-logo", (word === WHITE ? "light" : "dark") + "-" + (accent === YELLOW ? "yellow" : "mono"));
-    header.setAttribute("data-logo-bg", wordBg.join(",") + "|" + accentBg.join(",") + "|" + contrast(YELLOW, accentBg).toFixed(2) + "|dE" + dE(YELLOW, accentBg).toFixed(0));
   }
   function parseColor(str) { var m = str && str.match(/\d+(\.\d+)?/g); return m ? m.slice(0, 4).map(Number) : null; }
   function pageColor(el) {
