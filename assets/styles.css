@@ -614,10 +614,10 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .overlay .header-inner { height: auto; padding-top: 54px; align-items: center; }
 .overlay .logo img { width: 212px; }
 .pill-nav { position: relative; width: 517px; justify-content: space-between; height: 46px; padding: 0 6px 0 26px; gap: 20px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.pill-nav .nav-link { font-size: 13px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
+.pill-nav .nav-link { font-size: 15px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
 .pill-nav .nav-link:hover { color: var(--sun-yellow-deep); }
 .pill-nav .chev { display: none; }
-.pill-cta { display: grid; place-items: center; width: 138px; height: 34px; border-radius: 14px; background: var(--sun-yellow); color: var(--white); font-size: 13px; letter-spacing: -0.03em; text-decoration: none; transition: background .2s; }
+.pill-cta { display: grid; place-items: center; width: 138px; height: 34px; border-radius: 14px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.03em; text-decoration: none; transition: background .2s; }
 .pill-cta:hover { background: var(--sun-yellow-deep); }
 /* Life at SunRiver dropdown, OFFICIAL "Home NAV Live In / Out / On": 290 tall, same width as the pill nav above it, photo flush right.
    Opens with a quick fade and drop; the photo crossfades to match the item under the pointer. */
