@@ -62,6 +62,7 @@ SPECS = {
     "fah-hero": ("fah_hero", 1440, 611, -44.55, -3.18, 156.08, 206.54, 2400, {}),
     "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
+    "hfs-hero": ("hfs_band", None, None, 0, 0, 100, 100, 2400, {"fallback": "hfs-band"}),
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
     "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
     "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True, "trim": (0, 0.27, 0, 0)}),  # empty sky above the peaks trimmed
@@ -141,11 +142,14 @@ def build(dist, on_netlify):
             except Exception as e:  # noqa: BLE001
                 print("  figma export unavailable for %s (%s)" % (name, e.__class__.__name__))
         if not done and online:
-            try:
-                dest.write_bytes(_get(SELF + local))
-                done = True
-            except Exception:  # noqa: BLE001
-                pass
+            # the live site's copy, or for a new crop of an existing image, the live copy of the older crop
+            for alt in [local] + (["/media/fg/%s.webp" % SPECS[name][8]["fallback"]] if SPECS[name][8].get("fallback") else []):
+                try:
+                    dest.write_bytes(_get(SELF + alt))
+                    done = True
+                    break
+                except Exception:  # noqa: BLE001
+                    pass
         if not done:
             if on_netlify:
                 raise RuntimeError("Figma image %s could not be built from Figma or the live site" % name)

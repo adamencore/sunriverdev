@@ -303,8 +303,8 @@ def build_homes(listings):
     comm = "".join(box("community", c, c, c == "SunRiver Firelight") for c in COMMUNITIES)
     stat = "".join(box("status", st, st) for st in STATUS_ORDER)
     sqft = "".join(box("sqft", "%d-%d" % (a, b), "%d-%d <small>ft2</small>" % (a, b)) for a, b in SQFT_RANGES)
-    add("/homes-for-sale", "Homes for Sale", "Move-in ready and available homes at SunRiver Firelight, SunRiver Villas and SunRiver St. George.", "homes", '''
-<section class="hfs-band">%s<div class="wrap"><h1>Homes for sale</h1></div></section>
+    add("/homes-for-sale", "Homes for Sale", "Move-in ready and available homes at SunRiver Firelight, SunRiver Villas and SunRiver St. George.", "homes-overlay", '''
+<section class="fah-hero hfs-hero">%s<div class="wrap fah-hero-inner"><h1>Homes for sale</h1></div></section>
 <section class="hfs">
   <div class="wrap hfs-grid">
     <aside class="filters" aria-label="Filter homes">
@@ -323,7 +323,7 @@ def build_homes(listings):
       <div class="empty-state" id="home-empty" hidden><h2 class="h3">No homes match those filters.</h2><p>Try widening your search, or talk with our sales team about homes coming soon.</p>%s</div>
     </div>
   </div>
-</section>''' % (img(FG("hfs-band"), "", loading="eager"), comm, stat, sqft,
+</section>''' % (img(FG("hfs-hero"), "Aerial view of SunRiver Firelight with Pine Valley Mountain behind it", "fah-hero-img", "eager"), comm, stat, sqft,
                   plus_group("beds", "Beds", [2, 3, 4]), plus_group("baths", "Bath", [2, 3, 4]), plus_group("garage", "Garage", [2, 3, 4]),
                   plus_group("hobby", "Hobby", [1, 2]), len(ls), cards, btn("Contact Sales", "/contact-us")), body_class="sand-page")
 
