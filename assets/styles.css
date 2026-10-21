@@ -1448,11 +1448,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .li-flips { grid-template-columns: minmax(0, 300px); }
 }
 
-/* Flip card animation options (temporary preview switch above the cards) */
-.li-flip-preview { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 72px; color: #335A97; font-size: 13px; font-weight: 700; }
-.li-flip-preview button { padding: 8px 16px; border: 2px solid #335A97; border-radius: 30px; background: transparent; color: #335A97; font: inherit; font-weight: 900; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; }
-.li-flip-preview button[aria-pressed="true"] { background: #335A97; color: var(--white); }
-.li-flip-preview + .li-flips { margin-top: 28px; }
+/* Flip card animations: the page uses 5 (fade and zoom); 2 to 4 are kept for an easy switch via data-anim */
 /* 2. Vertical flip: turns top over bottom */
 .li-flips[data-anim="flipx"] .li-flip-back { transform: rotateX(180deg); }
 .li-flips[data-anim="flipx"] .li-flip:hover .li-flip-in, .li-flips[data-anim="flipx"] .li-flip:focus-visible .li-flip-in, .li-flips[data-anim="flipx"] .li-flip.is-flipped .li-flip-in { transform: rotateX(180deg); }
@@ -1475,4 +1471,3 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back, .li-flips[data-anim="fade"] .li-flip:focus-visible .li-flip-back, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back { opacity: 1; }
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back img, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back img { transform: none; }
 .li-flips[data-anim="slide"] .li-flip, .li-flips[data-anim="fade"] .li-flip { overflow: hidden; border-radius: 20px; }
-.li-flips.no-anim, .li-flips.no-anim * { transition: none !important; }
