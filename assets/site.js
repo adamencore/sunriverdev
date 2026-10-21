@@ -514,10 +514,12 @@
   function hex(c) { return "rgb(" + c.join(",") + ")"; }
   function apply(wordBg, accentBg) {
     var word = contrast(BLUE, wordBg) >= 3 || contrast(BLUE, wordBg) >= contrast(WHITE, wordBg) ? BLUE : WHITE;
-    var accent = contrast(YELLOW, accentBg) >= 2.2 ? YELLOW : (contrast(word, accentBg) >= contrast(YELLOW, accentBg) ? word : YELLOW);
+    // brand yellow unless it would wash out (very light or yellow-toned spots); then match the wordmark
+    var accent = contrast(YELLOW, accentBg) >= 1.6 ? YELLOW : (contrast(word, accentBg) >= contrast(YELLOW, accentBg) ? word : YELLOW);
     header.style.setProperty("--logo-word", hex(word));
     header.style.setProperty("--logo-accent", hex(accent));
     header.setAttribute("data-logo", (word === WHITE ? "light" : "dark") + "-" + (accent === YELLOW ? "yellow" : "mono"));
+    header.setAttribute("data-logo-bg", wordBg.join(",") + "|" + accentBg.join(",") + "|" + contrast(YELLOW, accentBg).toFixed(2));
   }
   function parseColor(str) { var m = str && str.match(/\d+(\.\d+)?/g); return m ? m.slice(0, 4).map(Number) : null; }
   function pageColor(el) {
