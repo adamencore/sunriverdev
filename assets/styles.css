@@ -98,7 +98,11 @@ p { margin: 0; max-width: 70ch; }
 }
 .founders-tab:hover { background: var(--sun-yellow-deep); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); padding-top: 36px; }
-.logo img { width: 210px; height: auto; }
+.logo { display: block; flex: none; }
+/* One logo size on every page. Colors come from site.js, which checks what the logo sits on. */
+.logo img, .logo-svg { display: block; width: 200px; height: auto; }
+.logo-svg .lg-word { fill: var(--logo-word, #325A96); transition: fill .35s ease; }
+.logo-svg .lg-accent { fill: var(--logo-accent, #F5AF1C); transition: fill .35s ease; }
 .main-nav { display: flex; align-items: center; gap: clamp(18px, 2.6vw, 44px); }
 .nav-item { position: static; }
 .nav-link {
@@ -129,7 +133,7 @@ button.nav-link { color: var(--deep-river); }
 @media (max-width: 1020px) {
   :root { --header-h: 108px; }
   .header-inner { padding-top: 30px; }
-  .logo img { width: 150px; }
+  .logo img, .logo-svg { width: 150px; }
   .founders-tab { font-size: 11px; padding: 7px 22px 8px; }
   .menu-toggle { display: block; }
   .main-nav { display: none; position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; align-items: stretch; gap: 0; background: var(--white); box-shadow: 0 18px 30px rgba(20, 50, 80, 0.18); padding: 8px var(--gutter) 24px; max-height: calc(100vh - var(--header-h)); overflow-y: auto; }
@@ -612,7 +616,6 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 /* Overlay header with translucent pill nav */
 .site-header.overlay { position: absolute; background: transparent; box-shadow: none; }
 .overlay .header-inner { height: auto; padding-top: 54px; align-items: center; }
-.overlay .logo img { width: 212px; }
 .pill-nav { position: relative; width: auto; justify-content: flex-start; height: 46px; padding: 0 7px 0 30px; gap: 38px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .pill-nav .nav-link { font-size: 15px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
 .pill-nav .nav-link:hover { color: var(--sun-yellow-deep); }
@@ -760,7 +763,6 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 }
 @media (max-width: 1020px) {
   .overlay .header-inner { padding-top: 24px; }
-  .overlay .logo img { width: 150px; }
   .overlay .menu-toggle { background: rgba(255, 255, 255, 0.7); border-radius: 50%; }
   .site-header.overlay[data-menu="open"] { background: var(--white); }
   .pill-nav { width: auto; justify-content: flex-start; height: auto; padding: 8px var(--gutter) 24px; border-radius: 0; background: var(--white); -webkit-backdrop-filter: none; backdrop-filter: none; gap: 0; }
@@ -809,12 +811,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* Header: white bar (inner pages) and photo overlay with the Founders tab */
-.has-tab .logo img { width: 189px; }
 .on-light .pill-nav { background: rgba(255, 255, 255, .8); box-shadow: 0 4px 18px rgba(20, 40, 80, .08), inset 0 0 0 1px rgba(51, 90, 151, .08); }
 .pill-nav .nav-link[aria-current="page"] { color: var(--sunriver-blue); }
-.overlay.has-tab .header-inner { padding-top: 63px; align-items: flex-start; }
-.overlay.has-tab .pill-nav { margin-top: 9px; }
-.has-tab .founders-tab { display: grid; place-items: center; width: 382px; height: 41px; padding: 0; font-size: 14px; letter-spacing: -0.03em; }
 .overlay-page main { padding-top: 0; }
 .sand-page main { background: #FAF5EF; }
 
@@ -987,10 +985,6 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 1020px) {
-  .has-tab .logo img { width: 150px; }
-  .overlay.has-tab .header-inner { padding-top: 46px; align-items: center; }
-  .overlay.has-tab .pill-nav { margin-top: 0; }
-  .has-tab .founders-tab { width: auto; height: 32px; padding: 0 22px; font-size: 11px; }
 }
 @media (max-width: 860px) {
   .fah-hero { height: 520px; }

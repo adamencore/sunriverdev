@@ -496,3 +496,100 @@
     win.addEventListener("mousedown", function (e) { if (e.detail > 1) e.preventDefault(); });
   });
 })();
+
+// Header logo colors: look at what the logo actually sits on (the hero photo under it, with the
+// hero's white wash, or the page background) and pick colors that read. The blue wordmark stays blue
+// unless the background is dark (then white); the sun rays and "Communities" stay brand yellow
+// wherever yellow has enough contrast, otherwise they follow the wordmark color.
+(function () {
+  var header = document.querySelector(".site-header");
+  var logo = header && header.querySelector(".logo-svg");
+  if (!logo) return;
+  var BLUE = [50, 90, 150], YELLOW = [245, 175, 28], WHITE = [255, 255, 255];
+  function lum(c) {
+    var a = c.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+  function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function hex(c) { return "rgb(" + c.join(",") + ")"; }
+  function apply(wordBg, accentBg) {
+    var word = contrast(BLUE, wordBg) >= 3 || contrast(BLUE, wordBg) >= contrast(WHITE, wordBg) ? BLUE : WHITE;
+    var accent = contrast(YELLOW, accentBg) >= 2.2 ? YELLOW : (contrast(word, accentBg) >= contrast(YELLOW, accentBg) ? word : YELLOW);
+    header.style.setProperty("--logo-word", hex(word));
+    header.style.setProperty("--logo-accent", hex(accent));
+    header.setAttribute("data-logo", (word === WHITE ? "light" : "dark") + "-" + (accent === YELLOW ? "yellow" : "mono"));
+  }
+  function parseColor(str) { var m = str && str.match(/\d+(\.\d+)?/g); return m ? m.slice(0, 4).map(Number) : null; }
+  function pageColor(el) {
+    for (; el && el !== document.documentElement; el = el.parentElement) {
+      var c = parseColor(getComputedStyle(el).backgroundColor);
+      if (c && (c.length < 4 || c[3] > 0.5)) return c.slice(0, 3);
+    }
+    var b = parseColor(getComputedStyle(document.body).backgroundColor);
+    return b && (b.length < 4 || b[3] > 0) ? b.slice(0, 3) : WHITE;
+  }
+  // The white wash at the top of the page heroes: about 60% white at the top, gone by ~42% of the height
+  function washAt(hero, y) {
+    if (!hero.matches(".fh-hero, .hfs-hero, .li-hero")) return 0;
+    var t = y / hero.offsetHeight;
+    return t < 0.26 ? 0.6 - (0.42 * t / 0.26) : t < 0.42 ? 0.18 * (1 - (t - 0.26) / 0.16) : 0;
+  }
+  // Average color of a box (page coordinates relative to the hero) as drawn by the hero's cover-fit image
+  function sample(img, hero, box) {
+    var W = hero.offsetWidth, H = hero.offsetHeight, iw = img.naturalWidth, ih = img.naturalHeight;
+    var cs = getComputedStyle(img), pos = (cs.objectPosition || "50% 50%").split(" ");
+    var px = parseFloat(pos[0]) / 100, py = parseFloat(pos[1] || "50%") / 100;
+    var sc = Math.max(W / iw, H / ih), dw = iw * sc, dh = ih * sc, ox = (W - dw) * px, oy = (H - dh) * py;
+    var k = 0.25, cv = document.createElement("canvas");
+    cv.width = Math.max(1, Math.round(box.w * k)); cv.height = Math.max(1, Math.round(box.h * k));
+    var ctx = cv.getContext("2d");
+    ctx.drawImage(img, (box.x - ox) / sc, (box.y - oy) / sc, box.w / sc, box.h / sc, 0, 0, cv.width, cv.height);
+    var d = ctx.getImageData(0, 0, cv.width, cv.height).data, r = 0, g = 0, b = 0, n = 0;
+    for (var i = 0; i < d.length; i += 4) { r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; }
+    var c = [r / n, g / n, b / n], a = washAt(hero, box.y + box.h / 2);
+    return c.map(function (v) { return Math.round(v * (1 - a) + 255 * a); });
+  }
+  var probe = null;
+  function run() {
+    if (header.classList.contains("is-fixed")) return;
+    var lr = logo.getBoundingClientRect();
+    if (!lr.width) return;
+    var cx = lr.left + lr.width / 2, cy = lr.top + lr.height / 2;
+    header.style.pointerEvents = "none";
+    var under = document.elementFromPoint(Math.max(0, cx), Math.max(0, cy));
+    header.style.pointerEvents = "";
+    var hero = under && under.closest(".fah-hero, .h4-hero");
+    var img = hero && hero.querySelector("img");
+    if (!hero || !img) { var bg = pageColor(under); apply(bg, bg); return; }
+    var hr = hero.getBoundingClientRect();
+    var rel = function (x, y, w, h) { return { x: x - hr.left, y: y - hr.top, w: w, h: h }; };
+    // word: the middle band of the logo; accents: the sun rays (left) and "Communities" (bottom right)
+    var wordBox = rel(lr.left + lr.width * 0.12, lr.top + lr.height * 0.22, lr.width * 0.86, lr.height * 0.45);
+    var raysBox = rel(lr.left, lr.top, lr.width * 0.32, lr.height * 0.75);
+    var commBox = rel(lr.left + lr.width * 0.22, lr.top + lr.height * 0.74, lr.width * 0.76, lr.height * 0.26);
+    var go = function (src) {
+      try {
+        var w = sample(src, hero, wordBox), a1 = sample(src, hero, raysBox), a2 = sample(src, hero, commBox);
+        // judge the accents by the harder of the two spots
+        var acc = Math.abs(lum(a1) - lum(YELLOW)) < Math.abs(lum(a2) - lum(YELLOW)) ? a1 : a2;
+        apply(w, acc);
+      } catch (e) { /* image not readable here: keep the brand colors */ }
+    };
+    if (img.src.indexOf(location.origin) === 0 || img.src.charAt(0) === "/") {
+      if (img.complete && img.naturalWidth) go(img); else img.addEventListener("load", function () { go(img); }, { once: true });
+    } else {
+      // photos from the image CDN: read a CORS copy (same file, small size) so the canvas can see it
+      if (!probe || probe.dataset.for !== img.currentSrc) {
+        probe = new Image(); probe.crossOrigin = "anonymous"; probe.dataset.for = img.currentSrc;
+        probe.src = (img.currentSrc || img.src).replace(/([?&])w=\d+/, "$1w=800") + ((img.currentSrc || img.src).indexOf("?") > -1 ? "&" : "?") + "cors=1";
+      }
+      if (probe.complete && probe.naturalWidth) go(probe); else probe.onload = function () { go(probe); };
+    }
+  }
+  var t;
+  function later() { clearTimeout(t); t = setTimeout(run, 120); }
+  run();
+  window.addEventListener("load", run);
+  window.addEventListener("resize", later);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+})();
