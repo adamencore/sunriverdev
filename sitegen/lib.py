@@ -224,6 +224,8 @@ FONTS = '''<style>
 
 def add(path, title, description, active, body, body_class=""):
     full_title = title if SITE_NAME in title else "%s | %s" % (title, SITE_NAME)
+    if body.lstrip().startswith('<section class="fah-hero') and not active.endswith("-overlay"):
+        active = (active or "page") + "-overlay"  # full photo hero: the header and nav sit on the photo
     if active.endswith("-overlay") and active != "home-overlay":
         body_class = (body_class + " overlay-page").strip()
     doc = '''<!doctype html>
@@ -291,26 +293,32 @@ def chat_section(title="Ready to Chat?", intro="Ready to take the next step and 
 </section>''' % dict(fid=fid, title=title, intro=intro)
 
 
-def sand_hero(eyebrow, title, sub="", tag="h1"):
-    e = '<p class="eyebrow">%s</p>' % eyebrow if eyebrow else ""
-    s = '<p class="sand-hero-sub">%s</p>' % sub if sub else ""
-    return '<section class="sand-hero"><div class="wrap">%s<%s>%s</%s>%s</div></section>' % (e, tag, title, tag, s)
+def full_hero(title, sub="", eyebrow="", src=None, alt="", cta=None, pos="50% 40%", extra="", tag="h1", cls=""):
+    """The sitewide page hero: a full-bleed photo that runs up under the floating header (like Homes for Sale),
+    a white wash at the top for the logo and nav, a blue tint behind a white title with a yellow underline."""
+    from .figma_assets import FG
+    src = src or FG("hfs-hero")
+    e = '<p class="fh-eyebrow">%s</p>' % eyebrow if eyebrow else ""
+    sb = '<p class="fh-sub">%s</p>' % sub if sub else ""
+    c = '<div class="fh-cta">%s</div>' % cta if cta else ""
+    return ('<section class="fah-hero fh-hero%s">%s<div class="wrap fah-hero-inner">%s<%s>%s</%s>%s%s</div>%s</section>' % (
+        " " + cls if cls else "", img(src, alt, "fah-hero-img", "eager", 'style="object-position:%s"' % pos), e, tag, title, tag, sb, c, extra))
+
+
+def sand_hero(eyebrow, title, sub="", tag="h1", src=None, alt="", pos="50% 40%"):
+    return full_hero(title, sub, eyebrow, src, alt, tag=tag, pos=pos)
 
 
 ABOUT_TABS = [("About Us", "/about"), ("History", "/history"), ("FAQ", "/faq"), ("Southern Utah", "/southern-utah")]
 
 
-def yellow_hero(title_html, current):
+def yellow_hero(title_html, current, src=None, alt="", pos="50% 40%"):
     tabs = "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' aria-current="page"' if h == current else "", t) for t, h in ABOUT_TABS)
-    return ('<section class="yellow-hero"><div class="wrap"><h1>%s</h1></div></section>'
-            '<nav class="tabbar" aria-label="About SunRiver"><ul>%s</ul></nav>') % (title_html, tabs)
+    return full_hero(title_html, src=src, alt=alt, pos=pos) + '<nav class="tabbar" aria-label="About SunRiver"><ul>%s</ul></nav>' % tabs
 
 
-def photo_hero(eyebrow, title, sub, src, alt, cta=None):
-    b = '<div class="btn-row">%s</div>' % cta if cta else ""
-    e = '<p class="eyebrow">%s</p>' % eyebrow if eyebrow else ""
-    return '''<section class="photo-hero">%s
-  <div class="wrap">%s<h1>%s</h1><hr class="rule">%s%s</div></section>''' % (img(src, alt, loading="eager"), e, title, "<p>%s</p>" % sub if sub else "", b)
+def photo_hero(eyebrow, title, sub, src, alt, cta=None, pos="50% 40%"):
+    return full_hero(title, sub, eyebrow, src, alt, cta, pos)
 
 
 def banner(text_html, src, cta=None, tall=False, tag="h2"):

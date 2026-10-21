@@ -2,7 +2,7 @@
 with SunRiver brand rules applied to the copy (SunRiver members, Zion 31 minutes from
 SunRiver Firelight, no golf at Firelight, no rates or percentages, no em dashes)."""
 from .lib import (FOUNDERS_BADGE, PHONE, PHONE_TEL, S, SQ, V, VP, add, banner, band, btn, chat_section, esc, faq, img,
-                  photo, photo_hero, sand_hero, simg, star_list, ul, yellow_hero)
+                  full_hero, photo, photo_hero, sand_hero, simg, star_list, ul, yellow_hero)
 from .figma_assets import FG
 from .pages_cms import fp_card, min_price, plan_card
 from .pages_home import build_home
@@ -241,7 +241,7 @@ def build_main(plans, listings):
   </div>
 </section>
 %s
-%s''' % (yellow_hero("A team with <strong>vision</strong>", "/about"), img(V("team.1kwlwm69zlbnz.png"), "The SunRiver Communities team"),
+%s''' % (yellow_hero("A team with <strong>vision</strong>", "/about", V("hero.1zxyn0xsm69_i.jpg"), "SunRiver members enjoying the outdoors"), img(V("team.1kwlwm69zlbnz.png"), "The SunRiver Communities team"),
          btn("Contact Us", "/contact-us"), band(V("aerial.3dl3zwtjejebp.jpg"), "Aerial view of SunRiver and the surrounding red rock country"), chat_section()))
 
     # ============================================================== HISTORY
@@ -272,7 +272,7 @@ def build_main(plans, listings):
     <ol class="history">%s</ol>
   </div>
 </section>
-%s''' % (yellow_hero("A team with <strong>experience</strong>", "/history"), tl_html, chat_section()))
+%s''' % (yellow_hero("A team with <strong>experience</strong>", "/history", V("cc-exterior.0ufveyw_xw2e8.jpg"), "The SunRiver St. George community center"), tl_html, chat_section()))
 
     # ============================================================== SOUTHERN UTAH
     dest = [("Zion National Park", "The most majestic national park in Utah, just 31 minutes from SunRiver Firelight.", V("zion.3lmfdu4qx4jcf.png")),
@@ -300,7 +300,7 @@ def build_main(plans, listings):
   </div>
 </section>
 %s
-%s''' % (yellow_hero("Explore <strong>Southern Utah</strong>", "/southern-utah"), dest_html,
+%s''' % (yellow_hero("Explore <strong>Southern Utah</strong>", "/southern-utah", V("beauty-band.1lup9pnv-v6wk.jpg"), "Red rock country in Southern Utah"), dest_html,
          banner("Have more questions? <strong>Let's talk!</strong>", V("aerial.3dl3zwtjejebp.jpg"), btn("Contact Us", "/contact-us")), chat_section()))
 
     # ============================================================== FAQ
@@ -340,7 +340,7 @@ def build_main(plans, listings):
     <div class="faq-group"><h2 class="h2">SunRiver St. George</h2>%s</div>
   </div>
 </section>
-%s''' % (yellow_hero("A team with <strong>answers</strong>", "/faq"), "".join(faq(q, a) for q, a in local), "".join(faq(q, a) for q, a in stg), chat_section()))
+%s''' % (yellow_hero("A team with <strong>answers</strong>", "/faq", V("neighborhood-walk.2u4xr239zlka_.jpg"), "SunRiver members walking through the neighborhood"), "".join(faq(q, a) for q, a in local), "".join(faq(q, a) for q, a in stg), chat_section()))
 
     # ============================================================== SUNRIVER FIRELIGHT
     mix = [("Brand New Homes", "Customize the location and design of your dream home."),
@@ -562,8 +562,7 @@ def build_main(plans, listings):
     team_html = "".join('<div class="person">%s<p class="role">%s</p><h3>%s</h3><p><a href="mailto:%s">%s</a><br>M: <a href="%s">%s</a></p></div>' % (
         photo(p, "Portrait of %s" % n, ""), r, n, e, e, tel(t), t) for n, r, e, t, p in team)
     add("/contact-us", "Contact Us", "Contact the SunRiver sales team in Toquerville and St. George, Utah. Sales Office (435) 688-1000.", "visit", '''
-<section class="page-hero">%s
-  <div class="wrap"><h1>Contact Us</h1><div class="bar" aria-hidden="true"></div><p>Have questions? We've got answers.</p><p><a class="hero-phone" href="%s">Sales Office %s</a></p></div></section>
+%s
 <section class="section">
   <div class="wrap split" style="align-items:start">
     <div class="stack-lg">
@@ -597,17 +596,12 @@ def build_main(plans, listings):
     <div class="center stack"><h2 class="display">Meet the <span class="yellow">team</span></h2><hr class="rule center"></div>
     <div class="team-grid">%s</div>
   </div>
-</section>''' % (img(V("hero.2wct_5z-9ksc6.jpg"), "", "hero-bg", "eager"), PHONE_TEL, PHONE, PHONE_TEL, PHONE, team_html))
+</section>''' % (full_hero("Contact Us", "Have questions? We've got answers.", src=V("hero.2wct_5z-9ksc6.jpg"), alt="",
+                   cta='<a class="hero-phone" href="%s">Sales Office %s</a>' % (PHONE_TEL, PHONE)), PHONE_TEL, PHONE, team_html))
 
     # ============================================================== FOUNDERS CLUB
     add("/founders-club", "Founders Club", "Join the SunRiver Firelight Founders Club: two years of HOA dues paid by SunRiver and first pick of premium homesites for the first 74 homeowners.", "visit", '''
-<section class="photo-hero founders-hero">%s
-  <div class="wrap split">
-    <div class="stack"><p class="eyebrow">SunRiver Firelight Founders Club</p><h1>Be part of history at SunRiver Firelight</h1><hr class="rule">
-      <p>Your exclusive invitation to shape Southern Utah's newest 55+ community.</p><div class="btn-row">%s</div></div>
-    <div class="badge-wrap">%s</div>
-  </div>
-</section>
+%s
 <section class="section">
   <div class="wrap narrow center stack">
     <p class="lede">As a Founder, you're not just buying a home, you're becoming part of SunRiver Firelight's future. Your energy and community spirit will make this an amazing place to live.</p>
@@ -644,8 +638,9 @@ def build_main(plans, listings):
 </section>
 %s
 <section class="section tight"><div class="wrap"><p class="note center">Founders Club benefits apply to the first 74 lots within the SunRiver Firelight community. Ask a sales agent for full details.</p></div></section>
-%s''' % (img(V("hero-biking.2u6pg0mr8v0zj.jpg"), "SunRiver members biking near SunRiver Firelight", loading="eager"), btn("Contact a Sales Agent", "/contact-us"),
-         img(FOUNDERS_BADGE, "SunRiver Firelight Founders Club badge", loading="eager"), btn("Contact a Sales Agent Today", "/contact-us"),
+%s''' % (full_hero("Be part of history at SunRiver Firelight", "Your exclusive invitation to shape Southern Utah's newest 55+ community.", "SunRiver Firelight Founders Club",
+                   V("hero-biking.2u6pg0mr8v0zj.jpg"), "SunRiver members biking near SunRiver Firelight", btn("Contact a Sales Agent", "/contact-us"),
+                   extra='<div class="fh-badge">%s</div>' % img(FOUNDERS_BADGE, "SunRiver Firelight Founders Club badge", loading="eager")), btn("Contact a Sales Agent Today", "/contact-us"),
          img(V("pickleball.2djjcxkbj1i0d.jpg"), "Two SunRiver members playing pickleball"), img(V("hike.07ka4q1elcjrm.jpg"), "Two SunRiver members resting on red rocks"),
          star_list(["<strong>A track record since 1998.</strong> SunRiver has built and sold over 2,500 homes across Southern Utah.",
                     "<strong>A growing 55+ destination.</strong> Southern Utah is one of the most sought-after places to live your greatest chapter.",
@@ -654,8 +649,7 @@ def build_main(plans, listings):
 
     # ============================================================== DISCOVERY VILLAS
     add("/discovery-villas", "Discovery Villas", "Spend three days and two nights in a designer-furnished villa at SunRiver Firelight. Tour the homes for $399.", "visit", '''
-<section class="photo-hero">%s
-  <div class="wrap"><p class="eyebrow">Discovery Villas</p><h1>Consider it undercover research.</h1><hr class="rule"><p>Three days and two nights at SunRiver Firelight, for $399.</p></div></section>
+%s
 <section class="section">
   <div class="wrap split">
     <div class="stack">
@@ -674,7 +668,8 @@ def build_main(plans, listings):
     <div class="center"><a class="btn" href="%s">Call to book your stay</a></div>
   </div>
 </section>
-%s''' % (simg("6ffd138643b63bd045a448fad4b69eeddbd8a0ba-2500x1667.webp", "A Discovery Villa at SunRiver Firelight", 1800, loading="eager"),
+%s''' % (full_hero("Consider it undercover research.", "Three days and two nights at SunRiver Firelight, for $399.", "Discovery Villas",
+                     S("6ffd138643b63bd045a448fad4b69eeddbd8a0ba-2500x1667.webp", 2400), "A Discovery Villa at SunRiver Firelight"),
          PHONE_TEL, PHONE, simg("c5ebae09696ee1eb9413e050b39c7b0a337f2ce5-2500x977.webp", "Inside a designer-furnished Discovery Villa", 900, sizes="(max-width: 860px) 100vw, 50vw"),
          '<div class="photo">%s</div>' % simg("ff6cad819fb35b52154d3d5e8b3644f73c0d438f-992x698.png", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
          '<div class="photo">%s</div>' % simg("01f99f1f0973eab00b77baec91841deb780f8ca9-992x698.webp", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
@@ -689,7 +684,7 @@ def build_main(plans, listings):
              ("The Recasting Loan", "Buy now, then pay down the principal with a lump sum when your previous home sells and reset your monthly payment to where you want it, without new loan paperwork.")]
     loans_html = "".join('<div class="card"><h3>%s</h3><hr class="rule short"><p>%s</p></div>' % x for x in loans)
     add("/no-mortgage-payments-for-life", "Mortgage Options", "Mortgage options for seniors with Brandon Hansen of Cherry Creek Mortgage, including the HECM for Purchase.", "homes", '''
-<section class="page-hero">%s<div class="wrap"><p class="kicker">Mortgage Options</p><h1>Mortgage options for seniors</h1><div class="bar" aria-hidden="true"></div></div></section>
+%s
 <section class="section">
   <div class="wrap split" style="grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr)">
     <div class="stack"><div class="photo ratio-34 shadow">%s</div>%s</div>
@@ -709,13 +704,13 @@ def build_main(plans, listings):
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">%s</div>
   </div>
 </section>
-%s''' % (img(V("hero.2y-1-elem3cii.jpg"), "", "hero-bg", "eager"), img(V("brandon-hansen.0156dosmff1qe.jpg"), "Portrait of Brandon Hansen"),
+%s''' % (full_hero("Mortgage options for seniors", eyebrow="Mortgage Options", src=V("hero.2y-1-elem3cii.jpg")), img(V("brandon-hansen.0156dosmff1qe.jpg"), "Portrait of Brandon Hansen"),
          img(V("ccmc-logo.0n4e-3057h95z.png"), "Cherry Creek Mortgage logo", "partner-logo"), img(V("loans.3_6r2qstk9_se.png"), "SunRiver members reviewing loan options"),
          loans_html, chat_section("Have more questions?", "Reach out and a representative from Brandon Hansen and Associates will get back to you as soon as possible.")))
 
     # ============================================================== ENERGY
     add("/energy", "Energy Efficient Homes", "How SunRiver builds energy efficient homes, measured with the HERS Index and verified by independent testing.", "homes", '''
-<section class="page-hero">%s<div class="wrap"><p class="kicker">How We Build</p><h1>Energy efficient homes</h1><div class="bar" aria-hidden="true"></div></div></section>
+%s
 <section class="section">
   <div class="wrap split wide-text">
     <div class="stack"><h2 class="display">What is an energy efficient <span class="yellow">home?</span></h2><hr class="rule">
@@ -735,7 +730,7 @@ def build_main(plans, listings):
     <div class="stack"><p class="eyebrow">Live In</p><h2 class="display">Built to keep you comfortable.</h2><hr class="rule"><p class="lede">Low-e windows, concrete roof tiles and hybrid gas and electric heating and cooling come standard in every SunRiver home.</p><div class="btn-row">%s</div></div>
   </div>
 </section>
-%s''' % (img(V("hero.1irv6-1-qgzsa.png"), "", "hero-bg", "eager"), img(V("hers-arrow.2ho2zyizzj715.png"), "HERS Index scale from zero energy home to standard new home, with a SunRiver home score highlighted"),
+%s''' % (full_hero("Energy efficient homes", eyebrow="How We Build", src=V("hero.1irv6-1-qgzsa.png")), img(V("hers-arrow.2ho2zyizzj715.png"), "HERS Index scale from zero energy home to standard new home, with a SunRiver home score highlighted"),
          img(V("testing.25wkt_vmsqs-v.jpg"), "Blower door testing equipment"), btn("See Floor Plans", "/floor-plans"), chat_section()))
 
     # ============================================================== INCENTIVES
@@ -764,7 +759,7 @@ def build_main(plans, listings):
     </div>
   </div>
 </section>
-%s''' % (sand_hero("Incentives", "SunRiver Firelight current offers"), offers_html, btn("View Move-In Ready Homes", "/homes-for-sale"),
+%s''' % (sand_hero("Incentives", "SunRiver Firelight current offers", src=V("hero.2h_vl62bxoy8t.jpg"), alt="SunRiver Firelight homes with red rock mountains behind"), offers_html, btn("View Move-In Ready Homes", "/homes-for-sale"),
          simg("d9ab6fb431a69357ceac184260508988c17b1498-1000x1500.jpg", "SunRiver members at SunRiver Firelight", 600, sizes="25vw"),
          simg("59eed49c03774313b75eafb9a0b4e31556bad280-1354x1458.webp", "SunRiver Firelight home interior", 600, sizes="25vw"),
          star_list(["<strong>Zero HOA fees for 2 full years.</strong> SunRiver pays your HOA dues for you.",
@@ -794,7 +789,7 @@ def build_main(plans, listings):
     <p class="lede">Schedule a tour of our model homes and see the SunRiver difference.</p>
     <div class="btn-row" style="justify-content:center">%s</div>
   </div>
-</section>''' % (sand_hero("Selling with SunRiver", "Partner with Southern Utah's premier 55+ builder and grow your business.", "", "h1"), rb_html, btn("Contact Us", "/contact-us#team")))
+</section>''' % (sand_hero("Selling with SunRiver", "Partner with Southern Utah's premier 55+ builder and grow your business.", "", "h1", V("hero.1zxyn0xsm69_i.jpg"), "SunRiver members enjoying the outdoors"), rb_html, btn("Contact Us", "/contact-us#team")))
 
     # ============================================================== AMENITIES VIDEO
     add("/amenities-video", "The Future Heart of SunRiver Firelight", "Phase 1 of the SunRiver Firelight Clubhouse is underway: a fitness center, the Clubhouse, a lap pool and four pickleball courts.", "life", '''
@@ -822,7 +817,7 @@ def build_main(plans, listings):
     <div class="center">%s</div>
   </div>
 </section>
-%s''' % (sand_hero("SunRiver Firelight", "The future heart of SunRiver Firelight", "Explore Phase 1 of the SunRiver Firelight Clubhouse, including a fitness center, lap pool and pickleball courts."),
+%s''' % (sand_hero("SunRiver Firelight", "The future heart of SunRiver Firelight", "Explore Phase 1 of the SunRiver Firelight Clubhouse, including a fitness center, lap pool and pickleball courts.", src=S("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", 2400), alt="Rendering of the SunRiver Firelight Clubhouse"),
          simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1000, sizes="(max-width: 860px) 100vw, 50vw"),
          btn("Talk with an Agent", "/contact-us"), chat_section()))
 
@@ -857,10 +852,10 @@ def build_main(plans, listings):
     <div class="hub-links">%s</div>
   </div>
 </section>
-%s''' % (sand_hero("Life at SunRiver", t, sub), img(pic, "%s at SunRiver" % t, loading="eager"), t, intro, links_html, chat_section()))
+%s''' % (sand_hero("Life at SunRiver", t, sub, src=pic, alt="%s at SunRiver" % t), img(pic, "%s at SunRiver" % t, loading="eager"), t, intro, links_html, chat_section()))
 
     # ============================================================== PRIVACY POLICY
-    add("/privacy-policy", "Privacy Policy", "SunRiver Communities privacy policy and SMS terms.", "", PRIVACY)
+    add("/privacy-policy", "Privacy Policy", "SunRiver Communities privacy policy and SMS terms.", "", PRIVACY.replace("%s", full_hero("Privacy Policy", "Effective Date: January 1, 2026"), 1))
 
     # ============================================================== 404
     add("/404", "Page Not Found", "This page could not be found.", "", '''
@@ -871,7 +866,7 @@ def build_main(plans, listings):
 
 
 PRIVACY = '''
-<section class="sand-hero"><div class="wrap"><h1>Privacy Policy</h1><p class="sand-hero-sub">Effective Date: January 1, 2026</p></div></section>
+%s
 <section class="section">
   <div class="wrap narrow legal">
     <p>At SunRiver, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, store, and safeguard your information when you visit our website or engage with us online.</p>

@@ -4,7 +4,7 @@ import math
 import re
 
 from .figma_assets import FG
-from .lib import (PAGES, PHONE, PHONE_TEL, S, V, VP, FOUNDERS_BADGE, add, btn, chat_section, clean, esc, img, money,
+from .lib import (full_hero, PAGES, PHONE, PHONE_TEL, S, V, VP, FOUNDERS_BADGE, add, btn, chat_section, clean, esc, img, money,
                   nice_date, sand_hero, simg, slugify, star_list)
 
 STATUS_ORDER = {"Move in Ready": 0, "For Sale": 1, "Under Contract": 2, "Sold": 3}
@@ -515,12 +515,12 @@ def blog_listing(posts, base, title_html, intro_html, page_title, description, c
 def build_blog(posts):
     posts = sorted(posts, key=lambda p: p.get("publishDate") or "", reverse=True)
     cats = sorted(set(c for p in posts for c in (p.get("categories") or []) if c))
-    banner = '''<section class="blog-banner">%s<div class="wrap">%s<p>Stories, events and guides from SunRiver Firelight and Southern Utah.</p></div></section>''' % (
-        img(V("bucketlist-banner.02if0nz4sgehw.webp"), "", loading="eager"), img(V("bucketlist-wordmark.3qnr5_89a42b3.png"), "Bucketlist Living", "wordmark", "eager"))
+    banner = full_hero(img(V("bucketlist-wordmark.3qnr5_89a42b3.png"), "Bucketlist Living", "wordmark", "eager"),
+                       "Stories, events and guides from SunRiver Firelight and Southern Utah.", src=V("bucketlist-banner.02if0nz4sgehw.webp"), cls="fh-blog")
     blog_listing(posts, "/bucketlistliving", banner, "", "#bucketlistliving", "Bucketlist Living: stories, events and guides from SunRiver Firelight and Southern Utah.", cats)
     for c in cats:
         cp = [p for p in posts if c in (p.get("categories") or [])]
-        blog_listing(cp, "/bucketlistliving/category/%s" % slugify(c), sand_hero("Category", esc(c)), "", "%s | #bucketlistliving" % c,
+        blog_listing(cp, "/bucketlistliving/category/%s" % slugify(c), sand_hero("Category", esc(c), src=V("bucketlist-banner.02if0nz4sgehw.webp")), "", "%s | #bucketlistliving" % c,
                      "%s stories from Bucketlist Living at SunRiver." % c, cats, c)
 
     for i, p in enumerate(posts):

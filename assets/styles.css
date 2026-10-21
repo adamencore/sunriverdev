@@ -1390,3 +1390,28 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 @media (max-width: 520px) {
   .lo-cards { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
+.fh-hero { height: 600px; background: #6E8FB8; }
+.fh-hero .fah-hero-img { opacity: 1; }
+.fh-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, .18) 26%, rgba(255, 255, 255, 0) 42%), linear-gradient(0deg, rgba(24, 52, 96, .6) 0%, rgba(24, 52, 96, .3) 50%, rgba(24, 52, 96, 0) 78%); }
+.fh-hero .fah-hero-inner { z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; padding-top: 0; padding-bottom: 92px; }
+.fh-eyebrow { margin: 0 0 14px; color: #FAF5EF; font-weight: 900; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(20, 50, 80, .35); }
+.fh-hero h1 { max-width: 920px; margin: 0 auto; color: #FAF5EF; font-weight: 900; font-size: 58px; line-height: 62px; letter-spacing: -0.02em; text-wrap: balance; text-shadow: 0 2px 18px rgba(20, 50, 80, .3); }
+.fh-hero h1 strong { color: inherit; font-weight: 900; }
+.fh-hero h1::after { content: ""; display: block; width: 140px; height: 7px; margin: 18px auto 0; background: #F6AF1D; border-radius: 3px; }
+.fh-sub { max-width: 640px; margin: 20px auto 0; color: #FAF5EF; font-family: var(--font-serif); font-size: 23px; line-height: 28px; letter-spacing: -0.02em; text-shadow: 0 1px 12px rgba(20, 50, 80, .35); }
+.fh-cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.fh-cta .hero-phone { color: #FAF5EF; font-weight: 900; font-size: 18px; text-decoration: none; border-bottom: 2px solid #F6AF1D; padding-bottom: 2px; }
+.fh-badge { position: absolute; right: max(var(--gutter), calc((100% - 1240px) / 2)); bottom: 70px; z-index: 2; width: 180px; }
+.fh-badge img { width: 100%; height: auto; }
+.fh-blog .wordmark { display: block; width: min(520px, 80vw); height: auto; margin: 0 auto; filter: drop-shadow(0 2px 14px rgba(20, 50, 80, .3)); }
+.fh-blog h1::after { margin-top: 10px; }
+.fh-hero + .tabbar { margin-top: 0; }
+@media (max-width: 860px) {
+  .fh-hero { height: 500px; }
+  .fh-hero .fah-hero-inner { padding-bottom: 64px; }
+  .fh-hero h1 { font-size: 38px; line-height: 42px; }
+  .fh-sub { font-size: 19px; line-height: 24px; }
+  .fh-badge { width: 110px; bottom: auto; top: 120px; }
+}
