@@ -1264,6 +1264,10 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lotmap { margin-top: 48px; display: flex; gap: 48px; align-items: flex-start; }
 .lotmap-scroll { position: relative; flex: 0 1 640px; min-width: 0; }
 .lotmap-svg { display: block; width: 100%; height: auto; }
+/* only the lot shapes take the pointer: labels, numbers and the rest of the art let it pass straight through to the lot */
+.lotmap-svg { -webkit-user-select: none; user-select: none; }
+.lotmap-svg * { pointer-events: none; }
+.lotmap-svg .lm-lot { pointer-events: auto; }
 .lotmap-svg .lm-lot { cursor: default; outline: none; transition: filter .2s ease; }
 .lotmap-svg .lm-lot[data-plan], .lotmap-svg .lm-lot.is-available, .lotmap-svg .lm-lot.is-sold, .lotmap-svg .lm-lot.is-sales, .lotmap-svg .lm-lot.is-upcoming { cursor: pointer; }
 .lotmap-svg .lm-lot.is-hot, .lotmap-svg .lm-lot:hover, .lotmap-svg .lm-lot:focus-visible { filter: brightness(.9); stroke: #335A97; stroke-width: 1.6px; }
