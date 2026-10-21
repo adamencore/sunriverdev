@@ -37,7 +37,25 @@ def normalize_plan(p):
     return p
 
 
+def apply_overrides(name, rows):
+    """data/overrides.json: per-slug field corrections layered over the CMS rows."""
+    try:
+        fixes = json.loads((ROOT / "data" / "overrides.json").read_text(encoding="utf-8")).get(name) or {}
+    except FileNotFoundError:
+        return rows
+    for r in rows:
+        slug = r.get("slug")
+        slug = slug.get("current") if isinstance(slug, dict) else slug
+        if slug in fixes:
+            r.update(fixes[slug])
+    return rows
+
+
 def load(name):
+    return apply_overrides(name, _load(name))
+
+
+def _load(name):
     if os.environ.get("OFFLINE") != "1":
         try:
             rows = fetch(QUERIES[name])

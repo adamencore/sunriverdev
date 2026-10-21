@@ -1,0 +1,6 @@
+{
+ "_readme": "Corrections applied on top of the developers' Sanity content at build time, for fields we can't edit in Sanity ourselves. Remove an entry once Sanity has the right value.",
+ "floorPlans": {
+  "hamlet": {"priceRange": "$469,900"}
+ }
+}
