@@ -99,8 +99,14 @@ def svg(plans=()):
   <button type="button" data-card="detail" aria-pressed="false">Option 2: More info</button>
 </div>
 <div class="lotmap card-light">
-  <div class="lotmap-scroll">
-    %s
+  <div class="lotmap-scroll lotmap-window">
+    <div class="lotmap-stage">%s</div>
+    <div class="lotmap-zoom" role="group" aria-label="Map zoom">
+      <button type="button" data-zoom="in" aria-label="Zoom in"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg></button>
+      <button type="button" data-zoom="out" aria-label="Zoom out"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12"/></svg></button>
+      <button type="button" data-zoom="reset" aria-label="Show the whole map"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5"/></svg></button>
+    </div>
+    <p class="lotmap-hint">Drag to explore. Pinch or use + to zoom.</p>
     <div class="lotmap-card" hidden></div>
     <script type="application/json" class="lotmap-plans">%s</script>
   </div>

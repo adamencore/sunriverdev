@@ -324,8 +324,8 @@
       var x = r.left - b.left + box.scrollLeft + r.width / 2 - cw / 2;
       x = Math.max(box.scrollLeft + 6, Math.min(x, box.scrollLeft + b.width - cw - 6));
       var y = r.top - b.top - ch - 10;
-      var below = y < -b.top + 90;  // no room above (under the sticky header): open below the lot
-      if (below) y = r.bottom - b.top + 10;
+      var below = y < 8 || r.top - ch - 10 < 90;  // no room above in the window (or under the sticky header): open below
+      if (below) y = Math.min(r.bottom - b.top + 10, b.height - ch - 8);
       card.style.left = x + "px"; card.style.top = y + "px";
       card.classList.toggle("is-below", below);
       if (!wasOpen) { void card.offsetWidth; }
@@ -341,6 +341,7 @@
       clearTimeout(hideTimer);
       hideTimer = setTimeout(close, 140);
     }
+    map.addEventListener("lotmap:close", close);
     card.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
     card.addEventListener("mouseleave", hideSoon);
 
@@ -372,5 +373,117 @@
       prev.querySelectorAll("button").forEach(function (b) { b.addEventListener("click", function () { setStyle(b.getAttribute("data-card")); }); });
     }
     if (/[?&]card=detail/.test(location.search)) setStyle("detail");
+  });
+})();
+
+// Lot map window: drag to pan, pinch, ctrl/trackpad-pinch wheel or the buttons to zoom
+(function () {
+  document.querySelectorAll(".lotmap-window").forEach(function (win) {
+    var stage = win.querySelector(".lotmap-stage");
+    var map = win.closest(".lotmap");
+    var hint = win.querySelector(".lotmap-hint");
+    var zin = win.querySelector('[data-zoom="in"]'), zout = win.querySelector('[data-zoom="out"]');
+    var W = 1000, H = 1000 * 1049.15 / 622.66, MAXK = 4.5;
+    var fit = 1, s = 1, x = 0, y = 0;
+
+    function closeCard() { map && map.dispatchEvent(new CustomEvent("lotmap:close")); }
+    function dismissHint() { if (hint) hint.classList.add("is-gone"); }
+    function clamp() {
+      var vw = win.clientWidth, vh = win.clientHeight, sw = W * s, sh = H * s;
+      x = sw <= vw ? (vw - sw) / 2 : Math.min(0, Math.max(vw - sw, x));
+      y = sh <= vh ? (vh - sh) / 2 : Math.min(0, Math.max(vh - sh, y));
+    }
+    function apply(ease) {
+      clamp();
+      stage.classList.toggle("is-easing", !!ease);
+      stage.style.transform = "translate(" + x + "px," + y + "px) scale(" + s + ")";
+      var zoomed = s > fit * 1.01;
+      win.classList.toggle("is-zoomed", zoomed);
+      if (zin) zin.disabled = s >= fit * MAXK * 0.99;
+      if (zout) zout.disabled = !zoomed;
+    }
+    function zoomAt(ns, px, py, ease) {
+      ns = Math.max(fit, Math.min(fit * MAXK, ns));
+      x = px - (px - x) * (ns / s); y = py - (py - y) * (ns / s); s = ns;
+      apply(ease); closeCard(); dismissHint();
+    }
+    function reset(ease) {
+      fit = Math.min(win.clientWidth / W, win.clientHeight / H);
+      s = fit; x = 0; y = 0; apply(ease);
+    }
+    reset(false);
+    var lastW = win.clientWidth;
+    window.addEventListener("resize", function () {
+      if (win.clientWidth === lastW) return;
+      lastW = win.clientWidth;
+      var rel = s / fit; fit = Math.min(win.clientWidth / W, win.clientHeight / H); s = fit * rel; apply(false);
+    });
+
+    win.querySelectorAll("[data-zoom]").forEach(function (b) {
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var k = b.getAttribute("data-zoom"), cx = win.clientWidth / 2, cy = win.clientHeight / 2;
+        if (k === "in") zoomAt(s * 1.6, cx, cy, true);
+        else if (k === "out") zoomAt(s / 1.6, cx, cy, true);
+        else { reset(true); closeCard(); }
+      });
+    });
+
+    // trackpad pinch and ctrl + wheel zoom; a plain wheel still scrolls the page
+    win.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      var r = win.getBoundingClientRect();
+      zoomAt(s * Math.exp(-e.deltaY * 0.01), e.clientX - r.left, e.clientY - r.top, false);
+    }, { passive: false });
+
+    // drag to pan (mouse, pen, one finger once zoomed) and two-finger pinch
+    var pts = {}, start = null, moved = false, pinch = null;
+    function count() { return Object.keys(pts).length; }
+    win.addEventListener("pointerdown", function (e) {
+      if (e.target.closest(".lotmap-zoom, .lotmap-card")) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+      moved = false;
+      if (count() === 1) start = { px: e.clientX, py: e.clientY, x: x, y: y };
+      if (count() === 2) {
+        var p = Object.values(pts), r = win.getBoundingClientRect();
+        pinch = { d: Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y), s: s,
+                  cx: (p[0].x + p[1].x) / 2 - r.left, cy: (p[0].y + p[1].y) / 2 - r.top, x: x, y: y };
+      }
+    });
+    win.addEventListener("pointermove", function (e) {
+      if (!pts[e.pointerId]) return;
+      pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+      if (pinch && count() >= 2) {
+        var p = Object.values(pts), d = Math.hypot(p[0].x - p[1].x, p[0].y - p[1].y);
+        var ns = Math.max(fit, Math.min(fit * MAXK, pinch.s * d / pinch.d));
+        x = pinch.cx - (pinch.cx - pinch.x) * (ns / pinch.s); y = pinch.cy - (pinch.cy - pinch.y) * (ns / pinch.s); s = ns;
+        moved = true; apply(false); closeCard(); dismissHint();
+        return;
+      }
+      if (!start) return;
+      // a finger on the un-zoomed map scrolls the page instead of panning
+      if (e.pointerType === "touch" && s <= fit * 1.01) return;
+      var dx = e.clientX - start.px, dy = e.clientY - start.py;
+      if (!moved && Math.hypot(dx, dy) < 5) return;
+      if (!moved) { moved = true; win.classList.add("is-dragging"); closeCard(); dismissHint(); try { win.setPointerCapture(e.pointerId); } catch (err) {} }
+      x = start.x + dx; y = start.y + dy; apply(false);
+    });
+    function up(e) {
+      delete pts[e.pointerId];
+      if (count() < 2) pinch = null;
+      if (count() === 0) { start = null; win.classList.remove("is-dragging"); }
+    }
+    win.addEventListener("pointerup", up);
+    win.addEventListener("pointercancel", up);
+    // a drag should not count as a click on the lot it ends on
+    win.addEventListener("click", function (e) { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+    win.addEventListener("dblclick", function (e) {
+      if (e.target.closest(".lotmap-zoom, .lotmap-card")) return;
+      var r = win.getBoundingClientRect();
+      zoomAt(s * 1.8, e.clientX - r.left, e.clientY - r.top, true);
+    });
+    win.addEventListener("mousedown", function (e) { if (e.detail > 1) e.preventDefault(); });
   });
 })();

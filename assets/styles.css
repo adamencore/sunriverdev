@@ -1262,7 +1262,22 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 
 /* Lot map (Live In, "Pick your spot."), art from the Illustrator export */
 .lotmap { margin-top: 48px; display: flex; gap: 48px; align-items: flex-start; }
-.lotmap-scroll { position: relative; flex: 0 1 640px; min-width: 0; }
+.lotmap-scroll { position: relative; flex: 0 1 680px; min-width: 0; }
+/* The map sits in its own window: drag to pan, pinch or the buttons to zoom */
+.lotmap-window { height: 760px; overflow: hidden; border-radius: 24px; background: #F1EEE9; box-shadow: inset 0 0 0 1px rgba(51, 90, 151, .12); touch-action: pan-y; cursor: grab; }
+.lotmap-window.is-zoomed { touch-action: none; }
+.lotmap-window.is-dragging { cursor: grabbing; }
+.lotmap-window.is-dragging .lm-lot { cursor: grabbing !important; }
+.lotmap-stage { position: absolute; left: 0; top: 0; width: 1000px; transform-origin: 0 0; will-change: transform; }
+.lotmap-stage.is-easing { transition: transform .32s cubic-bezier(.22, .61, .36, 1); }
+.lotmap-zoom { position: absolute; right: 16px; bottom: 16px; z-index: 2; display: grid; overflow: hidden; border-radius: 16px; background: var(--white); box-shadow: 0 6px 20px rgba(20, 40, 80, .16); }
+.lotmap-zoom button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: var(--white); color: #335A97; cursor: pointer; transition: background .18s ease; }
+.lotmap-zoom button + button { border-top: 1px solid rgba(51, 90, 151, .12); }
+.lotmap-zoom button:hover { background: #FAF5F0; }
+.lotmap-zoom button:disabled { color: rgba(51, 90, 151, .3); cursor: default; background: var(--white); }
+.lotmap-zoom svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lotmap-hint { position: absolute; left: 50%; bottom: 18px; z-index: 2; transform: translateX(-50%); margin: 0; padding: 8px 14px; border-radius: 20px; background: rgba(51, 90, 151, .88); color: var(--white); font-size: 12px; font-weight: 700; white-space: nowrap; pointer-events: none; transition: opacity .4s ease; }
+.lotmap-hint.is-gone { opacity: 0; }
 .lotmap-svg { display: block; width: 100%; height: auto; }
 /* only the lot shapes take the pointer: labels, numbers and the rest of the art let it pass straight through to the lot */
 .lotmap-svg { -webkit-user-select: none; user-select: none; }
@@ -1323,8 +1338,9 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .sw-plan { background: linear-gradient(135deg, #297AA7 0 25%, #C16089 25% 50%, #8070AF 50% 75%, #EAE188 75%); }
 @media (max-width: 860px) {
   .lotmap { flex-direction: column; gap: 24px; }
-  .lotmap-scroll { flex: none; width: 100%; overflow-x: auto; }
-  .lotmap-svg { min-width: 520px; }
+  .lotmap-scroll { flex: none; width: 100%; }
+  .lotmap-window { height: min(72vh, 600px); border-radius: 20px; }
+  .lotmap-hint { bottom: 16px; left: 16px; transform: none; font-size: 11px; }
   .lotmap-key { grid-template-columns: repeat(2, auto); }
 }
 
