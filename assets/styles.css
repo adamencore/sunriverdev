@@ -1396,7 +1396,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .fh-hero .fah-hero-img { opacity: 1; }
 .fh-hero::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(255, 255, 255, .6) 0%, rgba(255, 255, 255, .18) 26%, rgba(255, 255, 255, 0) 42%), linear-gradient(0deg, rgba(24, 52, 96, .6) 0%, rgba(24, 52, 96, .3) 50%, rgba(24, 52, 96, 0) 78%); }
 .fh-hero .fah-hero-inner { z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; padding-top: 0; padding-bottom: 92px; }
-.fh-eyebrow { margin: 0 0 14px; color: #FAF5EF; font-weight: 900; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(20, 50, 80, .35); }
+.fh-hero .fh-eyebrow { max-width: none; font-family: var(--font-display); line-height: 1.2; margin: 0 0 14px; color: #FAF5EF; font-weight: 900; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(20, 50, 80, .35); }
 .fh-hero h1 { max-width: 920px; margin: 0 auto; color: #FAF5EF; font-weight: 900; font-size: 58px; line-height: 62px; letter-spacing: -0.02em; text-wrap: balance; text-shadow: 0 2px 18px rgba(20, 50, 80, .3); }
 .fh-hero h1 strong { color: inherit; font-weight: 900; }
 .fh-hero h1::after { content: ""; display: block; width: 140px; height: 7px; margin: 18px auto 0; background: #F6AF1D; border-radius: 3px; }
