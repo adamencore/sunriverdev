@@ -29,9 +29,10 @@
         var panels = sheet.querySelectorAll('.m-nav-panel');
         var goPanel = function (name) {
           sheet.classList.toggle('at-life', name === 'life');
+          sheet.classList.toggle('at-homes', name === 'homes');
           panels.forEach(function (p) { var on = p.getAttribute('data-panel') === name; p.inert = !on; p.setAttribute('aria-hidden', on ? 'false' : 'true'); });
-          var opener = sheet.querySelector('[data-go="life"]'); if (opener) opener.setAttribute('aria-expanded', name === 'life' ? 'true' : 'false');
-          var f = sheet.querySelector('.m-nav-panel[data-panel="' + name + '"] ' + (name === 'life' ? '.m-nav-back' : '.m-nav-row')); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
+          sheet.querySelectorAll('.m-nav-row[data-go]').forEach(function (o) { o.setAttribute('aria-expanded', o.getAttribute('data-go') === name ? 'true' : 'false'); });
+          var f = sheet.querySelector('.m-nav-panel[data-panel="' + name + '"] ' + (name !== 'main' ? '.m-nav-back' : '.m-nav-row')); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
         };
         sheet.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { goPanel(b.getAttribute('data-go')); }); });
         toggle.addEventListener('click', function () { goPanel('main'); var c = sheet.querySelector('.m-nav-close'); if (c) c.focus(); });

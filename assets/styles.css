@@ -1500,11 +1500,12 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .m-nav-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
 /* Figma "Mobile Nav 2" (main) and "Mobile Nav 3" (Life at SunRiver): two panels that slide sideways */
 .m-nav-body { flex: 1 0 auto; display: flex; overflow: hidden; }
-.m-nav-panels { display: flex; flex: 1 0 auto; width: 200%; transition: transform .34s cubic-bezier(.22, .61, .36, 1); }
-.m-nav.at-life .m-nav-panels { transform: translateX(-50%); }
-.m-nav-panel { display: flex; flex-direction: column; width: 50%; padding: 26px 0 0; }
+.m-nav-panels { display: flex; flex: 1 0 auto; width: 300%; transition: transform .34s cubic-bezier(.22, .61, .36, 1); }
+.m-nav.at-life .m-nav-panels { transform: translateX(-33.3333%); }
+.m-nav.at-homes .m-nav-panels { transform: translateX(-66.6667%); }
+.m-nav-panel { display: flex; flex-direction: column; width: 33.3333%; padding: 26px 0 0; }
 .m-nav-panel > .m-nav-list { min-height: 235px; }
-.m-nav-panel[data-panel="life"] > .m-nav-list { min-height: 199px; }  /* Back takes the difference, so the small links line up on both panels */
+.m-nav-panel:not([data-panel="main"]) > .m-nav-list { min-height: 199px; }  /* Back takes the difference, so the small links line up on both panels */
 .m-nav-list { margin: 0; padding: 0 40px; list-style: none; }
 .m-nav-row { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 45px; padding: 0 7px 0 0; border: 0; background: none; color: #335A97; font: inherit; font-weight: 500; font-size: 21px; letter-spacing: -0.02em; text-align: left; text-decoration: none; cursor: pointer; }
 .m-chev { flex: none; width: 9px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
@@ -1522,7 +1523,8 @@ body.m-nav-lock { overflow: hidden; }
   /* the old drop-down mobile menu gives way to the sheet */
   .site-header[data-menu="open"] .main-nav { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .m-nav, .m-nav-panels { transition: opacity .12s linear; transform: none; } .m-nav.at-life .m-nav-panels { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .m-nav, .m-nav-panels { transition: opacity .12s linear; transform: none; } .m-nav.at-life .m-nav-panels { transform: translateX(-33.3333%); }
+.m-nav.at-homes .m-nav-panels { transform: translateX(-66.6667%); } }
 
 /* Homepage hero, Figma "Home NAV Live In 3": "NEW" in white, and the logo's sun rays and "Communities" in white over the sky */
 .h4-new { color: var(--white); }
@@ -1613,3 +1615,10 @@ body.m-nav-lock { overflow: hidden; }
   body.lon-printing .lon-cal-day { min-height: 92px; }
   @page { size: landscape; margin: 12mm; }
 }
+
+/* Homes dropdown: a small card under Homes with Floor Plans and Homes for Sale, same type and underline as Life at SunRiver */
+.nav-item.has-sm { position: relative; }
+.pill-drop.pill-drop-sm { left: -26px; right: auto; top: 38px; width: 200px; height: auto; padding: 4px 25px 24px; grid-template-columns: minmax(0, 1fr); transform-origin: 30% 0; }
+.pill-drop-sm ul { padding-top: 18px; gap: 20px; }
+.pill-drop-sm ul a:hover strong::after, .pill-drop-sm ul a:focus-visible strong::after { transform: scaleX(1); }
+.photo .dv-photo, .dv-photo { width: 100%; height: 100%; object-fit: cover; object-position: 8% 50%; }
