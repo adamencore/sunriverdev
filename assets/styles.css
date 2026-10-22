@@ -1560,6 +1560,7 @@ body.m-nav-lock { overflow: hidden; }
 .lon-cal-ev { display: block; margin-top: 5px; padding: 4px 7px 5px; border-left: 3px solid #8FA7D6; border-radius: 0 8px 8px 0; background: #EEF3FB; color: #335A97; font-size: 12px; line-height: 14px; }
 .lon-cal-ev small { display: block; opacity: .75; font-size: 11px; }
 .lon-cal-ev.is-event { border-left-color: #EDB443; background: #FDF4E1; }
+.lon-cal-ev.is-town { border-left-color: #D9577A; background: #FCEBF0; color: #A3304F; }  /* around town, pink like the printed calendar */
 .lon-cal-ev.is-open::after { content: "Guests welcome"; display: block; margin-top: 2px; color: #B07A0D; font-weight: 900; font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; }
 .lon-cal-empty { grid-column: 1 / -1; padding: 30px; border-right: 1px solid rgba(51, 90, 151, .16); border-bottom: 1px solid rgba(51, 90, 151, .16); color: #335A97; text-align: center; }
 .lon-guest { margin-left: 0; width: 100%; max-width: 1080px; background: #FAF5F0; }

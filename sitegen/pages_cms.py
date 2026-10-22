@@ -743,9 +743,9 @@ def build_live_on(posts):
     d = json.loads((Path(__file__).resolve().parent.parent / "data" / "live_on.json").read_text())
     now = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(c["name"]), esc(c["when"])) for c in d["running_now"])
     later = "".join('<li><span>%s</span></li>' % esc(c) for c in d["clubhouse_opens"])
-    shots = [("Hiking group", "Weekends", V("club-hiking.3s1-w8hg6a1nh.jpg")),
-             ("Pickleball", "On the completed courts", V("club-pickleball.3iqae91xix18y.jpg")),
-             ("Morning walks", "Weekday mornings", V("week-hike.13z6azl5t3od2.jpg"))]
+    shots = [("Sunrise Stroll", "Monthly, 7:30 AM", V("week-hike.13z6azl5t3od2.jpg")),
+             ("Pilates Workshop", "Select Thursdays, 11 AM", V("club-yoga.0jzome1ix55zy.jpg")),
+             ("Drop-in Games", "Wednesdays, 2 PM", V("cc-billiards.1qmjemn1vq503.jpg"))]
     shot_html = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
         img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in shots)
     cal = {"recurring": d["recurring"], "events": [e for e in d["events"] if e.get("date")]}
@@ -792,7 +792,7 @@ def build_live_on(posts):
       <div class="lon-cal-bar">
         <div class="lon-cal-nav"><button type="button" data-cal-prev aria-label="Previous month"><svg viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2L2 8l6 6"/></svg></button><h3 data-cal-title aria-live="polite"></h3><button type="button" data-cal-next aria-label="Next month"><svg viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button></div>
         <div class="lon-cal-tools">
-          <div class="lon-cal-filter" role="group" aria-label="Show"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="Clubs" aria-pressed="false">Clubs</button><button type="button" data-f="Events" aria-pressed="false">Events</button></div>
+          <div class="lon-cal-filter" role="group" aria-label="Show"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="Clubs" aria-pressed="false">Clubs</button><button type="button" data-f="Events" aria-pressed="false">Events</button><button type="button" data-f="Around town" aria-pressed="false">Around town</button></div>
           <button type="button" class="lon-cal-print" data-cal-print>Print this month</button>
         </div>
       </div>

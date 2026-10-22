@@ -725,6 +725,8 @@ document.querySelectorAll("[data-cal]").forEach(function (root) {
   function itemsOn(d) {
     var out = [], wd = d.getDay(), nth = Math.ceil(d.getDate() / 7);
     (data.recurring || []).forEach(function (r) {
+      var day = iso(d);
+      if ((r.from && day < r.from) || (r.until && day > r.until)) return;
       if ((r.weekdays && r.weekdays.indexOf(wd) > -1) || (r.nth && r.weekday === wd && r.nth === nth)) out.push(r);
     });
     (data.events || []).forEach(function (e) { if (e.date === iso(d)) out.push(e); });
@@ -742,7 +744,7 @@ document.querySelectorAll("[data-cal]").forEach(function (root) {
       var cls = "lon-cal-day" + (out ? " is-out" : "") + (!out && !items.length ? " is-blank" : "") + (iso(d) === iso(today) ? " is-today" : "") + (iso(d) < iso(today) ? " is-past" : "");
       html += '<div class="' + cls + '"><span class="lon-cal-num" data-dow="' + DOW[d.getDay()] + '">' + d.getDate() + '</span><div class="lon-cal-evs">' +
         items.map(function (x) {
-          return '<span class="lon-cal-ev' + (x.type === "Events" ? " is-event" : "") + (x.open ? " is-open" : "") + '">' + esc(x.title) + (x.when ? "<small>" + esc(x.when) + "</small>" : "") + "</span>";
+          return '<span class="lon-cal-ev' + (x.type === "Events" ? " is-event" : x.type === "Around town" ? " is-town" : "") + (x.open ? " is-open" : "") + '">' + esc(x.title) + (x.when ? "<small>" + esc(x.when) + "</small>" : "") + "</span>";
         }).join("") + "</div></div>";
     }
     if (!any) html += '<div class="lon-cal-empty">Nothing listed for this view yet. Check back soon, or ask us what is coming up.</div>';
@@ -762,5 +764,15 @@ document.querySelectorAll("[data-cal]").forEach(function (root) {
     window.print();
     setTimeout(function () { document.body.classList.remove("lon-printing"); }, 500);
   });
+  // open on this month if anything is still coming up, otherwise on the next month that has something listed
+  (function () {
+    var saved = filter;
+    for (var k = 0; k < 13; k++) {
+      var m = new Date(today.getFullYear(), today.getMonth() + k, 1), end = new Date(m.getFullYear(), m.getMonth() + 1, 0);
+      for (var t = new Date(k ? m : today); t <= end; t.setDate(t.getDate() + 1)) {
+        if (itemsOn(t).length) { cur = m; filter = saved; return; }
+      }
+    }
+  })();
   render();
 });

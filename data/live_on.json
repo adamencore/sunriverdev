@@ -1,21 +1,153 @@
 {
-  "_note": "Live On page data. PLACEHOLDERS: the clubs, days and times below came from the content draft and still need the real roster and schedule from the team. Edit here; the page and calendar rebuild from this file.",
+  "_note": "Live On page data. Clubs and the calendar come from the SunRiver Firelight November 2026 activity calendar. Add each new month's events here; the page and calendar rebuild from this file. Types: Clubs, Events, Around town.",
   "running_now": [
-    {"name": "Morning walking group", "when": "Weekday mornings"},
-    {"name": "Pickleball", "when": "Informal, on the completed courts"},
-    {"name": "Book club", "when": "Monthly"},
-    {"name": "Card night", "when": "Weekly"},
-    {"name": "Hiking group", "when": "Weekends"}
+    {
+      "name": "Women's Golf Club",
+      "when": "Mondays, 7:30 AM"
+    },
+    {
+      "name": "Breakfast Social",
+      "when": "Mondays, 9 to 10 AM"
+    },
+    {
+      "name": "Men's Golf Club",
+      "when": "Wednesdays, 7:30 AM"
+    },
+    {
+      "name": "Drop-in Games",
+      "when": "Wednesdays, 2 PM"
+    },
+    {
+      "name": "Pilates Workshop",
+      "when": "Select Thursdays, 11 AM"
+    },
+    {
+      "name": "Firelight Foodie Adventures",
+      "when": "Monthly"
+    }
   ],
-  "clubhouse_opens": ["Fitness classes", "Pottery and craft studios", "Woodworking", "Card and game rooms", "Water aerobics", "Event space for concerts and holiday dinners"],
+  "clubhouse_opens": [
+    "Fitness classes",
+    "Pottery and craft studios",
+    "Woodworking",
+    "Card and game rooms",
+    "Water aerobics",
+    "Event space for concerts and holiday dinners"
+  ],
   "recurring": [
-    {"title": "Morning walking group", "type": "Clubs", "weekdays": [1, 2, 3, 4, 5], "when": "Mornings"},
-    {"title": "Pickleball", "type": "Clubs", "weekdays": [2, 4, 6], "when": "Informal play"},
-    {"title": "Card night", "type": "Clubs", "weekdays": [3], "when": "Evening"},
-    {"title": "Hiking group", "type": "Clubs", "weekdays": [6], "when": "Morning"},
-    {"title": "Book club", "type": "Clubs", "nth": 1, "weekday": 4, "when": "Evening"}
+    {
+      "title": "Women's Golf Club",
+      "type": "Clubs",
+      "weekdays": [
+        1
+      ],
+      "when": "7:30 AM",
+      "from": "2026-11-01",
+      "until": "2026-11-30"
+    },
+    {
+      "title": "Breakfast Social",
+      "type": "Clubs",
+      "weekdays": [
+        1
+      ],
+      "when": "9 to 10 AM",
+      "from": "2026-11-01",
+      "until": "2026-11-30"
+    },
+    {
+      "title": "Men's Golf Club",
+      "type": "Clubs",
+      "weekdays": [
+        3
+      ],
+      "when": "7:30 AM",
+      "from": "2026-11-01",
+      "until": "2026-11-30"
+    },
+    {
+      "title": "Drop-in Games",
+      "type": "Clubs",
+      "weekdays": [
+        3
+      ],
+      "when": "2 PM",
+      "from": "2026-11-01",
+      "until": "2026-11-30"
+    }
   ],
   "events": [
-    {"_example": "One-off events go here, e.g. {\"date\": \"2026-11-14\", \"title\": \"Concert on the lawn\", \"type\": \"Events\", \"when\": \"6 pm\", \"open\": true}"}
+    {
+      "date": "2026-11-05",
+      "title": "Pilates Workshop",
+      "type": "Events",
+      "when": "11 AM"
+    },
+    {
+      "date": "2026-11-05",
+      "title": "Cookie Class",
+      "type": "Events",
+      "when": "4 PM"
+    },
+    {
+      "date": "2026-11-06",
+      "title": "Red Rock Classic",
+      "type": "Around town",
+      "when": ""
+    },
+    {
+      "date": "2026-11-13",
+      "title": "Firelight Foodie Adventures",
+      "type": "Events",
+      "when": "11 AM"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Pilates Workshop",
+      "type": "Events",
+      "when": "11 AM"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Paint Nite",
+      "type": "Events",
+      "when": "6 PM"
+    },
+    {
+      "date": "2026-11-19",
+      "title": "Jubilee of Trees",
+      "type": "Around town",
+      "when": ""
+    },
+    {
+      "date": "2026-11-20",
+      "title": "Sunrise Stroll",
+      "type": "Events",
+      "when": "7:30 AM"
+    },
+    {
+      "date": "2026-11-20",
+      "title": "Jubilee of Trees",
+      "type": "Around town",
+      "when": ""
+    },
+    {
+      "date": "2026-11-21",
+      "title": "Jubilee of Trees",
+      "type": "Around town",
+      "when": ""
+    },
+    {
+      "date": "2026-11-22",
+      "title": "Turkey Trot and Food Drive",
+      "type": "Around town",
+      "when": ""
+    },
+    {
+      "date": "2026-11-27",
+      "title": "Holiday Lights at Red Hills Garden begin",
+      "type": "Around town",
+      "when": ""
+    }
   ]
 }
