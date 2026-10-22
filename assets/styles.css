@@ -1322,6 +1322,13 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lmc-detail { background: var(--white); }
 .lmc-pill { position: absolute; left: 12px; top: 12px; padding: 5px 10px; border-radius: 20px; background: var(--white); color: #335A97; font-weight: 900; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; }
 .lmc-pill.is-sold { background: #D91E37; color: var(--white); }
+/* sold lots: the hover outline and card go red to match */
+.lotmap-svg .lm-lot.is-sold.is-hot, .lotmap-svg .lm-lot.is-sold:hover, .lotmap-svg .lm-lot.is-sold:focus-visible { stroke: #A3122A; }
+.lmc-card.is-sold .lmc-bar { background: #D91E37; }
+.lmc-card.is-sold .lmc-meta { color: #FFE2E6; }
+.lmc-detail.is-sold .lmc-title, .lmc-detail.is-sold .lmc-eyebrow { color: #D91E37; }
+.lmc-detail.is-sold .lmc-cta { color: #D91E37; }
+.lmc-detail.is-sold .lmc-arrow { background-color: #D91E37; }
 .lmc-pill.is-available { background: var(--sun-yellow); color: var(--white); }
 .lmc-pill.solo { position: static; display: inline-block; margin: 18px 0 0 20px; border: 1px solid rgba(51, 90, 151, .2); }
 .lmc-body { display: grid; gap: 6px; padding: 16px 20px 20px; }

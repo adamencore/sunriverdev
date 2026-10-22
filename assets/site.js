@@ -315,7 +315,7 @@
       if (!detail) {
         var name = p ? p.name : (st === "available" ? "Choose your plan" : st === "sold" ? "Sold" : label);
         var meta = "Lot " + n + (p ? " &middot; " + p.sqft + " ft&sup2;" : " &middot; " + label);
-        return "<" + tag + ' class="lmc-card"' + href + ">" +
+        return "<" + tag + ' class="lmc-card is-' + st + '"' + href + ">" +
           (p && p.img ? '<span class="lmc-img"><img src="' + p.img + '" alt=""></span>' : "") +
           '<span class="lmc-bar"><span class="lmc-meta">' + meta + '</span><span class="lmc-name">' + esc(name) + "</span>" +
           (url ? '<span class="po-go" aria-hidden="true"></span>' : "") + "</span></" + tag + ">";
@@ -340,7 +340,7 @@
         body = '<span class="lmc-eyebrow">Lot ' + n + '</span><span class="lmc-title">' + label + "</span>" +
           (url ? '<span class="lmc-cta">Talk with our sales team<span class="lmc-arrow" aria-hidden="true"></span></span>' : "");
       }
-      return "<" + tag + ' class="lmc-card lmc-detail"' + href + ">" +
+      return "<" + tag + ' class="lmc-card lmc-detail is-' + st + '"' + href + ">" +
         (p && p.img ? '<span class="lmc-img"><img src="' + p.img + '" alt=""><span class="lmc-pill is-' + st + '">' + label + "</span></span>"
                     : '<span class="lmc-pill is-' + st + ' solo">' + label + "</span>") +
         '<span class="lmc-body">' + body + "</span></" + tag + ">";
