@@ -590,7 +590,8 @@
   function pick(bg) {
     var word = contrast(BLUE, bg) >= 3 || contrast(BLUE, bg) >= contrast(WHITE, bg) ? BLUE : WHITE;
     var brand = brandAccent();
-    var ok = brand === WHITE ? contrast(WHITE, bg) >= 2.2 : (contrast(YELLOW, bg) >= 2 || dE(YELLOW, bg) >= 60);
+    var ok = brand === WHITE ? contrast(WHITE, bg) >= 1.3 :  // homepage: white accents per the Figma, unless the spot is nearly white
+      (contrast(YELLOW, bg) >= 2 || dE(YELLOW, bg) >= 60);
     var accent = ok ? brand : (contrast(word, bg) >= contrast(brand, bg) ? word : brand);
     return [word, accent];
   }
