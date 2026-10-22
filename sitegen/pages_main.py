@@ -669,7 +669,7 @@ def build_main(plans, listings):
   </div>
 </section>
 %s''' % (full_hero("Consider it undercover research.", "Three days and two nights at SunRiver Firelight, for $399.", "Discovery Villas",
-                     S("c5ebae09696ee1eb9413e050b39c7b0a337f2ce5-2500x977.webp", 2400), "Inside a designer-furnished Discovery Villa"),
+                     FG("dv-living"), "Inside a designer-furnished Discovery Villa"),
          PHONE_TEL, PHONE, img(FG("dv-firepit"), "SunRiver members around the fire pit at the Discovery Villas", "dv-photo"),
          '<div class="photo">%s</div>' % simg("ff6cad819fb35b52154d3d5e8b3644f73c0d438f-992x698.png", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
          '<div class="photo">%s</div>' % simg("01f99f1f0973eab00b77baec91841deb780f8ca9-992x698.webp", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
