@@ -895,21 +895,28 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .filter-btn:hover { background: #335A97; color: var(--white); }
 .results-count { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .hfs-results { position: relative; }
-.home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 15px; }
-.home-card { display: flex; flex-direction: column; min-height: 308px; padding: 15px 14px 11px; background: var(--white); border-radius: 21px; text-decoration: none; color: #153250; transition: transform .2s ease, box-shadow .2s ease; }
-.home-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); }
+.home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+/* Listing card, matched to the Vercel build */
+.home-card { display: block; border-radius: 21px; text-decoration: none; transition: box-shadow .25s ease; }
+.home-card:hover { box-shadow: 0 14px 34px rgba(20, 50, 80, .14); }
 .home-card[hidden] { display: none; }
-.home-img { position: relative; display: block; height: 167px; border-radius: 21px; overflow: hidden; background: var(--riverbed-sand); }
+.home-card-in { display: block; height: 100%; padding: 14px; border-radius: 21px; background: var(--white); box-shadow: 0 1px 2px rgba(20, 50, 80, .05); }
+.home-img { position: relative; display: block; aspect-ratio: 284 / 167; border-radius: 21px; overflow: hidden; background: linear-gradient(135deg, #C9D8E0, #E8DCC8); }
 .home-img img { width: 100%; height: 100%; object-fit: cover; }
-.home-badge { position: absolute; top: 11px; left: 12px; display: grid; place-items: center; height: 25px; padding: 0 11px; border-radius: 21px; background: #FAF5F0; color: #335A97; font-weight: 900; font-size: 10px; letter-spacing: -0.02em; text-transform: uppercase; }
-.home-badge:empty { display: none; }
-.home-title { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: 16px; padding: 0 13px; font-size: 15.2px; line-height: 20px; letter-spacing: -0.03em; }
+.home-badge { position: absolute; top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 999px; background: #FAF5F0; color: #325A96; font-weight: 900; font-size: 10px; line-height: 15px; letter-spacing: -0.02em; text-transform: uppercase; }
+.home-badge i { width: 6px; height: 6px; flex: none; border-radius: 50%; background: #22C55E; }
+.home-badge.is-under-contract { background: #F5AF1C; color: var(--white); }
+.home-badge.is-sold { background: #D91E37; color: var(--white); }
+.home-badge.is-under-contract i, .home-badge.is-sold i { background: var(--white); }
+.home-body { display: block; padding: 8px 6px 6px; }
+.home-title { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; color: #143250; font-size: 15px; line-height: 22.5px; letter-spacing: -0.03em; }
 .home-title strong { font-weight: 900; text-transform: uppercase; }
-.home-title span { white-space: nowrap; }
-.home-address { display: block; padding: 0 13px; font-size: 11.2px; line-height: 18px; letter-spacing: -0.03em; }
-.home-price { display: block; margin-top: 1px; padding: 0 13px; color: #335A97; font-weight: 900; font-size: 22.4px; line-height: 28px; letter-spacing: -0.03em; }
-.chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; padding: 0 12px; }
-.chip { display: inline-flex; align-items: center; gap: 6px; height: 25px; padding: 0 10px 0 11px; border: .7px solid #C8C4C0; border-radius: 21px; color: #C8C4C0; font-size: 11.2px; letter-spacing: -0.03em; white-space: nowrap; }
+.home-sf { flex: none; text-decoration: underline 3px #F5AF1C; text-underline-offset: 2px; }
+.home-address { display: block; color: #143250; font-size: 11px; line-height: 16.5px; letter-spacing: -0.03em; }
+.home-no { color: #9499AD; }
+.home-price { display: block; margin-top: 4px; color: #325A96; font-weight: 900; font-size: 22px; line-height: 33px; letter-spacing: -0.03em; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid #C8C4C0; border-radius: 999px; color: #C8C4C0; font-size: 11px; line-height: 16.5px; letter-spacing: -0.03em; white-space: nowrap; }
 .chip-icon { width: 12px; height: 12px; object-fit: contain; filter: grayscale(1) opacity(.45); }
 .empty-state { margin-top: 0; }
 
@@ -1238,8 +1245,6 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .li-visit .li-btns { margin-top: 38px; }
 .li-ready { padding: 106px 0 126px; background: var(--white); }
 .li-home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 926px; margin-top: 70px; }
-.li-home-grid .home-card { padding: 0; min-height: 0; }
-.li-home-grid .home-title, .li-home-grid .home-address, .li-home-grid .home-price { padding-inline: 12px; }
 .li-step { margin-top: 128px; }
 .li-step::before { content: ""; display: block; width: 104px; height: 3px; background: #EDB443; }
 .li-step h2 { margin-top: 18px; color: #335A97; font-weight: 900; font-size: 44px; line-height: 48px; letter-spacing: -0.03em; }

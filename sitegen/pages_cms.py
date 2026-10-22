@@ -271,20 +271,32 @@ def short_address(l):
     return re.sub(r"^\s*Home\s+\d+,\s*", "", l.get("address") or "")
 
 
+BADGE_LABEL = {"Move in Ready": "Move-In-Ready"}
+
+
 def listing_card(l):
-    """Homes for sale card, OFFICIAL Figma "Homes for Sale Filter Simple" (6:267)."""
+    """Homes for sale card, styled like the developers' Vercel build (sunriver-website.vercel.app/homes-for-sale):
+    status pill with a dot, plan name and square feet with a yellow underline, address and home number, price, spec chips."""
     photo = simg(l["photo"], l.get("photoAlt") or l.get("title"), 568, sizes="(max-width: 700px) 100vw, 284px") if l.get("photo") else ""
     data = 'data-community="%s" data-status="%s" data-sqft="%s" data-beds="%s" data-baths="%s" data-garage="%s" data-hobby="%s"' % (
         esc(l.get("community", "")), esc(l.get("status", "")), l.get("squareFootage") or 0, l.get("beds") or 0,
         l.get("baths") or 0, l.get("garageSpaces") or 0, l.get("hobbyRooms") or 0)
-    return '''<a class="home-card" href="/homes-for-sale/%s" %s>
-  <span class="home-img">%s<span class="home-badge">%s</span></span>
-  <span class="home-title"><strong>%s</strong><span>{:,} sqft</span></span>
-  <span class="home-address">%s</span>
-  <span class="home-price">%s</span>
-  %s
-</a>'''.format(l.get("squareFootage") or 0) % (
-        l["slug"], data, photo, esc(l.get("status") or ""), esc(clean(l.get("title"))), esc(short_address(l)), listing_price(l), spec_chips(l))
+    st = l.get("status") or ""
+    badge = '<span class="home-badge is-%s"><i aria-hidden="true"></i>%s</span>' % (slugify(st), esc(BADGE_LABEL.get(st, st))) if st else ""
+    m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
+    home_no = '<span class="home-no"> | Home %s</span>' % m.group(1) if m else ""
+    # a price, or "Ask for pricing"; a home under contract with no price shows none
+    price = "" if (st == "Under Contract" and not l.get("price")) else listing_price(l)
+    return '''<a class="home-card" href="/homes-for-sale/%s" %s><span class="home-card-in">
+  <span class="home-img">%s%s</span>
+  <span class="home-body">
+    <span class="home-title"><strong>%s</strong><span class="home-sf">%s sf</span></span>
+    <span class="home-address">%s%s</span>
+    %s
+    %s
+  </span>
+</span></a>''' % (l["slug"], data, photo, badge, esc(clean(l.get("title"))), l.get("squareFootage") or "",
+             esc(short_address(l)), home_no, '<span class="home-price">%s</span>' % price if price else "", spec_chips(l))
 
 
 def box(name, value, label, checked=False):
