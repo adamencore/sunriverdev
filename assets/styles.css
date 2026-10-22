@@ -616,18 +616,19 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 /* Overlay header with translucent pill nav */
 .site-header.overlay { position: absolute; background: transparent; box-shadow: none; }
 .overlay .header-inner { height: auto; padding-top: 54px; align-items: center; }
-.pill-nav { position: relative; width: auto; justify-content: flex-start; height: 46px; padding: 0 7px 0 30px; gap: 38px; background: rgba(255, 255, 255, 0.54); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.pill-nav { position: relative; width: auto; justify-content: flex-start; height: 46px; padding: 0 7px 0 30px; gap: 38px; background: rgba(255, 255, 255, 0.94); border-radius: 23px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .pill-nav .nav-link { font-size: 15px; letter-spacing: -0.03em; color: var(--sunriver-blue); padding: 6px 0; }
 .pill-nav .nav-link:hover { color: var(--sun-yellow-deep); }
 .pill-nav .chev { display: none; }
 .pill-cta { display: grid; place-items: center; width: 138px; height: 34px; border-radius: 14px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.03em; text-decoration: none; transition: background .2s; }
 .pill-cta:hover { background: var(--sun-yellow-deep); }
-/* Life at SunRiver dropdown, OFFICIAL "Home NAV Live In / Out / On": 290 tall, same width as the pill nav above it, photo flush right.
-   Opens with a quick fade and drop; the photo crossfades to match the item under the pointer. */
+/* Life at SunRiver dropdown, Figma "Home NAV Live In 3": a white card just under the pill, same width,
+   Live In / Live Out / Live On on the left (the one under the pointer gets the yellow underline) and an inset photo
+   with a serif title on the right. Opens with a quick fade and drop; the photo crossfades with the item. */
 .pill-drop {
-  display: grid; position: absolute; left: 0; right: 0; top: 52px; width: auto; height: 290px; padding: 0 0 0 29px;
-  background: #E1EAF9; border-radius: 20px; overflow: hidden; grid-template-columns: minmax(0, 1fr) 274px; align-items: start;
-  box-shadow: 0 14px 34px rgba(20, 50, 80, 0.2);
+  display: grid; position: absolute; left: 0; right: 0; top: 50px; width: auto; height: 176px; padding: 5px 5px 5px 26px;
+  background: var(--white); border-radius: 24px; overflow: hidden; grid-template-columns: minmax(0, 1fr) 303px; align-items: stretch;
+  box-shadow: 0 14px 34px rgba(20, 50, 80, 0.18);
   visibility: hidden; opacity: 0; pointer-events: none; transform: translateY(-8px) scale(.985); transform-origin: 20% 0;
   transition: opacity .14s ease, transform .18s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .18s;
 }
@@ -635,22 +636,22 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   visibility: visible; opacity: 1; pointer-events: auto; transform: none;
   transition: opacity .16s ease, transform .22s cubic-bezier(.2, .8, .2, 1), visibility 0s;
 }
-.pill-drop ul { list-style: none; margin: 35px 0 0; padding: 0; display: grid; gap: 23px; }
+.pill-drop ul { list-style: none; margin: 0; padding: 0; display: grid; align-content: center; gap: 30px; }
 .pill-drop li { opacity: 0; transform: translateY(6px); transition: opacity .14s ease, transform .14s ease; }
 .nav-item[data-open="true"] .pill-drop li { opacity: 1; transform: none; transition: opacity .2s ease, transform .24s cubic-bezier(.2, .8, .2, 1); }
 .nav-item[data-open="true"] .pill-drop li:nth-child(1) { transition-delay: .03s; }
 .nav-item[data-open="true"] .pill-drop li:nth-child(2) { transition-delay: .06s; }
 .nav-item[data-open="true"] .pill-drop li:nth-child(3) { transition-delay: .09s; }
-.pill-drop ul a { display: block; width: 191px; min-height: 60px; text-decoration: none; color: var(--sunriver-blue); }
-.pill-drop ul strong { display: inline-block; font-weight: 900; font-size: 15px; line-height: 18px; letter-spacing: -0.03em; }
-.pill-drop ul strong::after { content: ""; display: block; width: 100%; height: 3px; margin-top: 1px; background: var(--sun-yellow); border-radius: 2px; transform-origin: left; transition: transform .2s ease; }
-.pill-drop ul span { display: block; max-width: 170px; margin-top: 5px; font-size: 11.5px; line-height: 14px; letter-spacing: -0.02em; color: var(--deep-river); }
-.pill-drop ul a:hover strong, .pill-drop ul a:focus-visible strong { color: var(--sun-yellow-deep); }
-.pill-drop ul a:hover strong::after, .pill-drop ul a:focus-visible strong::after { transform: scaleX(1.25); }
-.pill-drop-photo { position: relative; display: block; width: 274px; height: 290px; overflow: hidden; background: #C9D7EE; }
+.pill-drop ul a { display: inline-block; text-decoration: none; color: #335A97; }
+.pill-drop ul strong { display: inline-block; font-weight: 500; font-size: 15px; line-height: 20px; letter-spacing: -0.02em; }
+.pill-drop ul strong::after { content: ""; display: block; height: 3px; margin-top: 2px; background: var(--sun-yellow); border-radius: 2px; transform: scaleX(0); transform-origin: left; transition: transform .22s cubic-bezier(.22, .61, .36, 1); }
+.pill-drop[data-active="0"] li:nth-child(1) strong::after, .pill-drop[data-active="1"] li:nth-child(2) strong::after, .pill-drop[data-active="2"] li:nth-child(3) strong::after { transform: scaleX(1.12); }
+.pill-drop-photo { position: relative; display: block; height: 100%; overflow: hidden; border-radius: 20px; background: #C9D7EE; }
 .pd-shot { position: absolute; inset: 0; opacity: 0; transform: scale(1.04); transition: opacity .25s ease, transform .45s cubic-bezier(.2, .8, .2, 1); }
 .pd-shot.is-on { opacity: 1; transform: none; }
 .pd-shot img { width: 100%; height: 100%; object-fit: cover; }
+.pd-shot::after { content: ""; position: absolute; inset: 0; background: rgba(20, 40, 70, .18); }
+.pd-shot-title { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; color: var(--white); font-family: var(--font-serif); font-size: 27px; letter-spacing: -0.02em; text-shadow: 0 2px 14px rgba(20, 40, 70, .35); }
 
 /* Hero */
 .h4-hero { position: relative; z-index: 3; height: clamp(560px, 63.75vw, 918px); border-radius: 0 0 30px 30px; overflow: hidden; background: #CFE0F2; box-shadow: 0 4px 30px rgba(21, 50, 80, 0.57); }

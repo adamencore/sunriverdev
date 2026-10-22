@@ -147,12 +147,13 @@ def pill_header(active, variant="bar"):
       variant "overlay" : over a photo hero with the yellow Founders Club tab ("Homes for Sale / Model Homes")
       variant "bar"     : white 168px bar with shadow ("Homes for Sale Filter Simple", "Home Detail")"""
     from .figma_assets import FG
-    items = "".join('<li><a href="%s" data-i="%d"><strong>%s</strong><span>%s</span></a></li>' % (h, k, t, sub) for k, (t, h, sub, _, _) in enumerate(LIFE))
-    # Dropdown photo per item (OFFICIAL "Home NAV Live In/Out/On"): it swaps as you hover each one.
-    # Live On uses the Figma photo, which is also what shows when the menu first opens.
-    shots = [(LIFE[0][3], LIFE[0][4]), (LIFE[1][3], LIFE[1][4]), (FG("nav-photo"), "SunRiver members playing pickleball")]
-    photos = "".join('<span class="pd-shot%s" data-i="%d">%s</span>' % (" is-on" if k == 2 else "", k, img(src, alt, loading="eager"))
-                     for k, (src, alt) in enumerate(shots))
+    items = "".join('<li><a href="%s" data-i="%d"><strong>%s</strong></a></li>' % (h, k, t) for k, (t, h, sub, _, _) in enumerate(LIFE))
+    # Dropdown photo per item, Figma "Home NAV Live In 3": each photo carries a serif title, and it swaps as you hover.
+    shots = [(FG("nav-kitchen"), "A couple cooking together in a SunRiver Firelight kitchen", "Your Home"),
+             (LIFE[1][3], LIFE[1][4], "Southern Utah"),
+             (FG("nav-photo"), "SunRiver members playing pickleball", "Clubs &amp; Groups")]
+    photos = "".join('<span class="pd-shot%s" data-i="%d">%s<span class="pd-shot-title">%s</span></span>' % (" is-on" if k == 0 else "", k, img(src, alt, loading="eager"), title)
+                     for k, (src, alt, title) in enumerate(shots))
     cur = lambda k: ' aria-current="page"' if k == active else ""
     tab = ""  # the Founders Club tab is retired
     # One header everywhere: logo plus the floating pill, no white bar behind it.
@@ -165,7 +166,7 @@ def pill_header(active, variant="bar"):
     <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="main-nav pill-nav" aria-label="Main">
       <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu"%s>Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
-        <div class="pill-drop" id="life-menu" data-active="2"><ul>%s</ul><div class="pill-drop-photo" aria-hidden="true">%s</div></div></div>
+        <div class="pill-drop" id="life-menu" data-active="0"><ul>%s</ul><div class="pill-drop-photo" aria-hidden="true">%s</div></div></div>
       <div class="nav-item"><a class="nav-link" href="/homes-for-sale"%s>Homes</a></div>
       <div class="nav-item"><a class="nav-link" href="/discovery-villas"%s>Discovery Villas</a></div>
       <a class="pill-cta" href="/contact-us"%s>Visit</a>

@@ -38,6 +38,7 @@ FIGMA_IDS = {
     "fah_hero": "9d943a9d-39c2-4942-a3eb-4cda27c34448",  # Discovery Villas Row 1, Find a Home hero
     "fah_card": "1cdb7ead-eb9a-4826-97b8-e94300fe4170",  # Rectangle 202, FLOOR PLANS card
     "hfs_band": "eac1e2af-712e-4c45-971b-f762936946b7",  # Rectangle 133, Homes for sale band
+    "nav_kitchen": "https://s3-alpha-sig.figma.com/img/0498/aae5/6d02de4e11be9878105ffee512c1b556?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=p2Njs4QGM1MUHUy4nZcfbaGpGdvyq2TUYDxTvP~8o5JuxsOae-17RFTBXsyS9kjxqy3lvazlJMXqJRLvY0hl~TrR~ZJ~OGECL3O9Y1SDeXRZOsfGjxSjKgMzlvgiVF5tQePFuvAVXX1bClnZs243V~eudc9GAl7HSUTI4RIo8ngrYI~oScGsz3hexI-~com9k25IXrujMChxGyDaiWX7WGO0zu6cLDdWQZikzLfAx41OXNeeboKI792jNI4041zj2odptPwACg18PnGxdKlW2Eey63MGbeQ8mTBxf58WVTAo4DJuhhZGYMtbEZdDx4QPS8hTFy1N-Sasgk-jed1gug__",  # Home NAV Live In 3 dropdown photo
     "li_bedroom": "https://s3-alpha-sig.figma.com/img/344f/a386/5f6b6a2704e33ef7c82c80dfbd29ead3?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=Oje4m6hKwL7HaUGOZHLt7xdt4O-7KE0ja-EqDJpt7GPOf8TzF8NsRlXa8T-FfytjiUjRcrlhyup5DQu6u0UYDmlg6ywIBfPw2FT3Zhi3hzsC~n-YXU0OV~myE-4WGsQnnJ1MauyWYuYlcQrPh1IvtqpZg5UmsCAYNpN1GrUJ~050iPhkB5hFOruCI1TXMogggiSssVmMAkH5wKjvK5j4aW0BHioo5u9wrxCj-16rhs8ByCIznxDG~pcK6YNYSuiSkWuP6ChCYQIASRq~-O1lxbmAfBC0Pl~DrIkV1PyYpLfRSKEwUSBUqFD7h6YZzSb4C652Sh2QSN~xGviSZ7xaVg__",  # Live In, 04 / The Design Center
     "sales_team": "87d320a1-aa84-40ac-bb9b-cba4b8e53d03",  # SunRiver Sales Team 2 (cut out)
     # Full-size originals read from the Figma file in the browser (signed links, valid to about 2026-11-02)
@@ -64,6 +65,7 @@ SPECS = {
     "fah-card": ("fah_card", 499, 261, -26.92, -35.94, 135.74, 146.06, 998, {}),
     "hfs-band": ("hfs_band", 1476, 238, 0, 4.38, 100, 348.39, 2400, {}),
     "hfs-hero": ("hfs_band", None, None, 0, 0, 100, 100, 2400, {"fallback": "hfs-band"}),
+    "nav-kitchen": ("nav_kitchen", None, None, 0, 0, 100, 100, 900, {}),
     "li-bedroom": ("li_bedroom", None, None, 0, 0, 100, 100, 1200, {}),
     "sales-team": ("sales_team", 442.233, 309.218, -4.06, -0.02, 108.11, 100.3, 884, {"alpha": True}),
     "fl-founders": ("fl_founders", None, None, 0, 0, 100, 100, 2400, {"mirror": True}),
