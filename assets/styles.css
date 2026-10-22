@@ -1489,25 +1489,32 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .m-nav-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 24px var(--gutter) 16px; background: #C9D9F3; }
 .m-nav-logo { margin-right: auto; }
 .m-nav-logo .logo-svg { width: 150px; }  /* same size as the header logo on mobile */
-.m-nav-visit { display: grid; place-items: center; flex: 0 1 132px; min-width: 84px; height: 36px; border-radius: 18px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.02em; text-decoration: none; }
 .m-nav-close { display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #F4EFE8; color: #335A97; cursor: pointer; }
 .m-nav-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
-.m-nav-body { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 40px 28px; }
-.m-nav-head { margin: 0 0 18px; color: #335A97; font-weight: 500; font-size: 18px; letter-spacing: -0.02em; }
-.m-nav-group { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 22px; }
-.m-nav-group a:not(.m-nav-top) { margin-left: 18px; color: #8FA7D6; font-size: 16px; line-height: 22px; letter-spacing: -0.02em; text-decoration: none; }
-.m-nav-top { margin-bottom: 4px; color: #335A97; font-size: 18px; line-height: 24px; letter-spacing: -0.02em; text-decoration: none; }
-.m-nav-body > .m-nav-top { margin: 4px 0 18px; }
-.m-nav-group a:hover, .m-nav-top:hover { color: var(--sun-yellow-deep); }
-.m-nav-photo { width: 100%; margin-top: 12px; aspect-ratio: 333 / 107; overflow: hidden; border-radius: 20px; }
-.m-nav-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+/* Figma "Mobile Nav 2" (main) and "Mobile Nav 3" (Life at SunRiver): two panels that slide sideways */
+.m-nav-body { flex: 1 0 auto; display: flex; overflow: hidden; }
+.m-nav-panels { display: flex; flex: 1 0 auto; width: 200%; transition: transform .34s cubic-bezier(.22, .61, .36, 1); }
+.m-nav.at-life .m-nav-panels { transform: translateX(-50%); }
+.m-nav-panel { display: flex; flex-direction: column; width: 50%; padding: 26px 0 0; }
+.m-nav-panel > .m-nav-list { min-height: 235px; }
+.m-nav-panel[data-panel="life"] > .m-nav-list { min-height: 199px; }  /* Back takes the difference, so the small links line up on both panels */
+.m-nav-list { margin: 0; padding: 0 40px; list-style: none; }
+.m-nav-row { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 45px; padding: 0 7px 0 0; border: 0; background: none; color: #335A97; font: inherit; font-weight: 500; font-size: 21px; letter-spacing: -0.02em; text-align: left; text-decoration: none; cursor: pointer; }
+.m-chev { flex: none; width: 9px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.m-nav-back { display: inline-flex; align-items: center; gap: 8px; height: 24px; margin: 0 0 12px 40px; align-self: flex-start; padding: 0; border: 0; background: none; color: #8FA7D6; font: inherit; font-size: 14px; cursor: pointer; }
+.m-nav-back .m-chev { width: 7px; height: 12px; }
+.m-nav-small { margin: 50px 0 0; padding: 0 40px; list-style: none; }
+.m-nav-small a { display: block; color: #8FA7D6; font-size: 14px; line-height: 23px; letter-spacing: -0.01em; text-decoration: none; }
+.m-nav-row:hover, .m-nav-small a:hover, .m-nav-back:hover { color: var(--sun-yellow-deep); }
+.m-nav-photo { flex: 1 0 230px; margin: 10px 28px 12px; overflow: hidden; border-radius: 20px; }
+.m-nav-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 body.m-nav-lock { overflow: hidden; }
 @media (min-width: 1021px) { .m-nav { display: none !important; } }
 @media (max-width: 1020px) {
   /* the old drop-down mobile menu gives way to the sheet */
   .site-header[data-menu="open"] .main-nav { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .m-nav { transition: opacity .12s linear; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .m-nav, .m-nav-panels { transition: opacity .12s linear; transform: none; } .m-nav.at-life .m-nav-panels { transform: translateX(-50%); } }
 
 /* Homepage hero, Figma "Home NAV Live In 3": "NEW" in white, and the logo's sun rays and "Communities" in white over the sky */
 .h4-new { color: var(--white); }

@@ -176,23 +176,34 @@ def pill_header(active, variant="bar"):
 <div class="m-nav" id="m-nav" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <div class="m-nav-bar">
     <a class="m-nav-logo" href="/" aria-label="SunRiver Communities home">%s</a>
-    <a class="m-nav-visit" href="/contact-us">Visit</a>
     <button class="m-nav-close" type="button" aria-label="Close menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
   </div>
   <nav class="m-nav-body" aria-label="Mobile">
-    <p class="m-nav-head">Life at SunRiver</p>
-    <div class="m-nav-group"><a class="m-nav-top" href="/live-in">Live In</a>
-      <a href="/floor-plans">Floor Plans</a><a href="/live-in#design-center">The Design Center</a><a href="/energy">How We Build</a></div>
-    <div class="m-nav-group"><a class="m-nav-top" href="/live-out">Live Out</a>
-      <a href="/southern-utah">Southern Utah</a><a href="/live-out#trails">Trails &amp; Nearby Adventures</a></div>
-    <div class="m-nav-group"><a class="m-nav-top" href="/live-on">Live On</a>
-      <a href="/live-on">Clubs &amp; Activities</a><a href="/bucketlistliving/category/events">Events Calendar</a><a href="/bucketlistliving">Bucketlist</a></div>
-    <a class="m-nav-top" href="/homes-for-sale">Homes</a>
-    <a class="m-nav-top" href="/discovery-villas">Discovery Villas</a>
-    <div class="m-nav-photo">%s</div>
+    <div class="m-nav-panels">
+    <div class="m-nav-panel" data-panel="main">
+      <ul class="m-nav-list">
+        <li><button type="button" class="m-nav-row" data-go="life" aria-expanded="false">Life at SunRiver<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button></li>
+        <li><a class="m-nav-row" href="/homes-for-sale">Homes<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+        <li><a class="m-nav-row" href="/discovery-villas">Discovery Villas<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+        <li><a class="m-nav-row" href="/contact-us">Visit<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+      </ul>
+      <ul class="m-nav-small"><li><a href="/about">About</a></li><li><a href="/contact-us">Contact Us</a></li><li><a href="/bucketlistliving">#bucketlistliving</a></li></ul>
+      <div class="m-nav-photo">%s</div>
+    </div>
+    <div class="m-nav-panel" data-panel="life" aria-hidden="true" inert>
+      <button type="button" class="m-nav-back" data-go="main"><svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2L2 8l6 6"/></svg>Back</button>
+      <ul class="m-nav-list">
+        <li><a class="m-nav-row" href="/live-in">Live In<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+        <li><a class="m-nav-row" href="/live-out">Live Out<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+        <li><a class="m-nav-row" href="/live-on">Live On<svg class="m-chev" viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></a></li>
+      </ul>
+      <ul class="m-nav-small"><li><a href="/about">About</a></li><li><a href="/contact-us">Contact Us</a></li><li><a href="/bucketlistliving">#bucketlistliving</a></li></ul>
+      <div class="m-nav-photo">%s</div>
+    </div>
+    </div>
   </nav>
 </div>''' % (cls, tab, LOGO_SVG, cur("life"), items, photos,
-       cur("homes"), cur("villas"), cur("visit"), LOGO_SVG, img(LIFE[1][3], LIFE[1][4]))
+       cur("homes"), cur("villas"), cur("visit"), LOGO_SVG, img(FG("nav-kitchen"), "A couple cooking together in a SunRiver kitchen"), img(LIFE[1][3], LIFE[1][4]))
 
 
 def header(active):

@@ -25,6 +25,16 @@
         sheet.querySelector('.m-nav-close').addEventListener('click', closeSheet);
         sheet.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { if (a.hash && a.pathname === location.pathname) closeSheet(); }); });
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+        // drill-down: Life at SunRiver slides to its own panel, Back slides home
+        var panels = sheet.querySelectorAll('.m-nav-panel');
+        var goPanel = function (name) {
+          sheet.classList.toggle('at-life', name === 'life');
+          panels.forEach(function (p) { var on = p.getAttribute('data-panel') === name; p.inert = !on; p.setAttribute('aria-hidden', on ? 'false' : 'true'); });
+          var opener = sheet.querySelector('[data-go="life"]'); if (opener) opener.setAttribute('aria-expanded', name === 'life' ? 'true' : 'false');
+          var f = sheet.querySelector('.m-nav-panel[data-panel="' + name + '"] ' + (name === 'life' ? '.m-nav-back' : '.m-nav-row')); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
+        };
+        sheet.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { goPanel(b.getAttribute('data-go')); }); });
+        toggle.addEventListener('click', function () { goPanel('main'); var c = sheet.querySelector('.m-nav-close'); if (c) c.focus(); });
       }
     }
     var items = header.querySelectorAll('.nav-item[data-open]');
