@@ -1479,10 +1479,10 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   opacity: 0; transform: translateY(-12px); transition: opacity .22s ease, transform .28s cubic-bezier(.22, .61, .36, 1); }
 .m-nav[hidden] { display: none; }
 .m-nav.is-open { opacity: 1; transform: none; }
-.m-nav-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 18px 20px 18px 28px; background: #C9D9F3; }
+.m-nav-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 24px var(--gutter) 16px; background: #C9D9F3; }
 .m-nav-logo { margin-right: auto; }
-.m-nav-logo .logo-svg { width: 132px; }
-.m-nav-visit { display: grid; place-items: center; width: 132px; height: 36px; border-radius: 18px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.02em; text-decoration: none; }
+.m-nav-logo .logo-svg { width: 150px; }  /* same size as the header logo on mobile */
+.m-nav-visit { display: grid; place-items: center; flex: 0 1 132px; min-width: 84px; height: 36px; border-radius: 18px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.02em; text-decoration: none; }
 .m-nav-close { display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #F4EFE8; color: #335A97; cursor: pointer; }
 .m-nav-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
 .m-nav-body { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 40px 28px; }
