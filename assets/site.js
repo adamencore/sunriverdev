@@ -624,7 +624,7 @@
     var mw = document.createElement("canvas"), ma = document.createElement("canvas");
     mw.width = ma.width = cols; mw.height = ma.height = rows;
     var dw = mw.getContext("2d").createImageData(cols, rows), da = ma.getContext("2d").createImageData(cols, rows);
-    var whiteParts = 0;
+    var whiteParts = 0, tally = { rays: { n: 0, off: 0, alt: [0, 0] }, comm: { n: 0, off: 0, alt: [0, 0] } };
     for (var r = 0; r < rows; r++) {
       var wash = washAt(hero, box.y + (r + 0.5) * box.h / rows);
       for (var c = 0; c < cols; c++) {
@@ -636,8 +636,17 @@
         var pr = pick(bg), o = (r * cols + c) * 4;
         if (pr[0] === WHITE) whiteParts++;
         dw.data[o] = pr[0][0]; dw.data[o + 1] = pr[0][1]; dw.data[o + 2] = pr[0][2]; dw.data[o + 3] = 255;
-        da.data[o] = pr[1][0]; da.data[o + 1] = pr[1][1]; da.data[o + 2] = pr[1][2]; da.data[o + 3] = 255;
+        // accents: tally per piece (sun rays on the left, "Communities" along the bottom)
+        var piece = c < cols * 0.32 && r < rows * 0.78 ? tally.rays : r >= rows * 0.74 && c >= cols * 0.22 ? tally.comm : null;
+        if (piece) { piece.n++; if (pr[1] !== brandAccent()) { piece.off++; piece.alt[pr[1] === WHITE ? 1 : 0]++; } }
       }
+    }
+    // the rays and "Communities" each switch as one piece: brand color unless a quarter of the piece can't take it
+    var accFor = function (t) { return t.off > t.n * 0.25 ? (t.alt[1] > t.alt[0] ? WHITE : BLUE) : brandAccent(); };
+    var raysC = accFor(tally.rays), commC = accFor(tally.comm);
+    for (var rr = 0; rr < rows; rr++) for (var cc = 0; cc < cols; cc++) {
+      var col = cc < cols * 0.32 && rr < rows * 0.78 ? raysC : commC, q = (rr * cols + cc) * 4;
+      da.data[q] = col[0]; da.data[q + 1] = col[1]; da.data[q + 2] = col[2]; da.data[q + 3] = 255;
     }
     mw.getContext("2d").putImageData(dw, 0, 0); ma.getContext("2d").putImageData(da, 0, 0);
     // soften the edges between colors: blur a larger copy (the SVG scales it up smoothly as well)
