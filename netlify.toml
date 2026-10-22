@@ -19,3 +19,9 @@
   from = "/cdn-img/*"
   to = "https://cdn.sanity.io/images/ib6s13lu/production/:splat"
   status = 200
+
+# Same-origin path to the photos still hosted on the earlier Vercel build (same reason as above)
+[[redirects]]
+  from = "/vimg/*"
+  to = "https://sunriver-website.vercel.app/_next/static/media/:splat"
+  status = 200

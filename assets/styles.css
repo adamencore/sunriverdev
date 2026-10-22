@@ -1519,4 +1519,4 @@ body.m-nav-lock { overflow: hidden; }
 
 /* Homepage hero, Figma "Home NAV Live In 3": "NEW" in white, and the logo's sun rays and "Communities" in white over the sky */
 .h4-new { color: var(--white); }
-.site-header.is-home .logo-svg .lg-accent { fill: var(--white); }
+.site-header.is-home { --logo-accent: var(--white); }  /* until the color map is painted */

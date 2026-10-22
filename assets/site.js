@@ -585,6 +585,73 @@
     var c = [r / n, g / n, b / n], a = washAt(hero, box.y + box.h / 2);
     return c.map(function (v) { return Math.round(v * (1 - a) + 255 * a); });
   }
+  var NS = "http://www.w3.org/2000/svg", VB = logo.viewBox.baseVal;
+  function brandAccent() { return header.classList.contains("is-home") ? WHITE : YELLOW; }
+  function pick(bg) {
+    var word = contrast(BLUE, bg) >= 3 || contrast(BLUE, bg) >= contrast(WHITE, bg) ? BLUE : WHITE;
+    var brand = brandAccent();
+    var ok = brand === WHITE ? contrast(WHITE, bg) >= 2.2 : (contrast(YELLOW, bg) >= 2 || dE(YELLOW, bg) >= 60);
+    var accent = ok ? brand : (contrast(word, bg) >= contrast(brand, bg) ? word : brand);
+    return [word, accent];
+  }
+  function ensureDefs() {
+    var defs = logo.querySelector("defs.lg-maps");
+    if (defs) return defs;
+    defs = document.createElementNS(NS, "defs"); defs.setAttribute("class", "lg-maps");
+    ["lg-map-word", "lg-map-accent"].forEach(function (id) {
+      var p = document.createElementNS(NS, "pattern"), im = document.createElementNS(NS, "image");
+      p.setAttribute("id", id); p.setAttribute("patternUnits", "userSpaceOnUse");
+      p.setAttribute("x", VB.x); p.setAttribute("y", VB.y); p.setAttribute("width", VB.width); p.setAttribute("height", VB.height);
+      im.setAttribute("x", VB.x); im.setAttribute("y", VB.y); im.setAttribute("width", VB.width); im.setAttribute("height", VB.height);
+      im.setAttribute("preserveAspectRatio", "none");
+      p.appendChild(im); defs.appendChild(p);
+    });
+    logo.insertBefore(defs, logo.firstChild);
+    return defs;
+  }
+  function paintMaps(img, hero, box) {
+    var W = hero.offsetWidth, H = hero.offsetHeight, iw = img.naturalWidth, ih = img.naturalHeight;
+    var cs = getComputedStyle(img), pos = (cs.objectPosition || "50% 50%").split(" ");
+    var px = parseFloat(pos[0]) / 100, py = parseFloat(pos[1] || "50%") / 100;
+    var sc = Math.max(W / iw, H / ih), ox = (W - iw * sc) * px, oy = (H - ih * sc) * py;
+    // one cell for about every 5px of logo, read from a 4x larger copy and averaged
+    var cols = Math.max(8, Math.round(box.w / 5)), rows = Math.max(4, Math.round(box.h / 5)), K = 4;
+    var cv = document.createElement("canvas"); cv.width = cols * K; cv.height = rows * K;
+    var ctx = cv.getContext("2d");
+    ctx.drawImage(img, (box.x - ox) / sc, (box.y - oy) / sc, box.w / sc, box.h / sc, 0, 0, cv.width, cv.height);
+    var d = ctx.getImageData(0, 0, cv.width, cv.height).data;
+    var mw = document.createElement("canvas"), ma = document.createElement("canvas");
+    mw.width = ma.width = cols; mw.height = ma.height = rows;
+    var dw = mw.getContext("2d").createImageData(cols, rows), da = ma.getContext("2d").createImageData(cols, rows);
+    var whiteParts = 0;
+    for (var r = 0; r < rows; r++) {
+      var wash = washAt(hero, box.y + (r + 0.5) * box.h / rows);
+      for (var c = 0; c < cols; c++) {
+        var R = 0, G = 0, B = 0;
+        for (var y = 0; y < K; y++) for (var x = 0; x < K; x++) {
+          var i = ((r * K + y) * cv.width + c * K + x) * 4; R += d[i]; G += d[i + 1]; B += d[i + 2];
+        }
+        var n = K * K, bg = [R / n, G / n, B / n].map(function (v) { return Math.round(v * (1 - wash) + 255 * wash); });
+        var pr = pick(bg), o = (r * cols + c) * 4;
+        if (pr[0] === WHITE) whiteParts++;
+        dw.data[o] = pr[0][0]; dw.data[o + 1] = pr[0][1]; dw.data[o + 2] = pr[0][2]; dw.data[o + 3] = 255;
+        da.data[o] = pr[1][0]; da.data[o + 1] = pr[1][1]; da.data[o + 2] = pr[1][2]; da.data[o + 3] = 255;
+      }
+    }
+    mw.getContext("2d").putImageData(dw, 0, 0); ma.getContext("2d").putImageData(da, 0, 0);
+    // soften the edges between colors: blur a larger copy (the SVG scales it up smoothly as well)
+    var soft = function (m) {
+      var o = document.createElement("canvas"); o.width = cols * 4; o.height = rows * 4;
+      var x = o.getContext("2d"); x.imageSmoothingEnabled = true; x.filter = "blur(3px)";
+      x.drawImage(m, -1, -1, o.width + 2, o.height + 2);
+      return o.toDataURL("image/png");
+    };
+    var defs = ensureDefs(), ims = defs.querySelectorAll("image");
+    ims[0].setAttribute("href", soft(mw)); ims[1].setAttribute("href", soft(ma));
+    header.style.setProperty("--logo-word", "url(#lg-map-word)");
+    header.style.setProperty("--logo-accent", "url(#lg-map-accent)");
+    header.setAttribute("data-logo", "map-" + Math.round(100 * whiteParts / (rows * cols)));
+  }
   var probe = null;
   function run() {
     if (header.classList.contains("is-fixed")) return;
@@ -599,26 +666,23 @@
     if (!hero || !img) { var bg = pageColor(under); apply(bg, bg); return; }
     var hr = hero.getBoundingClientRect();
     var rel = function (x, y, w, h) { return { x: x - hr.left, y: y - hr.top, w: w, h: h }; };
-    // word: the middle band of the logo; accents: the sun rays (left) and "Communities" (bottom right)
-    var wordBox = rel(lr.left + lr.width * 0.12, lr.top + lr.height * 0.22, lr.width * 0.86, lr.height * 0.45);
-    var raysBox = rel(lr.left, lr.top, lr.width * 0.32, lr.height * 0.75);
-    var commBox = rel(lr.left + lr.width * 0.22, lr.top + lr.height * 0.74, lr.width * 0.76, lr.height * 0.26);
+    // Paint a color map behind every part of the logo: each spot of the wordmark and accents gets the
+    // color that reads on the photo right behind it, with soft blends where the photo changes.
     var go = function (src) {
-      try {
-        var w = sample(src, hero, wordBox), a1 = sample(src, hero, raysBox), a2 = sample(src, hero, commBox);
-        // judge the accents by the harder of the two spots
-        var acc = Math.abs(lum(a1) - lum(YELLOW)) < Math.abs(lum(a2) - lum(YELLOW)) ? a1 : a2;
-        apply(w, acc);
-      } catch (e) { /* image not readable here: keep the brand colors */ }
+      try { paintMaps(src, hero, rel(lr.left, lr.top, lr.width, lr.height)); }
+      catch (e) { /* image not readable here: keep the brand colors */ }
     };
-    if (img.src.indexOf(location.origin) === 0 || img.src.charAt(0) === "/") {
+    if (img.src.indexOf(location.origin) === 0) {
       if (img.complete && img.naturalWidth) go(img); else img.addEventListener("load", function () { go(img); }, { once: true });
     } else {
       // photos from the image CDN
       if (!probe || probe.dataset.for !== img.currentSrc) {
         probe = new Image(); probe.dataset.for = img.currentSrc;
         // same file, small, through the site's own /cdn-img/ proxy (netlify.toml) so the canvas may read it
-        probe.src = (img.currentSrc || img.src).replace(/^https:\/\/cdn\.sanity\.io\/images\/[^/]+\/[^/]+\//, "/cdn-img/").replace(/([?&])w=\d+/, "$1w=800");
+        var u = img.currentSrc || img.src;
+        probe.src = u.replace(/^https:\/\/cdn\.sanity\.io\/images\/[^/]+\/[^/]+\//, "/cdn-img/").replace(/([?&])w=\d+/, "$1w=800")
+          .replace(/^https:\/\/sunriver-website\.vercel\.app\/_next\/static\/media\//, "/vimg/")
+          .replace(/^https:\/\/sunriverdev\.netlify\.app\//, "/");
       }
       if (probe.complete && probe.naturalWidth) go(probe); else probe.onload = function () { go(probe); };
     }
