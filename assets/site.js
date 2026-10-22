@@ -5,11 +5,27 @@
   if (header) {
     var toggle = header.querySelector('.menu-toggle');
     if (toggle) {
-      toggle.addEventListener('click', function () {
-        var open = header.getAttribute('data-menu') === 'open';
-        header.setAttribute('data-menu', open ? 'closed' : 'open');
-        toggle.setAttribute('aria-expanded', String(!open));
-      });
+      // Mobile: the menu button opens the full-screen menu sheet (Figma "Mobile Nav")
+      var sheet = document.getElementById('m-nav');
+      var openSheet = function () {
+        if (!sheet) return;
+        sheet.hidden = false; void sheet.offsetWidth; sheet.classList.add('is-open');
+        document.body.classList.add('m-nav-lock'); toggle.setAttribute('aria-expanded', 'true');
+        var c = sheet.querySelector('.m-nav-close'); if (c) c.focus();
+      };
+      var closeSheet = function () {
+        if (!sheet || sheet.hidden) return;
+        sheet.classList.remove('is-open'); document.body.classList.remove('m-nav-lock'); toggle.setAttribute('aria-expanded', 'false');
+        setTimeout(function () { if (!sheet.classList.contains('is-open')) sheet.hidden = true; }, 280);
+        toggle.focus();
+      };
+      toggle.setAttribute('aria-controls', 'm-nav');
+      toggle.addEventListener('click', openSheet);
+      if (sheet) {
+        sheet.querySelector('.m-nav-close').addEventListener('click', closeSheet);
+        sheet.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { if (a.hash && a.pathname === location.pathname) closeSheet(); }); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+      }
     }
     var items = header.querySelectorAll('.nav-item[data-open]');
     var closeAll = function (except) {

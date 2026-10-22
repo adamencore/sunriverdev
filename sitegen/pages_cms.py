@@ -621,7 +621,7 @@ def build_live_in(plans, listings):
     <div class="li-walk"><div><h3>Walk the ground.</h3><p>The right location makes more sense in person.</p></div><a class="li-btn solid" href="/contact-us">Meet with an agent</a></div>
   </div>
 </section>
-<section class="li-dc">
+<section class="li-dc" id="design-center">
   <div class="wrap li-in">
     <p class="li-eyebrow">04 / The Design Center</p>
     <h2 class="li-title">You are not buying the home.<br> You are building it.</h2>
@@ -701,7 +701,7 @@ def build_live_out():
     <div class="li-btns center"><a class="li-btn light" href="/contact-us">Schedule a visit</a><a class="li-btn white" href="/discovery-villas">Stay a few nights</a></div>
   </div>
 </section>
-<section class="li-ready lo-trails">
+<section class="li-ready lo-trails" id="trails">
   <div class="wrap li-in">
     <p class="li-eyebrow">02 / Trails and adventure</p>
     <h2 class="li-title">The trails start where<br> the driveway ends.</h2>

@@ -171,8 +171,27 @@ def pill_header(active, variant="bar"):
       <a class="pill-cta" href="/contact-us"%s>Visit</a>
     </nav>
   </div>
-</header>''' % (cls, tab, LOGO_SVG, cur("life"), items, photos,
-       cur("homes"), cur("villas"), cur("visit"))
+</header>
+<div class="m-nav" id="m-nav" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <div class="m-nav-bar">
+    <a class="m-nav-logo" href="/" aria-label="SunRiver Communities home">%s</a>
+    <a class="m-nav-visit" href="/contact-us">Visit</a>
+    <button class="m-nav-close" type="button" aria-label="Close menu"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+  </div>
+  <nav class="m-nav-body" aria-label="Mobile">
+    <p class="m-nav-head">Life at SunRiver</p>
+    <div class="m-nav-group"><a class="m-nav-top" href="/live-in">Live In</a>
+      <a href="/floor-plans">Floor Plans</a><a href="/live-in#design-center">The Design Center</a><a href="/energy">How We Build</a></div>
+    <div class="m-nav-group"><a class="m-nav-top" href="/live-out">Live Out</a>
+      <a href="/southern-utah">Southern Utah</a><a href="/live-out#trails">Trails &amp; Nearby Adventures</a></div>
+    <div class="m-nav-group"><a class="m-nav-top" href="/live-on">Live On</a>
+      <a href="/live-on">Clubs &amp; Activities</a><a href="/bucketlistliving/category/events">Events Calendar</a><a href="/bucketlistliving">Bucketlist</a></div>
+    <a class="m-nav-top" href="/homes-for-sale">Homes</a>
+    <a class="m-nav-top" href="/discovery-villas">Discovery Villas</a>
+    <div class="m-nav-photo">%s</div>
+  </nav>
+</div>''' % (cls, tab, LOGO_SVG, cur("life"), items, photos,
+       cur("homes"), cur("villas"), cur("visit"), LOGO_SVG, img(LIFE[1][3], LIFE[1][4]))
 
 
 def header(active):

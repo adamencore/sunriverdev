@@ -1472,3 +1472,32 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back, .li-flips[data-anim="fade"] .li-flip:focus-visible .li-flip-back, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back { opacity: 1; }
 .li-flips[data-anim="fade"] .li-flip:hover .li-flip-back img, .li-flips[data-anim="fade"] .li-flip.is-flipped .li-flip-back img { transform: none; }
 .li-flips[data-anim="slide"] .li-flip, .li-flips[data-anim="fade"] .li-flip { overflow: hidden; border-radius: 20px; }
+
+/* Mobile menu, Figma "Mobile Nav" (129:46): full-screen sheet with a light blue bar (logo, Visit, close),
+   Life at SunRiver groups with their pages, Homes, Discovery Villas and a photo at the bottom */
+.m-nav { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; background: var(--white); overflow-y: auto; -webkit-overflow-scrolling: touch;
+  opacity: 0; transform: translateY(-12px); transition: opacity .22s ease, transform .28s cubic-bezier(.22, .61, .36, 1); }
+.m-nav[hidden] { display: none; }
+.m-nav.is-open { opacity: 1; transform: none; }
+.m-nav-bar { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 12px; padding: 18px 20px 18px 28px; background: #C9D9F3; }
+.m-nav-logo { margin-right: auto; }
+.m-nav-logo .logo-svg { width: 132px; }
+.m-nav-visit { display: grid; place-items: center; width: 132px; height: 36px; border-radius: 18px; background: var(--sun-yellow); color: var(--white); font-size: 15px; letter-spacing: -0.02em; text-decoration: none; }
+.m-nav-close { display: grid; place-items: center; flex: none; width: 36px; height: 36px; padding: 0; border: 0; border-radius: 50%; background: #F4EFE8; color: #335A97; cursor: pointer; }
+.m-nav-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.m-nav-body { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 40px 28px; }
+.m-nav-head { margin: 0 0 18px; color: #335A97; font-weight: 500; font-size: 18px; letter-spacing: -0.02em; }
+.m-nav-group { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 22px; }
+.m-nav-group a:not(.m-nav-top) { margin-left: 18px; color: #8FA7D6; font-size: 16px; line-height: 22px; letter-spacing: -0.02em; text-decoration: none; }
+.m-nav-top { margin-bottom: 4px; color: #335A97; font-size: 18px; line-height: 24px; letter-spacing: -0.02em; text-decoration: none; }
+.m-nav-body > .m-nav-top { margin: 4px 0 18px; }
+.m-nav-group a:hover, .m-nav-top:hover { color: var(--sun-yellow-deep); }
+.m-nav-photo { width: 100%; margin-top: 12px; aspect-ratio: 333 / 107; overflow: hidden; border-radius: 20px; }
+.m-nav-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+body.m-nav-lock { overflow: hidden; }
+@media (min-width: 1021px) { .m-nav { display: none !important; } }
+@media (max-width: 1020px) {
+  /* the old drop-down mobile menu gives way to the sheet */
+  .site-header[data-menu="open"] .main-nav { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .m-nav { transition: opacity .12s linear; transform: none; } }
