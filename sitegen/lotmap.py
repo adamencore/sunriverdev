@@ -74,8 +74,7 @@ def svg(plans=()):
         if st == "sold":
             marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, WHITE))
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, RED, n))
-            dx, dy = g.get("s", [1.0, 13.5])  # SOLD sits where the Illustrator art put it
-            marks.append('<text class="lm-sold" x="%.2f" y="%.2f" fill="%s">SOLD</text>' % (cx + dx, cy + dy + 3.45, WHITE))
+            # no "SOLD" label: the red fill and the key already say it
         elif plan_key:
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, WHITE, n))
         else:
