@@ -41,7 +41,7 @@ def build_home(plans):
     <img class="h4-hero-img" src="%(hero_wide)s" alt="A SunRiver couple riding bikes in Southern Utah" fetchpriority="high">
   </picture>
   <div class="wrap h4-hero-inner">
-    <h1>A 55+ community in Southern Utah for people who refuse to slow down.</h1>
+    <h1>A <span class="h4-new">NEW</span> 55+ community in Southern Utah for people who refuse to slow down.</h1>
     <p class="h4-eyebrow">SunRiver Firelight</p>
     <a class="btn h4-hero-btn" href="/why-sunriver">Life at SunRiver</a>
   </div>

@@ -157,7 +157,7 @@ def pill_header(active, variant="bar"):
     cur = lambda k: ' aria-current="page"' if k == active else ""
     tab = ""  # the Founders Club tab is retired
     # One header everywhere: logo plus the floating pill, no white bar behind it.
-    cls = {"home": "site-header overlay", "overlay": "site-header overlay", "bar": "site-header overlay on-light"}[variant]
+    cls = {"home": "site-header overlay is-home", "overlay": "site-header overlay", "bar": "site-header overlay on-light"}[variant]
     return '''<a class="skip" href="#main">Skip to content</a>
 <header class="%s" data-menu="closed">
   %s
