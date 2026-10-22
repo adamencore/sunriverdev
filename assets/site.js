@@ -641,8 +641,8 @@
         if (piece) { piece.n++; if (pr[1] !== brandAccent()) { piece.off++; piece.alt[pr[1] === WHITE ? 1 : 0]++; } }
       }
     }
-    // the rays and "Communities" each switch as one piece: brand color unless a quarter of the piece can't take it
-    var accFor = function (t) { return t.off > t.n * 0.25 ? (t.alt[1] > t.alt[0] ? WHITE : BLUE) : brandAccent(); };
+    // the rays and "Communities" each switch as one piece: brand color unless about an eighth of the piece can't take it
+    var accFor = function (t) { return t.off > t.n * 0.12 ? (t.alt[1] > t.alt[0] ? WHITE : BLUE) : brandAccent(); };
     var raysC = accFor(tally.rays), commC = accFor(tally.comm);
     for (var rr = 0; rr < rows; rr++) for (var cc = 0; cc < cols; cc++) {
       var col = cc < cols * 0.32 && rr < rows * 0.78 ? raysC : commC, q = (rr * cols + cc) * 4;
