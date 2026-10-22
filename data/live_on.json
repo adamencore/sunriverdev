@@ -1,0 +1,21 @@
+{
+  "_note": "Live On page data. PLACEHOLDERS: the clubs, days and times below came from the content draft and still need the real roster and schedule from the team. Edit here; the page and calendar rebuild from this file.",
+  "running_now": [
+    {"name": "Morning walking group", "when": "Weekday mornings"},
+    {"name": "Pickleball", "when": "Informal, on the completed courts"},
+    {"name": "Book club", "when": "Monthly"},
+    {"name": "Card night", "when": "Weekly"},
+    {"name": "Hiking group", "when": "Weekends"}
+  ],
+  "clubhouse_opens": ["Fitness classes", "Pottery and craft studios", "Woodworking", "Card and game rooms", "Water aerobics", "Event space for concerts and holiday dinners"],
+  "recurring": [
+    {"title": "Morning walking group", "type": "Clubs", "weekdays": [1, 2, 3, 4, 5], "when": "Mornings"},
+    {"title": "Pickleball", "type": "Clubs", "weekdays": [2, 4, 6], "when": "Informal play"},
+    {"title": "Card night", "type": "Clubs", "weekdays": [3], "when": "Evening"},
+    {"title": "Hiking group", "type": "Clubs", "weekdays": [6], "when": "Morning"},
+    {"title": "Book club", "type": "Clubs", "nth": 1, "weekday": 4, "when": "Evening"}
+  ],
+  "events": [
+    {"_example": "One-off events go here, e.g. {\"date\": \"2026-11-14\", \"title\": \"Concert on the lawn\", \"type\": \"Events\", \"when\": \"6 pm\", \"open\": true}"}
+  ]
+}

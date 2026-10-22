@@ -711,3 +711,56 @@ document.querySelectorAll(".li-flip").forEach(function (c) {
   c.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); c.classList.toggle("is-flipped"); } });
   c.addEventListener("mouseleave", function () { c.classList.remove("is-flipped"); });
 });
+
+// Live On events calendar: month grid built from recurring clubs and dated events (data/live_on.json),
+// with an All / Clubs / Events filter and a printable month.
+document.querySelectorAll("[data-cal]").forEach(function (root) {
+  var data; try { data = JSON.parse(root.querySelector(".lon-cal-data").textContent); } catch (e) { return; }
+  var grid = root.querySelector("[data-cal-grid]"), title = root.querySelector("[data-cal-title]");
+  var today = new Date(), cur = new Date(today.getFullYear(), today.getMonth(), 1), filter = "all";
+  var DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  function esc(s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function iso(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+  function itemsOn(d) {
+    var out = [], wd = d.getDay(), nth = Math.ceil(d.getDate() / 7);
+    (data.recurring || []).forEach(function (r) {
+      if ((r.weekdays && r.weekdays.indexOf(wd) > -1) || (r.nth && r.weekday === wd && r.nth === nth)) out.push(r);
+    });
+    (data.events || []).forEach(function (e) { if (e.date === iso(d)) out.push(e); });
+    return out.filter(function (x) { return filter === "all" || (x.type || "Clubs") === filter; });
+  }
+  function render() {
+    title.textContent = MONTHS[cur.getMonth()] + " " + cur.getFullYear();
+    var html = DOW.map(function (d) { return '<div class="lon-cal-dow">' + d + "</div>"; }).join("");
+    var start = new Date(cur); start.setDate(1 - cur.getDay());
+    var last = new Date(cur.getFullYear(), cur.getMonth() + 1, 0), cells = Math.ceil((cur.getDay() + last.getDate()) / 7) * 7, any = false;
+    for (var i = 0; i < cells; i++) {
+      var d = new Date(start); d.setDate(start.getDate() + i);
+      var out = d.getMonth() !== cur.getMonth(), items = out ? [] : itemsOn(d);
+      if (items.length) any = true;
+      var cls = "lon-cal-day" + (out ? " is-out" : "") + (!out && !items.length ? " is-blank" : "") + (iso(d) === iso(today) ? " is-today" : "") + (iso(d) < iso(today) ? " is-past" : "");
+      html += '<div class="' + cls + '"><span class="lon-cal-num" data-dow="' + DOW[d.getDay()] + '">' + d.getDate() + '</span><div class="lon-cal-evs">' +
+        items.map(function (x) {
+          return '<span class="lon-cal-ev' + (x.type === "Events" ? " is-event" : "") + (x.open ? " is-open" : "") + '">' + esc(x.title) + (x.when ? "<small>" + esc(x.when) + "</small>" : "") + "</span>";
+        }).join("") + "</div></div>";
+    }
+    if (!any) html += '<div class="lon-cal-empty">Nothing listed for this view yet. Check back soon, or ask us what is coming up.</div>';
+    grid.innerHTML = html;
+  }
+  root.querySelector("[data-cal-prev]").addEventListener("click", function () { cur.setMonth(cur.getMonth() - 1); render(); });
+  root.querySelector("[data-cal-next]").addEventListener("click", function () { cur.setMonth(cur.getMonth() + 1); render(); });
+  root.querySelectorAll("[data-f]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      filter = b.getAttribute("data-f");
+      root.querySelectorAll("[data-f]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+  root.querySelector("[data-cal-print]").addEventListener("click", function () {
+    document.body.classList.add("lon-printing");
+    window.print();
+    setTimeout(function () { document.body.classList.remove("lon-printing"); }, 500);
+  });
+  render();
+});

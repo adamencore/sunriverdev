@@ -732,3 +732,114 @@ def build_live_out():
   </div>
 </section>''' % (img(V("live-out.2z9c8sf8gogme.jpg"), "SunRiver members hiking in red rock country", "fah-hero-img", "eager"),
                  rows, cards, also, trail_cols, img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html))
+
+
+# ================================================================== LIVE ON (patterned on the Figma "Live In" page, like Live Out)
+def build_live_on(posts):
+    """Live On page. Copy from Adam's Live On doc, in the brand language from the sales playbook: Members, the Clubhouse,
+    future tense for anything not built. Clubs and the calendar schedule live in data/live_on.json (placeholders for now)."""
+    import json
+    from pathlib import Path
+    d = json.loads((Path(__file__).resolve().parent.parent / "data" / "live_on.json").read_text())
+    now = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(c["name"]), esc(c["when"])) for c in d["running_now"])
+    later = "".join('<li><span>%s</span></li>' % esc(c) for c in d["clubhouse_opens"])
+    shots = [("Hiking group", "Weekends", V("club-hiking.3s1-w8hg6a1nh.jpg")),
+             ("Pickleball", "On the completed courts", V("club-pickleball.3iqae91xix18y.jpg")),
+             ("Morning walks", "Weekday mornings", V("week-hike.13z6azl5t3od2.jpg"))]
+    shot_html = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
+        img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in shots)
+    cal = {"recurring": d["recurring"], "events": [e for e in d["events"] if e.get("date")]}
+    cal_json = json.dumps(cal, separators=(",", ":")).replace("</", "<\\/")
+    phases = [("Built and open today", ["Five model homes", "Occupied homes in phases one and two", "22 miles of trails",
+                                      "The first pickleball courts", "The sales office at 182 Cottonwood Drive"]),
+              ("Under construction now", ["The Clubhouse", "The 4,000 square foot pool", "The full pickleball complex",
+                                          "Toquerville Parkway, the new bypass with direct I-15 and Zion access"]),
+              ("Coming after that", ["Additional phases toward 1,200 homes total", "Additional amenity areas"])]
+    phase_html = "".join('<div class="lon-phase"><span class="lon-dot"></span><h3>%s</h3><ul>%s</ul></div>' % (
+        h, "".join("<li>%s</li>" % esc(x) for x in items)) for h, items in phases)
+    recent = sorted(posts, key=lambda p: p.get("publishDate") or "", reverse=True)[:3]
+    posts_html = '<div class="post-grid cols-3 lon-posts">%s</div>' % "".join(post_card(p) for p in recent) if recent else ""
+    add("/live-on", "Live On", "Live On at SunRiver Firelight: clubs and activities, the events calendar, what is coming and when, and Bucketlist Living.", "life-overlay", '''
+<section class="fah-hero li-hero lon-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>Live On</h1></div>
+</section>
+<section class="li-intro">
+  <div class="wrap li-in">
+    <h2>Most people arrive planning to do one thing and end up doing five.</h2>
+    <p class="li-serif">That is not a slogan. It is what happens. Somebody moves in for the hiking, gets pulled into pickleball by a neighbor, and eight months later they are running the book club they never intended to join.</p>
+    <div class="li-btns"><a class="li-btn solid" href="#calendar">See the calendar</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
+  </div>
+</section>
+<section class="li-plans lon-clubs" id="clubs">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">01 / Clubs and activities</p>
+    <h2 class="li-title">Real friendships do not<br> happen by accident.</h2>
+    <p class="li-copy">They happen when people keep bumping into each other on purpose, which is what a good calendar is actually for.</p>
+    <div class="lo-cards lon-shots">%s</div>
+    <div class="lon-lists">
+      <div class="lo-times"><h3>What is running now</h3><ul>%s</ul></div>
+      <div class="lo-times"><h3>What starts when the Clubhouse opens</h3><ul class="lon-plain">%s</ul></div>
+      <div class="lon-own"><h3>And what you start yourself</h3><p>Every club here began because a Member wanted it to exist and asked. There is no committee to petition. Tell a Steward what you want to run and they will help you find your people.</p></div>
+    </div>
+  </div>
+</section>
+<section class="li-ready lon-cal" id="calendar">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">02 / Events calendar</p>
+    <h2 class="li-title">What is happening this month.</h2>
+    <div class="lon-calendar" data-cal>
+      <div class="lon-cal-bar">
+        <div class="lon-cal-nav"><button type="button" data-cal-prev aria-label="Previous month"><svg viewBox="0 0 10 16" aria-hidden="true"><path d="M8 2L2 8l6 6"/></svg></button><h3 data-cal-title aria-live="polite"></h3><button type="button" data-cal-next aria-label="Next month"><svg viewBox="0 0 10 16" aria-hidden="true"><path d="M2 2l6 6-6 6"/></svg></button></div>
+        <div class="lon-cal-tools">
+          <div class="lon-cal-filter" role="group" aria-label="Show"><button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="Clubs" aria-pressed="false">Clubs</button><button type="button" data-f="Events" aria-pressed="false">Events</button></div>
+          <button type="button" class="lon-cal-print" data-cal-print>Print this month</button>
+        </div>
+      </div>
+      <div class="lon-cal-grid" data-cal-grid></div>
+      <script type="application/json" class="lon-cal-data">%s</script>
+    </div>
+    <div class="li-walk lon-guest">
+      <div><h3>Not a Member yet?</h3><p>Prospective buyers are welcome at most events. Come see what a Tuesday actually looks like.</p></div>
+      <a class="li-btn solid" href="/contact-us">Join us at the next one</a>
+    </div>
+  </div>
+</section>
+<section class="li-visit">
+  <svg class="li-wave" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C 260 120, 520 120, 760 210 S 1220 300, 1440 160 L1440 360 L0 360 Z" fill="#fff" fill-opacity=".07"/><path d="M0 110 C 300 30, 560 60, 820 140 S 1260 200, 1440 60 L1440 0 L0 0 Z" fill="#fff" fill-opacity=".05"/></svg>
+  <div class="wrap li-visit-inner">
+    <h2>Come see what a Tuesday looks like.</h2>
+    <div class="li-btns center"><a class="li-btn light" href="/contact-us">Schedule a visit</a><a class="li-btn white" href="/discovery-villas">Stay a few nights</a></div>
+  </div>
+</section>
+<section class="li-lots lon-coming" id="coming">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">03 / What is coming and when</p>
+    <h2 class="li-title">What is built, what is under construction,<br> and when the rest arrives.</h2>
+    <p class="li-copy">We build in phases. That means parts of this community are a construction site right now, and we would rather show you the schedule than talk around it.</p>
+    <div class="lon-phases">%s</div>
+    <p class="lon-updated">Updated the first week of every month, with photographs taken on site and dates that move only when we tell you they moved.</p>
+    <div class="lon-honest">
+      <div class="lon-honest-img">%s</div>
+      <div class="lon-honest-text">
+        <h3>Here is the part nobody else will say out loud.</h3>
+        <p>If you buy now, you will live through some of the building. You will hear equipment. Some streets will be closed. That is the honest tradeoff.</p>
+        <p>Here is the other half of it, learned across twenty-five years and 2,500 homes: the people who buy early become the connectors. They are the ones who know everybody, because they were here when there were only forty of them and there was nothing to do but figure each other out. By the time the amenities open, they already have their people. The Members who arrive later spend a year catching up.</p>
+        <p class="lon-kicker">Early is harder. It is also better.</p>
+        <a class="li-btn solid" href="/contact-us">Walk the site with the developer</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="li-ready lon-blog" id="bucketlist">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">04 / Bucketlist Living</p>
+    <h2 class="li-title">Stories from the people<br> who live here.</h2>
+    <p class="li-copy">The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Bucketlist Living is where SunRiver Members tell their stories, along with guides to the trails, parks and towns around us.</p>
+    %s
+    <div class="li-btns"><a class="li-btn solid" href="/bucketlistliving">Read Bucketlist Living</a></div>
+  </div>
+</section>''' % (img(V("live-on.2kwzvtocledst.jpg"), "SunRiver members playing pool together", "fah-hero-img", "eager"),
+                 shot_html, now, later, cal_json, phase_html,
+                 simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw"),
+                 posts_html))

@@ -1520,3 +1520,88 @@ body.m-nav-lock { overflow: hidden; }
 /* Homepage hero, Figma "Home NAV Live In 3": "NEW" in white, and the logo's sun rays and "Communities" in white over the sky */
 .h4-new { color: var(--white); }
 .site-header.is-home { --logo-accent: var(--white); }  /* until the color map is painted */
+
+/* Live On, patterned on Live In / Live Out */
+.lon-hero .fah-hero-img { object-position: 50% 30%; }
+.lon-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1080px; margin-top: 52px; }
+.lon-lists { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; max-width: 1080px; margin-top: 64px; }
+.lon-lists h3, .lon-cal h3.lon-h, .lon-phase h3 { color: #335A97; font-weight: 900; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+.lon-plain li { display: block; }
+.lon-own { padding-top: 0; }
+.lon-own p { margin-top: 16px; padding-top: 13px; border-top: 3px solid #EDB443; color: #335A97; font-family: var(--font-serif); font-size: 20px; line-height: 26px; letter-spacing: -0.02em; }
+/* calendar */
+.lon-calendar { max-width: 1080px; margin-top: 48px; }
+.lon-cal-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 3px solid #EDB443; }
+.lon-cal-nav { display: flex; align-items: center; gap: 14px; }
+.lon-cal-nav h3 { min-width: 210px; color: #335A97; font-weight: 900; font-size: 28px; line-height: 32px; letter-spacing: -0.03em; text-align: center; }
+.lon-cal-nav button { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 2px solid #335A97; border-radius: 50%; background: none; color: #335A97; cursor: pointer; transition: background .2s, color .2s; }
+.lon-cal-nav button:hover { background: #335A97; color: var(--white); }
+.lon-cal-nav svg { width: 9px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lon-cal-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.lon-cal-filter { display: flex; padding: 4px; border-radius: 30px; background: #FAF5F0; }
+.lon-cal-filter button { height: 34px; padding: 0 18px; border: 0; border-radius: 20px; background: none; color: #335A97; font: inherit; font-weight: 900; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.lon-cal-filter button[aria-pressed="true"] { background: #335A97; color: var(--white); }
+.lon-cal-print { height: 42px; padding: 0 20px; border: 2px solid #335A97; border-radius: 30px; background: none; color: #335A97; font: inherit; font-weight: 900; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.lon-cal-print:hover { background: #335A97; color: var(--white); }
+.lon-cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin-top: 18px; border-top: 1px solid rgba(51, 90, 151, .16); border-left: 1px solid rgba(51, 90, 151, .16); }
+.lon-cal-dow { padding: 10px 10px 8px; border-right: 1px solid rgba(51, 90, 151, .16); border-bottom: 1px solid rgba(51, 90, 151, .16); background: #FAF5F0; color: #335A97; font-weight: 900; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.lon-cal-day { min-height: 118px; padding: 8px 8px 10px; border-right: 1px solid rgba(51, 90, 151, .16); border-bottom: 1px solid rgba(51, 90, 151, .16); }
+.lon-cal-day.is-out { background: #FBF9F6; }
+.lon-cal-day.is-today .lon-cal-num { background: #EDB443; color: var(--white); }
+.lon-cal-num { display: inline-grid; place-items: center; min-width: 26px; height: 26px; border-radius: 13px; color: #335A97; font-weight: 900; font-size: 13px; }
+.lon-cal-day.is-out .lon-cal-num { opacity: .35; }
+.lon-cal-ev { display: block; margin-top: 5px; padding: 4px 7px 5px; border-left: 3px solid #8FA7D6; border-radius: 0 8px 8px 0; background: #EEF3FB; color: #335A97; font-size: 12px; line-height: 14px; }
+.lon-cal-ev small { display: block; opacity: .75; font-size: 11px; }
+.lon-cal-ev.is-event { border-left-color: #EDB443; background: #FDF4E1; }
+.lon-cal-ev.is-open::after { content: "Guests welcome"; display: block; margin-top: 2px; color: #B07A0D; font-weight: 900; font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; }
+.lon-cal-empty { grid-column: 1 / -1; padding: 30px; border-right: 1px solid rgba(51, 90, 151, .16); border-bottom: 1px solid rgba(51, 90, 151, .16); color: #335A97; text-align: center; }
+.lon-guest { margin-left: 0; width: 100%; max-width: 1080px; background: #FAF5F0; }
+.lon-guest .li-btn { flex: none; width: 260px; }
+/* what is coming */
+.lon-phases { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; max-width: 1080px; margin-top: 60px; }
+.lon-phases::before { content: ""; position: absolute; top: 8px; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #EDB443 0 33%, rgba(237, 180, 67, .45) 33% 66%, rgba(51, 90, 151, .18) 66%); border-radius: 2px; }
+.lon-phase { position: relative; padding-top: 36px; }
+.lon-dot { position: absolute; top: 0; left: 0; width: 19px; height: 19px; border: 4px solid #FAF5F0; border-radius: 50%; background: #EDB443; }
+.lon-phase:nth-child(2) .lon-dot { background: #F3CF86; }
+.lon-phase:nth-child(3) .lon-dot { background: #C3CFE3; }
+.lon-phase ul { list-style: none; margin: 14px 0 0; padding: 0; }
+.lon-phase li { padding: 11px 0; border-bottom: 1px solid rgba(51, 90, 151, .16); color: #335A97; font-size: 15px; line-height: 20px; }
+.lon-updated { max-width: 690px; margin-top: 30px; color: #335A97; font-family: var(--font-serif); font-size: 18px; line-height: 23px; font-style: italic; }
+.lon-honest { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0; max-width: 1080px; margin-top: 80px; overflow: hidden; border-radius: 24px; background: #335A97; }
+.lon-honest-img { position: relative; min-height: 420px; }
+.lon-honest-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lon-honest-text { padding: 52px 48px 50px; color: var(--white); }
+.lon-honest-text h3 { color: var(--white); font-family: var(--font-serif); font-weight: 500; font-size: 34px; line-height: 38px; letter-spacing: -0.02em; }
+.lon-honest-text p { margin-top: 16px; font-size: 15px; line-height: 21px; opacity: .92; }
+.lon-honest-text .lon-kicker { margin-top: 22px; color: #F3C25E; font-weight: 900; font-size: 22px; line-height: 26px; letter-spacing: -0.02em; opacity: 1; }
+.lon-honest-text .li-btn { margin-top: 26px; }
+.lon-posts { max-width: 1080px; margin-top: 52px; }
+@media (max-width: 960px) {
+  .lon-lists, .lon-phases { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .lon-phases::before { display: none; }
+  .lon-shots { grid-template-columns: minmax(0, 1fr); }
+  .lon-honest { grid-template-columns: minmax(0, 1fr); }
+  .lon-honest-img { min-height: 260px; }
+  .lon-honest-text { padding: 36px 28px 38px; }
+  .lon-guest { flex-direction: column; align-items: flex-start; }
+}
+/* calendar becomes an agenda list on small screens */
+@media (max-width: 760px) {
+  .lon-cal-grid { display: block; border: 0; }
+  .lon-cal-dow, .lon-cal-day.is-out, .lon-cal-day.is-blank, .lon-cal-day.is-past { display: none; }  /* the agenda starts today */
+  .lon-cal-day { display: flex; gap: 14px; min-height: 0; padding: 12px 0; border-right: 0; }
+  .lon-cal-day .lon-cal-evs { flex: 1; }
+  .lon-cal-day .lon-cal-ev:first-child { margin-top: 0; }
+  .lon-cal-num::after { content: attr(data-dow); display: block; font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
+  .lon-cal-num { flex: none; width: 44px; height: 44px; border-radius: 12px; background: #FAF5F0; line-height: 1; }
+  .lon-cal-nav h3 { min-width: 0; font-size: 22px; }
+}
+/* printable month */
+@media print {
+  body.lon-printing > *:not(main), body.lon-printing main > *:not(.lon-cal), body.lon-printing .lon-guest, body.lon-printing .lon-cal-tools, body.lon-printing .lon-cal-nav button, body.lon-printing .site-header, body.lon-printing .m-nav { display: none !important; }
+  body.lon-printing .lon-cal { padding: 0; }
+  body.lon-printing .li-in { padding-left: 0; }
+  body.lon-printing .lon-cal-grid { display: grid; }
+  body.lon-printing .lon-cal-day { min-height: 92px; }
+  @page { size: landscape; margin: 12mm; }
+}
