@@ -587,11 +587,11 @@ def build_live_in(plans, listings):
   %s
   <div class="wrap fah-hero-inner"><h1>Live In</h1></div>
 </section>
-<section class="li-intro">
+<section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>A home for<br> what comes next.</h2>
-    <p class="li-serif">Thoughtful floor plans, room for the things you love,<br> and the freedom to make this place your own.</p>
-    <div class="li-btns"><a class="li-btn solid" href="/floor-plans">Explore floor plans</a><a class="li-btn" href="/homes-for-sale">See homes for sale</a></div>
+    <h2>A new home for exactly this stage.</h2>
+    <p class="li-serif"><strong>Live In is the home itself.</strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
+    <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See floor plans</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
 <section class="li-plans">
@@ -680,11 +680,11 @@ def build_live_out():
   %s
   <div class="wrap fah-hero-inner"><h1>Live Out</h1></div>
 </section>
-<section class="li-intro">
+<section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Zion is<br> 31 minutes away.</h2>
-    <p class="li-serif">Not a scenic drive away. Not a day trip. Decide to go at breakfast<br> and be walking the Pa&rsquo;rus Trail before the shuttle line builds.</p>
-    <div class="li-btns"><a class="li-btn solid" href="/contact-us">Schedule a visit</a><a class="li-btn" href="#nearby">See what is nearby</a></div>
+    <h2>Zion is 31 minutes away. That is the point.</h2>
+    <p class="li-serif"><strong>Live Out is everything past the front door.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
+    <div class="li-btns"><a class="li-btn solid" href="#nearby">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
 <section class="li-plans lo-region">
@@ -764,10 +764,10 @@ def build_live_on(posts):
   %s
   <div class="wrap fah-hero-inner"><h1>Live On</h1></div>
 </section>
-<section class="li-intro">
+<section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Most people arrive planning to do one thing and end up doing five.</h2>
-    <p class="li-serif">That is not a slogan. It is what happens. Somebody moves in for the hiking, gets pulled into pickleball by a neighbor, and eight months later they are running the book club they never intended to join.</p>
+    <h2>Nobody acts their age here.</h2>
+    <p class="li-serif"><strong>Live On is everyone you have not met yet.</strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
     <div class="li-btns"><a class="li-btn solid" href="#calendar">See the calendar</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
