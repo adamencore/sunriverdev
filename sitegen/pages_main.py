@@ -664,7 +664,7 @@ def build_main(plans, listings):
 <section class="section sand">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Close to everything that makes <span class="yellow">Southern Utah special</span></h2><hr class="rule center"></div>
-    <div class="grid cols-3">%s%s%s</div>
+    <div class="grid cols-3 dv-near">%s%s%s</div>
     <div class="center"><a class="btn" href="%s">Call to book your stay</a></div>
   </div>
 </section>
