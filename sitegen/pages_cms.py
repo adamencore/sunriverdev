@@ -603,7 +603,7 @@ def build_live_in(plans, listings):
   <div class="wrap li-in">
     <p class="li-eyebrow">01 / Floor plans</p>
     <h2 class="li-title">Seven floor plans. Every one built<br> for how you actually live.</h2>
-    <p class="li-copy">Sizes run from {:,} to {:,} square feet, two to three bedrooms, and garages up to an extended three-car. Every plan includes custom-crafted cabinetry, solid-surface countertops, Moen fixtures, GE appliances, structured wiring, hybrid gas and electric heating and cooling, low-E windows, and concrete roof tile. Standard, not upgrades.</p>
+    <p class="li-copy">{:,} to {:,} square feet, two to three bedrooms. Custom cabinetry, Moen fixtures and GE appliances come standard, not as upgrades.</p>
     <div class="li-plan-grid">%s</div>
     <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a></div>
   </div>
