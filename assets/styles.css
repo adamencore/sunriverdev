@@ -1648,3 +1648,4 @@ body.m-nav-lock { overflow: hidden; }
 .li-lead .li-serif { max-width: 760px; margin-top: 26px; font-size: 22px; line-height: 31px; }
 .li-lead .li-serif strong { display: block; margin-bottom: 8px; font-weight: 500; font-size: 28px; line-height: 32px; }
 @media (max-width: 860px) { .li-lead .li-serif { font-size: 19px; line-height: 27px; } }
+.li-lead .li-serif mark { padding: 0 4px; margin: 0 -2px; color: inherit; background: linear-gradient(transparent 52%, rgba(237, 180, 67, .55) 52%, rgba(237, 180, 67, .55) 92%, transparent 92%); }

@@ -590,7 +590,7 @@ def build_live_in(plans, listings):
 <section class="li-intro li-lead">
   <div class="wrap li-in">
     <h2>A new home for exactly this stage.</h2>
-    <p class="li-serif"><strong>Live In is the home itself.</strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
+    <p class="li-serif"><strong><mark>Live In</mark> is the home itself.</strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
     <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See floor plans</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
@@ -683,7 +683,7 @@ def build_live_out():
 <section class="li-intro li-lead">
   <div class="wrap li-in">
     <h2>Zion is 31 minutes away. That is the point.</h2>
-    <p class="li-serif"><strong>Live Out is everything past the front door.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
+    <p class="li-serif"><strong><mark>Live Out</mark> is everything past the front door.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
     <div class="li-btns"><a class="li-btn solid" href="#nearby">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
@@ -767,7 +767,7 @@ def build_live_on(posts):
 <section class="li-intro li-lead">
   <div class="wrap li-in">
     <h2>Nobody acts their age here.</h2>
-    <p class="li-serif"><strong>Live On is everyone you have not met yet.</strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
+    <p class="li-serif"><strong><mark>Live On</mark> is everyone you have not met yet.</strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
     <div class="li-btns"><a class="li-btn solid" href="#calendar">See the calendar</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
