@@ -25,7 +25,7 @@ sys.path.insert(0, str(ROOT))
 
 from sitegen import figma_assets, lib  # noqa: E402
 from sitegen.data import ON_NETLIFY, get_all  # noqa: E402
-from sitegen.pages_cms import build_blog, build_floor_plans, build_homes, build_firelight, build_live_in, build_live_on, build_live_out  # noqa: E402
+from sitegen.pages_cms import build_blog, build_design, build_floor_plans, build_homes, build_firelight, build_live_in, build_live_on, build_live_out  # noqa: E402
 from sitegen.pages_main import build_main  # noqa: E402
 
 DIST = ROOT / "dist"
@@ -98,6 +98,7 @@ def main():
     build_homes(listings)
     build_live_in(plans, listings)  # replaces the older Live In page with the Figma version
     build_live_out()  # replaces the older Live Out hub, patterned on Live In
+    build_design()  # the Design Center page, linked from Live In 04
     build_firelight(plans)  # replaces the older SunRiver Firelight page, in the Live In style
     build_live_on(posts)  # replaces the older Live On hub, patterned on Live In
     build_blog(posts)

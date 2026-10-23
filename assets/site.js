@@ -777,3 +777,38 @@ document.querySelectorAll("[data-cal]").forEach(function (root) {
   })();
   render();
 });
+
+// Design Center: the timeline line fills as you scroll, and each step lights up as the line reaches it
+document.querySelectorAll("[data-timeline]").forEach(function (tl) {
+  var steps = tl.querySelectorAll(".dz-step"), ticking = false;
+  function update() {
+    ticking = false;
+    var r = tl.getBoundingClientRect(), mark = window.innerHeight * 0.6;
+    var pct = Math.max(0, Math.min(1, (mark - r.top) / r.height));
+    tl.style.setProperty("--dz-fill", (pct * 100).toFixed(1) + "%");
+    steps.forEach(function (s) { s.classList.toggle("is-reached", s.getBoundingClientRect().top < mark); });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+});
+
+// Design Center: finish category tabs
+document.querySelectorAll(".dz-style").forEach(function (sec) {
+  var tabs = sec.querySelectorAll("[role=tab]"), panes = sec.querySelectorAll(".dz-pane");
+  function show(i) {
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", t.getAttribute("data-i") === i ? "true" : "false"); });
+    panes.forEach(function (p) { p.classList.toggle("is-on", p.getAttribute("data-i") === i); });
+  }
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () { show(t.getAttribute("data-i")); });
+    t.addEventListener("keydown", function (e) {
+      var k = Array.prototype.indexOf.call(tabs, t);
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        var n = tabs[(k + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+        n.focus(); show(n.getAttribute("data-i"));
+      }
+    });
+  });
+});

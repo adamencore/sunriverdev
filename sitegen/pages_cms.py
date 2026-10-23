@@ -562,6 +562,11 @@ def build_blog(posts):
 
 
 # ================================================================== LIVE IN (OFFICIAL Figma "Live In", work in progress)
+# The three flip cards under 04 / The Design Center (1 Choose your plan and lot, 2 See full-size samples,
+# 3 Know what it costs) are parked, not deleted: set this to True to bring them back.
+SHOW_DC_FLIPS = False
+
+
 def build_live_in(plans, listings):
     """Live In page from the OFFICIAL Figma "Live In" frame: photo hero, intro, the floor plans,
     a yellow visit band, homes ready now, and the available lots section (lot map to come)."""
@@ -644,12 +649,14 @@ def build_live_in(plans, listings):
         <p>Where the light lands in the morning. Which counter you will stand at when there are twelve people over. Whether the hobby room is for pottery or a workbench, because those need different outlets.</p>
         <p>The point of the appointment is not to upsell you. It is to make the house match the way you live.</p></div>
     </div>
-    <div class="li-flips" data-anim="fade">%s</div>
+    %s
+    <div class="li-btns"><a class="li-btn solid" href="/design">Explore the Design Center</a></div>
   </div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
         rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans),
-        img(FG("li-bedroom"), "A finished bedroom in a SunRiver Firelight home"), flips))
+        img(FG("li-bedroom"), "A finished bedroom in a SunRiver Firelight home"),
+        '<div class="li-flips" data-anim="fade">%s</div>' % flips if SHOW_DC_FLIPS else ""))
 
 
 def build_live_out():
@@ -964,3 +971,112 @@ def add_with_firelight(path, title, description, active, body, body_class=""):
   </div>
 </section>""" % (img(src, alt), h, t)
     add(path, title, description, active, body + promo, body_class)
+
+
+# ================================================================== DESIGN CENTER (patterned on tripointehomes.com/design-studio, in SunRiver style)
+def build_design():
+    """The Design Center page, linked from Live In 04. Layout follows Tri Pointe's Design Studio page: photo hero,
+    a centered intro, a step-by-step timeline that fills in as you scroll, a dark band, finish categories with tabs,
+    what comes standard, questions, and a closing photo band. Copy stays with facts already on the site."""
+    K = lambda ref, w=1600: S(ref, w)
+    kitchen = "image-4002cc30c79b533f3eab3b908037c2757c646f0e-2000x1333-jpg"
+    living = "image-312860ee44f51f22356dcb88f7516b1e9c385b8b-2000x1335-jpg"
+    dining = "image-6a1e318870d5ce3c3d850bca703c8a60ca608e64-1334x2000-jpg"
+    bedroom = "image-50a51a4be0e76165502af30a2ded5523cc7bee18-2000x1334-jpg"
+    exterior = "image-e4478eff78151d8dd145c3ac5fe16468329ce8ff-2000x1334-jpg"
+    samples = "/assets/img/design-center-samples.webp"
+    steps = [("Choose your plan and homesite", "Start with the footprint and the place you want to call home. Once your plan and lot are set, your Design Center journey begins.", None),
+             ("Come prepared", "Bring photos of rooms you love, measurements of the furniture you are keeping, and a sense of how you actually live. Where the light lands in the morning. Whether the hobby room is for pottery or a workbench, because those need different outlets.", None),
+             ("Sit down with a designer", "At the Design Center, a SunRiver designer sits beside you with full-size samples of cabinetry, countertops, flooring, tile, fixtures, lighting and paint.", None),
+             ("Narrow it down", "See real combinations side by side, compare, and make confident choices about the rooms you will use every day.", None),
+             ("Know what it costs", "Leave knowing what your home will look like and what each selection costs. No guesswork, no surprises at closing.", samples)]
+    tl = []
+    for i, (t, d, pic) in enumerate(steps, 1):
+        if pic:
+            tl.append('<li class="dz-step dz-step-card"><div class="dz-card">%s<div class="dz-card-text"><span class="dz-num">%d</span><h3>%s</h3><p>%s</p></div></div></li>' % (
+                img(pic, "A SunRiver designer showing full-size countertop samples at the Design Center"), i, t, d))
+        else:
+            tl.append('<li class="dz-step%s"><span class="dz-num">%d</span><div class="dz-step-text"><h3>%s</h3><p>%s</p></div></li>' % (" is-left" if i % 2 == 0 else "", i, t, d))
+    cats = [("Cabinetry", "Door styles, finishes and hardware for the kitchen, baths and the hobby room.", K(kitchen), "The kitchen in the Astoria model home"),
+            ("Countertops", "Full-size slabs and samples, so you see the real pattern and not a two-inch chip.", FG("nav-kitchen"), "A couple cooking together in a SunRiver Firelight kitchen"),
+            ("Flooring", "Wood-look, carpet and tile, chosen room by room for how each space gets used.", K(living), "The living room in the Astoria model home"),
+            ("Tile and fixtures", "Backsplashes, shower tile and the fixtures that go with them.", samples, "Full-size samples at the SunRiver Design Center"),
+            ("Lighting", "Pendants, chandeliers and the fixtures that set the mood of a room.", K(dining, 1200), "The dining room in the Astoria model home"),
+            ("Paint", "Wall colors and trim that tie every room together.", K(bedroom), "A bedroom in the Astoria model home")]
+    tabs = "".join('<button type="button" role="tab" aria-selected="%s" data-i="%d">%s</button>' % ("true" if i == 0 else "false", i, t) for i, (t, _, _, _) in enumerate(cats))
+    panes = "".join('<figure class="dz-pane%s" data-i="%d">%s<figcaption><strong>%s</strong>%s</figcaption></figure>' % (
+        " is-on" if i == 0 else "", i, img(src, alt), t, d) for i, (t, d, src, alt) in enumerate(cats))
+    standard = ["Custom-crafted cabinetry", "Solid-surface countertops", "Moen fixtures", "GE appliances", "Structured wiring",
+                "Hybrid gas and electric heating and cooling", "Low-E windows", "Concrete roof tile"]
+    std = "".join("<li>%s</li>" % x for x in standard)
+    qa = [("What comes standard in my home?", "Every plan includes custom-crafted cabinetry, solid-surface countertops, Moen fixtures, GE appliances, structured wiring, hybrid gas and electric heating and cooling, low-E windows and concrete roof tile. Standard, not upgrades."),
+          ("When does the design process start?", "Once you have chosen your floor plan and homesite. Your agent will help you set up time at the Design Center."),
+          ("Can I prepare ahead of time?", "Yes, and it helps. Bring photos of rooms you love, measurements of furniture you are keeping, and notes on how you use each space."),
+          ("Will someone try to upsell me?", "No. The point of the appointment is not to upsell you. It is to make the house match the way you live."),
+          ("How much do options cost?", "It depends on the plan and the selections you make. You leave knowing what each selection costs, before anything is final."),
+          ("Can I see finished homes first?", "Yes. Five of the seven floor plans are open as model homes, and move-in ready homes are available to walk through.")]
+    faq_html = "".join('<details class="faq dz-faq"><summary>%s</summary><div class="answer"><p>%s</p></div></details>' % x for x in qa)
+    add("/design", "The Design Center", "The SunRiver Design Center: choose finishes with a designer beside you, see full-size samples, and leave knowing what each selection costs.", "life-overlay", """
+<section class="fah-hero li-hero dz-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>The Design Center</h1></div>
+</section>
+<section class="dz-intro">
+  <div class="wrap">
+    <h2>Where your home<br> becomes yours.</h2>
+    <p>You are not buying the home. You are building it. Most builders hand you three packages and call it a choice. We hand you a room, full-size samples, and a designer who wants to know how you actually live. This is where the floor plan you picked turns into the home you will come back to every day.</p>
+  </div>
+</section>
+<section class="dz-process" id="process">
+  <div class="wrap">
+    <p class="li-eyebrow center">01 / How it works</p>
+    <h2 class="dz-h2">Five steps from floor plan<br> to finished home.</h2>
+    <ol class="dz-timeline" data-timeline><li class="dz-line" aria-hidden="true"><span class="dz-line-fill"></span></li>%s</ol>
+  </div>
+</section>
+<section class="dz-band">
+  <div class="wrap">
+    <h2>Clarity, not a sales pitch.</h2>
+    <p>Feeling clear and confident matters more than any single finish. Your designer will show you what comes standard, what each option adds, and how every choice fits your life and your budget. The point of the appointment is not to upsell you. It is to make the house match the way you live.</p>
+  </div>
+</section>
+<div class="dz-wide">%s</div>
+<section class="dz-style">
+  <div class="wrap">
+    <p class="li-eyebrow center">02 / Your style, your choice</p>
+    <h2 class="dz-h2 light">Every finish, full size.</h2>
+    <p class="dz-sub">Browse the categories you will choose from at the Design Center, then come in and see them in person.</p>
+    <div class="dz-tabs" role="tablist" aria-label="Finish categories">%s</div>
+    <div class="dz-panes" data-dz-panes>%s</div>
+  </div>
+</section>
+<section class="dz-standard">
+  <div class="wrap dz-split">
+    <div class="dz-split-text">
+      <p class="li-eyebrow">03 / Standard, not upgrades</p>
+      <h2 class="dz-h2 left">The good stuff<br> comes included.</h2>
+      <p>Every SunRiver Firelight plan starts with a list most builders call upgrades. Your Design Center appointment builds from there.</p>
+      <ul class="dz-std">%s</ul>
+      <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See the floor plans</a></div>
+    </div>
+    <div class="dz-split-img">%s</div>
+  </div>
+</section>
+<section class="dz-faqs">
+  <div class="wrap">
+    <h2 class="dz-h2">Your questions, answered.</h2>
+    <div class="dz-faq-list">%s</div>
+  </div>
+</section>
+<section class="dz-cta">
+  %s
+  <div class="wrap dz-cta-inner">
+    <h2>Your home is waiting.</h2>
+    <div class="li-btns center"><a class="li-btn white" href="/contact-us">Schedule a visit</a><a class="li-btn light" href="/homes-for-sale">See homes for sale</a></div>
+  </div>
+</section>
+<section class="dz-note"><div class="wrap"><p>Availability and selections vary by floor plan and construction stage. Your designer will guide you to the options that fit.</p></div></section>""" % (
+        img(K(kitchen, 2400), "The kitchen in the Astoria model home at SunRiver Firelight", "fah-hero-img", "eager"),
+        "".join(tl), img(K(living, 2400), "The living room in the Astoria model home"), tabs, panes, std,
+        img(K(bedroom), "A bedroom in the Astoria model home"), faq_html,
+        img(K(exterior, 2400), "The Astoria model home at SunRiver Firelight", "dz-cta-img")))
