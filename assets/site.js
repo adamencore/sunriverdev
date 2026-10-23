@@ -861,3 +861,34 @@ document.querySelectorAll("[data-yt]").forEach(function (b) {
     } else start();
   });
 })();
+
+// FAQs: animate opening and closing instead of snapping
+(function () {
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll("details.faq").forEach(function (d) {
+    var sum = d.querySelector("summary"), body = d.querySelector(".answer"), anim = null;
+    if (!sum || !body || reduced || !d.animate) return;
+    var EASE = "cubic-bezier(.22, .61, .36, 1)";
+    sum.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (anim) anim.cancel();
+      var start = d.offsetHeight;
+      if (!d.open || d.classList.contains("is-closing")) {
+        d.classList.remove("is-closing");
+        d.classList.add("is-opening-start");
+        d.open = true;
+        var end = sum.offsetHeight + body.offsetHeight;
+        requestAnimationFrame(function () { d.classList.remove("is-opening-start"); });
+        anim = d.animate({ height: [start + "px", end + "px"] }, { duration: 380, easing: EASE });
+      } else {
+        d.classList.add("is-closing");
+        anim = d.animate({ height: [start + "px", sum.offsetHeight + "px"] }, { duration: 320, easing: EASE });
+        anim.onfinish = function () { d.open = false; d.classList.remove("is-closing"); };
+      }
+      d.style.overflow = "hidden";
+      var a = anim;
+      a.addEventListener("finish", function () { if (anim === a) { anim = null; d.style.overflow = ""; } });
+      a.addEventListener("cancel", function () { if (anim === a) anim = null; });
+    });
+  });
+})();

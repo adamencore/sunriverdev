@@ -1788,3 +1788,13 @@ body.m-nav-lock { overflow: hidden; }
 .li-dc-sound svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .li-dc-sound svg path:first-child { fill: currentColor; }
 .li-dc-video:hover .li-dc-sound { background: var(--white); }
+
+/* FAQs open and close with a smooth height animation (site.js); the + turns into an x */
+details.faq summary::after { content: "+"; transition: transform .35s cubic-bezier(.22, .61, .36, 1), background .25s ease; }
+details.faq[open] summary::after { content: "+"; transform: translateY(-50%) rotate(45deg); }
+details.faq summary:hover::after { background: var(--sun-yellow-deep); }
+details.faq { transition: box-shadow .3s ease; }
+details.faq[open] { box-shadow: 0 10px 28px rgba(20, 50, 80, .08); }
+details.faq .answer { overflow: hidden; }
+details.faq .answer > * { transition: opacity .35s ease, transform .35s cubic-bezier(.22, .61, .36, 1); }
+details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { opacity: 0; transform: translateY(-6px); }
