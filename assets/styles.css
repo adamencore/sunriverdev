@@ -1649,3 +1649,22 @@ body.m-nav-lock { overflow: hidden; }
 .li-lead .li-serif strong { display: block; margin-bottom: 8px; font-weight: 500; font-size: 28px; line-height: 32px; }
 @media (max-width: 860px) { .li-lead .li-serif { font-size: 19px; line-height: 27px; } }
 .li-lead .li-serif mark { padding: 0 4px; margin: 0 -2px; color: inherit; border-radius: 3px; background: linear-gradient(transparent 38%, rgba(237, 180, 67, .62) 38%, rgba(237, 180, 67, .62) 94%, transparent 94%); }
+
+/* Live In / Out / On: card linking to the SunRiver Firelight overview */
+.fl-promo-wrap { padding: 96px 0 110px; background: var(--white); }
+.fl-promo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); max-width: 1080px; overflow: hidden; border-radius: 24px; background: #335A97; color: var(--white); text-decoration: none; }
+.fl-promo-img { position: relative; min-height: 360px; overflow: hidden; }
+.fl-promo-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.fl-promo:hover .fl-promo-img img { transform: scale(1.04); }
+.fl-promo-text { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 48px 48px 50px; }
+.fl-promo-text .li-eyebrow { color: #F3C25E; }
+.fl-promo-h { display: block; margin-top: 12px; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
+.fl-promo-p { display: block; margin-top: 14px; font-size: 15px; line-height: 22px; opacity: .92; }
+.fl-promo .li-btn { margin-top: 26px; }
+.fl-promo:hover .li-btn.solid { border-color: var(--sun-yellow-deep); background: var(--sun-yellow-deep); }
+@media (max-width: 960px) {
+  .fl-promo { grid-template-columns: minmax(0, 1fr); }
+  .fl-promo-img { min-height: 240px; }
+  .fl-promo-text { padding: 34px 28px 36px; }
+  .fl-promo-h { font-size: 28px; line-height: 32px; }
+}

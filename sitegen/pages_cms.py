@@ -582,7 +582,7 @@ def build_live_in(plans, listings):
     flips = "".join('''<div class="li-flip" tabindex="0"><div class="li-flip-in">
       <div class="li-flip-front"><span class="li-flip-num">%s</span><h3>%s</h3><p>%s</p></div>
       <div class="li-flip-back" aria-hidden="true">%s<span>%s</span></div></div></div>''' % (n, t, d, img(src, alt), t) for n, t, d, src, alt in steps)
-    add("/live-in", "Live In", "Live In at SunRiver Firelight: seven floor plans, homes ready now and homesites to choose from.", "life-overlay", '''
+    add_with_firelight("/live-in", "Live In", "Live In at SunRiver Firelight: seven floor plans, homes ready now and homesites to choose from.", "life-overlay", '''
 <section class="fah-hero li-hero">
   %s
   <div class="wrap fah-hero-inner"><h1>Live In</h1></div>
@@ -675,7 +675,7 @@ def build_live_out():
               ("Dining", [("River Rock Roasting Company, La Verkin", "4 min"), ("Pigs Ear American Bistro", "10 min"), ("The Hurricane restaurant strip", "15 min")])]
     near_html = "".join('<div class="lo-near"><h3>%s</h3><ul>%s</ul></div>' % (
         c, "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in items)) for c, items in nearby)
-    add("/live-out", "Live Out", "Live Out at SunRiver Firelight: Zion 31 minutes away, 22 miles of trails, and everything you need close by.", "life-overlay", '''
+    add_with_firelight("/live-out", "Live Out", "Live Out at SunRiver Firelight: Zion 31 minutes away, 22 miles of trails, and everything you need close by.", "life-overlay", '''
 <section class="fah-hero li-hero lo-hero">
   %s
   <div class="wrap fah-hero-inner"><h1>Live Out</h1></div>
@@ -759,7 +759,7 @@ def build_live_on(posts):
         h, "".join("<li>%s</li>" % esc(x) for x in items)) for h, items in phases)
     recent = sorted(posts, key=lambda p: p.get("publishDate") or "", reverse=True)[:3]
     posts_html = '<div class="post-grid cols-3 lon-posts">%s</div>' % "".join(post_card(p) for p in recent) if recent else ""
-    add("/live-on", "Live On", "Live On at SunRiver Firelight: clubs and activities, the events calendar, what is coming and when, and Bucketlist Living.", "life-overlay", '''
+    add_with_firelight("/live-on", "Live On", "Live On at SunRiver Firelight: clubs and activities, the events calendar, what is coming and when, and Bucketlist Living.", "life-overlay", '''
 <section class="fah-hero li-hero lon-hero">
   %s
   <div class="wrap fah-hero-inner"><h1>Live On</h1></div>
@@ -931,3 +931,36 @@ def build_firelight(plans):
   </div>
 </section>''' % (img(V("hero.2h_vl62bxoy8t.jpg"), "SunRiver members riding e-bikes on a red rock trail near SunRiver Firelight", "fah-hero-img", "eager"),
                    mix_html, amen_html, club_html, rows))
+
+
+# A card on each Live In / Out / On page pointing to the SunRiver Firelight overview
+FL_PROMO = {
+    "/live-in": ("Every home here is part of something bigger.",
+                 "The plans, the lots and the Design Center all belong to SunRiver Firelight, SunRiver's newest 55+ community in Toquerville, with the Clubhouse on the way and Zion 31 minutes from your front door.",
+                 V("homesites-aerial.0o-k9ic3-z5oy.jpg"), "Aerial view of homesites at SunRiver Firelight"),
+    "/live-out": ("Home base for all of it.",
+                  "SunRiver Firelight sits on the Zion side of Southern Utah, in Toquerville. See the whole community: the homes, the Clubhouse, and why we built here.",
+                  V("hero.2h_vl62bxoy8t.jpg"), "SunRiver members riding e-bikes on a red rock trail near SunRiver Firelight"),
+    "/live-on": ("Where all of this happens.",
+                 "The clubs, the calendar and the future Clubhouse are all part of SunRiver Firelight, SunRiver's newest 55+ community in Toquerville. See the whole picture.",
+                 V("clubhouse-rendering.1ka003naw87xl.jpg"), "Rendering of the SunRiver Firelight Clubhouse"),
+}
+
+
+def add_with_firelight(path, title, description, active, body, body_class=""):
+    h, t, src, alt = FL_PROMO[path]
+    promo = """
+<section class="fl-promo-wrap">
+  <div class="wrap li-in">
+    <a class="fl-promo" href="/sunriver-firelight">
+      <span class="fl-promo-img">%s</span>
+      <span class="fl-promo-text">
+        <span class="li-eyebrow">SunRiver Firelight</span>
+        <span class="fl-promo-h">%s</span>
+        <span class="fl-promo-p">%s</span>
+        <span class="li-btn solid">Explore SunRiver Firelight</span>
+      </span>
+    </a>
+  </div>
+</section>""" % (img(src, alt), h, t)
+    add(path, title, description, active, body + promo, body_class)
