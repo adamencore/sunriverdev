@@ -1759,3 +1759,4 @@ body.m-nav-lock { overflow: hidden; }
 }
 .dz-band h2 { color: var(--white); }
 .dz-process p.li-eyebrow, .dz-style p.li-eyebrow { display: block; max-width: none; text-align: center; }
+.dz-pane-4 img { object-position: 50% 12%; }  /* Lighting: keep the chandelier in frame */

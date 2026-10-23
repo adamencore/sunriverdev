@@ -1004,8 +1004,8 @@ def build_design():
             ("Lighting", "Pendants, chandeliers and the fixtures that set the mood of a room.", K(dining, 1200), "The dining room in the Astoria model home"),
             ("Paint", "Wall colors and trim that tie every room together.", K(bedroom), "A bedroom in the Astoria model home")]
     tabs = "".join('<button type="button" role="tab" aria-selected="%s" data-i="%d">%s</button>' % ("true" if i == 0 else "false", i, t) for i, (t, _, _, _) in enumerate(cats))
-    panes = "".join('<figure class="dz-pane%s" data-i="%d">%s<figcaption><strong>%s</strong>%s</figcaption></figure>' % (
-        " is-on" if i == 0 else "", i, img(src, alt), t, d) for i, (t, d, src, alt) in enumerate(cats))
+    panes = "".join('<figure class="dz-pane%s dz-pane-%d" data-i="%d">%s<figcaption><strong>%s</strong>%s</figcaption></figure>' % (
+        " is-on" if i == 0 else "", i, i, img(src, alt), t, d) for i, (t, d, src, alt) in enumerate(cats))
     standard = ["Custom-crafted cabinetry", "Solid-surface countertops", "Moen fixtures", "GE appliances", "Structured wiring",
                 "Hybrid gas and electric heating and cooling", "Low-E windows", "Concrete roof tile"]
     std = "".join("<li>%s</li>" % x for x in standard)
