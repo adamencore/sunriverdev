@@ -929,5 +929,5 @@ def build_firelight(plans):
     <div class="li-plan-grid">%s</div>
     <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a><a class="li-btn" href="/live-in#lots">Pick your homesite</a><a class="li-btn" href="/homes-for-sale">Homes for sale</a></div>
   </div>
-</section>''' % (img(V("hero.2h_vl62bxoy8t.jpg"), "SunRiver Firelight homes with red rock mountains behind", "fah-hero-img", "eager"),
+</section>''' % (img(V("hero.2h_vl62bxoy8t.jpg"), "SunRiver members riding e-bikes on a red rock trail near SunRiver Firelight", "fah-hero-img", "eager"),
                    mix_html, amen_html, club_html, rows))
