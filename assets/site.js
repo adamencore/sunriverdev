@@ -818,3 +818,22 @@ document.querySelectorAll(".dz-style").forEach(function (sec) {
     });
   });
 });
+
+// Video buttons (data-yt): open the YouTube video in a dialog at its own shape; Escape, the close button or a click outside closes it
+document.querySelectorAll("[data-yt]").forEach(function (b) {
+  b.addEventListener("click", function () {
+    var m = document.createElement("div");
+    m.className = "vid-modal"; m.setAttribute("role", "dialog"); m.setAttribute("aria-modal", "true"); m.setAttribute("aria-label", b.getAttribute("aria-label") || "Video");
+    m.innerHTML = '<div class="vid-modal-box"><iframe src="https://www.youtube-nocookie.com/embed/' + b.getAttribute("data-yt") +
+      '?autoplay=1&rel=0&playsinline=1" title="SunRiver video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
+      '<button type="button" class="vid-modal-close" aria-label="Close video"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>';
+    document.body.appendChild(m); document.body.classList.add("m-nav-lock");
+    requestAnimationFrame(function () { m.classList.add("is-open"); });
+    var close = function () { document.removeEventListener("keydown", onKey); m.remove(); document.body.classList.remove("m-nav-lock"); b.focus(); };
+    var onKey = function (e) { if (e.key === "Escape") close(); };
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    m.querySelector(".vid-modal-close").addEventListener("click", close);
+    document.addEventListener("keydown", onKey);
+    m.querySelector(".vid-modal-close").focus();
+  });
+});

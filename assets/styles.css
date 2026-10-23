@@ -1435,7 +1435,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 
 /* Live In: 04 / The Design Center */
 .li-dc { padding: 104px 0 140px; background: var(--white); }
-.li-dc-feature { display: grid; grid-template-columns: 354px minmax(0, 1fr); gap: 28px; align-items: center; max-width: 806px; margin-top: 76px; }
+.li-dc-feature { display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 1fr); gap: 44px; align-items: center; max-width: 1080px; margin-top: 76px; }
 .li-dc-img { aspect-ratio: 354 / 237; overflow: hidden; border-radius: 20px; }
 .li-dc-img img { width: 100%; height: 100%; object-fit: cover; }
 .li-dc-text h3 { color: #335A97; font-weight: 900; font-size: 28px; line-height: 32px; letter-spacing: -0.03em; }
@@ -1760,3 +1760,21 @@ body.m-nav-lock { overflow: hidden; }
 .dz-band h2 { color: var(--white); }
 .dz-process p.li-eyebrow, .dz-style p.li-eyebrow { display: block; max-width: none; text-align: center; }
 .dz-pane-4 img { object-position: 50% 12%; }  /* Lighting: keep the chandelier in frame */
+
+/* Live In 04: the Design Center photo plays the "Build it the way you always said you would" video (vertical, opens at its own shape) */
+.li-dc-video { position: relative; display: block; width: 100%; padding: 0; border: 0; background: #E9E4DD; cursor: pointer; }
+.li-dc-video::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(20, 40, 75, .55) 0%, rgba(20, 40, 75, 0) 55%); transition: background .3s ease; }
+.li-dc-video img { transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.li-dc-video:hover img { transform: scale(1.04); }
+.li-dc-play { position: absolute; left: 50%; top: 50%; z-index: 1; width: 76px; height: 76px; margin: -38px 0 0 -38px; border-radius: 50%; background: rgba(255, 255, 255, .92); box-shadow: 0 10px 30px rgba(20, 40, 75, .3); transition: transform .25s ease; }
+.li-dc-play::after { content: ""; position: absolute; left: 31px; top: 25px; border-style: solid; border-width: 13px 0 13px 21px; border-color: transparent transparent transparent #335A97; }
+.li-dc-video:hover .li-dc-play { transform: scale(1.06); }
+.li-dc-cap { position: absolute; left: 22px; right: 22px; bottom: 18px; z-index: 1; color: var(--white); font-family: var(--font-serif); font-size: 20px; line-height: 24px; text-align: left; text-shadow: 0 1px 10px rgba(20, 40, 75, .4); }
+.li-dc-text h3 { font-size: 32px; line-height: 36px; }
+.li-dc-text p { font-size: 16px; line-height: 23px; }
+.vid-modal { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 24px; background: rgba(12, 24, 45, .82); opacity: 0; transition: opacity .2s ease; }
+.vid-modal.is-open { opacity: 1; }
+.vid-modal-box { position: relative; height: min(86vh, 860px); aspect-ratio: 9 / 16; max-width: 92vw; overflow: hidden; border-radius: 20px; background: #000; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.vid-modal-box iframe { width: 100%; height: 100%; border: 0; }
+.vid-modal-close { position: absolute; top: 18px; right: 18px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #F4EFE8; color: #335A97; cursor: pointer; }
+.vid-modal-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
