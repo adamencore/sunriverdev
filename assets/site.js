@@ -27,14 +27,14 @@
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
         // drill-down: Life at SunRiver slides to its own panel, Back slides home
         var panels = sheet.querySelectorAll('.m-nav-panel');
-        var goPanel = function (name) {
+        var goPanel = function (name, byKeyboard) {
           sheet.classList.toggle('at-life', name === 'life');
           sheet.classList.toggle('at-homes', name === 'homes');
           panels.forEach(function (p) { var on = p.getAttribute('data-panel') === name; p.inert = !on; p.setAttribute('aria-hidden', on ? 'false' : 'true'); });
           sheet.querySelectorAll('.m-nav-row[data-go]').forEach(function (o) { o.setAttribute('aria-expanded', o.getAttribute('data-go') === name ? 'true' : 'false'); });
-          var f = sheet.querySelector('.m-nav-panel[data-panel="' + name + '"] ' + (name !== 'main' ? '.m-nav-back' : '.m-nav-row')); if (f) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);
+          var f = sheet.querySelector('.m-nav-panel[data-panel="' + name + '"] ' + (name !== 'main' ? '.m-nav-back' : '.m-nav-row')); if (f && byKeyboard) setTimeout(function () { f.focus({ preventScroll: true }); }, 60);  // only keyboard users get focus moved (a tap left a yellow focus box on Life at SunRiver)
         };
-        sheet.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { goPanel(b.getAttribute('data-go')); }); });
+        sheet.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function (e) { goPanel(b.getAttribute('data-go'), e.detail === 0); if (e.detail !== 0) b.blur(); }); });
         toggle.addEventListener('click', function () { goPanel('main'); var c = sheet.querySelector('.m-nav-close'); if (c) c.focus(); });
       }
     }

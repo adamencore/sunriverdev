@@ -1515,6 +1515,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .m-nav-small { margin: auto 0 0; padding: 50px 28px 30px; list-style: none; }
 .m-nav-small a { display: block; color: #8FA7D6; font-size: 16px; line-height: 23px; letter-spacing: -0.01em; text-decoration: none; }
 .m-nav-row:hover, .m-nav-small a:hover, .m-nav-back:hover { color: var(--sun-yellow-deep); }
+.m-nav-row:focus:not(:focus-visible), .m-nav-back:focus:not(:focus-visible) { outline: none; }
 body.m-nav-lock { overflow: hidden; }
 @media (min-width: 1021px) { .m-nav { display: none !important; } }
 @media (max-width: 1020px) {
