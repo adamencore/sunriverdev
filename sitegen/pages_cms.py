@@ -623,7 +623,7 @@ def build_live_in(plans, listings):
     </div>
   </div>
 </section>
-<section class="li-lots">
+<section class="li-lots" id="lots">
   <div class="wrap li-in">
     <p class="li-eyebrow">03 / Available lots</p>
     <h2 class="li-title">Pick your spot.</h2>
@@ -843,3 +843,91 @@ def build_live_on(posts):
                  shot_html, now, later, cal_json, phase_html,
                  simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw"),
                  posts_html))
+
+
+# ================================================================== SUNRIVER FIRELIGHT (the live sunriver.com page, rebuilt in the Live In style)
+def build_firelight(plans):
+    """SunRiver Firelight overview, from the live sunriver.com/sunriver-firelight page with the copy brought in line:
+    Members, the Clubhouse, future tense for what is not built, drive times matching Live Out, no golf, and the
+    dated items (reservations, summer/fall updates, the invented week of activities) dropped."""
+    mix = [("Brand new homes", "Choose your homesite, then design the home that goes on it."),
+           ("Outdoor living", "Red rock, open desert and 22 miles of trail run through and around the community."),
+           ("Prime location", "On the Zion side of Southern Utah, north of Hurricane, with St. George about 30 minutes away."),
+           ("Designed for you", "Hobby rooms, open kitchens and garages up to an extended three-car, with room for the gear you love."),
+           ("Mild seasons", "About 500 feet higher than St. George, so summers run a few degrees cooler, without the snow."),
+           ("Community", "SunRiver is more than a place to live. It is a community of people who refuse to slow down.")]
+    mix_html = "".join('<div class="lo-col"><h3>%s</h3><p>%s</p></div>' % x for x in mix)
+    amen = [("The Clubhouse", "The hub for social, recreational and wellness life at SunRiver Firelight, with fitness rooms, event spaces and dedicated rooms for hobbies and clubs.", V("amenity-clubhouse.1s09xtqihpiiw.jpg")),
+            ("The pool", "A 4,000 square foot pool for laps, sunning on the deck or a poolside evening with neighbors.", V("amenity-pool.3xoam7a_jzu33.jpg")),
+            ("Pickleball", "Courts for players of every level, for daily play, friendly competition and the conversation after the game.", V("amenity-pickleball.2602yc92h05vt.jpg"))]
+    amen_html = "".join('<div class="fl-amen-card"><div class="fl-amen-img">%s</div><h3>%s</h3><p>%s</p></div>' % (img(p, "%s at SunRiver Firelight" % t), t, d) for t, d, p in amen)
+    clubs = [("Hiking", "Trails from the front door", V("club-hiking.3s1-w8hg6a1nh.jpg")),
+             ("Pilates and yoga", "Workshops and classes", V("club-yoga.0jzome1ix55zy.jpg")),
+             ("Pickleball", "Play, then stay and talk", V("club-pickleball.3iqae91xix18y.jpg"))]
+    club_html = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
+        img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in clubs)
+    cards = [plan_link_card(p) for p in plans[:4]]
+    rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2])) for r in range((len(cards) + 1) // 2))
+    add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life-overlay", '''
+<section class="fah-hero li-hero fl-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>SunRiver Firelight</h1></div>
+</section>
+<section class="li-intro">
+  <div class="wrap li-in">
+    <h2>Zion in your<br> backyard.</h2>
+    <p class="li-serif">SunRiver Firelight is the newest community from SunRiver: single-family homes in Toquerville, with Springdale and Zion National Park close enough for a morning trip. Live a little closer.</p>
+    <div class="li-btns"><a class="li-btn solid" href="/contact-us">Talk with an agent</a><a class="li-btn" href="/floor-plans">Explore floor plans</a></div>
+  </div>
+</section>
+<section class="li-plans fl-mix">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">01 / Just the right mix</p>
+    <h2 class="li-title">Everything you came to<br> Southern Utah for.</h2>
+    <div class="lo-cols">%s</div>
+    <div class="lo-weather">
+      <h3>Live a little closer.</h3>
+      <div class="lo-stats">
+        <div><strong>31 min</strong><span>To Zion National Park</span></div>
+        <div><strong>30 min</strong><span>To St. George, give or take</span></div>
+        <div><strong>50 min</strong><span>To Cedar City and the Utah Shakespeare Festival</span></div>
+      </div>
+      <p class="li-copy">Toquerville Parkway, the new bypass now under construction, will run right past SunRiver Firelight with direct access to I-15 and Zion National Park.</p>
+    </div>
+  </div>
+</section>
+<section class="li-visit">
+  <svg class="li-wave" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C 260 120, 520 120, 760 210 S 1220 300, 1440 160 L1440 360 L0 360 Z" fill="#fff" fill-opacity=".07"/><path d="M0 110 C 300 30, 560 60, 820 140 S 1260 200, 1440 60 L1440 0 L0 0 Z" fill="#fff" fill-opacity=".05"/></svg>
+  <div class="wrap li-visit-inner">
+    <h2>Come see it for yourself.</h2>
+    <div class="li-btns center"><a class="li-btn light" href="/contact-us">Schedule a visit</a><a class="li-btn white" href="/discovery-villas">Stay a few nights</a></div>
+  </div>
+</section>
+<section class="li-ready fl-amen" id="clubhouse">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">02 / The Clubhouse</p>
+    <h2 class="li-title">The future heart of<br> SunRiver Firelight.</h2>
+    <p class="li-copy">Phase 1 of the Clubhouse is under construction now. When it opens, this is where SunRiver members will work out, gather, take a class and start the next club.</p>
+    <div class="fl-amen-grid">%s</div>
+    <div class="li-btns"><a class="li-btn solid" href="/live-on#coming">See what is coming and when</a><a class="li-btn" href="/amenities-video">Watch the flythrough</a></div>
+  </div>
+</section>
+<section class="li-plans fl-clubs">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">03 / Clubs and activities</p>
+    <h2 class="li-title">So much time.<br> So much to do.</h2>
+    <p class="li-copy">Clubs are already meeting at SunRiver Firelight, from the Breakfast Social to Pilates workshops and drop-in games, and every new club starts because a Member asks for it.</p>
+    <div class="lo-cards lon-shots">%s</div>
+    <div class="li-btns"><a class="li-btn solid" href="/live-on#calendar">See this month&rsquo;s calendar</a><a class="li-btn" href="/live-on">Explore Live On</a></div>
+  </div>
+</section>
+<section class="li-ready fl-homes">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">04 / Homes</p>
+    <h2 class="li-title">Seven floor plans.<br> Your choice of homesite.</h2>
+    <p class="li-copy">Pick the plan, pick the lot, then finish it your way at the Design Center. Looking for something sooner? Move-in ready homes are available now.</p>
+    <div class="li-plan-grid">%s</div>
+    <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a><a class="li-btn" href="/live-in#lots">Pick your homesite</a><a class="li-btn" href="/homes-for-sale">Homes for sale</a></div>
+  </div>
+</section>''' % (img(V("hero.2h_vl62bxoy8t.jpg"), "SunRiver Firelight homes with red rock mountains behind", "fah-hero-img", "eager"),
+                   mix_html, amen_html, club_html, rows))

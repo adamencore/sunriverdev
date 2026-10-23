@@ -1621,3 +1621,17 @@ body.m-nav-lock { overflow: hidden; }
 .pill-drop-sm ul { padding-top: 18px; gap: 20px; }
 .pill-drop-sm ul a:hover strong::after, .pill-drop-sm ul a:focus-visible strong::after { transform: scaleX(1); }
 .photo .dv-photo, .dv-photo { width: 100%; height: 100%; object-fit: cover; object-position: 8% 50%; }
+
+/* SunRiver Firelight overview, in the Live In style */
+.fl-hero .fah-hero-img { object-position: 50% 60%; }
+.fl-mix .lo-cols { row-gap: 44px; }
+.fl-mix .lo-col h3, .fl-amen-card h3 { color: #335A97; font-weight: 900; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+.fl-mix .lo-weather .li-copy { margin-top: 30px; }
+.fl-amen-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; max-width: 1080px; margin-top: 52px; }
+.fl-amen-img { overflow: hidden; border-radius: 24px; aspect-ratio: 4 / 3; background: #E9E4DD; }
+.fl-amen-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.fl-amen-card:hover .fl-amen-img img { transform: scale(1.04); }
+.fl-amen-card h3 { margin-top: 20px; }
+.fl-amen-card p { margin-top: 8px; color: #335A97; font-size: 15px; line-height: 21px; }
+.fl-amen .li-btns, .fl-clubs .li-btns { margin-top: 48px; }
+@media (max-width: 960px) { .fl-amen-grid { grid-template-columns: minmax(0, 1fr); } }
