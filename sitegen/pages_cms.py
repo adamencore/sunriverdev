@@ -644,7 +644,7 @@ def build_live_in(plans, listings):
     <h2 class="li-title">You are not buying the home.<br> You are building it.</h2>
     <p class="li-copy">Most builders hand you three packages and call it a choice. We hand you a room.</p>
     <div class="li-dc-feature">
-      <button type="button" class="li-dc-img li-dc-video" data-yt="IjkJNOvhLtE" aria-label="Play the video: Build it the way you always said you would">%s<span class="li-dc-play" aria-hidden="true"></span><span class="li-dc-cap">Build it the way you always said you would</span></button>
+      <button type="button" class="li-dc-img li-dc-video" data-yt="IjkJNOvhLtE" data-yt-loop aria-label="Watch with sound: Build it the way you always said you would">%s<span class="li-dc-loop" aria-hidden="true"></span><span class="li-dc-sound" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 8v4h3l4 3V5L6 8H3z"/><path d="M13 7.5a3.5 3.5 0 0 1 0 5M15 5a7 7 0 0 1 0 10"/></svg>Watch with sound</span></button>
       <div class="li-dc-text"><h3>Choices with real life in mind.</h3>
         <p>Where the light lands in the morning. Whether the hobby room is for pottery or a workbench. We are not here to upsell you, just to fit the house to how you live.</p></div>
     </div>

@@ -837,3 +837,27 @@ document.querySelectorAll("[data-yt]").forEach(function (b) {
     m.querySelector(".vid-modal-close").focus();
   });
 });
+
+// Looping video in a photo frame (data-yt-loop): starts muted when it scrolls into view, loops, no controls.
+// Skipped for people who ask for reduced motion; they keep the photo.
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll("[data-yt-loop]").forEach(function (b) {
+    var slot = b.querySelector(".li-dc-loop"), id = b.getAttribute("data-yt");
+    if (!slot) return;
+    var start = function () {
+      if (slot.firstChild) return;
+      var f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&mute=1&loop=1&playlist=" + id +
+        "&controls=0&disablekb=1&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&fs=0";
+      f.title = ""; f.tabIndex = -1; f.setAttribute("aria-hidden", "true");
+      f.allow = "autoplay; encrypted-media";
+      f.addEventListener("load", function () { setTimeout(function () { slot.classList.add("is-ready"); }, 700); });
+      slot.appendChild(f);
+    };
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { start(); io.disconnect(); } }); }, { rootMargin: "200px" });
+      io.observe(b);
+    } else start();
+  });
+})();
