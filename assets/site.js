@@ -569,6 +569,12 @@
   function washAt(hero, y) {
     if (!hero.matches(".fh-hero, .hfs-hero, .li-hero")) return 0;
     var t = y / hero.offsetHeight;
+    // .li-hero (Live In / Out / On, Firelight, Design Center): 82% white at the top, 60% at 28%, 28% at 52%, gone by 72%
+    if (hero.matches(".li-hero")) {
+      var st = [[0, .82], [.28, .6], [.52, .28], [.72, 0]];
+      for (var k = 1; k < st.length; k++) if (t <= st[k][0]) return st[k - 1][1] + (st[k][1] - st[k - 1][1]) * (t - st[k - 1][0]) / (st[k][0] - st[k - 1][0]);
+      return 0;
+    }
     return t < 0.26 ? 0.6 - (0.42 * t / 0.26) : t < 0.42 ? 0.18 * (1 - (t - 0.26) / 0.16) : 0;
   }
   // Average color of a box (page coordinates relative to the hero) as drawn by the hero's cover-fit image
