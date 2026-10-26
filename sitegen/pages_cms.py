@@ -1056,7 +1056,7 @@ def build_design():
       <h2 class="dz-h2 left">The good stuff<br> comes included.</h2>
       <p>Every SunRiver Firelight plan starts with a list most builders call upgrades. Your Design Center appointment builds from there.</p>
       <ul class="dz-std">%s</ul>
-      <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See the floor plans</a></div>
+      <a class="text-link" href="/floor-plans">See the floor plans<svg viewBox="0 0 30 14" aria-hidden="true"><path d="M0 7h28M22 1l6 6-6 6"/></svg></a>
     </div>
     <div class="dz-split-img">%s</div>
   </div>
