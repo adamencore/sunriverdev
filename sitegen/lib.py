@@ -231,14 +231,17 @@ SOCIAL = '''<div class="social">
 
 FOOTER_COLS = [
     ("Company", [("Why SunRiver?", "/why-sunriver"), ("About", "/about"), ("Southern Utah", "/southern-utah"), ("FAQ", "/faq"), ("History", "/history")]),
-    ("Find a Home", [("Homes for Sale", "/homes-for-sale"), ("Mortgage Options", "/no-mortgage-payments-for-life"), ("Energy Efficient Homes", "/energy"), ("Floor Plans", "/floor-plans")]),
-    ("Communities", [("SunRiver St. George", "/st-george"), ("SunRiver Firelight", "/sunriver-firelight"), ("SunRiver Villas", "/villas")]),
+    ("Find a Home", [("Homes for Sale", "/homes-for-sale"), ("Mortgage Options", "/no-mortgage-payments-for-life"), ("Energy Efficient Homes", "/energy")]),
+    ("Communities", [("SunRiver St.George", "/st-george"), ("SunRiver Firelight", "/sunriver-firelight"), ("SunRiver Villas", "/villas")]),
     ("Get in Touch", [("Contact Us", "/contact-us"), ("Bucketlistliving Blog", "/bucketlistliving"), ("SunRiverToday.com", "https://www.sunrivertoday.com/"),
                       ("SRvillasToday.com", "https://www.srvillastoday.com/"), ("Privacy Policy", "/privacy-policy")]),
 ]
 
 
 def footer():
+    """Footer matching the live sunriver.com footer: the couple-on-red-rock photo behind everything, social icons
+    centered, the logo with address and phone on the left, four link columns."""
+    from .figma_assets import FG
     cols = "".join('<div class="footer-col"><h2>%s</h2><ul>%s</ul></div>' % (
         t, "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' class="italic"' if l == "Privacy Policy" else "", l) for l, h in links))
         for t, links in FOOTER_COLS)
@@ -250,9 +253,8 @@ def footer():
       <div class="footer-brand">%s<p>182 Cottonwood Dr<br>Toquerville, UT 84737</p><p><a href="%s">Sales Office: %s</a></p></div>
       %s
     </div>
-    <p class="copyright">SunRiver Firelight &copy; 2026 All Rights Reserved</p>
   </div>
-</footer>''' % (img(FOOTER_BG, "", "footer-bg"), SOCIAL, img(LOGO, "SunRiver Communities"), PHONE_TEL, PHONE, cols)
+</footer>''' % (img(FG("footer-photo"), "", "footer-bg"), SOCIAL, '<a class="footer-logo" href="/" aria-label="SunRiver Communities home">%s</a>' % LOGO_SVG, PHONE_TEL, PHONE, cols)
 
 
 FONTS = '''<style>
