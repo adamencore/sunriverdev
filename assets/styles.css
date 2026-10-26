@@ -619,6 +619,11 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .footer-brand { grid-column: 1 / -1; }
   .footer-brand p:nth-of-type(1) { margin-top: 24px; }
   .footer-brand p:nth-of-type(2) { margin-top: 12px; }
+  /* phones: keep the links on a soft white fade and let the photo show below them */
+  .site-footer::before { background: linear-gradient(180deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .86) 68%, rgba(255, 255, 255, 0) 84%); }
+  .site-footer > img.footer-bg { object-position: 42% 100%; }
+  .site-footer .wrap { padding-bottom: 300px; }
+  .footer-col ul { gap: 8px; }
 }
 
 .skip { position: absolute; left: -9999px; top: 0; background: var(--sunriver-blue); color: var(--white); padding: 10px 16px; z-index: 100; }
