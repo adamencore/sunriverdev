@@ -1079,3 +1079,51 @@ def build_design():
         "".join(tl), img(K(living, 2400), "The living room in the Astoria model home"), tabs, panes, std,
         img(K(bedroom), "A bedroom in the Astoria model home"), faq_html,
         img(K(exterior, 2400), "The Astoria model home at SunRiver Firelight", "dz-cta-img")))
+
+
+# ================================================================== DISCOVERY VILLAS: request a stay (form)
+def build_dv_book():
+    """Request-a-stay form for the Discovery Villas. Basic fields only. Like the other site forms it is a placeholder
+    (data-demo) until the forms are wired to the CRM; the checkout date fills in from the arrival date (2 nights)."""
+    add("/discovery-villas/book", "Request a Discovery Villas Stay", "Request three days and two nights in a designer-furnished Discovery Villa at SunRiver Firelight for $399.", "visit", """
+<section class="fah-hero li-hero dvb-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>Request your stay</h1></div>
+</section>
+<section class="dvb">
+  <div class="wrap dvb-grid">
+    <aside class="dvb-summary">
+      <p class="li-eyebrow">Discovery Villas</p>
+      <h2>Three days.<br> Two nights.<br> <span>$399.</span></h2>
+      <p>Stay in a designer-furnished villa at SunRiver Firelight and make the community your basecamp. Tour the model homes, walk the neighborhood and see what a regular Tuesday looks like.</p>
+      <ul class="dvb-list">
+        <li>A designer-furnished villa, right in the community</li>
+        <li>Time to tour the model homes at your own pace</li>
+        <li>Zion National Park 31 minutes away</li>
+      </ul>
+      <p class="dvb-call">Rather talk it through? Call <a href="%s">%s</a></p>
+    </aside>
+    <form class="chat-form light dvb-form" data-demo novalidate aria-label="Request a Discovery Villas stay">
+      <div class="row">
+        <div><label for="dv-first">First name</label><input id="dv-first" name="firstname" type="text" autocomplete="given-name" required></div>
+        <div><label for="dv-last">Last name</label><input id="dv-last" name="lastname" type="text" autocomplete="family-name" required></div>
+      </div>
+      <div class="row">
+        <div><label for="dv-email">Email</label><input id="dv-email" name="email" type="email" autocomplete="email" required></div>
+        <div><label for="dv-phone">Phone</label><input id="dv-phone" name="phone" type="tel" autocomplete="tel" required></div>
+      </div>
+      <div class="row">
+        <div><label for="dv-arrive">Arrival date</label><input id="dv-arrive" name="arrival" type="date" required></div>
+        <div><label for="dv-depart">Checkout</label><input id="dv-depart" name="checkout" type="date" readonly tabindex="-1" aria-describedby="dv-depart-note"><span class="dvb-hint" id="dv-depart-note">Two nights after arrival</span></div>
+      </div>
+      <div class="row">
+        <div><label for="dv-guests">Guests</label><select id="dv-guests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+        <div><label for="dv-from">Traveling from</label><input id="dv-from" name="city" type="text" autocomplete="address-level2" placeholder="City, State"></div>
+      </div>
+      <div><label for="dv-msg">Questions or notes</label><textarea id="dv-msg" name="message" placeholder="Flexible dates, accessibility needs, anything we should know"></textarea></div>
+      <p class="consent">By clicking "Request my stay", I authorize SunRiver to contact me about this request via the contact information I provide. I understand calls or texts may use automated technology. I can opt out at any time on the SunRiver website or by unsubscribing. This consent is not required to complete my request.</p>
+      <button class="btn" type="submit">Request my stay</button>
+      <p class="form-note" hidden style="color:var(--sunriver-blue)"></p>
+    </form>
+  </div>
+</section>""" % (img(FG("dv-living"), "Inside a designer-furnished Discovery Villa", "fah-hero-img", "eager"), PHONE_TEL, PHONE))

@@ -150,9 +150,16 @@
   document.querySelectorAll('form[data-demo]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      // required fields: mark the empty ones and stop
+      var missing = Array.prototype.filter.call(form.querySelectorAll('[required]'), function (el) {
+        var bad = !el.value || (el.type === 'email' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value));
+        el.classList.toggle('is-invalid', bad); el.setAttribute('aria-invalid', bad ? 'true' : 'false');
+        return bad;
+      });
+      if (missing.length) { missing[0].focus(); var n0 = form.querySelector('.form-note'); if (n0) { n0.hidden = false; n0.textContent = 'Please fill in the highlighted fields.'; } return; }
       var note = form.querySelector('.form-note');
       if (note) { note.hidden = false; note.textContent = 'Thanks! A SunRiver team member will reach out soon.'; }
-      form.querySelectorAll('input, textarea, button').forEach(function (el) { el.disabled = true; });
+      form.querySelectorAll('input, textarea, select, button').forEach(function (el) { el.disabled = true; });
     });
   });
 
@@ -892,3 +899,26 @@ document.querySelectorAll("[data-yt]").forEach(function (b) {
     });
   });
 })();
+
+// Discovery Villas form: arrival can't be in the past, and checkout is two nights after arrival
+(function () {
+  var a = document.getElementById("dv-arrive"), d = document.getElementById("dv-depart");
+  if (!a || !d) return;
+  var iso = function (x) { return x.getFullYear() + "-" + ("0" + (x.getMonth() + 1)).slice(-2) + "-" + ("0" + x.getDate()).slice(-2); };
+  a.min = iso(new Date());
+  a.addEventListener("change", function () {
+    if (!a.value) { d.value = ""; return; }
+    var p = a.value.split("-"), x = new Date(+p[0], +p[1] - 1, +p[2] + 2);
+    d.value = iso(x);
+  });
+})();
+
+// Forms: clear the red outline as soon as a flagged field gets a value
+document.addEventListener("input", function (e) {
+  var el = e.target;
+  if (el.classList && el.classList.contains("is-invalid") && el.value) { el.classList.remove("is-invalid"); el.setAttribute("aria-invalid", "false"); }
+}, true);
+document.addEventListener("change", function (e) {
+  var el = e.target;
+  if (el.classList && el.classList.contains("is-invalid") && el.value) { el.classList.remove("is-invalid"); el.setAttribute("aria-invalid", "false"); }
+}, true);

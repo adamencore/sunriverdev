@@ -656,7 +656,7 @@ def build_main(plans, listings):
       <h2 class="display">See SunRiver Firelight the way <span class="yellow">you'll live it.</span></h2><hr class="rule">
       <p class="lede">Spend three days and two nights in a designer-furnished villa and make this community your basecamp while you explore. Tour the homes, walk the neighborhood and picture your greatest chapter, at your own pace, with no compromises.</p>
       <p class="serif price-callout">3 days, 2 nights <span class="yellow">$399</span></p>
-      <div class="btn-row"><a class="btn" href="%s">Or call us %s</a></div>
+      <div class="btn-row"><a class="btn" href="/discovery-villas/book">Request your stay</a><a class="btn blue-btn" href="%s">Or call us %s</a></div>
     </div>
     <div class="photo ratio-34 shadow">%s</div>
   </div>
@@ -665,7 +665,7 @@ def build_main(plans, listings):
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Close to everything that makes <span class="yellow">Southern Utah special</span></h2><hr class="rule center"></div>
     <div class="grid cols-3 dv-near">%s%s%s</div>
-    <div class="center"><a class="btn" href="%s">Call to book your stay</a></div>
+    <div class="center btn-row" style="justify-content:center"><a class="btn" href="/discovery-villas/book">Request your stay</a><a class="btn blue-btn" href="%s">Call to book your stay</a></div>
   </div>
 </section>
 %s''' % (full_hero("Consider it undercover research.", "Three days and two nights at SunRiver Firelight, for $399.", "Discovery Villas",
