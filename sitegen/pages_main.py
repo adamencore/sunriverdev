@@ -731,7 +731,7 @@ def build_main(plans, listings):
   </div>
 </section>
 %s''' % (full_hero("Energy efficient homes", eyebrow="How We Build", src=V("hero.1irv6-1-qgzsa.png")), img(V("hers-arrow.2ho2zyizzj715.png"), "HERS Index scale from zero energy home to standard new home, with a SunRiver home score highlighted"),
-         img("/assets/img/energy-blower-door.webp", "A blower door pressure and flow gauge set up for a home airtightness test", attrs='style="object-position:50% 44%"'), btn("See Floor Plans", "/floor-plans"), chat_section()))
+         img("/assets/img/energy-blower-door.webp?v=2", "A blower door pressure and flow gauge set up for a home airtightness test", attrs='style="object-position:50% 50%"'), btn("See Floor Plans", "/floor-plans"), chat_section()))
 
     # ============================================================== INCENTIVES
     offers = [(S("4edfb3b104b35d496a67f074dff826f2fe6c00b1-80x80.png"), "2 Years of HOA Paid by SunRiver", "Founding Members enjoy two full years of HOA dues covered by SunRiver, a $4,800 value just for joining early."),
