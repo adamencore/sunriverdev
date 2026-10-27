@@ -565,6 +565,7 @@ def build_blog(posts):
 # The three flip cards under 04 / The Design Center (1 Choose your plan and lot, 2 See full-size samples,
 # 3 Know what it costs) are parked, not deleted: set this to True to bring them back.
 SHOW_DC_FLIPS = False
+SHOW_LON_HONEST = False  # Live On "the part nobody else will say out loud" card, not in the current Figma; parked
 
 
 def build_live_in(plans, listings):
@@ -754,15 +755,32 @@ def build_live_on(posts):
         k, img(FG(f), "SunRiver members, %s" % t.lower()), t) for t, f, k in tiles)
     cal = {"recurring": d["recurring"], "events": [e for e in d["events"] if e.get("date")]}
     cal_json = json.dumps(cal, separators=(",", ":")).replace("</", "<\\/")
-    phases = [("Built and open today", ["Five model homes", "Occupied homes in phases one and two", "22 miles of trails",
-                                      "The first pickleball courts", "The sales office at 182 Cottonwood Drive"]),
-              ("Under construction now", ["The Clubhouse", "The 4,000 square foot pool", "The full pickleball complex",
-                                          "Toquerville Parkway, the new bypass with direct I-15 and Zion access"]),
-              ("Coming after that", ["Additional phases toward 1,200 homes total", "Additional amenity areas"])]
-    phase_html = "".join('<div class="lon-phase"><span class="lon-dot"></span><h3>%s</h3><ul>%s</ul></div>' % (
-        h, "".join("<li>%s</li>" % esc(x) for x in items)) for h, items in phases)
+    built = [("5 model homes", "lon-models", "Model homes at SunRiver Firelight"), ("22 miles of trails", "lon-trails", "SunRiver members riding the trails"),
+             ("1st pickleball courts", "lon-courts", "SunRiver members at the first pickleball courts"), ("Sales office", "lon-sales", "The SunRiver Firelight sales office")]
+    tiles_b = ['<div class="lon-built-tile lon-b%d">%s<span>%s</span></div>' % (i + 1, img(FG(f), alt), t) for i, (t, f, alt) in enumerate(built)]
+    built_html = '<div class="lon-built-row">%s</div><div class="lon-built-row">%s</div>' % ("".join(tiles_b[:2]), "".join(tiles_b[2:]))
+    slides = [("The 4,000 sq ft pool", "lon-pool", "Rendering of the future 4,000 square foot pool at the Clubhouse"),
+              ("Pickleball complex", "lon-complex", "Rendering of the future pickleball complex"),
+              ("Clubhouse", "lon-clubhouse", "The Clubhouse under construction"),
+              ("Additional phases", "lon-phases", "Rendering of additional home phases at SunRiver Firelight")]
+    slide_html = "".join('<div class="lon-slide" role="group" aria-roledescription="slide" aria-label="%d of %d">%s<span>%s</span></div>' % (
+        i + 1, len(slides), img(FG(f), alt, loading="eager" if i == 0 else "lazy"), t) for i, (t, f, alt) in enumerate(slides))
+    honest = '''
+    <div class="lon-honest">
+      <div class="lon-honest-img">%s</div>
+      <div class="lon-honest-text">
+        <h3>Here is the part nobody else will say out loud.</h3>
+        <p>Buy now and you will live through some of the building: equipment noise, a few closed streets. That is the honest tradeoff.</p>
+        <p>The other half: across twenty-five years and 2,500 homes, early buyers become the connectors. By the time the amenities open, they already have their people.</p>
+        <p class="lon-kicker">Early is harder. It is also better.</p>
+        <a class="li-btn solid" href="/contact-us">Walk the site with the developer</a>
+      </div>
+    </div>''' % simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw") if SHOW_LON_HONEST else ""
     recent = sorted(posts, key=lambda p: p.get("publishDate") or "", reverse=True)[:3]
-    posts_html = '<div class="post-grid cols-3 lon-posts">%s</div>' % "".join(post_card(p) for p in recent) if recent else ""
+    posts_html = '<div class="lon-posts">%s</div>' % "".join(
+        '<a class="lon-post" href="/bucketlistliving/%s"><span class="lon-post-img">%s</span><strong>%s</strong><time datetime="%s">%s</time></a>' % (
+            p["slug"], simg(p["cover"], p["title"], 700, sizes="(max-width: 860px) 100vw, 320px") if p.get("cover") else "",
+            esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate"))) for p in recent) if recent else ""
     add_with_firelight("/live-on", "Live On", "Live On at SunRiver Firelight: clubs and activities, the events calendar, what is coming and when, and Bucketlist Living.", "life-overlay", '''
 <section class="fah-hero li-hero lon-hero">
   %s
@@ -810,10 +828,6 @@ def build_live_on(posts):
       <div class="lon-cal-grid" data-cal-grid></div>
       <script type="application/json" class="lon-cal-data">%s</script>
     </div>
-    <div class="li-walk lon-guest">
-      <div><h3>Not a Member yet?</h3><p>Prospective buyers are welcome at most events. Come see what a Tuesday actually looks like.</p></div>
-      <a class="li-btn solid" href="/contact-us">Join us at the next one</a>
-    </div>
   </div>
 </section>
 <section class="li-visit">
@@ -828,18 +842,17 @@ def build_live_on(posts):
     <p class="li-eyebrow">03 / What is coming and when</p>
     <h2 class="li-title">What is built, what is under construction,<br> and when the rest arrives.</h2>
     <p class="li-copy">We build in phases. That means parts of this community are a construction site right now, and we would rather show you the schedule than talk around it.</p>
-    <div class="lon-phases">%s</div>
-    <p class="lon-updated">Updated the first week of every month, with photographs taken on site and dates that move only when we tell you they moved.</p>
-    <div class="lon-honest">
-      <div class="lon-honest-img">%s</div>
-      <div class="lon-honest-text">
-        <h3>Here is the part nobody else will say out loud.</h3>
-        <p>Buy now and you will live through some of the building: equipment noise, a few closed streets. That is the honest tradeoff.</p>
-        <p>The other half: across twenty-five years and 2,500 homes, early buyers become the connectors. By the time the amenities open, they already have their people.</p>
-        <p class="lon-kicker">Early is harder. It is also better.</p>
-        <a class="li-btn solid" href="/contact-us">Walk the site with the developer</a>
-      </div>
+    <div class="lon-built">
+      <h3 class="lon-sub">Built and open<br> today</h3>
+      <div class="lon-built-grid">%s</div>
     </div>
+    <div class="lon-uc">
+      <h3 class="lon-sub">Under construction now</h3>
+      <div class="lon-carousel" data-carousel aria-roledescription="carousel" aria-label="Under construction now">
+        <div class="lon-car-track" data-car-track>%s</div>
+        <div class="lon-car-nav"><button type="button" data-car-prev aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button><button type="button" data-car-next aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
+      </div>
+    </div>%s
   </div>
 </section>
 <section class="li-ready lon-blog" id="bucketlist">
@@ -848,11 +861,10 @@ def build_live_on(posts):
     <h2 class="li-title">Stories from the people<br> who live here.</h2>
     <p class="li-copy">The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Bucketlist Living is where SunRiver Members tell their stories, along with guides to the trails, parks and towns around us.</p>
     %s
-    <div class="li-btns"><a class="li-btn solid" href="/bucketlistliving">Read Bucketlist Living</a></div>
+    <div class="li-btns center lon-blog-more"><a class="li-btn blue" href="/bucketlistliving">Read Bucketlist Living</a></div>
   </div>
 </section>''' % (img(FG("lon-hero"), "A SunRiver couple riding bikes on a red rock trail", "fah-hero-img", "eager"),
-                 shot_html, now, img(FG("lon-couple"), "A SunRiver couple out on their bikes"), cal_json, phase_html,
-                 simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw"),
+                 shot_html, now, img(FG("lon-couple"), "A SunRiver couple out on their bikes"), cal_json, built_html, slide_html, honest,
                  posts_html))
 
 
@@ -954,7 +966,7 @@ FL_PROMO = {
                   FG("lo-promo"), "SunRiver members out for a bike ride near SunRiver Firelight"),
     "/live-on": ("Where all of this happens.",
                  "The clubs, the calendar and the future Clubhouse are all part of SunRiver Firelight, SunRiver's newest 55+ community in Toquerville. See the whole picture.",
-                 V("clubhouse-rendering.1ka003naw87xl.jpg"), "Rendering of the SunRiver Firelight Clubhouse"),
+                 FG("lon-promo"), "SunRiver members riding bikes on a tree-lined trail"),
 }
 
 

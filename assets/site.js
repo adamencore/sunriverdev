@@ -922,3 +922,25 @@ document.addEventListener("change", function (e) {
   var el = e.target;
   if (el.classList && el.classList.contains("is-invalid") && el.value) { el.classList.remove("is-invalid"); el.setAttribute("aria-invalid", "false"); }
 }, true);
+
+// Photo carousel (data-carousel): one slide at a time, previous and next buttons, wraps around, swipe on touch.
+(function () {
+  document.querySelectorAll("[data-carousel]").forEach(function (c) {
+    var track = c.querySelector("[data-car-track]"), slides = track ? track.children : [], i = 0, x0 = null;
+    if (!track || slides.length < 2) return;
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      track.style.transform = "translateX(" + (-100 * i) + "%)";
+      for (var k = 0; k < slides.length; k++) slides[k].setAttribute("aria-hidden", k === i ? "false" : "true");
+    }
+    c.querySelector("[data-car-prev]").addEventListener("click", function () { go(i - 1); });
+    c.querySelector("[data-car-next]").addEventListener("click", function () { go(i + 1); });
+    c.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    c.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1));
+    });
+    go(0);
+  });
+})();

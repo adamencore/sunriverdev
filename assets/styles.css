@@ -1545,6 +1545,51 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .li-plan-belt .po-name { font-size: 24px; line-height: 26px; }
 }
 
+/* Live On 03 and 04, Figma "LIVE ON": built-and-open mosaic, under-construction carousel, story cards */
+.lon-cal { background: var(--white); }
+.lon-coming { background: var(--white); padding-bottom: 110px; }
+.lon-blog { background: #FAF5F0; }
+.lon-sub { color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
+.lon-sub::before { content: ""; display: block; width: 132px; height: 3px; margin-bottom: 14px; background: #EDB443; }
+.lon-built { max-width: 906px; margin: 64px 0 0 128px; }
+.lon-built-grid { display: grid; gap: 18px; margin-top: 40px; }
+.lon-built-row { display: flex; gap: 18px; }
+.lon-built-tile, .lon-slide { position: relative; overflow: hidden; border-radius: 24px; background: #335A97; }
+.lon-built-tile { height: 261px; }
+.lon-b1 { flex: 491 1 0; } .lon-b2 { flex: 397 1 0; } .lon-b3 { flex: 395 1 0; } .lon-b4 { flex: 493 1 0; }
+.lon-built-tile img, .lon-slide img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lon-built-tile::after, .lon-slide::after { content: ""; position: absolute; inset: 50% 0 0; background: linear-gradient(180deg, rgba(10, 18, 34, 0), rgba(10, 18, 34, .65)); pointer-events: none; }
+.lon-built-tile span, .lon-slide span { position: absolute; left: 30px; bottom: 26px; z-index: 1; color: var(--white); font-weight: 900; font-size: 13px; line-height: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+.lon-uc { max-width: 1034px; margin-top: 96px; }
+.lon-carousel { position: relative; height: 362px; margin-top: 44px; overflow: hidden; border-radius: 24px; }
+.lon-car-track { display: flex; height: 100%; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.lon-slide { flex: none; width: 100%; height: 100%; border-radius: 0; }
+.lon-car-nav { position: absolute; right: 24px; bottom: 22px; z-index: 2; display: flex; gap: 8px; }
+.lon-car-nav button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 1.5px solid var(--white); border-radius: 50%; background: transparent; color: var(--white); cursor: pointer; transition: background .2s, color .2s; }
+.lon-car-nav button:hover { background: var(--white); color: #335A97; }
+.lon-car-nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lon-posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 37px; max-width: 1034px; margin-top: 52px; }
+.lon-post { display: block; color: #335A97; text-decoration: none; }
+.lon-post-img { position: relative; display: block; height: 243px; overflow: hidden; border-radius: 24px; background: #E9E1D6; }
+.lon-post-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.lon-post:hover .lon-post-img img { transform: scale(1.04); }
+.lon-post strong { display: block; margin: 18px 22px 0; font-weight: 900; font-size: 18px; line-height: 22px; letter-spacing: -0.02em; }
+.lon-post time { display: block; margin: 6px 22px 0; font-size: 12px; line-height: 15px; }
+.lon-blog-more { max-width: 1034px; margin-top: 56px; }
+.li-btn.blue { border-color: #335A97; background: #335A97; color: var(--white); }
+.li-btn.blue:hover { border-color: #26457A; background: #26457A; }
+@media (max-width: 1100px) { .lon-built { margin-left: 0; } }
+@media (max-width: 860px) {
+  .lon-sub { font-size: 30px; line-height: 34px; }
+  .lon-built-row { flex-direction: column; }
+  .lon-built-row .lon-built-tile { flex: none; }
+  .lon-built-tile { height: 220px; }
+  .lon-uc { margin-top: 72px; }
+  .lon-carousel { height: 260px; }
+  .lon-posts { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .lon-post-img { height: 220px; }
+}
+
 /* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
 .fh-hero { height: 600px; background: #6E8FB8; }
 .fh-hero .fah-hero-img { opacity: 1; }
