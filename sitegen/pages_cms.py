@@ -829,8 +829,8 @@ def build_live_on(posts):
       <div class="lon-honest-img">%s</div>
       <div class="lon-honest-text">
         <h3>Here is the part nobody else will say out loud.</h3>
-        <p>If you buy now, you will live through some of the building. You will hear equipment. Some streets will be closed. That is the honest tradeoff.</p>
-        <p>Here is the other half of it, learned across twenty-five years and 2,500 homes: the people who buy early become the connectors. They are the ones who know everybody, because they were here when there were only forty of them and there was nothing to do but figure each other out. By the time the amenities open, they already have their people. The Members who arrive later spend a year catching up.</p>
+        <p>Buy now and you will live through some of the building: equipment noise, a few closed streets. That is the honest tradeoff.</p>
+        <p>The other half: across twenty-five years and 2,500 homes, early buyers become the connectors. By the time the amenities open, they already have their people.</p>
         <p class="lon-kicker">Early is harder. It is also better.</p>
         <a class="li-btn solid" href="/contact-us">Walk the site with the developer</a>
       </div>
