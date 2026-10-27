@@ -775,6 +775,7 @@ def build_live_on(posts):
     <p class="li-eyebrow">01 / Clubs and activities</p>
     <h2 class="li-title">Real friendships do not<br> happen by accident.</h2>
     <p class="li-copy">They happen when people keep bumping into each other on purpose, which is what a good calendar is actually for.</p>
+    <svg class="lon-defs" width="0" height="0" aria-hidden="true" focusable="false"><clipPath id="lon-paddle-clip" clipPathUnits="objectBoundingBox"><path d="M.04566 0H.43836A.04566 .10989 0 0 1 .48402 .10989V.52015H.95434A.04566 .10989 0 0 1 1 .63004V.89011A.04566 .10989 0 0 1 .95434 1H.04566A.04566 .10989 0 0 1 0 .89011V.10989A.04566 .10989 0 0 1 .04566 0Z"/></clipPath></svg>
     <div class="lon-mosaic">%s</div>
     <div class="lon-start">
       <h3>And what you<br> start yourself</h3>
@@ -844,7 +845,7 @@ def build_live_on(posts):
     %s
     <div class="li-btns"><a class="li-btn solid" href="/bucketlistliving">Read Bucketlist Living</a></div>
   </div>
-</section>''' % (img(V("live-on.2kwzvtocledst.jpg"), "SunRiver members playing pool together", "fah-hero-img", "eager"),
+</section>''' % (img(FG("lon-hero"), "A SunRiver couple riding bikes on a red rock trail", "fah-hero-img", "eager"),
                  shot_html, now, img(FG("lon-couple"), "A SunRiver couple out on their bikes"), cal_json, phase_html,
                  simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw"),
                  posts_html))

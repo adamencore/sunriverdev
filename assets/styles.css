@@ -1470,19 +1470,21 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 
 /* Live On 01, Figma "LIVE ON": photo mosaic, start-your-own note, what's running now */
 .lon-clubs { padding-bottom: 0; }
-.lon-mosaic { position: relative; width: min(900px, 100%); aspect-ratio: 900 / 750; margin: 64px 0 0 71px; }
-.lon-tile { position: absolute; overflow: hidden; border-radius: 22px; background: #335A97; }
+.lon-mosaic { position: relative; width: min(896px, 100%); aspect-ratio: 896 / 746; margin: 64px 0 0 71px; }
+.lon-defs { position: absolute; width: 0; height: 0; }
+.lon-hero .fah-hero-img { object-position: 50% 56%; }
+.lon-tile { position: absolute; overflow: hidden; border-radius: 30px; background: #335A97; }
 .lon-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
 .lon-tile:hover img { transform: scale(1.04); }
 .lon-tile::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(180deg, rgba(10, 18, 34, 0), rgba(10, 18, 34, .7)); pointer-events: none; }
 .lon-tile span { position: absolute; left: 24px; bottom: 20px; z-index: 1; color: var(--white); font-weight: 900; font-size: 20px; line-height: 24px; letter-spacing: -0.02em; }
-.lon-t-pottery { left: 0; top: 0; width: 35.6%; height: 59.9%; }
+.lon-t-pottery { left: 0; top: 0; width: 35.49%; height: 59.79%; }
 .lon-t-pottery img { object-position: 50% 60%; }
-.lon-t-pilates { left: 37.7%; top: 9.8%; width: 55.2%; height: 35.2%; }
-.lon-t-paddle { left: 0; top: 63.3%; width: 73.3%; height: 36.7%; z-index: 1; }
-.lon-t-paddle img { object-position: 50% 30%; }
-.lon-t-pickleball { left: 37.7%; top: 47.4%; width: 35.6%; height: 32.7%; z-index: 2; box-shadow: 0 0 0 0 transparent; }
-.lon-t-hiking { left: 75.1%; top: 47.4%; width: 24.9%; height: 52.6%; }
+.lon-t-pilates { left: 37.61%; top: 9.52%; width: 55.25%; height: 35.25%; }
+.lon-t-paddle { left: 0; top: 63.27%; width: 73.33%; height: 36.73%; border-radius: 0; clip-path: url(#lon-paddle-clip); }
+.lon-t-paddle img { object-position: 50% 28%; }
+.lon-t-pickleball { left: 37.61%; top: 47.32%; width: 35.71%; height: 32.98%; }
+.lon-t-hiking { left: 74.89%; top: 47.32%; width: 25.11%; height: 52.68%; }
 .lon-t-hiking img { object-position: 55% 50%; }
 .lon-start { position: relative; max-width: 1000px; margin: 78px 0 0 128px; }
 .lon-start h3 { display: inline-block; padding-bottom: 18px; color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
@@ -1506,9 +1508,9 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 }
 @media (max-width: 860px) {
   .lon-mosaic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; aspect-ratio: auto; }
-  .lon-tile { position: relative; inset: auto; width: auto; height: 220px; }
+  .lon-tile { position: relative; inset: auto; width: auto; height: 220px; border-radius: 22px; }
   .lon-t-pottery, .lon-t-hiking { height: 300px; }
-  .lon-t-paddle { grid-column: 1 / -1; order: 5; height: 220px; }
+  .lon-t-paddle { grid-column: 1 / -1; order: 5; height: 220px; border-radius: 22px; clip-path: none; }
   .lon-tile span { left: 16px; bottom: 14px; font-size: 17px; }
   .lon-start h3, .lon-running-list h3 { font-size: 30px; line-height: 34px; }
   .lon-start p { margin-left: 0; font-size: 20px; line-height: 29px; }
@@ -1652,7 +1654,7 @@ body.m-nav-lock { overflow: hidden; }
 .site-header.is-home { --logo-accent: var(--white); }  /* until the color map is painted */
 
 /* Live On, patterned on Live In / Live Out */
-.lon-hero .fah-hero-img { object-position: 50% 30%; }
+.lon-hero .fah-hero-img { object-position: 50% 56%; }
 .lon-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1080px; margin-top: 52px; }
 .lon-lists { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; max-width: 1080px; margin-top: 64px; }
 .lon-lists h3, .lon-cal h3.lon-h, .lon-phase h3 { color: #335A97; font-weight: 900; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
