@@ -83,7 +83,7 @@ SPECS = {
     "li-hero": ("li_hero", None, None, 0, 0, 100, 100, 1536, {}),
     "fl-smart": ("fl_smart", None, None, 0, 0, 100, 100, 1536, {}),
     "lo-hero": ("lo_hero", None, None, 0, 0, 100, 100, 2400, {}),
-    "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0, 0, 0.4), "fallback": "couple"}),
+    "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0.25, 0.2, 0.29), "fallback": "couple"}),
     "lo-promo": ("lo_promo", None, None, 0, 0, 100, 100, 1080, {}),
 }
 

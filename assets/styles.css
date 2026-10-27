@@ -1443,7 +1443,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lo-visit .li-btns { margin-top: 40px; }
 .lo-visit .li-btn { width: 300px; }
 .lo-btn-blue.li-btn.solid { color: #335A97; }
-.lo-visit-couple { position: absolute; right: 2%; bottom: 0; z-index: 1; width: min(46%, 640px); height: calc(100% + 100px); pointer-events: none; }
+.lo-visit-couple { position: absolute; right: 3%; bottom: 0; z-index: 1; width: min(50%, 682px); height: calc(100% + 125px); pointer-events: none; }
 .lo-visit-couple img { position: absolute; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
 .lo-nearby { background: var(--white); padding-bottom: 40px; }
 .lo-nearby .lo-near-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px 64px; max-width: 1040px; }
@@ -1458,7 +1458,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lo-visit { height: auto; padding-top: 72px; }
   .lo-visit-text { height: auto; max-width: none; }
   .lo-visit h2 { font-size: 46px; line-height: 46px; }
-  .lo-visit-couple { position: relative; right: auto; width: min(100%, 440px); height: auto; margin: 24px auto 0; aspect-ratio: 1 / .87; }
+  .lo-visit-couple { position: relative; right: auto; width: min(100%, 440px); height: auto; margin: 24px auto 0; aspect-ratio: 682 / 575; }
   .lo-nearby .lo-near-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
 }
 @media (max-width: 560px) {
