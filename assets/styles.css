@@ -1422,6 +1422,52 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lo-cards { grid-template-columns: minmax(0, 1fr); }
 }
 
+/* Live Out, Figma "LIVE OUT" (255:900) */
+.lo-hero .fah-hero-img { object-position: 50% 38%; }
+.lo-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 40px; max-width: 1040px; margin-top: 56px; }
+.lo-photo { aspect-ratio: 320 / 245; }
+.lo-photo::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(180deg, rgba(10, 18, 34, 0), rgba(10, 18, 34, .72)); pointer-events: none; }
+.lo-photo-text { position: absolute; left: 22px; right: 22px; bottom: 18px; z-index: 1; display: grid; gap: 2px; color: var(--white); }
+.lo-photo-text strong { font-weight: 900; font-size: 18px; line-height: 22px; letter-spacing: -0.02em; }
+.lo-photo-text span { font-weight: 500; font-size: 12px; line-height: 15px; opacity: .92; }
+.lo-region .lo-weather { max-width: 1040px; margin-top: 104px; padding-top: 0; border-top: 0; text-align: center; }
+.lo-region .lo-weather h3 { color: #335A97; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
+.lo-region .lo-stats { max-width: 860px; margin: 44px auto 0; }
+.lo-region .lo-stats strong { color: #EDB443; font-size: 64px; line-height: 64px; }
+.lo-region .lo-stats span { max-width: 240px; margin: 10px auto 0; font-size: 14px; line-height: 18px; }
+.lo-visit { position: relative; z-index: 1; height: 450px; margin-top: 0; background: #3D5C9A; }
+.lo-visit-wave { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lo-visit-inner { position: relative; height: 100%; }
+.lo-visit-text { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; height: 100%; max-width: 680px; }
+.lo-visit h2 { color: var(--white); font-family: var(--font-display); font-weight: 900; font-size: 64px; line-height: 62px; letter-spacing: -0.035em; }
+.lo-visit .li-btns { margin-top: 40px; }
+.lo-visit .li-btn { width: 300px; }
+.lo-btn-blue.li-btn.solid { color: #335A97; }
+.lo-visit-couple { position: absolute; right: 2%; bottom: 0; z-index: 1; width: min(46%, 640px); height: calc(100% + 100px); pointer-events: none; }
+.lo-visit-couple img { position: absolute; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: 50% 100%; }
+.lo-nearby { background: var(--white); padding-bottom: 40px; }
+.lo-nearby .lo-near-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px 64px; max-width: 1040px; }
+.lo-nearby .lo-near ul { display: grid; gap: 18px; margin-top: 22px; }
+.lo-nearby .lo-near li { align-items: center; min-height: 52px; padding: 0 26px; border: 0; border-radius: 12px; background: #FAF5F0; font-size: 14px; }
+.lo-nearby .lo-near li strong { color: #335A97; }
+@media (max-width: 960px) {
+  .lo-photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .lo-region .lo-weather h3 { font-size: 30px; line-height: 34px; }
+  .lo-region .lo-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .lo-region .lo-stats strong { font-size: 44px; line-height: 46px; }
+  .lo-visit { height: auto; padding-top: 72px; }
+  .lo-visit-text { height: auto; max-width: none; }
+  .lo-visit h2 { font-size: 46px; line-height: 46px; }
+  .lo-visit-couple { position: relative; right: auto; width: min(100%, 440px); height: auto; margin: 24px auto 0; aspect-ratio: 1 / .87; }
+  .lo-nearby .lo-near-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+}
+@media (max-width: 560px) {
+  .lo-photos { grid-template-columns: minmax(0, 1fr); }
+  .lo-region .lo-stats { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .lo-visit .li-btn { width: 100%; }
+  .lo-nearby .lo-near li { padding: 0 18px; }
+}
+
 /* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
 .fh-hero { height: 600px; background: #6E8FB8; }
 .fh-hero .fah-hero-img { opacity: 1; }
@@ -1682,12 +1728,16 @@ body.m-nav-lock { overflow: hidden; }
 .fl-promo-text .li-eyebrow { color: #F3C25E; }
 .fl-promo-h { display: block; margin-top: 12px; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
 .fl-promo-p { display: block; margin-top: 14px; font-size: 15px; line-height: 22px; opacity: .92; }
-.fl-promo .li-btn { margin-top: 26px; }
-.fl-promo:hover .li-btn.solid { border-color: var(--sun-yellow-deep); background: var(--sun-yellow-deep); }
+.fl-promo { position: relative; max-width: 1040px; min-height: 400px; grid-template-columns: 45% minmax(0, 1fr); background: #3D5C9A; }
+.fl-promo-text { padding: 48px 96px 64px 48px; }
+.fl-promo-h { font-size: 40px; line-height: 44px; }
+.fl-promo-go { position: absolute; right: 26px; bottom: 26px; display: grid; place-items: center; width: 46px; height: 46px; border: 2px solid var(--white); border-radius: 50%; transition: background .2s, color .2s; }
+.fl-promo-go svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fl-promo:hover .fl-promo-go { background: var(--white); color: #3D5C9A; }
 @media (max-width: 960px) {
   .fl-promo { grid-template-columns: minmax(0, 1fr); }
   .fl-promo-img { min-height: 240px; }
-  .fl-promo-text { padding: 34px 28px 36px; }
+  .fl-promo-text { padding: 34px 28px 88px; }
   .fl-promo-h { font-size: 28px; line-height: 32px; }
 }
 

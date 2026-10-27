@@ -49,6 +49,10 @@ FIGMA_IDS = {
     "fl_smart": "https://s3-alpha-sig.figma.com/img/270c/d40a/707fa627e86465d4c80c7f845c21a219?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=NrO9GO~lihKhrwkPl3Pzd-OwoORYCDhEWMKTN2vgI-A~2YRFujqn4Sm8rTxocVq1wq67LyQhJ~ZgBykk3GShyvHixakUszXaN8hMGQU3aXHP3Rpee8fgi3sDJeVFZtcbPjlVkJ12lAheiruwEX6D5dowawcSJmxz8LKsqyJTfFy3khMyemhHAWt0wtAr2bfQfOEZ9t7tcg~vFgQ23U1sIANoIJGMt5b2zygR8xoud6r-MZIhZXyuS41OqkpWX1nvT7cdAiv3xbMYn7ZKYm4Uaw~qXcEGA0yHR32RBMsZTmmjhDakNi1ESHm0FuHtXylY34Tnqn8Wddnd8RudxbrZMw__",
     "li_hero": "https://s3-alpha-sig.figma.com/img/7883/f3a5/247799052dce918b2474e9de97e2fda4?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=X-NTor9119a6Q3pUOJXMXkKsdKOdXnWDmDjIjLLq0SLeudvLxeGShn7hJgUFo1VHbDOLoFHEwF5NkDrOfZ03SekOoc5OxhmcHQImZM4hjJBzdmzzQGSHj67Ew9HbtBexATst5InaZ9VrC0o-LyUWggBy7-YpfTpK-dtRocgwnVxobWiVUBCbiD4oVMw5I8eXbTdlayPDHLb8382Bo9HSWN8wt3NSiNyQ6aoGZJgj7RfTVD2pNT12GkxjJHNmtxxYDE9rSU-h5MyLrpyBBfElW~w375CYVbLV81~bAkQEThXZn2uELhk2ONUB0E4y88WosNkBkyaqNNu7eX8SKvGJNw__",
     "fl_trails": "https://s3-alpha-sig.figma.com/img/20de/bfe4/e9f6cdf4c07e2d8c2925b3d0b7dbe921?Expires=1793577600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=W8~8tUJpQcbxR7qCtBx4lBAen6QV2rhcYRhpi4lixh2O0j-URjWrFl4yr85EwfCpKSVY~ykrTQ2uftEUhGxsntjoK3LTAN~ub49q5SORqHFwZGOmyaGjbO~j75JpzR7qxokGwKMqVmdogLpuYXFNYV6Wp0FcTKFGYCXEqDhW6kh-09~qmZt3Iz-1iYLLRnEdq~gb2qre4jLoJEFOVC5nLFvry~y3BBGdHf1S5xtFTcwa6bRfpZWqSUY9wlJxJxevy4yasmev-g0tPyhtvP1sSNutv1FkN4h~1SFSDwI3wPJXigiIzjf1Or-TBkPnxOMWXCVlzbFjLkHDqVC0U-1UxA__",
+    # Live Out (OFFICIAL "LIVE OUT", 255:900), signed links valid to about 2026-11-03; the live-site copy takes over after that
+    "lo_hero": "https://s3-alpha-sig.figma.com/img/7a67/bea7/ccd3c478fef47db04390bd31ddc72352?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=UFQcfeoDGiKoCl0CTbBu2rv0ZigT2bADxKAjK6b5FoLumStQSu8kiw1hTguBDen3GSqYy7vo8izN65E0Fj0ACEB~ZcEKMLC45020ndm~wBGgMc4YPHJSLnEGjD-I86Cw-xVFxr3XFWkp6BaHgm57avDkjQYB0jDuJavoKxSLyCli4gZDvkfidLG~SWBXJP8SXuDm24nwDybJoKssVitfWhsXNq955aoewKxGNL5ki~1b6Pfx1eiBIrgD8ok6QUZmVSYgwLSF-0e350Qza3QpM9OyQYqLB1iWaqrx-GYsGy-jv5erDyumTLk8rqCxTsFj339vsx-4qHxBHYBAiIUn6w__",
+    "lo_couple": "https://s3-alpha-sig.figma.com/img/fe32/e9fb/497ad9d87e4746996ed0659eecfd4e9b?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=qyosrCJPJmZPAMHY~0pAdZvSuFMkwjyKhuvVhvIOnAY-RNK7ZtmLBaagqR-~fV7RW37MXm8Kyry9mFrZ8jYaoEqVGlRExU55qd~-~HQScey4NsOip2e1kAYBQuh5AZaAHWTy5xN0ANlaHDtExF-lMUv2yiwqbmAJ2GYHOH~kE4~8ClnOgKQJELtBE91Q2dqrJGmRgPk1vlaHg4UHp8jHbXZEwEr6XbTXt2WWVLtCJ7UU~0HIBhdY1hU91zBi6jTXJHmroTZrEMLpr9dTYo2CrgPmMrOwZCrfQMUoFpxXPKFuK5ugsuLDxyL1PzkNcQY8bK4i8~GRG8JFGZaPBbcslA__",
+    "lo_promo": "https://s3-alpha-sig.figma.com/img/37b6/918b/7b721500eba4b2b3ae3083c5d9c8a5e2?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RXW4L7WpqQBVliunIY-HtIL1PF~oJdgVzx2eb3THJ4FOYyDqtktuMwKJ9XyvNccHDeaEkDFKhWwjtjEf-TJZXIfJm3aq6S2~cA-ExB83cUx~Az6lxPTvjzx7g3ZZ5DXKSyOLzlEstKhdj8mED3TJsSQTRrjjheUUqEyEUVYUNctYzKTi7Nze3ytKthe5xjMDmJCUQ-nwF1EqTs-hpk-5ZqoFaWUZyBjC0u40e0Z6akRzoJxM~QXJwNTZe04uWr4vSVhjEJkltYFWVYx4l5nd4HUyGOpkVoyO0Py1bZYTxIGjOAP10IZJNd41zvHfTcOYBhO0xaLs0wQG-7a3n6eIoA__",
 }
 
 # name: (source, frame w, frame h, image left %, top %, width %, height %, output width, options)
@@ -78,6 +82,9 @@ SPECS = {
     "fl-trails": ("fl_trails", None, None, 0, 0, 100, 100, 2400, {"alpha": True, "trim": (0, 0.27, 0, 0)}),  # empty sky above the peaks trimmed
     "li-hero": ("li_hero", None, None, 0, 0, 100, 100, 1536, {}),
     "fl-smart": ("fl_smart", None, None, 0, 0, 100, 100, 1536, {}),
+    "lo-hero": ("lo_hero", None, None, 0, 0, 100, 100, 2400, {}),
+    "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0, 0, 0.4), "fallback": "couple"}),
+    "lo-promo": ("lo_promo", None, None, 0, 0, 100, 100, 1080, {}),
 }
 
 USED = set()
