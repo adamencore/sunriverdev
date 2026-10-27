@@ -1498,7 +1498,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lon-running-list li { display: flex; justify-content: space-between; gap: 18px; padding: 24px 0; border-bottom: 2px solid #EDB443; color: #335A97; font-size: 14px; line-height: 18px; }
 .lon-running-list li:last-child { border-bottom: 0; }
 .lon-running-list li strong { flex: none; font-weight: 900; }
-.lon-running-couple { position: absolute; left: 487px; bottom: 0; z-index: 1; width: 600px; height: 560px; pointer-events: none; }
+.lon-running-couple { position: absolute; left: 487px; bottom: 0; z-index: 3; width: 600px; height: 560px; pointer-events: none; }
 .lon-running-couple img { width: 100%; height: 100%; object-fit: cover; object-position: 0 0; }
 @media (max-width: 1100px) {
   .lon-mosaic, .lon-running { margin-left: 0; }
