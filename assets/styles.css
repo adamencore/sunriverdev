@@ -1483,7 +1483,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lon-t-paddle img { object-position: 50% 30%; }
 .lon-t-pickleball { left: 37.7%; top: 47.4%; width: 35.6%; height: 32.7%; z-index: 2; box-shadow: 0 0 0 0 transparent; }
 .lon-t-hiking { left: 75.1%; top: 47.4%; width: 24.9%; height: 52.6%; }
-.lon-t-hiking img { object-position: 40% 50%; }
+.lon-t-hiking img { object-position: 55% 50%; }
 .lon-start { position: relative; max-width: 1000px; margin: 78px 0 0 128px; }
 .lon-start h3 { display: inline-block; padding-bottom: 18px; color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
 .lon-start h3::after { content: ""; display: block; width: 138px; height: 3px; margin-top: 18px; background: #EDB443; }
@@ -1496,8 +1496,8 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .lon-running-list li { display: flex; justify-content: space-between; gap: 18px; padding: 24px 0; border-bottom: 2px solid #EDB443; color: #335A97; font-size: 14px; line-height: 18px; }
 .lon-running-list li:last-child { border-bottom: 0; }
 .lon-running-list li strong { flex: none; font-weight: 900; }
-.lon-running-couple { position: absolute; left: 487px; bottom: 0; z-index: 1; width: 526px; height: 560px; pointer-events: none; }
-.lon-running-couple img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.lon-running-couple { position: absolute; left: 487px; bottom: 0; z-index: 1; width: 600px; height: 560px; pointer-events: none; }
+.lon-running-couple img { width: 100%; height: 100%; object-fit: cover; object-position: 0 0; }
 @media (max-width: 1100px) {
   .lon-mosaic, .lon-running { margin-left: 0; }
   .lon-start { margin-left: 0; }
@@ -1513,7 +1513,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lon-start h3, .lon-running-list h3 { font-size: 30px; line-height: 34px; }
   .lon-start p { margin-left: 0; font-size: 20px; line-height: 29px; }
   .lon-running { min-height: 0; margin-top: 80px; padding-bottom: 0; }
-  .lon-running-couple { position: relative; left: auto; right: auto; width: min(100%, 420px); height: auto; margin: 24px auto 0; aspect-ratio: 526 / 560; }
+  .lon-running-couple { position: relative; left: auto; right: auto; width: min(100%, 420px); height: auto; margin: 24px auto 0; aspect-ratio: 600 / 560; }
   .lon-running-list ul { padding: 4px 22px; }
 }
 @media (max-width: 520px) {

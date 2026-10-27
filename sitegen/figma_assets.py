@@ -91,7 +91,7 @@ SPECS = {
     "lo-hero": ("lo_hero", None, None, 0, 0, 100, 100, 2400, {}),
     "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0.25, 0.2, 0.29), "fallback": "couple"}),
     "lo-promo": ("lo_promo", None, None, 0, 0, 100, 100, 1080, {}),
-    "lon-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1100, {"alpha": True, "trim": (0, 0.25, 0.2, 0.12), "fallback": "lo-couple"}),
+    "lon-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1100, {"alpha": True, "trim": (0, 0.25, 0.05, 0.12), "fallback": "lo-couple"}),
     "lon-pottery": ("lon_pottery", None, None, 0, 0, 100, 100, 900, {}),
     "lon-pilates": ("lon_pilates", None, None, 0, 0, 100, 100, 1200, {}),
     "lon-pickleball": ("lon_pickleball", None, None, 0, 0, 100, 100, 1000, {}),
