@@ -805,9 +805,9 @@ def build_live_on(posts):
     slides = [("The 4,000 sq ft pool", "lon-pool", "Rendering of the future 4,000 square foot pool at the Clubhouse"),
               ("Pickleball complex", "lon-complex", "Rendering of the future pickleball complex"),
               ("Clubhouse", "lon-clubhouse", "The Clubhouse under construction"),
-              ("Additional phases", "lon-phases", "Rendering of additional home phases at SunRiver Firelight")]
-    slide_html = "".join('<div class="lon-slide" role="group" aria-roledescription="slide" aria-label="%d of %d">%s<span>%s</span></div>' % (
-        i + 1, len(slides), img(FG(f), alt, loading="eager" if i == 0 else "lazy"), t) for i, (t, f, alt) in enumerate(slides))
+              ("Additional phases", "/assets/img/lon-additional-phases.webp", "New homes going up in the next phases at SunRiver Firelight")]
+    slide_html = "".join('<div class="lon-slide lon-s%d" role="group" aria-roledescription="slide" aria-label="%d of %d">%s<span>%s</span></div>' % (
+        i + 1, i + 1, len(slides), img(f if f.startswith("/") else FG(f), alt, loading="eager" if i == 0 else "lazy"), t) for i, (t, f, alt) in enumerate(slides))
     honest = '''
     <div class="lon-honest">
       <div class="lon-honest-img">%s</div>

@@ -108,7 +108,7 @@ SPECS = {
     "lon-sales": ("lon_sales", None, None, 0, 0, 100, 100, 1200, {}),
     "lon-pool": ("lon_pool", None, None, 0, 0, 100, 100, 2000, {}),
     "lon-complex": ("lon_complex", None, None, 0, 0, 100, 100, 2000, {}),
-    "lon-clubhouse": ("lon_clubhouse", None, None, 0, 0, 100, 100, 2000, {'trim': (0, 0.25, 0, 0.2)}),
+    "lon-clubhouse": ("lon_clubhouse", None, None, 0, 0, 100, 100, 2000, {}),
     "lon-phases": ("lon_phases", None, None, 0, 0, 100, 100, 1674, {}),
     "lon-promo": ("lon_promo", None, None, 0, 0, 100, 100, 1200, {}),
     "lon-pottery": ("lon_pottery", None, None, 0, 0, 100, 100, 900, {}),
