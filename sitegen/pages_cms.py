@@ -502,26 +502,68 @@ def post_card(p):
         esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")))
 
 
+def story_card(p, sizes="(max-width: 860px) 100vw, 320px"):
+    """Story card in the Live On 04 style: rounded photo, bold title, date."""
+    cover = simg(p["cover"], p["title"], 700, sizes=sizes) if p.get("cover") else ""
+    return '<a class="lon-post" href="/bucketlistliving/%s"><span class="lon-post-img">%s</span><strong>%s</strong><time datetime="%s">%s</time></a>' % (
+        p["slug"], cover, esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")))
+
+
 def blog_listing(posts, base, title_html, intro_html, page_title, description, cats, current_cat=None):
+    """Bucketlist Living listing, in the Live In / Out / On style: hero, a lead intro and the latest story as a
+    featured card on the main page, then category chips and the story cards on a cream band."""
     pages = max(1, math.ceil(len(posts) / float(PER_PAGE)))
-    chips = '<nav class="cat-chips" aria-label="Categories"><a href="/bucketlistliving"%s>All</a>%s</nav>' % (
+    chips = '<nav class="cat-chips bl-chips" aria-label="Categories"><a href="/bucketlistliving"%s>All</a>%s</nav>' % (
         ' aria-current="page"' if not current_cat else "",
         "".join('<a href="/bucketlistliving/category/%s"%s>%s</a>' % (slugify(c), ' aria-current="page"' if c == current_cat else "", esc(c)) for c in cats))
     for n in range(1, pages + 1):
         chunk = posts[(n - 1) * PER_PAGE: n * PER_PAGE]
-        path = base if n == 1 else "%s/page/%d" % (base, n)
-        prev = '<a class="btn blue-btn" href="%s">Newer</a>' % (base if n == 2 else "%s/page/%d" % (base, n - 1)) if n > 1 else ""
-        nxt = '<a class="btn" href="%s/page/%d">Older</a>' % (base, n + 1) if n < pages else ""
-        pager = '<nav class="pager" aria-label="Pages">%s<span>Page %d of %d</span>%s</nav>' % (prev, n, pages, nxt) if pages > 1 else ""
-        add(path, page_title if n == 1 else "%s, page %d" % (page_title, n), description, "life", '''
-%s
-<section class="section blog">
-  <div class="wrap stack-lg">
+        lead = ""
+        if n == 1 and not current_cat and chunk:
+            top, chunk = chunk[0], chunk[1:]
+            cat = (top.get("categories") or [None])[0]
+            excerpt = clean(top.get("excerpt")) or clean(" ".join(
+                "".join(c.get("text", "") for c in b.get("children", [])) for b in (top.get("body") or []) if b.get("_type") == "block"))
+            if len(excerpt) > 190:
+                excerpt = excerpt[:190].rsplit(" ", 1)[0].rstrip(",.;:") + "..."
+            lead = '''
+<section class="li-intro li-lead">
+  <div class="wrap li-in">
+    <h2>Stories from the people who live here.</h2>
+    <p class="li-serif"><strong><mark>Bucketlist Living</mark> is where SunRiver Members tell their stories.</strong> The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Along with guides to the trails, parks and towns around us.</p>
+  </div>
+</section>
+<section class="fl-promo-wrap bl-feature">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">Latest story</p>
+    <a class="fl-promo" href="/bucketlistliving/%s" aria-label="Read %s">
+      <span class="fl-promo-img">%s</span>
+      <span class="fl-promo-text">
+        <span class="li-eyebrow">%s</span>
+        <span class="fl-promo-h">%s</span>
+        <span class="fl-promo-p">%s</span>
+        <span class="fl-promo-go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></svg></span>
+      </span>
+    </a>
+  </div>
+</section>''' % (top["slug"], esc(clean(top["title"])),
+                 simg(top["cover"], top["title"], 1200, loading="eager", sizes="(max-width: 860px) 100vw, 470px") if top.get("cover") else "",
+                 esc(cat) if cat else nice_date(top.get("publishDate")), esc(clean(top["title"])), esc(excerpt))
+        prev = '<a class="li-btn" href="%s">Newer stories</a>' % (base if n == 2 else "%s/page/%d" % (base, n - 1)) if n > 1 else ""
+        nxt = '<a class="li-btn blue" href="%s/page/%d">Older stories</a>' % (base, n + 1) if n < pages else ""
+        pager = '<nav class="li-btns center bl-pager" aria-label="Pages">%s%s</nav><p class="bl-page-of">Page %d of %d</p>' % (prev, nxt, n, pages) if pages > 1 else ""
+        add(base if n == 1 else "%s/page/%d" % (base, n), page_title if n == 1 else "%s, page %d" % (page_title, n), description, "life", '''
+%s%s
+<section class="li-plans bl-list">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">%s</p>
+    <h2 class="li-title">%s</h2>
     %s
-    <div class="post-grid">%s</div>
+    <div class="lon-posts bl-grid">%s</div>
     %s
   </div>
-</section>''' % (title_html + intro_html, chips, "".join(post_card(p) for p in chunk), pager))
+</section>''' % (title_html + intro_html, lead, "All stories" if not current_cat else "Category",
+                 "Every story, newest first." if not current_cat else esc(current_cat), chips, "".join(story_card(p) for p in chunk), pager))
 
 
 def build_blog(posts):
@@ -551,14 +593,15 @@ def build_blog(posts):
     <div class="post-body">%s</div>
   </div>
 </article>
-<section class="section sand">
-  <div class="wrap stack-lg">
-    <div class="center stack"><h2 class="h2">More from #bucketlistliving</h2><hr class="rule center"></div>
-    <div class="post-grid cols-4">%s</div>
-    <div class="center">%s</div>
+<section class="li-plans bl-list">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">#bucketlistliving</p>
+    <h2 class="li-title">More stories.</h2>
+    <div class="lon-posts bl-more">%s</div>
+    <div class="li-btns bl-pager">%s</div>
   </div>
 </section>''' % (chips, cover, esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")),
-                 portable_text(p.get("body")), "".join(post_card(q) for q in more), btn("See all stories", "/bucketlistliving")))
+                 portable_text(p.get("body")), "".join(story_card(q) for q in more[:3]), '<a class="li-btn blue" href="/bucketlistliving">See all stories</a>'))
 
 
 # ================================================================== LIVE IN (OFFICIAL Figma "Live In", work in progress)

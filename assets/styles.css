@@ -1590,6 +1590,16 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lon-post-img { height: 220px; }
 }
 
+/* Bucketlist Living, in the Live In / Out / On style */
+.fl-promo-wrap.bl-feature { padding: 0 0 104px; }
+.bl-feature .fl-promo { margin-top: 22px; }
+.bl-list { padding-bottom: 120px; }
+.bl-chips { justify-content: flex-start; margin-top: 30px; }
+.bl-grid, .bl-more { row-gap: 56px; }
+.bl-pager { max-width: 1034px; margin-top: 64px; justify-content: center; }
+.bl-page-of { max-width: 1034px; margin-top: 16px; color: #335A97; font-size: 13px; text-align: center; }
+@media (max-width: 860px) { .fl-promo-wrap.bl-feature { padding-bottom: 72px; } }
+
 /* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
 .fh-hero { height: 600px; background: #6E8FB8; }
 .fh-hero .fah-hero-img { opacity: 1; }
