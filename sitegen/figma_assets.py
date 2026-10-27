@@ -53,6 +53,12 @@ FIGMA_IDS = {
     "lo_hero": "https://s3-alpha-sig.figma.com/img/7a67/bea7/ccd3c478fef47db04390bd31ddc72352?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=UFQcfeoDGiKoCl0CTbBu2rv0ZigT2bADxKAjK6b5FoLumStQSu8kiw1hTguBDen3GSqYy7vo8izN65E0Fj0ACEB~ZcEKMLC45020ndm~wBGgMc4YPHJSLnEGjD-I86Cw-xVFxr3XFWkp6BaHgm57avDkjQYB0jDuJavoKxSLyCli4gZDvkfidLG~SWBXJP8SXuDm24nwDybJoKssVitfWhsXNq955aoewKxGNL5ki~1b6Pfx1eiBIrgD8ok6QUZmVSYgwLSF-0e350Qza3QpM9OyQYqLB1iWaqrx-GYsGy-jv5erDyumTLk8rqCxTsFj339vsx-4qHxBHYBAiIUn6w__",
     "lo_couple": "https://s3-alpha-sig.figma.com/img/fe32/e9fb/497ad9d87e4746996ed0659eecfd4e9b?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=qyosrCJPJmZPAMHY~0pAdZvSuFMkwjyKhuvVhvIOnAY-RNK7ZtmLBaagqR-~fV7RW37MXm8Kyry9mFrZ8jYaoEqVGlRExU55qd~-~HQScey4NsOip2e1kAYBQuh5AZaAHWTy5xN0ANlaHDtExF-lMUv2yiwqbmAJ2GYHOH~kE4~8ClnOgKQJELtBE91Q2dqrJGmRgPk1vlaHg4UHp8jHbXZEwEr6XbTXt2WWVLtCJ7UU~0HIBhdY1hU91zBi6jTXJHmroTZrEMLpr9dTYo2CrgPmMrOwZCrfQMUoFpxXPKFuK5ugsuLDxyL1PzkNcQY8bK4i8~GRG8JFGZaPBbcslA__",
     "lo_promo": "https://s3-alpha-sig.figma.com/img/37b6/918b/7b721500eba4b2b3ae3083c5d9c8a5e2?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=RXW4L7WpqQBVliunIY-HtIL1PF~oJdgVzx2eb3THJ4FOYyDqtktuMwKJ9XyvNccHDeaEkDFKhWwjtjEf-TJZXIfJm3aq6S2~cA-ExB83cUx~Az6lxPTvjzx7g3ZZ5DXKSyOLzlEstKhdj8mED3TJsSQTRrjjheUUqEyEUVYUNctYzKTi7Nze3ytKthe5xjMDmJCUQ-nwF1EqTs-hpk-5ZqoFaWUZyBjC0u40e0Z6akRzoJxM~QXJwNTZe04uWr4vSVhjEJkltYFWVYx4l5nd4HUyGOpkVoyO0Py1bZYTxIGjOAP10IZJNd41zvHfTcOYBhO0xaLs0wQG-7a3n6eIoA__",
+    # Live On (OFFICIAL "LIVE ON" frame), signed links valid to about 2026-11-03
+    "lon_pottery": "https://s3-alpha-sig.figma.com/img/91a4/cebd/107634abd059afb3b4788588cec4ebbf?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=f3AwbMQUy~yfwPHegFZ~ImqQJXliIik12RMoC7hTxQ34AWIUgRjC5Ap-TpGkbGudx0bbCVT7J-cF~~qIRGQFKySLhRQHSbCMc88YkaYuYrGgCUEh5RKOp53VPczPhdz5mDiSLh2FJuSdSXiVNOn1YTN1g1spTHGM~f8oYvOxUwA-AqzERF8ooAw6Kdcamrf2U1FPAJimqtUrun3IPpsURxkKWCiwuqVnZ-BT2KVJU-2DiG-yxEVZ~VKQYbpKAMt2e22HsxxdS~oOopIjCJkHzZCg~1FAoj1w4c2zQKuLaAVcxn7HAXBv5DlnRwbAlyUceyw9al3qbECtByTCaxPUIA__",
+    "lon_pilates": "https://s3-alpha-sig.figma.com/img/0847/3ee7/44ccd6ca018b24f2702301195bc77ef4?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=chz4dMklXJMhGu-U2pyQUFexfZgEytDuxZD7qxj4aL82UgNsuGsdiyssv34CSljguiz5AzixLjB1BdH9JP2WF6--wrCDFLWXESOltIc2fYcrvw3X2yzs6B-LXG7CZ-B2v~7x~12rE40-KHObor44ZouxMy0gkhDq0OY01Ssq73VT0FPOwIT82QYG4OrTEMOs3Ud2o2DgwShrpmumlwjBCajREwXmdEvqFe8MYfJ01H4mIm4xjnCaU94oSYbkblORUah2b25yyXMKnNS0yPnCCgy3zXowOZIhb8iCtVFKlWNgIIkT2awug51YaSdTojUxqRpoGcQuNXc3clfIMiKfRQ__",
+    "lon_pickleball": "https://s3-alpha-sig.figma.com/img/623a/ffca/1a0c4216bc7a347019d67ef78bb1abc4?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=SSKPZW~3P6v5HhnH-UAzljWIUfhnhagn89HdTomIr4oSHOQK0Xdh17d9QN2OPy5nMYWWVMBK4drWrhJ4p-5XkQ1RNSgoPWGqRZNS1qJIG1~EvjDH-Atxg979CptkemR30JVDyJCHpdFD0xZwU3pvpyJhbybpeIsb6TEZlZV2qLjbGAjNc13WD5yJCoKqk2ufYV56myJC2SjK5xtn4GPjjGXCRqD2wxrCs4Ok2IJztUFohZCVS-EzAyivYqexxmUWZemqg5HbypV6n9eQwl514t9938RzXkXjWIil3j~G8c3Vuwk0a4ieP8RflcQU-94morFmJCAwcDZg1-WKQdKEuw__",
+    "lon_hiking": "https://s3-alpha-sig.figma.com/img/c357/99e9/9d1c38962d07a2aa6684017e8667eb03?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=F0HJWWG8HOIOPtGlSrQUNTDuDO3oUWpBCvfci~fjOdHYyYkq8HJkxxYICQdysshXFTNnTbJ9wmZSq8nE6z2TcwpZOiH6uiK2MSRdlLTMpe2iqRs7cJZm6AOTz-DPKbDnNdC5uZHXNvVm8lm0L0WTx34upXdT7ibVt4-viH0RSDaWtiV4gUcH9v8TUHfxruHPaRdlweokkZNZxKj7aa3Eh1AnM-JxnIFeJ9Y0Xsp0Ahb4lGoz1hVs3yxhPzHdV1AenAFiigN6Iskt6aLKhWwx7uGdZ46~BS62J3q5V1uWTUtz3v3OEVoV6OWzEyiR2zLz~MwLsRZistw9Q0V3Wacw1w__",
+    "lon_paddle": "https://s3-alpha-sig.figma.com/img/2143/4b74/ed76e418c6e8766128733e118ea4d2f1?Expires=1794182400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=NrTp-XoaO-niJNeTbj8fFU8-tbPEtbY6TdObrvwHWOA~8aUDxXbV5ayUgf1x3BmxE9xmdDSJCSG3HPDXqH6ozGVsOX-IBKCB4C9ZZi7BRQ-sj3Bbt58A0xyWLHQ5pUyDz~R3i3cgVfSaBTzG-fg1kFtq97QBunrPJpXphnP2NtoELR~RqldOPuw~gPI~EKEf6etqyrfozA9gGgl34fY08TO8FVIUqEWNcBeH11kZHDWVlLRo0n9t4BivtDXgdppKZL27DWXrfdnpMlIfIEuu7VgVRiVzqE3lA9Z4M1ew6gBdQHp7ZJQvAYipubnvKtUSIvIabfIIJAKhsNtcBGUgng__",
 }
 
 # name: (source, frame w, frame h, image left %, top %, width %, height %, output width, options)
@@ -85,6 +91,12 @@ SPECS = {
     "lo-hero": ("lo_hero", None, None, 0, 0, 100, 100, 2400, {}),
     "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0.25, 0.2, 0.29), "fallback": "couple"}),
     "lo-promo": ("lo_promo", None, None, 0, 0, 100, 100, 1080, {}),
+    "lon-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1100, {"alpha": True, "trim": (0, 0.25, 0.2, 0.12), "fallback": "lo-couple"}),
+    "lon-pottery": ("lon_pottery", None, None, 0, 0, 100, 100, 900, {}),
+    "lon-pilates": ("lon_pilates", None, None, 0, 0, 100, 100, 1200, {}),
+    "lon-pickleball": ("lon_pickleball", None, None, 0, 0, 100, 100, 1000, {}),
+    "lon-hiking": ("lon_hiking", None, None, 0, 0, 100, 100, 800, {}),
+    "lon-paddle": ("lon_paddle", None, None, 0, 0, 100, 100, 1600, {}),
 }
 
 USED = set()

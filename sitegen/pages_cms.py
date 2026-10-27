@@ -743,12 +743,10 @@ def build_live_on(posts):
     from pathlib import Path
     d = json.loads((Path(__file__).resolve().parent.parent / "data" / "live_on.json").read_text())
     now = "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(c["name"]), esc(c["when"])) for c in d["running_now"])
-    later = "".join('<li><span>%s</span></li>' % esc(c) for c in d["clubhouse_opens"])
-    shots = [("Sunrise Stroll", "Monthly, 7:30 AM", V("week-hike.13z6azl5t3od2.jpg")),
-             ("Pilates Workshop", "Select Thursdays, 11 AM", V("club-yoga.0jzome1ix55zy.jpg")),
-             ("Drop-in Games", "Wednesdays, 2 PM", V("cc-billiards.1qmjemn1vq503.jpg"))]
-    shot_html = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
-        img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in shots)
+    tiles = [("Pottery", "lon-pottery", "pottery"), ("Pilates", "lon-pilates", "pilates"), ("Paddleboard", "lon-paddle", "paddle"),
+             ("Pickleball", "lon-pickleball", "pickleball"), ("Hiking", "lon-hiking", "hiking")]
+    shot_html = "".join('<div class="lon-tile lon-t-%s">%s<span>%s</span></div>' % (
+        k, img(FG(f), "SunRiver members, %s" % t.lower()), t) for t, f, k in tiles)
     cal = {"recurring": d["recurring"], "events": [e for e in d["events"] if e.get("date")]}
     cal_json = json.dumps(cal, separators=(",", ":")).replace("</", "<\\/")
     phases = [("Built and open today", ["Five model homes", "Occupied homes in phases one and two", "22 miles of trails",
@@ -777,11 +775,17 @@ def build_live_on(posts):
     <p class="li-eyebrow">01 / Clubs and activities</p>
     <h2 class="li-title">Real friendships do not<br> happen by accident.</h2>
     <p class="li-copy">They happen when people keep bumping into each other on purpose, which is what a good calendar is actually for.</p>
-    <div class="lo-cards lon-shots">%s</div>
-    <div class="lon-lists">
-      <div class="lo-times"><h3>What is running now</h3><ul>%s</ul></div>
-      <div class="lo-times"><h3>What starts when the Clubhouse opens</h3><ul class="lon-plain">%s</ul></div>
-      <div class="lon-own"><h3>And what you start yourself</h3><p>Every club here began because a Member wanted it to exist and asked. There is no committee to petition. Tell a Steward what you want to run and they will help you find your people.</p></div>
+    <div class="lon-mosaic">%s</div>
+    <div class="lon-start">
+      <h3>And what you<br> start yourself</h3>
+      <p>Every club here began because a Member wanted it to exist and asked. There is no committee to petition. Tell a Steward what you want to run and they will help you find your people.</p>
+    </div>
+    <div class="lon-running">
+      <div class="lon-running-list">
+        <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>What&rsquo;s running now</h3>
+        <ul>%s</ul>
+      </div>
+      <div class="lon-running-couple">%s</div>
     </div>
   </div>
 </section>
@@ -841,7 +845,7 @@ def build_live_on(posts):
     <div class="li-btns"><a class="li-btn solid" href="/bucketlistliving">Read Bucketlist Living</a></div>
   </div>
 </section>''' % (img(V("live-on.2kwzvtocledst.jpg"), "SunRiver members playing pool together", "fah-hero-img", "eager"),
-                 shot_html, now, later, cal_json, phase_html,
+                 shot_html, now, img(FG("lon-couple"), "A SunRiver couple out on their bikes"), cal_json, phase_html,
                  simg("00a771c4786df837151167618e14dcacac89a759-2048x1506.webp", "Rendering of the SunRiver Firelight Clubhouse", 1200, sizes="(max-width: 860px) 100vw, 45vw"),
                  posts_html))
 

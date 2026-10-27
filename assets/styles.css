@@ -1468,6 +1468,60 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lo-nearby .lo-near li { padding: 0 18px; }
 }
 
+/* Live On 01, Figma "LIVE ON": photo mosaic, start-your-own note, what's running now */
+.lon-clubs { padding-bottom: 0; }
+.lon-mosaic { position: relative; width: min(900px, 100%); aspect-ratio: 900 / 750; margin: 64px 0 0 71px; }
+.lon-tile { position: absolute; overflow: hidden; border-radius: 22px; background: #335A97; }
+.lon-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22, .61, .36, 1); }
+.lon-tile:hover img { transform: scale(1.04); }
+.lon-tile::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(180deg, rgba(10, 18, 34, 0), rgba(10, 18, 34, .7)); pointer-events: none; }
+.lon-tile span { position: absolute; left: 24px; bottom: 20px; z-index: 1; color: var(--white); font-weight: 900; font-size: 20px; line-height: 24px; letter-spacing: -0.02em; }
+.lon-t-pottery { left: 0; top: 0; width: 35.6%; height: 59.9%; }
+.lon-t-pottery img { object-position: 50% 60%; }
+.lon-t-pilates { left: 37.7%; top: 9.8%; width: 55.2%; height: 35.2%; }
+.lon-t-paddle { left: 0; top: 63.3%; width: 73.3%; height: 36.7%; z-index: 1; }
+.lon-t-paddle img { object-position: 50% 30%; }
+.lon-t-pickleball { left: 37.7%; top: 47.4%; width: 35.6%; height: 32.7%; z-index: 2; box-shadow: 0 0 0 0 transparent; }
+.lon-t-hiking { left: 75.1%; top: 47.4%; width: 24.9%; height: 52.6%; }
+.lon-t-hiking img { object-position: 40% 50%; }
+.lon-start { position: relative; max-width: 1000px; margin: 78px 0 0 128px; }
+.lon-start h3 { display: inline-block; padding-bottom: 18px; color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
+.lon-start h3::after { content: ""; display: block; width: 138px; height: 3px; margin-top: 18px; background: #EDB443; }
+.lon-start p { max-width: 620px; margin: 0 0 0 208px; color: #335A97; font-family: var(--font-serif); font-size: 24px; line-height: 35px; letter-spacing: -0.015em; }
+.lon-running { position: relative; min-height: 560px; margin: 150px 0 0 71px; padding-bottom: 105px; }
+.lon-running-list { position: relative; z-index: 2; width: min(507px, 100%); }
+.lon-running-list h3 { display: flex; align-items: center; gap: 16px; color: #335A97; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 40px; letter-spacing: -0.02em; }
+.lon-running-list h3 svg { flex: none; width: 34px; height: 34px; fill: none; stroke: #EDB443; stroke-width: 1.8; stroke-linecap: round; }
+.lon-running-list ul { list-style: none; margin: 28px 0 0; padding: 10px 32px; border-radius: 20px; background: var(--white); box-shadow: 0 14px 40px rgba(51, 90, 151, .06); }
+.lon-running-list li { display: flex; justify-content: space-between; gap: 18px; padding: 24px 0; border-bottom: 2px solid #EDB443; color: #335A97; font-size: 14px; line-height: 18px; }
+.lon-running-list li:last-child { border-bottom: 0; }
+.lon-running-list li strong { flex: none; font-weight: 900; }
+.lon-running-couple { position: absolute; left: 487px; bottom: 0; z-index: 1; width: 526px; height: 560px; pointer-events: none; }
+.lon-running-couple img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+@media (max-width: 1100px) {
+  .lon-mosaic, .lon-running { margin-left: 0; }
+  .lon-start { margin-left: 0; }
+  .lon-start p { margin-left: 120px; }
+  .lon-running-couple { left: auto; right: -40px; width: 46%; }
+}
+@media (max-width: 860px) {
+  .lon-mosaic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; aspect-ratio: auto; }
+  .lon-tile { position: relative; inset: auto; width: auto; height: 220px; }
+  .lon-t-pottery, .lon-t-hiking { height: 300px; }
+  .lon-t-paddle { grid-column: 1 / -1; order: 5; height: 220px; }
+  .lon-tile span { left: 16px; bottom: 14px; font-size: 17px; }
+  .lon-start h3, .lon-running-list h3 { font-size: 30px; line-height: 34px; }
+  .lon-start p { margin-left: 0; font-size: 20px; line-height: 29px; }
+  .lon-running { min-height: 0; margin-top: 80px; padding-bottom: 0; }
+  .lon-running-couple { position: relative; left: auto; right: auto; width: min(100%, 420px); height: auto; margin: 24px auto 0; aspect-ratio: 526 / 560; }
+  .lon-running-list ul { padding: 4px 22px; }
+}
+@media (max-width: 520px) {
+  .lon-tile, .lon-t-paddle { height: 180px; }
+  .lon-t-pottery, .lon-t-hiking { height: 250px; }
+  .lon-running-list li { flex-direction: column; gap: 4px; padding: 18px 0; }
+}
+
 /* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
 .fh-hero { height: 600px; background: #6E8FB8; }
 .fh-hero .fah-hero-img { opacity: 1; }
