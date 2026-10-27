@@ -570,11 +570,14 @@ SHOW_DC_FLIPS = False
 def build_live_in(plans, listings):
     """Live In page from the OFFICIAL Figma "Live In" frame: photo hero, intro, the floor plans,
     a yellow visit band, homes ready now, and the available lots section (lot map to come)."""
-    cards = []
-    for p in plans[:4]:  # the design shows four plans, then a See all floor plans button
-        cards.append(plan_link_card(p))
-    rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2]))
-                   for r in range((len(cards) + 1) // 2))
+    # All seven plans, smallest to largest (the Floor Plan Book order), as two staggered rows that bleed off the
+    # edges like the Figma: row one opens on Hamlet, August, Tara; row two picks up at Evergreen. Both rows drift
+    # slowly left on one continuous belt so every plan comes through; hover or focus pauses them.
+    ordered = sorted(plans, key=lambda q: q["squareFootage"])
+    belt = "".join(plan_link_card(q) for q in ordered)
+    quiet = belt.replace('<a class="po-card"', '<a class="po-card" tabindex="-1" aria-hidden="true"')
+    rows = "".join('<div class="li-plan-track li-plan-track-%d"><div class="li-plan-belt">%s%s%s%s</div></div>' % (
+        n, quiet, belt if n == 1 else quiet, quiet, quiet) for n in (1, 2))
     ready = sorted([l for l in listings if l.get("status") in ("Move in Ready", "For Sale")], key=listing_sort_key)[:6]
     sizes = sorted(p["squareFootage"] for p in plans)
     # 04 / The Design Center: three cards that flip on hover (or tap) to a photo
@@ -604,7 +607,9 @@ def build_live_in(plans, listings):
     <p class="li-eyebrow">01 / Floor plans</p>
     <h2 class="li-title">Seven floor plans. Every one built<br> for how you actually live.</h2>
     <p class="li-copy">{:,} to {:,} square feet, two to three bedrooms. Custom cabinetry, Moen fixtures and GE appliances come standard, not as upgrades.</p>
-    <div class="li-plan-grid">%s</div>
+  </div>
+  <div class="li-plan-rows" aria-label="Floor plans">%s</div>
+  <div class="wrap li-in">
     <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a></div>
   </div>
 </section>

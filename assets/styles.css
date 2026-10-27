@@ -1524,6 +1524,27 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .lon-running-list li { flex-direction: column; gap: 4px; padding: 18px 0; }
 }
 
+/* Live In 01: seven plan tiles in two staggered rows that bleed off both edges (Figma "LIVE IN") */
+.li-plan-rows { --cw: 382px; --gap: 44px; --step: calc(var(--cw) + var(--gap)); --o1: calc(50% - 517px); --o2: calc(50% - 714px - 3 * var(--step));
+  display: grid; gap: var(--gap); margin-top: 88px; overflow: hidden; padding: 6px 0 10px; }
+.li-plan-track { position: relative; height: 296px; }
+.li-plan-belt { position: absolute; top: 0; display: flex; gap: var(--gap); width: max-content; animation: li-belt 90s linear infinite; }
+.li-plan-track-1 .li-plan-belt { left: calc(var(--o1) - 7 * var(--step)); }
+.li-plan-track-2 .li-plan-belt { left: calc(var(--o2) - 7 * var(--step)); }
+.li-plan-rows:hover .li-plan-belt, .li-plan-rows:focus-within .li-plan-belt { animation-play-state: paused; }
+.li-plan-belt .po-card { flex: none; width: var(--cw); }
+.li-plan-belt .po-img { height: 216px; }
+.li-plan-belt .po-bar { height: 72px; }
+@keyframes li-belt { from { transform: translateX(0); } to { transform: translateX(calc(-7 * var(--step))); } }
+@media (prefers-reduced-motion: reduce) { .li-plan-belt { animation: none; } }
+@media (max-width: 860px) {
+  .li-plan-rows { --cw: 280px; --gap: 18px; --o1: 20px; --o2: calc(20px - 2.5 * var(--step)); margin-top: 48px; }
+  .li-plan-track { height: 236px; }
+  .li-plan-belt .po-img { height: 160px; }
+  .li-plan-belt .po-bar { height: 66px; }
+  .li-plan-belt .po-name { font-size: 24px; line-height: 26px; }
+}
+
 /* Sitewide page hero (same treatment as Homes for Sale): full-bleed photo up under the floating header */
 .fh-hero { height: 600px; background: #6E8FB8; }
 .fh-hero .fah-hero-img { opacity: 1; }
