@@ -641,7 +641,7 @@ def build_live_in(plans, listings):
       <div class="li-flip-front"><span class="li-flip-num">%s</span><h3>%s</h3><p>%s</p></div>
       <div class="li-flip-back" aria-hidden="true">%s<span>%s</span></div></div></div>''' % (n, t, d, img(src, alt), t) for n, t, d, src, alt in steps)
     add_with_firelight("/live-in", "Live In", "Live In at SunRiver Firelight: seven floor plans, homes ready now and homesites to choose from.", "life-overlay", '''
-<section class="fah-hero li-hero">
+<section class="fah-hero li-hero keep-tall">
   %s
   <div class="wrap fah-hero-inner"><h1>Live In</h1></div>
 </section>
@@ -732,7 +732,7 @@ def build_live_out():
     near_html = "".join('<div class="lo-near"><h3>%s</h3><ul>%s</ul></div>' % (
         c, "".join('<li><span>%s</span><strong>%s</strong></li>' % (esc(a), b) for a, b in items)) for c, items in nearby)
     add_with_firelight("/live-out", "Live Out", "Live Out at SunRiver Firelight: Zion 31 minutes away, 22 miles of trails, and everything you need close by.", "life-overlay", '''
-<section class="fah-hero li-hero lo-hero">
+<section class="fah-hero li-hero lo-hero keep-tall">
   %s
   <div class="wrap fah-hero-inner"><h1>Live Out</h1></div>
 </section>
@@ -831,7 +831,7 @@ def build_live_on(posts):
             p["slug"], simg(p["cover"], p["title"], 700, sizes="(max-width: 860px) 100vw, 320px") if p.get("cover") else "",
             esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate"))) for p in recent) if recent else ""
     add_with_firelight("/live-on", "Live On", "Live On at SunRiver Firelight: clubs and activities, the events calendar, what is coming and when, and Bucketlist Living.", "life-overlay", '''
-<section class="fah-hero li-hero lon-hero">
+<section class="fah-hero li-hero lon-hero keep-tall">
   %s
   <div class="wrap fah-hero-inner"><h1>Live On</h1></div>
 </section>

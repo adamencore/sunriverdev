@@ -2103,3 +2103,14 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
   .ht-left .ht-card, .ht-right .ht-card { grid-column: 2; justify-self: stretch; max-width: none; padding: 22px 22px 24px; text-align: left; transform: translateY(24px); }
   .ht-year { font-size: 40px; }
 }
+
+/* Page banners at half height (2026-10-29). Home and Live In / Out / On keep the full-height banner (.keep-tall). */
+.fah-hero:not(.keep-tall) { height: auto; min-height: 306px; }
+.fah-hero:not(.keep-tall) .fah-hero-inner { padding-top: 150px; padding-bottom: 44px; }
+.fah-hero.li-hero:not(.keep-tall) h1 { font-size: 64px; line-height: 64px; }
+.fah-hero:not(.keep-tall) .fh-eyebrow { margin-bottom: 6px; }
+@media (max-width: 860px) {
+  .fah-hero:not(.keep-tall) { min-height: 260px; }
+  .fah-hero:not(.keep-tall) .fah-hero-inner { padding-top: 126px; padding-bottom: 34px; }
+  .fah-hero.li-hero:not(.keep-tall) h1 { font-size: 42px; line-height: 44px; }
+}
