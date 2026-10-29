@@ -2114,3 +2114,4 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
   .fah-hero:not(.keep-tall) .fah-hero-inner { padding-top: 126px; padding-bottom: 34px; }
   .fah-hero.li-hero:not(.keep-tall) h1 { font-size: 42px; line-height: 44px; }
 }
+.fl-hero:not(.keep-tall) .fah-hero-img { object-position: 50% 64%; }
