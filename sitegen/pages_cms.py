@@ -117,7 +117,7 @@ def build_floor_plans(plans):
     <p>Working alongside our talented designers, you can create a home that captures your imagination and leaves your home just plain smart.</p>
     <a class="flp-btn" href="/energy">Learn more</a>
   </div>
-</section>''' % (img(FG("fah-hero"), "SunRiver Firelight homes with red rock mesas behind them", "fah-hero-img", "eager"), grid,
+</section>''' % (img("/assets/img/floor-plans-sky.webp", "Blue sky with white clouds over Southern Utah", "fah-hero-img", "eager", 'style="object-position:50% 72%"'), grid,
          img(FG("fl-founders"), "", "fl-bg"), img(V("founders-badge-tilt.3k3jxq99pwu_k.svg"), "SunRiver Firelight Founders Club badge", "fl-badge"),
          img(FG("fl-trails"), "Red rock and mountain trail country near SunRiver Firelight", "fl-trails-img"),
          img(FG("fl-smart"), "", "fl-bg")))
