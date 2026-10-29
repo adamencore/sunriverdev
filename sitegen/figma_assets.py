@@ -101,7 +101,7 @@ SPECS = {
     "lo-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1300, {"alpha": True, "trim": (0, 0.25, 0.2, 0.29), "fallback": "couple"}),
     "lo-promo": ("lo_promo", None, None, 0, 0, 100, 100, 1080, {}),
     "lon-hero": ("lon_hero", None, None, 0, 0, 100, 100, 2400, {"trim": (0, 0.42, 0, 0.02)}),
-    "lon-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1100, {"alpha": True, "trim": (0, 0.25, 0.05, 0.12), "fallback": "lo-couple"}),
+    "lon-couple": ("lo_couple", None, None, 0, 0, 100, 100, 1044, {"alpha": True, "fallback": "lo-couple"}),
     "lon-models": ("lon_models", None, None, 0, 0, 100, 100, 1200, {}),
     "lon-trails": ("lon_hero", None, None, 0, 0, 100, 100, 900, {}),
     "lon-courts": ("lon_courts", None, None, 0, 0, 100, 100, 900, {}),
