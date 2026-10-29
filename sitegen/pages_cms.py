@@ -935,13 +935,13 @@ def build_firelight(plans):
     cards = [plan_link_card(p) for p in plans[:4]]
     rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2])) for r in range((len(cards) + 1) // 2))
     add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life-overlay", '''
-<section class="fah-hero li-hero fl-hero">
+<section class="fah-hero li-hero fl-hero no-wash">
   %s
-  <div class="wrap fah-hero-inner"><h1>SunRiver Firelight</h1></div>
+  <div class="wrap fah-hero-inner"><h1>SunRiver Firelight</h1><p class="fl-hero-sub">Toquerville, UT</p></div>
 </section>
-<section class="li-intro">
+<section class="li-intro fl-intro">
   <div class="wrap li-in">
-    <h2>Zion in your<br> backyard.</h2>
+    <h2>Zion in your<br> backyard</h2>
     <p class="li-serif">SunRiver Firelight is the newest community from SunRiver: single-family homes in Toquerville, with Springdale and Zion National Park close enough for a morning trip. Live a little closer.</p>
     <div class="li-btns"><a class="li-btn solid" href="/contact-us">Talk with an agent</a><a class="li-btn" href="/floor-plans">Explore floor plans</a></div>
   </div>
@@ -995,7 +995,7 @@ def build_firelight(plans):
     <div class="li-plan-grid">%s</div>
     <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a><a class="li-btn" href="/live-in#lots">Pick your homesite</a><a class="li-btn" href="/homes-for-sale">Homes for sale</a></div>
   </div>
-</section>''' % (img(V("hero.2h_vl62bxoy8t.jpg"), "SunRiver members riding e-bikes on a red rock trail near SunRiver Firelight", "fah-hero-img", "eager"),
+</section>''' % (img(FG("fl-hero"), "SunRiver Firelight members hiking among red rock and sage near Toquerville", "fah-hero-img", "eager"),
                    mix_html, amen_html, club_html, rows))
 
 

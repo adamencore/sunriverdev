@@ -574,7 +574,7 @@
   }
   // The white wash at the top of the page heroes: about 60% white at the top, gone by ~42% of the height
   function washAt(hero, y) {
-    if (!hero.matches(".fh-hero, .hfs-hero, .li-hero")) return 0;
+    if (!hero.matches(".fh-hero, .hfs-hero, .li-hero") || hero.matches(".no-wash")) return 0;
     var t = y / hero.offsetHeight;
     // .li-hero (Live In / Out / On, Firelight, Design Center): 82% white at the top, 60% at 28%, 28% at 52%, gone by 72%
     if (hero.matches(".li-hero")) {
