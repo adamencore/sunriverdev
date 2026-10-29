@@ -2055,3 +2055,11 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
 .lon-b2 img { object-position: 50% 82%; }
 .lon-b3 img { object-position: 50% 72%; }
 .lon-s3 img { object-position: 50% 90%; }
+
+/* SunRiver Firelight 01: Just the right mix carousel (Figma "SunRiver Firelight") */
+.fl-carousel { max-width: 1034px; height: 414px; margin-top: 52px; }
+.fl-slide span.fl-slide-text { display: grid; gap: 6px; max-width: 360px; left: 30px; bottom: 26px; text-transform: none; letter-spacing: 0; }
+.fl-slide-text strong { font-weight: 900; font-size: 20px; line-height: 24px; letter-spacing: -0.02em; }
+.fl-slide-text em { font-style: normal; font-weight: 500; font-size: 13px; line-height: 17px; opacity: .95; }
+.fl-slide::after { inset: 40% 0 0; }
+@media (max-width: 860px) { .fl-carousel { height: 320px; } .fl-slide span.fl-slide-text { left: 22px; right: 100px; bottom: 22px; } }

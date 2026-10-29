@@ -922,7 +922,16 @@ def build_firelight(plans):
            ("Designed for you", "Hobby rooms, open kitchens and garages up to an extended three-car, with room for the gear you love."),
            ("Mild seasons", "About 500 feet higher than St. George, so summers run a few degrees cooler, without the snow."),
            ("Community", "SunRiver is more than a place to live. It is a community of people who refuse to slow down.")]
-    mix_html = "".join('<div class="lo-col"><h3>%s</h3><p>%s</p></div>' % x for x in mix)
+    # 01 carousel (Figma "SunRiver Firelight" frame): one photo per item, title and line bottom left, arrows bottom right
+    mix_pics = [(FG("fl-living"), "A SunRiver couple at home with their dog", "50% 40%"),
+                (FG("lon-hero"), "SunRiver members riding bikes on a red rock trail", "50% 78%"),
+                (FG("hfs-hero"), "Aerial view of SunRiver Firelight with Pine Valley Mountain behind it", "50% 50%"),
+                (S("image-4002cc30c79b533f3eab3b908037c2757c646f0e-2000x1333-jpg", 1600), "The finished kitchen in the Astoria model home", "50% 50%"),
+                (FG("fl-trails"), "Red rock mountains and desert trail near SunRiver Firelight", "50% 30%"),
+                (FG("lon-pickleball"), "SunRiver members on the pickleball courts", "50% 35%")]
+    mix_html = "".join('<div class="lon-slide fl-slide" role="group" aria-roledescription="slide" aria-label="%d of %d">%s<span class="fl-slide-text"><strong>%s</strong><em>%s</em></span></div>' % (
+        i + 1, len(mix), img(src, alt, loading="eager" if i == 0 else "lazy", attrs='style="object-position:%s"' % pos), t, d)
+        for i, ((t, d), (src, alt, pos)) in enumerate(zip(mix, mix_pics)))
     amen = [("The Clubhouse", "The hub for social, recreational and wellness life at SunRiver Firelight, with fitness rooms, event spaces and dedicated rooms for hobbies and clubs.", V("amenity-clubhouse.1s09xtqihpiiw.jpg")),
             ("The pool", "A 4,000 square foot pool for laps, sunning on the deck or a poolside evening with neighbors.", V("amenity-pool.3xoam7a_jzu33.jpg")),
             ("Pickleball", "Courts for players of every level, for daily play, friendly competition and the conversation after the game.", V("amenity-pickleball.2602yc92h05vt.jpg"))]
@@ -950,7 +959,10 @@ def build_firelight(plans):
   <div class="wrap li-in">
     <p class="li-eyebrow">01 / Just the right mix</p>
     <h2 class="li-title">Everything you came to<br> Southern Utah for.</h2>
-    <div class="lo-cols">%s</div>
+    <div class="lon-carousel fl-carousel" data-carousel aria-roledescription="carousel" aria-label="Just the right mix">
+      <div class="lon-car-track" data-car-track>%s</div>
+      <div class="lon-car-nav"><button type="button" data-car-prev aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button><button type="button" data-car-next aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
+    </div>
     <div class="lo-weather">
       <h3>Live a little closer.</h3>
       <div class="lo-stats">
