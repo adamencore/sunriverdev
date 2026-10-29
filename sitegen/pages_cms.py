@@ -611,17 +611,23 @@ SHOW_DC_FLIPS = False
 SHOW_LON_HONEST = False  # Live On "the part nobody else will say out loud" card, not in the current Figma; parked
 
 
+def plan_belt(plans):
+    """All plans, smallest to largest (the Floor Plan Book order), as two staggered rows that bleed off the edges and
+    drift slowly left on one continuous belt (Live In and SunRiver Firelight). Hover or focus pauses them."""
+    ordered = sorted(plans, key=lambda q: q["squareFootage"])
+    belt = "".join(plan_link_card(q) for q in ordered)
+    quiet = belt.replace('<a class="po-card"', '<a class="po-card" tabindex="-1" aria-hidden="true"')
+    return "".join('<div class="li-plan-track li-plan-track-%d"><div class="li-plan-belt">%s%s%s%s</div></div>' % (
+        n, quiet, belt if n == 1 else quiet, quiet, quiet) for n in (1, 2))
+
+
 def build_live_in(plans, listings):
     """Live In page from the OFFICIAL Figma "Live In" frame: photo hero, intro, the floor plans,
     a yellow visit band, homes ready now, and the available lots section (lot map to come)."""
     # All seven plans, smallest to largest (the Floor Plan Book order), as two staggered rows that bleed off the
     # edges like the Figma: row one opens on Hamlet, August, Tara; row two picks up at Evergreen. Both rows drift
     # slowly left on one continuous belt so every plan comes through; hover or focus pauses them.
-    ordered = sorted(plans, key=lambda q: q["squareFootage"])
-    belt = "".join(plan_link_card(q) for q in ordered)
-    quiet = belt.replace('<a class="po-card"', '<a class="po-card" tabindex="-1" aria-hidden="true"')
-    rows = "".join('<div class="li-plan-track li-plan-track-%d"><div class="li-plan-belt">%s%s%s%s</div></div>' % (
-        n, quiet, belt if n == 1 else quiet, quiet, quiet) for n in (1, 2))
+    rows = plan_belt(plans)
     ready = sorted([l for l in listings if l.get("status") in ("Move in Ready", "For Sale")], key=listing_sort_key)[:6]
     sizes = sorted(p["squareFootage"] for p in plans)
     # 04 / The Design Center: three cards that flip on hover (or tap) to a photo
@@ -941,8 +947,7 @@ def build_firelight(plans):
              ("Pickleball", "Play, then stay and talk", V("club-pickleball.3iqae91xix18y.jpg"))]
     club_html = "".join('<div class="lo-card">%s<div class="lo-card-text"><strong>%s</strong><span>%s</span></div></div>' % (
         img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in clubs)
-    cards = [plan_link_card(p) for p in plans[:4]]
-    rows = "".join('<div class="li-plan-row%s">%s</div>' % (" shift" if r % 2 else "", "".join(cards[r * 2:r * 2 + 2])) for r in range((len(cards) + 1) // 2))
+    rows = plan_belt(plans)
     add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life-overlay", '''
 <section class="fah-hero li-hero fl-hero no-wash">
   %s
@@ -1004,7 +1009,9 @@ def build_firelight(plans):
     <p class="li-eyebrow">04 / Homes</p>
     <h2 class="li-title">Seven floor plans.<br> Your choice of homesite.</h2>
     <p class="li-copy">Pick the plan, pick the lot, then finish it your way at the Design Center. Looking for something sooner? Move-in ready homes are available now.</p>
-    <div class="li-plan-grid">%s</div>
+  </div>
+  <div class="li-plan-rows" aria-label="Floor plans">%s</div>
+  <div class="wrap li-in">
     <div class="li-btns li-plans-more"><a class="li-btn solid" href="/floor-plans">See all floor plans</a><a class="li-btn" href="/live-in#lots">Pick your homesite</a><a class="li-btn" href="/homes-for-sale">Homes for sale</a></div>
   </div>
 </section>''' % (img(FG("fl-hero"), "SunRiver Firelight members hiking among red rock and sage near Toquerville", "fah-hero-img", "eager"),
