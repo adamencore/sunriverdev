@@ -2115,3 +2115,15 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
   .fah-hero.li-hero:not(.keep-tall) h1 { font-size: 42px; line-height: 44px; }
 }
 .fl-hero:not(.keep-tall) .fah-hero-img { object-position: 50% 64%; }
+
+/* Walk the ground: same width as the lot map, two buttons */
+.lotmap + .li-walk, .hfs-map .li-walk { width: 100%; max-width: 1034px; margin: 32px 0 0; }
+.li-walk-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+.li-walk-btns .li-btn { flex: none; width: 238px; height: 44px; }
+/* Homes for Sale: lot map section under the listings, and the View map jump under the filters */
+.hfs-map { padding: 40px 0 120px; scroll-margin-top: 20px; }
+.hfs-map .wrap > .li-eyebrow, .hfs-map .li-title, .hfs-map .li-copy, .hfs-map .lotmap, .hfs-map .li-walk { max-width: 1034px; margin-left: auto; margin-right: auto; }
+.hfs-map .lotmap { margin-top: 36px; }
+.filter-btn.filter-map { display: grid; place-items: center; margin-top: 10px; background: #335A97; color: var(--white); text-decoration: none; }
+.filter-btn.filter-map:hover { background: #24477D; }
+@media (max-width: 860px) { .li-walk-btns { width: 100%; } .li-walk-btns .li-btn { width: 100%; } .hfs-map { padding-bottom: 80px; } }

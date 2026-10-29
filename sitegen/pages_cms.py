@@ -309,7 +309,7 @@ def plus_group(name, label, options):
         label, "".join(box(name, v, "%s+" % v) for v in options))
 
 
-def build_homes(listings):
+def build_homes(listings, plans=()):
     ls = sorted(listings, key=listing_sort_key)
     cards = "".join(listing_card(l) for l in ls)
     comm = "".join(box("community", c, c, c == "SunRiver Firelight") for c in COMMUNITIES)
@@ -327,6 +327,7 @@ def build_homes(listings):
         <fieldset><legend>SQFT</legend><div class="opts">%s</div></fieldset>
         %s%s%s%s
         <button type="submit" class="filter-btn">Filter</button>
+        <a class="filter-btn filter-map" href="#map">View map</a>
       </form>
     </aside>
     <div class="hfs-results">
@@ -335,9 +336,18 @@ def build_homes(listings):
       <div class="empty-state" id="home-empty" hidden><h2 class="h3">No homes match those filters.</h2><p>Try widening your search, or talk with our sales team about homes coming soon.</p>%s</div>
     </div>
   </div>
+</section>
+<section class="hfs-map" id="map">
+  <div class="wrap">
+    <p class="li-eyebrow">SunRiver Firelight lot map</p>
+    <h2 class="li-title">See every homesite.</h2>
+    <p class="li-copy">Homes for sale link straight to their listing. Open homesites are ready for the floor plan you choose.</p>
+    %s
+    <div class="li-walk"><div><h3>Walk the ground.</h3><p>The right location makes more sense in person.</p></div><div class="li-walk-btns"><a class="li-btn solid" href="/contact-us">Meet with an agent</a><a class="li-btn" href="#home-grid">See all homes for sale</a></div></div>
+  </div>
 </section>''' % (img(FG("hfs-hero"), "Aerial view of SunRiver Firelight with Pine Valley Mountain behind it", "fah-hero-img", "eager"), comm, stat, sqft,
                   plus_group("beds", "Beds", [2, 3, 4]), plus_group("baths", "Bath", [2, 3, 4]), plus_group("garage", "Garage", [2, 3, 4]),
-                  plus_group("hobby", "Hobby", [1, 2]), len(ls), cards, btn("Contact Sales", "/contact-us")), body_class="sand-page")
+                  plus_group("hobby", "Hobby", [1, 2]), len(ls), cards, btn("Contact Sales", "/contact-us"), lotmap.svg(plans, listings)), body_class="sand-page")
 
     for l in ls:
         build_listing(l)
@@ -690,7 +700,7 @@ def build_live_in(plans, listings):
     <p class="li-copy">Some homesites back to open desert, some sit higher for the view, and others put you closer to the community center and trailheads. What you can build on each one varies.</p>
   </div>
   <div class="wrap li-in">%s
-    <div class="li-walk"><div><h3>Walk the ground.</h3><p>The right location makes more sense in person.</p></div><a class="li-btn solid" href="/contact-us">Meet with an agent</a></div>
+    <div class="li-walk"><div><h3>Walk the ground.</h3><p>The right location makes more sense in person.</p></div><div class="li-walk-btns"><a class="li-btn solid" href="/contact-us">Meet with an agent</a><a class="li-btn" href="/homes-for-sale">See all homes for sale</a></div></div>
   </div>
 </section>
 <section class="li-dc" id="design-center">

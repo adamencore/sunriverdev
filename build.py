@@ -95,7 +95,7 @@ def main():
     print("Rendering pages")
     build_main(plans, listings)
     build_floor_plans(plans)
-    build_homes(listings)
+    build_homes(listings, plans)
     build_live_in(plans, listings)  # replaces the older Live In page with the Figma version
     build_live_out()  # replaces the older Live Out hub, patterned on Live In
     build_dv_book()  # Discovery Villas request-a-stay form
