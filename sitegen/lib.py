@@ -74,6 +74,8 @@ def sanity_id(ref):
 
 
 def S(ref, w=None):
+    if ref.startswith("http"):  # an outside image (MLS photos): used as is
+        return ref
     fid, ow, _ = sanity_id(ref)
     url = SANITY_CDN + fid
     if fid.endswith(".svg"):
@@ -92,6 +94,8 @@ def img(src, alt="", cls="", loading="lazy", attrs=""):
 
 def simg(ref, alt="", w=1200, cls="", loading="lazy", sizes="100vw"):
     """Responsive Sanity image with a small srcset."""
+    if ref.startswith("http"):
+        return img(ref, alt, cls, loading)
     _, ow, oh = sanity_id(ref)
     widths = sorted(set(x for x in (w // 2, w, w * 2) if not ow or x <= ow) or {ow})
     srcset = ", ".join("%s %dw" % (S(ref, x), x) for x in widths)

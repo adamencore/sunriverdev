@@ -3,6 +3,7 @@
 can't be reached. A failed fetch on Netlify fails the build so a broken deploy never ships."""
 import json
 import os
+import re
 import sys
 import urllib.parse
 import urllib.request
@@ -79,9 +80,39 @@ def block_text(body):
     return " ".join(out).strip()
 
 
+def _street(a):
+    """'Home 26, 992 W Frank Ave, Toquerville, UT' -> '992 w frank ave'"""
+    a = re.sub(r"^\s*home\s+\d+\s*,\s*", "", (a or "").lower())
+    a = a.split(",")[0]
+    return re.sub(r"\b(drive|dr)\b\.?", "dr", re.sub(r"\s+", " ", a)).strip()
+
+
+def mls_listings(sanity):
+    """The homes for sale, matched to the live sunriver.com/homes-for-sale MLS feed (data/mls_listings.json).
+    A home also in Sanity keeps its photos, gallery, videos and page address; MLS sets price, status and specs."""
+    src = json.loads((ROOT / "data" / "mls_listings.json").read_text(encoding="utf-8"))["listings"]
+    by_street = {_street(l.get("address")): l for l in sanity}
+    by_mls = {l.get("mlsNumber"): l for l in sanity if l.get("mlsNumber")}
+    out = []
+    for m in src:
+        base = dict(by_mls.get(m["mls"]) or by_street.get(_street(m["address"])) or {})
+        title = m.get("plan") or base.get("title") or "Single Family"
+        addr = "%s%s, %s" % ("Home %d, " % m["lot"] if m.get("lot") else "", m["address"], m["city"])
+        slug = base.get("slug") or re.sub(r"[^a-z0-9]+", "-", ("%s %s" % (title, m["address"])).lower()).strip("-")
+        base.update({"title": title, "slug": slug, "address": addr, "status": m["status"], "price": m["price"], "askForPricing": False,
+                     "squareFootage": m["sqft"], "beds": m["beds"], "baths": m["baths"], "garageSpaces": m["garage"],
+                     "hobbyRooms": m.get("hobby", base.get("hobbyRooms") or 0), "community": m["community"], "mlsNumber": m["mls"],
+                     "statusDate": base.get("statusDate") or "2026-10-29"})
+        if not base.get("photo"):
+            base["photo"], base["photoAlt"], base["gallery"] = m["photo"], "%s, %s" % (title, m["address"]), []
+        out.append(base)
+    print("  homes for sale: %d from the MLS feed (%d matched to Sanity listings)" % (len(out), sum(1 for m in src if by_mls.get(m["mls"]) or by_street.get(_street(m["address"])))))
+    return out
+
+
 def get_all():
     plans = [normalize_plan(p) for p in load("floorPlans")]
-    listings = load("homeListings")
+    listings = mls_listings(load("homeListings"))
     posts = [p for p in load("posts")
              if p.get("slug") and p.get("title") and not p["title"].startswith("[PENDING") and block_text(p.get("body"))]
     return plans, listings, posts
