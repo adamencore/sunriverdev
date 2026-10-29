@@ -700,13 +700,12 @@ def build_main(plans, listings):
 </section>
 <section class="section sand">
   <div class="wrap split" style="align-items:start">
-    <div class="stack"><h2 class="display">Five ways to <span class="yellow">arrive.</span></h2><hr class="rule"><div class="photo">%s</div></div>
+    <div class="stack"><h2 class="display">Five ways to <span class="yellow">arrive.</span></h2><hr class="rule"><div class="loans-card"><p>Loans built just<br> for seniors</p></div></div>
     <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">%s</div>
   </div>
 </section>
 %s''' % (full_hero("Mortgage options for seniors", eyebrow="Mortgage Options", src=V("hero.2y-1-elem3cii.jpg")), img(V("brandon-hansen.0156dosmff1qe.jpg"), "Portrait of Brandon Hansen"),
-         img(V("ccmc-logo.0n4e-3057h95z.png"), "Cherry Creek Mortgage logo", "partner-logo"), img(V("loans.3_6r2qstk9_se.png"), "SunRiver members reviewing loan options"),
-         loans_html, chat_section("Have more questions?", "Reach out and a representative from Brandon Hansen and Associates will get back to you as soon as possible.")))
+         img(V("ccmc-logo.0n4e-3057h95z.png"), "Cherry Creek Mortgage logo", "partner-logo"), loans_html, chat_section("Have more questions?", "Reach out and a representative from Brandon Hansen and Associates will get back to you as soon as possible.")))
 
     # ============================================================== ENERGY
     add("/energy", "Energy Efficient Homes", "How SunRiver builds energy efficient homes, measured with the HERS Index and verified by independent testing.", "homes", '''

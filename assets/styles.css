@@ -2063,3 +2063,8 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
 .fl-slide-text em { font-style: normal; font-weight: 500; font-size: 13px; line-height: 17px; opacity: .95; }
 .fl-slide::after { inset: 40% 0 0; }
 @media (max-width: 860px) { .fl-carousel { height: 320px; } .fl-slide span.fl-slide-text { left: 22px; right: 100px; bottom: 22px; } }
+
+/* Mortgage Options: the "Loans built just for seniors" card as live text in SunRiver blue (was an image with #1b283a type) */
+.loans-card { display: grid; place-items: center; min-height: 210px; padding: 36px 28px; border-radius: var(--radius-img); background: var(--white); box-shadow: var(--shadow-card); }
+.loans-card p { margin: 0; color: var(--sunriver-blue); font-family: var(--font-serif); font-weight: 500; font-size: 40px; line-height: 44px; letter-spacing: -0.02em; text-align: center; }
+@media (max-width: 860px) { .loans-card { min-height: 0; } .loans-card p { font-size: 30px; line-height: 34px; } }
