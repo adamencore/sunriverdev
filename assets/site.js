@@ -656,7 +656,9 @@
       }
     }
     // the rays and "Communities" each switch as one piece: brand color unless about an eighth of the piece can't take it
-    var accFor = function (t) { return t.off > t.n * 0.12 ? (t.alt[1] > t.alt[0] ? WHITE : BLUE) : brandAccent(); };
+    // on a hero without the white wash (dark photo straight up under the header), a piece that can't stay brand color goes white
+    var noWash = hero.matches(".no-wash");
+    var accFor = function (t) { return t.off > t.n * 0.12 ? (noWash || t.alt[1] > t.alt[0] ? WHITE : BLUE) : brandAccent(); };
     var raysC = accFor(tally.rays), commC = accFor(tally.comm);
     for (var rr = 0; rr < rows; rr++) for (var cc = 0; cc < cols; cc++) {
       var col = cc < cols * 0.32 && rr < rows * 0.78 ? raysC : commC, q = (rr * cols + cc) * 4;

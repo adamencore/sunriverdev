@@ -1826,14 +1826,13 @@ body.m-nav-lock { overflow: hidden; }
 /* SunRiver Firelight overview, in the Live In style */
 .fl-hero .fah-hero-img { object-position: 50% 25%; }
 .li-hero.no-wash::before { display: none; }
-.li-hero.no-wash::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10, 20, 40, .22) 0%, rgba(10, 20, 40, 0) 30%, rgba(10, 20, 40, 0) 55%, rgba(10, 20, 40, .18) 100%); pointer-events: none; }
 .fl-hero h1::after { display: none; }
-.fl-hero-sub { display: inline-block; margin-top: 10px; padding: 0 22px 12px; color: #FAF5EF; font-family: var(--font-serif); font-weight: 500; font-size: 32px; line-height: 38px; letter-spacing: -0.01em; text-shadow: 0 2px 14px rgba(20, 50, 80, 0.3); border-bottom: 5px solid var(--sun-yellow); }
+.fl-hero-sub { display: inline-block; margin-top: 10px; min-width: 304px; padding: 0 22px 12px; color: #FAF5EF; font-family: var(--font-serif); font-weight: 500; font-size: 36px; line-height: 42px; letter-spacing: -0.01em; text-shadow: 0 2px 14px rgba(20, 50, 80, 0.3); border-bottom: 5px solid var(--sun-yellow); }
 .fl-hero .fah-hero-inner { display: flex; flex-direction: column; align-items: center; }
 .fl-intro h2::after { content: ""; display: block; width: 136px; height: 4px; margin-top: 18px; background: #EDB443; border-radius: 2px; }
 .fl-intro .li-serif { max-width: 690px; margin-top: 30px; font-size: 22px; line-height: 28px; }
 .fl-intro .li-btns { margin-top: 56px; }
-@media (max-width: 860px) { .fl-hero-sub { font-size: 24px; line-height: 30px; } .fl-intro .li-serif { font-size: 19px; line-height: 26px; } }
+@media (max-width: 860px) { .fl-hero-sub { min-width: 0; font-size: 24px; line-height: 30px; } .fl-intro .li-serif { font-size: 19px; line-height: 26px; } }
 .fl-mix .lo-cols { row-gap: 44px; }
 .fl-mix .lo-col h3, .fl-amen-card h3 { color: #335A97; font-weight: 900; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
 .fl-mix .lo-weather .li-copy { margin-top: 30px; }
