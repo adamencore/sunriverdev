@@ -253,8 +253,13 @@ def build_main(plans, listings):
           ("2016", "SunRiver Villas", "SunRiver Villas begins: a new active adult resort community with its own community center.", V("2016-villas.0gwincf_04c2m.jpg")),
           ("2018", "Hampton Inn &amp; Suites", "Hampton Inn &amp; Suites at SunRiver opens with a well-attended Grand Opening.", V("2018-hampton-inn.16s935p4q0_01.jpg")),
           ("2022", "SunRiver Firelight", "SunRiver announces plans for a 1,200+ home community in Toquerville, Utah, the gateway to Zion National Park.", V("2022-firelight.3c2h6miza7eiz.png"))]
-    tl_html = "".join('<li class="tl-row"><div class="tl-year">%s</div><div class="tl-content"><h3>%s</h3><p>%s</p></div>%s</li>' % (
-        y, t, d, '<div class="tl-img">%s</div>' % img(p, "%s, %s" % (t, y)) if p else '<div class="tl-img empty"></div>') for y, t, d, p in tl)
+    # A centered line that fills with yellow as you scroll; each year gets a round photo on the line, and its card
+    # slides in from alternating sides as the line reaches it (same scroll logic as the Design Center timeline)
+    tl_html = "".join('''<li class="ht-item %s">
+      <div class="ht-node%s">%s</div>
+      <div class="ht-card"><span class="ht-year">%s</span><h3>%s</h3><p>%s</p></div>
+    </li>''' % ("ht-left" if i % 2 == 0 else "ht-right", "" if p else " ht-node-year",
+                img(p, "%s, %s" % (t, y)) if p else "<span>%s</span>" % y, y, t, d) for i, (y, t, d, p) in enumerate(tl))
     add("/history", "History", "The history of SunRiver Communities, from the first homes in 1998 to SunRiver Firelight in Toquerville.", "about", '''
 %s
 <section class="section">
@@ -269,7 +274,7 @@ def build_main(plans, listings):
 <section class="section sand">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Our <span class="yellow">History</span></h2><hr class="rule center"></div>
-    <ol class="history">%s</ol>
+    <ol class="ht" data-htl><span class="ht-line" aria-hidden="true"><span class="ht-fill"></span></span>%s</ol>
   </div>
 </section>
 %s''' % (yellow_hero("A team with <strong>experience</strong>", "/history", V("cc-exterior.0ufveyw_xw2e8.jpg"), "The SunRiver St. George community center"), tl_html, chat_section()))

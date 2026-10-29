@@ -946,3 +946,17 @@ document.addEventListener("change", function (e) {
     go(0);
   });
 })();
+
+// History timeline (data-htl): the center line fills to a mark 60% down the screen; each year lights up as the line reaches it
+document.querySelectorAll("[data-htl]").forEach(function (tl) {
+  var items = tl.querySelectorAll(".ht-item"), ticking = false;
+  function update() {
+    ticking = false;
+    var r = tl.getBoundingClientRect(), mark = window.innerHeight * 0.62;
+    tl.style.setProperty("--ht-fill", (Math.max(0, Math.min(1, (mark - r.top) / r.height)) * 100).toFixed(1) + "%");
+    items.forEach(function (it) { var b = it.getBoundingClientRect(); it.classList.toggle("is-reached", b.top + b.height / 2 < mark); });
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+});
