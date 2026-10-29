@@ -916,11 +916,11 @@ def build_firelight(plans):
     """SunRiver Firelight overview, from the live sunriver.com/sunriver-firelight page with the copy brought in line:
     Members, the Clubhouse, future tense for what is not built, drive times matching Live Out, no golf, and the
     dated items (reservations, summer/fall updates, the invented week of activities) dropped."""
-    mix = [("Brand new homes", "Choose your homesite, then design the home that goes on it."),
-           ("Outdoor living", "Red rock, open desert and 22 miles of trail run through and around the community."),
-           ("Prime location", "On the Zion side of Southern Utah, north of Hurricane, with St. George about 30 minutes away."),
-           ("Designed for you", "Hobby rooms, open kitchens and garages up to an extended three-car, with room for the gear you love."),
-           ("Mild seasons", "About 500 feet higher than St. George, so summers run a few degrees cooler, without the snow."),
+    mix = [("Brand New Homes", "Choose your homesite, then design the home that goes on it."),
+           ("Outdoor Living", "Red rock, open desert and 22 miles of trail run through and around the community."),
+           ("Prime Location", "On the Zion side of Southern Utah, north of Hurricane, with St. George about 30 minutes away."),
+           ("Designed for You", "Hobby rooms, open kitchens and garages up to an extended three-car, with room for the gear you love."),
+           ("Mild Seasons", "About 500 feet higher than St. George, so summers run a few degrees cooler, without the snow."),
            ("Community", "SunRiver is more than a place to live. It is a community of people who refuse to slow down.")]
     # 01 carousel (Figma "SunRiver Firelight" frame): one photo per item, title and line bottom left, arrows bottom right
     mix_pics = [(FG("fl-living"), "A SunRiver couple at home with their dog", "50% 40%"),
