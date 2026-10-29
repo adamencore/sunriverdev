@@ -131,12 +131,8 @@ def svg(plans=(), listings=()):
     sold = sum(1 for e in lots.values() if e.get("status") == "sold")
     out = re.sub(r"<svg\b", '<svg class="lotmap-svg" role="group" aria-label="SunRiver Firelight lot map: %d homesites available, %d sold"' % (avail, sold), out, count=1)
     out = re.sub(r"<\?xml[^>]*>", "", out)
-    return '''<div class="lotmap-preview" role="group" aria-label="Lot card preview">
-  <span>Preview the lot card:</span>
-  <button type="button" data-card="light" aria-pressed="true">Option 1: Light</button>
-  <button type="button" data-card="detail" aria-pressed="false">Option 2: More info</button>
-</div>
-<div class="lotmap card-light">
+    # lot card: Option 1 "Light" (chosen 2026-10-29); the "More info" style stays in site.js under .card-detail
+    return '''<div class="lotmap card-light">
   <div class="lotmap-scroll lotmap-window">
     <div class="lotmap-stage">%s</div>
     <div class="lotmap-zoom" role="group" aria-label="Map zoom">
