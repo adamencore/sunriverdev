@@ -22,12 +22,39 @@ STATUS_LABEL = {"available": "Available", "sold": "Sold", "model": "Model home",
                 "sales": "Sales Center", "upcoming": "Future release"}
 
 
+def listing_price_text(l):
+    p = l.get("price")
+    if l.get("askForPricing") or not p:
+        return "Ask for pricing"
+    return "$" + "{:,}".format(int(p)) if isinstance(p, (int, float)) else str(p)
+
+
 def load():
     return json.loads((ROOT / "data" / "lots.json").read_text())
 
 
-def svg(plans=()):
+FOR_SALE = ("For Sale", "Move in Ready", "Coming Soon")
+# only these lots react to the pointer: a homesite you can still buy. Sold lots, model homes, future models, the Sales
+# Center and future-release lots are part of the picture only (no hover, no card, not focusable).
+INTERACTIVE = ("available",)
+
+
+def lot_listings(listings):
+    """{lot number: listing} for SunRiver Firelight homes currently for sale, read from the listing address
+    ("Home 26, 992 W Frank Ave"), so a new listing in Sanity links its lot on the next deploy."""
+    out = {}
+    for l in listings or ():
+        if "firelight" not in (l.get("community") or "").lower() or l.get("status") not in FOR_SALE:
+            continue
+        m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
+        if m:
+            out[int(m.group(1))] = l
+    return out
+
+
+def svg(plans=(), listings=()):
     data = load()
+    homes = lot_listings(listings)
     by_name = {q["name"].lower(): q for q in plans}
     colors = data["colors"]
     lots = {e["lot"]: e for e in data["lots"]}
@@ -53,9 +80,17 @@ def svg(plans=()):
         elif st in ("available", "upcoming"):
             fill = WHITE
         q = by_name.get((plan or "").lower())
-        attrs = ' data-tip="%s" data-status="%s" tabindex="0" role="link" aria-label="%s"' % (tip, st, tip)
+        home = homes.get(n) if st == "available" else None
+        if home:
+            tip = "Lot %d: %s for sale" % (n, home.get("title") or plan or "Home")
+        if st in INTERACTIVE:
+            attrs = ' data-tip="%s" data-status="%s" tabindex="0" role="link" aria-label="%s"' % (tip, st, tip)
+        else:
+            attrs = ' data-status="%s"' % st
         if q:
             attrs += ' data-plan="%s"' % q["slug"]
+        if home:
+            attrs += ' data-home="%s"' % home["slug"]
         if fill:
             attrs += ' style="fill:%s"' % fill
 
@@ -87,6 +122,10 @@ def svg(plans=()):
         ref = q.get("gallery") and q["gallery"][0]["asset"]
         cards[q["slug"]] = {"name": q["name"], "sqft": "{:,}".format(q["squareFootage"]), "price": q.get("priceRange", ""),
                             "spec": q.get("specLine", ""), "img": S(ref, 640) if ref else "", "url": "/floor-plans/%s" % q["slug"]}
+    for n, l in homes.items():
+        cards["home:" + l["slug"]] = {"name": l.get("title") or "Home", "sqft": "{:,}".format(l.get("squareFootage") or 0),
+                                      "price": listing_price_text(l), "spec": "%s bed | %s bath" % (l.get("beds") or "", l.get("baths") or ""),
+                                      "img": S(l["photo"], 640) if l.get("photo") else "", "url": "/homes-for-sale/%s" % l["slug"]}
     plan_json = json.dumps(cards, separators=(",", ":")).replace("</", "<\\/")
     avail = sum(1 for e in lots.values() if e.get("status") == "available")
     sold = sum(1 for e in lots.values() if e.get("status") == "sold")
@@ -106,14 +145,14 @@ def svg(plans=()):
       <button type="button" data-zoom="reset" aria-label="Show the whole map"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5V3h4.5M12.5 3H17v4.5M17 12.5V17h-4.5M7.5 17H3v-4.5"/></svg></button>
     </div>
     <p class="lotmap-hint">Drag to explore. Pinch or use + to zoom.</p>
+    <ul class="lotmap-key" aria-label="Map key">
+      <li><span class="sw sw-open"></span>Available</li>
+      <li><span class="sw sw-sold"></span>Sold</li>
+      <li><span class="sw sw-model"></span>Model home</li>
+      <li><span class="sw sw-future"></span>Future model</li>
+      <li><span class="sw sw-plan"></span>Plan selected</li>
+    </ul>
     <div class="lotmap-card" hidden></div>
     <script type="application/json" class="lotmap-plans">%s</script>
   </div>
-  <ul class="lotmap-key">
-    <li><span class="sw sw-open"></span>Available</li>
-    <li><span class="sw sw-sold"></span>Sold</li>
-    <li><span class="sw sw-model"></span>Model home</li>
-    <li><span class="sw sw-future"></span>Future model</li>
-    <li><span class="sw sw-plan"></span>Plan selected</li>
-  </ul>
 </div>''' % (out.strip(), plan_json)

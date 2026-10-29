@@ -306,8 +306,10 @@
     var LABEL = { available: "Available", sold: "Sold", model: "Model home", future: "Future model", sales: "Sales Center", upcoming: "Future release" };
     var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
+    function home(g) { var h = g.getAttribute("data-home"); return h ? data["home:" + h] : null; }
     function target(g) {
       var p = data[g.getAttribute("data-plan")], st = g.getAttribute("data-status");
+      if (home(g)) return home(g).url;  // a home for sale on this lot: straight to its listing
       if (p) return p.url;
       if (st === "sales") return "/contact-us";
       if (st === "available" || st === "upcoming") return "/floor-plans";
@@ -320,6 +322,18 @@
       var url = target(g), label = LABEL[st] || st;
       var detail = map.classList.contains("card-detail");
       var tag = url ? "a" : "div", href = url ? ' href="' + url + '"' : "";
+      var hm = home(g);
+      if (hm) {  // listing card: the actual home for sale on this lot
+        if (!detail) {
+          return '<a class="lmc-card is-home" href="' + hm.url + '">' + (hm.img ? '<span class="lmc-img"><img src="' + hm.img + '" alt=""></span>' : "") +
+            '<span class="lmc-bar"><span class="lmc-meta">Lot ' + n + " &middot; For sale &middot; " + esc(hm.price) + '</span><span class="lmc-name">' + esc(hm.name) + '</span><span class="po-go" aria-hidden="true"></span></span></a>';
+        }
+        return '<a class="lmc-card lmc-detail is-home" href="' + hm.url + '">' +
+          (hm.img ? '<span class="lmc-img"><img src="' + hm.img + '" alt=""><span class="lmc-pill is-available">For sale</span></span>' : '<span class="lmc-pill is-available solo">For sale</span>') +
+          '<span class="lmc-body"><span class="lmc-eyebrow">Lot ' + n + '</span><span class="lmc-title">The ' + esc(hm.name) + '</span>' +
+          '<span class="lmc-spec">' + hm.sqft + " ft&sup2; | " + esc(hm.spec) + '</span><span class="lmc-price">' + esc(hm.price) + '</span>' +
+          '<span class="lmc-cta">See this home<span class="lmc-arrow" aria-hidden="true"></span></span></span></a>';
+      }
       if (!detail) {
         var name = p ? p.name : (st === "available" ? "Choose your plan" : st === "sold" ? "Sold" : label);
         var meta = "Lot " + n + (p ? " &middot; " + p.sqft + " ft&sup2;" : " &middot; " + label);

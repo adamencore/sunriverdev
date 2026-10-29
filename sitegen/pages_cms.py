@@ -708,7 +708,7 @@ def build_live_in(plans, listings):
   </div>
 </section>'''.format(sizes[0], sizes[-1]).replace("{{", "{").replace("}}", "}") % (
         img(FG("li-hero"), "SunRiver members visiting in a SunRiver Firelight living room", "fah-hero-img", "eager"),
-        rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans),
+        rows, "".join(listing_card(l) for l in ready), lotmap.svg(plans, listings),
         img(FG("li-bedroom"), "A finished bedroom in a SunRiver Firelight home"),
         '<div class="li-flips" data-anim="fade">%s</div>' % flips if SHOW_DC_FLIPS else ""))
 
