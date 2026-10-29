@@ -2076,7 +2076,7 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
 .ht-item { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 220px minmax(0, 1fr); align-items: center; gap: 0 40px; min-height: 260px; }
 .ht-item + .ht-item { margin-top: 18px; }
 .ht-node { position: relative; z-index: 1; grid-column: 2; grid-row: 1; justify-self: center; width: 200px; height: 200px; overflow: hidden; border-radius: 50%; background: var(--sunriver-blue);
-  box-shadow: 0 0 0 8px var(--riverbed-sand), 0 0 0 12px rgba(50, 90, 150, .18), var(--shadow-photo); transform: scale(.82); filter: grayscale(1); opacity: .6;
+  box-shadow: 0 0 0 8px var(--riverbed-sand), 0 0 0 12px rgba(50, 90, 150, .18), var(--shadow-photo); transform: scale(.82); filter: grayscale(1) brightness(1.08);
   transition: transform .7s cubic-bezier(.22, .61, .36, 1), filter .7s ease, opacity .7s ease, box-shadow .5s ease; }
 .ht-node img { width: 100%; height: 100%; object-fit: cover; transition: transform 6s ease; }
 .ht-node-year { display: grid; place-items: center; }
