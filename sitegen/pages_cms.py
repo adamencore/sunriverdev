@@ -140,7 +140,7 @@ def contact_row(founders=True):
           <a class="hd-btn yellow" href="/contact-us">Contact Us Today</a></div>
         <div class="hd-team">%s</div>
       </div>
-    </div>''' % ("" if fc else " solo", fc, PHONE_TEL, PHONE, img(FG("sales-team"), "The SunRiver sales team"))
+    </div>''' % ("" if fc else " solo", fc, PHONE_TEL, PHONE, img("/assets/img/sales-team-2026.webp", "The SunRiver Firelight sales team"))
 
 
 def thumbs_html(refs, alt, contain=()):
