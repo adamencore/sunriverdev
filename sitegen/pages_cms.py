@@ -1266,7 +1266,7 @@ def build_dv_v2():
 <section class="li-intro li-lead dv2-intro">
   <div class="wrap li-in">
     <h2>Test drive your<br> next chapter.</h2>
-    <p class="li-serif"><strong><mark>Somebody decided this was the slowing-down part.</mark> They did not ask you.</strong> The word retirement comes with a picture attached: quiet mornings, a careful pace, a calendar with nothing on it. Drive through Southern Utah early on a Tuesday and the picture falls apart. The people out on the trail have had careers, raised kids and buried parents, but they were not finished. We are not going to argue that here. Instead, we built it, and we want you to test drive it.</p>
+    <p class="li-serif"><strong><mark>Somebody decided this was the slowing-down part.</mark> They did not ask you.</strong> Retirement is supposed to mean quiet mornings and an empty calendar. Then you see who is out on the trail early on a Tuesday. We built a place for people who are not finished, and we want you to test drive it.</p>
     <div class="li-btns"><a class="li-btn solid" href="/discovery-villas/book">Request your stay</a><a class="li-btn" href="%s">Call %s</a></div>
   </div>
 </section>
