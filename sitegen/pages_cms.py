@@ -1264,10 +1264,19 @@ def build_dv_v2():
   <div class="wrap fah-hero-inner"><h1>Discovery Villas</h1></div>
 </section>
 <section class="li-intro li-lead dv2-intro">
-  <div class="wrap li-in">
+  <div class="wrap li-in dv2-intro-grid">
+   <div class="dv2-intro-text">
+    <p class="li-eyebrow">Three nights at SunRiver Firelight</p>
     <h2>Test drive your<br> next chapter.</h2>
     <p class="li-serif"><strong><mark>Somebody decided this was the slowing-down part.</mark> They did not ask you.</strong> Retirement is supposed to mean quiet mornings and an empty calendar. Then you see who is out on the trail early on a Tuesday. We built a place for people who are not finished, and we want you to test drive it.</p>
     <div class="li-btns"><a class="li-btn solid" href="/discovery-villas/book">Request your stay</a><a class="li-btn" href="%s">Call %s</a></div>
+   </div>
+   <div class="dv2-collage">
+     <div class="dv2-col-main">%s</div>
+     <div class="dv2-col-small">%s</div>
+     <div class="dv2-badge"><strong>$399</strong><span>for the stay</span></div>
+     <ul class="dv2-chips"><li>Fully furnished</li><li>A real street</li><li>Zion in 31 min</li></ul>
+   </div>
   </div>
 </section>
 <section class="li-plans dv2-stay" id="stay">
@@ -1339,6 +1348,8 @@ def build_dv_v2():
 </section>""" % (
         img(FG("dv-living"), "Inside a furnished Discovery Villa at SunRiver Firelight", "fah-hero-img", "eager"),
         PHONE_TEL, PHONE,
+        img(FG("lon-hero"), "SunRiver Members out on a red rock trail on a weekday morning", attrs='style="object-position:50% 70%"'),
+        img(FG("fl-living"), "A SunRiver couple at home with their dog", attrs='style="object-position:50% 40%"'),
         img(FG("dv-firepit"), "SunRiver Members around the fire pit at the Discovery Villas"),
         PHONE_TEL, PHONE, "".join(day_html),
         img(K(exterior), "The Astoria model home at SunRiver Firelight"),
