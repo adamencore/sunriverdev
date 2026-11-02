@@ -1216,3 +1216,134 @@ def build_dv_book():
     </form>
   </div>
 </section>""" % (img(FG("dv-living"), "Inside a designer-furnished Discovery Villa", "fah-hero-img", "eager"), PHONE_TEL, PHONE))
+
+
+# ================================================================== DISCOVERY VILLAS V2 (draft beside the current page)
+def build_dv_v2():
+    """Discovery Villas v2, in the Live In / Out / On style. Copy adapted from the Discovery Home print flier
+    (Google Doc "Discovery Villas"): residents became Members, Zion is 31 minutes, and the flier-only bits
+    (panel layout, the seasonal shuttle placeholder) are dropped. Lives at /discovery-villas-v2 until approved."""
+    K = lambda ref, w=1600: S(ref, w)
+    kitchen = "image-4002cc30c79b533f3eab3b908037c2757c646f0e-2000x1333-jpg"
+    exterior = "image-e4478eff78151d8dd145c3ac5fe16468329ce8ff-2000x1334-jpg"
+    days = [
+        ("The night you arrive", "Check in at three", None,
+         "The grocery store is five minutes down in La Verkin, so stock the kitchen like it is yours. Eat on the patio. Watch the light come off the cliffs.", []),
+        ("Day one", "The house", FG("dv-living"),
+         "Coffee on the patio, and the sunrise you would be waking up to in your next chapter.",
+         [("10:00", "Walk the model homes. All of them. Open the closets, run the faucets, stand in the garage and think about where the kayaks go."),
+          ("12:00", "The Design Center, where a house stops being a floor plan. Flooring, cabinets, and the hobby room you did not know you wanted."),
+          ("1:30", "Lunch at River Rock Roasting in La Verkin, just downhill, out on the deck above the Virgin River gorge."),
+          ("Afternoon", "Quail Creek, or doing nothing at all. Your call.")]),
+        ("Day two", "Life", FG("lon-hero"),
+         "A day for the rest of it.",
+         [("8:00", "Zion. Thirty-one minutes to the Springdale entrance. In shuttle season, park in Springdale and ride in."),
+          ("Midday", "Springdale. Galleries, the bookstore, lunch at Oscar's Café."),
+          ("4:00", "Back before the heat breaks. The drive home is the good part."),
+          ("6:00", "Find a SunRiver Firelight event, or set up dinner with a few of our Members.")]),
+        ("The morning you go", "Check out at eleven", None,
+         "Leave the opener on the counter. Go write your next chapter.", []),
+    ]
+    day_html = []
+    for i, (when, what, pic, lead, items) in enumerate(days):
+        sched = "".join('<li><span>%s</span><p>%s</p></li>' % (t, esc(d)) for t, d in items)
+        day_html.append('<li class="dv2-day%s"><span class="dv2-dot" aria-hidden="true">%d</span><div class="dv2-day-card">%s<div class="dv2-day-text"><p class="li-eyebrow">%s</p><h3>%s</h3><p class="dv2-lead">%s</p>%s</div></div></li>' % (
+            " has-pic" if pic else "", i + 1,
+            '<div class="dv2-day-img">%s</div>' % img(pic, "A day at SunRiver Firelight: %s" % what.lower()) if pic else "",
+            when, what, esc(lead), '<ul class="dv2-sched">%s</ul>' % sched if sched else ""))
+    qa = [("What does the stay cost?", "$399 for the stay. Three nights and two days in a furnished SunRiver Firelight home."),
+          ("When is check-in and checkout?", "Check in at 3:00 p.m. Checkout is 11:00 a.m. on the morning you go."),
+          ("Is it a model home?", "No. It is a real SunRiver Firelight home on a real street, fully furnished. No rope across the hallway."),
+          ("Do I have to follow a schedule?", "No. The days are yours. Tour the model homes and the Design Center whenever it suits you, or spend the whole afternoon on the patio."),
+          ("Can I meet the people who live here?", "Yes. Ask us about SunRiver Firelight events during your stay, or we can set up dinner with a few of our Members."),
+          ("How do I book?", "Request your dates online or call us at %s. We will confirm your stay and answer any questions." % PHONE)]
+    faq_html = "".join('<details class="faq dz-faq"><summary>%s</summary><div class="answer"><p>%s</p></div></details>' % (q, esc(a)) for q, a in qa)
+    add("/discovery-villas-v2", "Discovery Villas", "Test drive your next chapter: three nights in a furnished SunRiver Firelight home, with Zion 31 minutes away, for $399.", "visit", """
+<section class="fah-hero li-hero dv2-hero">
+  %s
+  <div class="wrap fah-hero-inner"><h1>Discovery Villas</h1></div>
+</section>
+<section class="li-intro li-lead dv2-intro">
+  <div class="wrap li-in">
+    <h2>Test drive your<br> next chapter.</h2>
+    <p class="li-serif"><strong><mark>Somebody decided this was the slowing-down part.</mark> They did not ask you.</strong> The word retirement comes with a picture attached: quiet mornings, a careful pace, a calendar with nothing on it. Drive through Southern Utah early on a Tuesday and the picture falls apart. The people out on the trail have had careers, raised kids and buried parents, but they were not finished. We are not going to argue that here. Instead, we built it, and we want you to test drive it.</p>
+    <div class="li-btns"><a class="li-btn solid" href="/discovery-villas/book">Request your stay</a><a class="li-btn" href="%s">Call %s</a></div>
+  </div>
+</section>
+<section class="li-plans dv2-stay" id="stay">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">01 / The stay</p>
+    <h2 class="li-title">Not a model with a rope<br> across the hallway.</h2>
+    <div class="dv2-split">
+      <div class="dv2-split-img">%s</div>
+      <div class="dv2-card">
+        <p class="dv2-price"><strong>$399</strong><span>for the stay</span></p>
+        <ul class="dv2-facts">
+          <li><strong>Three nights, two days</strong>A real SunRiver Firelight home on a real street, fully furnished.</li>
+          <li><strong>Your own front door</strong>With Zion in the backyard and the trails a short walk away.</li>
+          <li><strong>Check in 3:00 p.m.</strong>Checkout 11:00 a.m. on the morning you go.</li>
+          <li><strong>No one scheduling your days</strong>Tour the model homes and the Design Center on your own time.</li>
+        </ul>
+        <div class="li-btns"><a class="li-btn solid" href="/discovery-villas/book">Request your stay</a></div>
+      </div>
+    </div>
+    <div class="lo-weather dv2-near">
+      <h3>Everything close by.</h3>
+      <div class="lo-stats dv2-stats">
+        <div><strong>5 min</strong><span>To groceries in La Verkin</span></div>
+        <div><strong>13 min</strong><span>To urgent care</span></div>
+        <div><strong>24 min</strong><span>To St. George</span></div>
+        <div><strong>31 min</strong><span>To Zion National Park</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="li-visit">
+  <svg class="li-wave" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true"><path d="M0 250 C 260 120, 520 120, 760 210 S 1220 300, 1440 160 L1440 360 L0 360 Z" fill="#fff" fill-opacity=".07"/><path d="M0 110 C 300 30, 560 60, 820 140 S 1260 200, 1440 60 L1440 0 L0 0 Z" fill="#fff" fill-opacity=".05"/></svg>
+  <div class="wrap li-visit-inner">
+    <h2>Two days. Nobody scheduling them.</h2>
+    <div class="li-btns center"><a class="li-btn light" href="/discovery-villas/book">Request your stay</a><a class="li-btn white" href="%s">Call %s</a></div>
+  </div>
+</section>
+<section class="li-ready dv2-days" id="itinerary">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">02 / Your stay, day by day</p>
+    <h2 class="li-title">Here is what those two days<br> might look like.</h2>
+    <p class="li-copy">A suggestion, not a schedule. The patio is also a legitimate plan.</p>
+    <ol class="dv2-timeline">%s</ol>
+  </div>
+</section>
+<section class="li-plans dv2-explore">
+  <div class="wrap li-in">
+    <p class="li-eyebrow">03 / While you are here</p>
+    <h2 class="li-title">See the homes.<br> Then see the rest of it.</h2>
+    <div class="dv2-cards">
+      <a class="dv2-link" href="/floor-plans"><span class="dv2-link-img">%s</span><strong>The model homes</strong><span>Five of the seven floor plans are open to walk through.</span></a>
+      <a class="dv2-link" href="/design"><span class="dv2-link-img">%s</span><strong>The Design Center</strong><span>Full-size samples and a designer who wants to know how you live.</span></a>
+      <a class="dv2-link" href="/live-out"><span class="dv2-link-img">%s</span><strong>Zion and beyond</strong><span>Trails, reservoirs and Springdale, all within a short drive.</span></a>
+    </div>
+  </div>
+</section>
+<section class="dz-faqs">
+  <div class="wrap">
+    <h2 class="dz-h2">Your questions, answered.</h2>
+    <div class="dz-faq-list">%s</div>
+  </div>
+</section>
+<section class="dz-cta">
+  %s
+  <div class="wrap dz-cta-inner">
+    <h2>Go write your next chapter.</h2>
+    <div class="li-btns center"><a class="li-btn white" href="/discovery-villas/book">Request your stay</a><a class="li-btn light" href="%s">Call %s</a></div>
+  </div>
+</section>""" % (
+        img(FG("dv-living"), "Inside a furnished Discovery Villa at SunRiver Firelight", "fah-hero-img", "eager"),
+        PHONE_TEL, PHONE,
+        img(FG("dv-firepit"), "SunRiver Members around the fire pit at the Discovery Villas"),
+        PHONE_TEL, PHONE, "".join(day_html),
+        img(K(exterior), "The Astoria model home at SunRiver Firelight"),
+        img(K(kitchen), "The kitchen in the Astoria model home"),
+        img("/assets/img/lo-zion.webp", "Red rock cliffs in Zion National Park"),
+        faq_html,
+        img(FG("fl-hero"), "SunRiver Firelight members hiking among red rock and sage near Toquerville", "dz-cta-img"),
+        PHONE_TEL, PHONE))
