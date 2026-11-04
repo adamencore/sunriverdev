@@ -169,6 +169,7 @@ def pill_header(active, variant="bar"):
     <a class="logo" href="/" aria-label="SunRiver Communities home">%s</a>
     <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     <nav class="main-nav pill-nav" aria-label="Main">
+      <span class="pill-morph" aria-hidden="true"></span>
       <div class="nav-item" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="life-menu"%s>Life at SunRiver<span class="chev" aria-hidden="true"></span></button>
         <div class="pill-drop" id="life-menu" data-active="0"><ul>%s</ul><div class="pill-drop-photo" aria-hidden="true">%s</div></div></div>
       <div class="nav-item has-sm" data-open="false"><button class="nav-link" type="button" aria-expanded="false" aria-controls="homes-menu"%s>Homes<span class="chev" aria-hidden="true"></span></button>

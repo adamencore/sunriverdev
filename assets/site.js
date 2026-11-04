@@ -38,9 +38,9 @@
         toggle.addEventListener('click', function () { goPanel('main'); var c = sheet.querySelector('.m-nav-close'); if (c) c.focus(); });
       }
     }
-    var items = header.querySelectorAll('.nav-item[data-open]');
+    var navItems = header.querySelectorAll('.nav-item[data-open]');
     var closeAll = function (except) {
-      items.forEach(function (it) {
+      navItems.forEach(function (it) {
         if (it !== except) {
           it.setAttribute('data-open', 'false');
           var b = it.querySelector('button.nav-link');
@@ -49,7 +49,7 @@
       });
     };
     var hoverable = window.matchMedia('(hover: hover) and (min-width: 1021px)');
-    items.forEach(function (item) {
+    navItems.forEach(function (item) {
       var btn = item.querySelector('button.nav-link');
       if (!btn) return;
       btn.addEventListener('click', function (e) {
@@ -77,6 +77,48 @@
         a.addEventListener('focus', function () { show(i); });
       });
     });
+    // Glide (option 3): one white card behind both dropdowns. It fades in under the first menu you open,
+    // then slides and resizes to the next one as you move across the nav; the links slide in from that side.
+    var glPill = header.querySelector('.pill-nav'), glMorph = glPill && glPill.querySelector('.pill-morph');
+    if (glMorph) {
+      glPill.classList.add('has-morph');
+      var glOrder = Array.prototype.slice.call(navItems), glCur = null;
+      var glBox = function (el) {  // position of a dropdown inside the pill, ignoring its transforms
+        var x = 0, y = 0, n = el;
+        while (n && n !== glPill) { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+        return { x: x, y: y, w: el.offsetWidth, h: el.offsetHeight };
+      };
+      var glPlace = function (drop) {
+        var b = glBox(drop);
+        glMorph.style.transform = 'translate(' + b.x + 'px,' + b.y + 'px)';
+        glMorph.style.width = b.w + 'px'; glMorph.style.height = b.h + 'px';
+      };
+      var glSync = function () {
+        var open = null;
+        glOrder.forEach(function (it) { if (it.getAttribute('data-open') === 'true') open = it; });
+        if (open === glCur) return;
+        var prev = glCur; glCur = open;
+        if (!open) { glMorph.classList.remove('is-open', 'is-ready'); return; }
+        var drop = open.querySelector('.pill-drop');
+        if (!drop) return;
+        drop.classList.remove('pd-leave-l', 'pd-leave-r', 'pd-enter-l', 'pd-enter-r');
+        if (!prev) {
+          glMorph.classList.remove('is-ready'); glPlace(drop); void glMorph.offsetWidth;
+          glMorph.classList.add('is-open');
+          requestAnimationFrame(function () { glMorph.classList.add('is-ready'); });
+          return;
+        }
+        var right = glOrder.indexOf(open) > glOrder.indexOf(prev);
+        var old = prev.querySelector('.pill-drop');
+        if (old) { old.classList.remove('pd-enter-l', 'pd-enter-r'); old.classList.add(right ? 'pd-leave-l' : 'pd-leave-r'); }
+        void drop.offsetWidth;
+        drop.classList.add(right ? 'pd-enter-r' : 'pd-enter-l');
+        glPlace(drop);
+      };
+      var glMo = new MutationObserver(glSync);
+      glOrder.forEach(function (it) { glMo.observe(it, { attributes: true, attributeFilter: ['data-open'] }); });
+      window.addEventListener('resize', function () { if (glCur) { var d = glCur.querySelector('.pill-drop'); if (d) glPlace(d); } });
+    }
     document.addEventListener('click', function (e) { if (!header.contains(e.target)) closeAll(null); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closeAll(null); header.setAttribute('data-menu', 'closed'); } });
   }
