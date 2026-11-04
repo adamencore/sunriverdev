@@ -1819,8 +1819,8 @@ body.m-nav-lock { overflow: hidden; }
 
 /* Homes dropdown: a small card under Homes with Floor Plans and Homes for Sale, same type and underline as Life at SunRiver */
 .nav-item.has-sm { position: relative; }
-.pill-drop.pill-drop-sm { left: -26px; right: auto; top: 38px; width: 200px; height: auto; padding: 4px 25px 24px; grid-template-columns: minmax(0, 1fr); transform-origin: 30% 0; }
-.pill-drop-sm ul { padding-top: 18px; gap: 20px; }
+.pill-drop.pill-drop-sm { left: -26px; right: auto; top: 40.6px; width: 200px; height: auto; padding: 6px 25px 28px; grid-template-columns: minmax(0, 1fr); transform-origin: 30% 0; }
+.pill-drop-sm ul { padding-top: 23px; gap: 24px; }
 .pill-drop-sm ul a:hover strong::after, .pill-drop-sm ul a:focus-visible strong::after { transform: scaleX(1); }
 .photo .dv-photo, .dv-photo { width: 100%; height: 100%; object-fit: cover; object-position: 8% 50%; }
 
