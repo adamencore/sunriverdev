@@ -110,9 +110,49 @@ def mls_listings(sanity):
     return out
 
 
+PLAN_GARAGE = {"Hamlet": 2, "August": 2, "Tara": 3, "Evergreen": 3, "Astoria": 3, "Elmwood": 3, "Amberly": 3}
+
+
+def inventory_listings(sanity, plans):
+    """SunRiver Firelight homes for sale from the sales team's Move-In Ready sheet (data/inventory.json, the source of truth).
+    A home also in Sanity keeps its photos, gallery, videos and page address; otherwise the floor plan's renderings are used."""
+    inv = json.loads((ROOT / "data" / "inventory.json").read_text(encoding="utf-8"))
+    by_street = {_street(l.get("address")): l for l in sanity}
+    plan_by_name = {p.get("name"): p for p in plans}
+    out, matched = [], 0
+    for h in inv["homes"]:
+        if h.get("status") == "Sold":
+            continue
+        spec = inv["plans"][h["plan"]]
+        parts = h["base"] + sum(a for _, a in h.get("options", [])) + h["upgrades"]
+        if parts != h["price"]:
+            print("  inventory note: lot %d adds up to %s, the sheet total is %s (sheet total used)" % (h["lot"], parts, h["price"]))
+        base = by_street.get(_street(h["address"]))
+        matched += bool(base)
+        base = dict(base or {})
+        plan = plan_by_name.get(h["plan"]) or {}
+        slug = base.get("slug") or "%s-lot-%d" % (h["plan"].lower(), h["lot"])
+        base.update({"title": h["plan"], "slug": slug, "address": "Home %d, %s, %s" % (h["lot"], h["address"], inv["city"]),
+                     "lot": h["lot"], "status": h["status"], "price": h["price"], "askForPricing": False,
+                     "featured": bool(h.get("featured")), "basePrice": h["base"], "options": h.get("options", []),
+                     "upgrades": h["upgrades"], "squareFootage": spec["sqft"], "beds": spec["beds"], "baths": spec["baths"],
+                     "garageSpaces": h.get("garage") or PLAN_GARAGE.get(h["plan"]), "hobbyRooms": spec["hobby"],
+                     "community": "SunRiver Firelight", "mlsNumber": None, "statusDate": inv["asOf"], "asOf": inv["asOf"]})
+        if not base.get("photo"):
+            g = [x.get("asset") for x in plan.get("gallery") or [] if isinstance(x, dict) and x.get("asset")]
+            base["photo"] = g[0] if g else None
+            base["photoAlt"] = "%s floor plan front rendering" % h["plan"]
+            base["gallery"] = g[1:6]
+        out.append(base)
+    print("  homes for sale: %d SunRiver Firelight homes from the %s inventory sheet (%d matched to Sanity listings)" % (len(out), inv["asOf"], matched))
+    return out
+
+
 def get_all():
     plans = [normalize_plan(p) for p in load("floorPlans")]
-    listings = mls_listings(load("homeListings"))
+    sanity = load("homeListings")
+    # SunRiver Firelight from the sales team's inventory sheet; other communities from the MLS feed
+    listings = inventory_listings(sanity, plans) + [l for l in mls_listings(sanity) if l.get("community") != "SunRiver Firelight"]
     posts = [p for p in load("posts")
              if p.get("slug") and p.get("title") and not p["title"].startswith("[PENDING") and block_text(p.get("body"))]
     return plans, listings, posts

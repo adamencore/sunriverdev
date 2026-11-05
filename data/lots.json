@@ -31,7 +31,8 @@
   },
   {
    "lot": 2,
-   "status": "occupied"
+   "status": "occupied",
+   "plan": "Evergreen"
   },
   {
    "lot": 3,
@@ -64,11 +65,13 @@
   {
    "lot": 13,
    "status": "available",
-   "color": "yellow"
+   "color": "yellow",
+   "plan": "Elmwood"
   },
   {
    "lot": 14,
-   "status": "occupied"
+   "status": "occupied",
+   "plan": "Evergreen"
   },
   {
    "lot": 15,
@@ -102,7 +105,8 @@
   {
    "lot": 22,
    "status": "available",
-   "color": "purple"
+   "color": "purple",
+   "plan": "August"
   },
   {
    "lot": 23,
@@ -124,7 +128,8 @@
   },
   {
    "lot": 27,
-   "status": "occupied"
+   "status": "occupied",
+   "plan": "Hamlet"
   },
   {
    "lot": 28,
@@ -210,7 +215,8 @@
   {
    "lot": 46,
    "status": "available",
-   "color": "orange"
+   "color": "orange",
+   "plan": "Astoria"
   },
   {
    "lot": 47,
@@ -220,7 +226,8 @@
   {
    "lot": 48,
    "status": "available",
-   "color": "yellow"
+   "color": "yellow",
+   "plan": "Elmwood"
   },
   {
    "lot": 49,
@@ -255,27 +262,32 @@
   },
   {
    "lot": 56,
-   "status": "build"
+   "status": "build",
+   "plan": "Hamlet"
   },
   {
    "lot": 57,
    "status": "available",
-   "color": "pink"
+   "color": "pink",
+   "plan": "Tara"
   },
   {
    "lot": 58,
    "status": "available",
-   "color": "purple"
+   "color": "purple",
+   "plan": "August"
   },
   {
    "lot": 59,
    "status": "available",
-   "color": "pink"
+   "color": "pink",
+   "plan": "Tara"
   },
   {
    "lot": 60,
    "status": "available",
-   "color": "yellow"
+   "color": "yellow",
+   "plan": "Elmwood"
   },
   {
    "lot": 61,
@@ -288,7 +300,8 @@
   {
    "lot": 63,
    "status": "available",
-   "color": "pink"
+   "color": "pink",
+   "plan": "Tara"
   },
   {
    "lot": 64,
@@ -301,7 +314,8 @@
   {
    "lot": 66,
    "status": "available",
-   "color": "pink"
+   "color": "pink",
+   "plan": "Tara"
   },
   {
    "lot": 67,
@@ -330,7 +344,8 @@
   },
   {
    "lot": 72,
-   "status": "occupied"
+   "status": "occupied",
+   "plan": "Evergreen"
   },
   {
    "lot": 73,

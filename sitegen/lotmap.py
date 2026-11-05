@@ -123,10 +123,10 @@ def svg(plans=(), listings=()):
         elif st in ("available", "upcoming"):
             fill = WHITE
         q = by_name.get((plan or "").lower())
-        home = homes.get(n) if st == "available" else None
+        home = homes.get(n) if st in ("available", "build") else None  # a home for sale links its lot, even one still marked Build job
         if home:
             tip = "Lot %d: %s for sale" % (n, home.get("title") or plan or "Home")
-        if st in INTERACTIVE:
+        if st in INTERACTIVE or home:
             attrs = ' data-tip="%s" data-status="%s" tabindex="0" role="link" aria-label="%s"' % (tip, st, tip)
         else:
             attrs = ' data-status="%s"' % st

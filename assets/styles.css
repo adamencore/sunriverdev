@@ -2239,3 +2239,19 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
 .lotmap-key .sw-icon svg { width: 13px; height: 13px; }
 .sw-villa { background: #E8A93A; }
 @media (max-width: 700px) { .lotmap-key .sw-icon svg { width: 10px; height: 10px; } }
+
+/* Homesite number with the house icon (cards and listing pages), Featured Home tag, price breakdown */
+.home-no { display: inline-flex; align-items: center; gap: 3px; margin-left: 8px; color: #335A97; font-weight: 900; vertical-align: -1px; white-space: nowrap; }
+.home-ico { width: 13px; height: 12px; flex: none; }
+.home-feat { position: absolute; top: 12px; right: 12px; padding: 4px 12px; border-radius: 999px; background: #F5AF1C; color: #143250; font-weight: 900; font-size: 10px; line-height: 15px; letter-spacing: -0.02em; text-transform: uppercase; }
+.hd-site { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 6px 14px 6px 10px; border-radius: 999px; background: #FAF5F0; color: #335A97; font-weight: 900; font-size: 15px; line-height: 20px; letter-spacing: -0.02em; }
+.hd-site-ico { width: 20px; height: 18px; flex: none; }
+.hd-site + .hd-address { margin-top: 10px; }
+.hd-feat { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 14px; color: #335A97; font-weight: 700; font-size: 15px; line-height: 20px; }
+.hd-feat strong { padding: 3px 12px; border-radius: 999px; background: #F5AF1C; color: #143250; font-weight: 900; font-size: 12px; text-transform: uppercase; letter-spacing: -0.01em; }
+.hd-break { margin: 18px 0 0; padding: 14px 0 0; border-top: 1px solid rgba(51, 90, 151, .18); display: grid; gap: 6px; font-size: 14px; line-height: 20px; color: #143250; }
+.hd-break div { display: flex; justify-content: space-between; gap: 16px; }
+.hd-break dt { margin: 0; }
+.hd-break dd { margin: 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hd-break .hd-break-total { margin-top: 4px; padding-top: 8px; border-top: 2px solid #F5AF1C; font-weight: 900; color: #335A97; font-size: 16px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

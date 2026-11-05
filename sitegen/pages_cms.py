@@ -274,6 +274,17 @@ def short_address(l):
 BADGE_LABEL = {"Move in Ready": "Move-In-Ready"}
 
 
+def home_icon(cls="home-ico"):
+    """The house (Build Job) icon from the lot map, marking a homesite number."""
+    w, h, inner = lotmap.ICONS["build"]
+    return '<svg class="%s" viewBox="0 0 %s %s" aria-hidden="true">%s</svg>' % (cls, w, h, inner)
+
+
+def homesite_no(l):
+    m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
+    return m.group(1) if m else ""
+
+
 def listing_card(l):
     """Homes for sale card, styled like the developers' Vercel build (sunriver-website.vercel.app/homes-for-sale):
     status pill with a dot, plan name and square feet with a yellow underline, address and home number, price, spec chips."""
@@ -283,19 +294,20 @@ def listing_card(l):
         l.get("baths") or 0, l.get("garageSpaces") or 0, l.get("hobbyRooms") or 0)
     st = l.get("status") or ""
     badge = '<span class="home-badge is-%s"><i aria-hidden="true"></i>%s</span>' % (slugify(st), esc(BADGE_LABEL.get(st, st))) if st else ""
-    m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
-    home_no = '<span class="home-no"> | Home %s</span>' % m.group(1) if m else ""
+    n = homesite_no(l)
+    home_no = '<span class="home-no" title="Homesite %s">%s<span class="sr-only">Homesite </span>%s</span>' % (n, home_icon(), n) if n else ""
+    feat = '<span class="home-feat">Featured Home</span>' if l.get("featured") else ""
     # a price, or "Ask for pricing"; a home under contract with no price shows none
     price = "" if (st == "Under Contract" and not l.get("price")) else listing_price(l)
     return '''<a class="home-card" href="/homes-for-sale/%s" %s><span class="home-card-in">
-  <span class="home-img">%s%s</span>
+  <span class="home-img">%s%s%s</span>
   <span class="home-body">
     <span class="home-title"><strong>%s</strong><span class="home-sf">%s sf</span></span>
     <span class="home-address">%s%s</span>
     %s
     %s
   </span>
-</span></a>''' % (l["slug"], data, photo, badge, esc(clean(l.get("title"))), l.get("squareFootage") or "",
+</span></a>''' % (l["slug"], data, photo, badge, feat, esc(clean(l.get("title"))), l.get("squareFootage") or "",
              esc(short_address(l)), home_no, '<span class="home-price">%s</span>' % price if price else "", spec_chips(l))
 
 
@@ -400,13 +412,22 @@ def build_listing(l):
             "".join('<button type="button" class="thumb%s" data-src="%s" aria-label="Show photo %d">%s</button>' % (
                 " is-active" if k == 0 else "", S(r, 1600), k + 1, img(S(r, 320), "%s photo %d" % (alt, k + 1))) for k, r in enumerate(pics)),
             '<button type="button" class="see-more" aria-expanded="false">See more</button>' if len(pics) > 4 else "")
-    m = re.match(r"\s*Home\s+(\d+)", l.get("address") or "")
-    home_no = m.group(1) if m else ""
+    home_no = homesite_no(l)
+    site = '<p class="hd-site">%s<span>Homesite %s</span></p>' % (home_icon("hd-site-ico"), home_no) if home_no else ""
+    feat = '<p class="hd-feat"><strong>Featured Home</strong>Ask for pricing!</p>' if l.get("featured") else ""
+    breakdown = ""
+    if l.get("basePrice"):
+        rows = [("%s base price" % clean(l.get("title")), money(l["basePrice"]))]
+        rows += [(clean(lbl), money(a) if a else "Included") for lbl, a in l.get("options") or []]
+        if l.get("upgrades"):
+            rows.append(("Design upgrades", money(l["upgrades"])))
+        breakdown = '<dl class="hd-break">%s<div class="hd-break-total"><dt>Price</dt><dd>%s</dd></div></dl>' % (
+            "".join("<div><dt>%s</dt><dd>%s</dd></div>" % (esc(a), b) for a, b in rows), listing_price(l))
     videos = ""
     if l.get("youtubeShortIds"):
         vids = "".join('<div class="short"><iframe src="https://www.youtube.com/embed/%s" title="Video tour of %s" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe></div>' % (v, esc(l.get("title"))) for v in l["youtubeShortIds"])
         videos = '<section class="hd-videos"><div class="wrap stack-lg"><div class="center stack"><h2 class="h2">Take a look inside%s</h2><hr class="rule center"></div><div class="shorts">%s</div></div></section>' % (
-            " Home %s" % home_no if home_no else "", vids)
+            " Homesite %s" % home_no if home_no else "", vids)
     addr = short_address(l) or l.get("address") or ""
     title = clean(l.get("title"))
     head, story = listing_story(l)
@@ -422,10 +443,12 @@ def build_listing(l):
       <div class="hd-card">
         <p class="hd-price">%s</p>
         <p class="hd-name"><strong>%s</strong><span aria-hidden="true">|</span>%s sqft</p>
+        %s
         <h1 class="hd-address">%s</h1>
         <p class="hd-comm">%s</p>
         %s
         <p class="hd-status">%s</p>
+        %s%s
         <div class="hd-actions"><a class="hd-btn solid" href="/contact-us">Schedule a Tour</a><a class="hd-btn" href="/contact-us#team">Request Info</a></div>
         %s
       </div>
@@ -437,8 +460,8 @@ def build_listing(l):
     %s
   </div>
 </section>
-%s''' % (main, thumbs, listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), esc(addr),
-         esc(comm), spec_chips(l, "chips hd-chips"), esc(l.get("status") or ""), mls,
+%s''' % (main, thumbs, listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), site, esc(addr),
+         esc(comm), spec_chips(l, "chips hd-chips"), esc(BADGE_LABEL.get(l.get("status"), l.get("status") or "")), feat, breakdown, mls,
          esc(head), esc(story), esc(addr).replace(" ", "+"), esc(addr),
          contact_row(l.get("community") == "SunRiver Firelight"), videos), body_class="sand-page")
 
