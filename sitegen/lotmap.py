@@ -38,8 +38,9 @@ def _icon(name):
 ICONS = {k: _icon(k) for k in ("build", "occupied", "villa")}
 
 
-def icon_mark(kind, cx, cy, label_lines, width):
-    """An icon with a small caps label under it, the pair centred on the lot (cx, cy is the lot's area centroid)."""
+def icon_mark(kind, cx, cy, label_lines, width, angle=0):
+    """An icon with a small caps label under it, the pair centred in the lot's box and turned to the lot's angle,
+    like the printed map (cx, cy, angle come from the lot's best-fit rotated rectangle)."""
     w, h, inner = ICONS[kind]
     s = width / w
     ih, gap, cap, lead = h * s, 2.4, 3.1, 5.2  # icon height, icon to label, label cap height (4.3 font), line step
@@ -50,6 +51,8 @@ def icon_mark(kind, cx, cy, label_lines, width):
     for line in label_lines:
         out += '<text class="lm-lbl" x="%.2f" y="%.2f" fill="%s">%s</text>' % (cx, y, LABEL_BLUE, line)
         y += lead
+    if abs(angle) >= 0.5:
+        out = '<g transform="rotate(%.1f %.2f %.2f)">%s</g>' % (angle, cx, cy, out)
     return out
 
 
@@ -150,13 +153,13 @@ def svg(plans=(), listings=()):
         if "c" not in g:
             continue
         cx, cy = g["c"]
-        ix, iy = g.get("ic", g["c"])  # true centre of the lot shape, for the icons
+        ix, iy, ia = g.get("box", g["c"] + [0])  # centre and angle of the lot's rotated box, for the icons
         if st == "build":
-            marks.append(icon_mark("build", ix, iy, ["BUILD JOB"], 12))
+            marks.append(icon_mark("build", ix, iy, ["BUILD JOB"], 12, ia))
         elif st == "occupied":
-            marks.append(icon_mark("occupied", ix, iy, ["OCCUPIED"], 15))
+            marks.append(icon_mark("occupied", ix, iy, ["OCCUPIED"], 15, ia))
         elif st == "villa":
-            marks.append(icon_mark("villa", ix, iy, ["DISCOVERY", "VILLA"], 11))
+            marks.append(icon_mark("villa", ix, iy, ["DISCOVERY", "VILLA"], 11, ia))
         elif st == "sold":
             marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, WHITE))
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, RED, n))
