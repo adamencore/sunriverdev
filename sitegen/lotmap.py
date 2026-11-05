@@ -19,7 +19,36 @@ WHITE = "#FFFFFF"
 NUM_LIGHT = "#F3F0E8"
 BADGE = {"slate": "#33637A", "sage": "#819F85", "orange": "#E07E35", "gray": "#8A8F99"}
 STATUS_LABEL = {"available": "Available", "sold": "Sold", "model": "Model home", "future": "Future model",
-                "sales": "Sales Center", "upcoming": "Future release"}
+                "sales": "Sales Center", "upcoming": "Future release", "build": "Build job", "occupied": "Occupied",
+                "villa": "Discovery Villa"}
+LABEL_BLUE = "#335A97"
+VILLA_GOLD = "#E8A93A"
+
+
+def _icon(name):
+    """Adam's map icons (sitegen/lotmap_icons/*.svg): (width, height, inner markup with the class fills inlined)."""
+    raw = (ROOT / "sitegen" / "lotmap_icons" / (name + ".svg")).read_text()
+    vb = [float(v) for v in re.search(r'viewBox="([^"]+)"', raw).group(1).split()]
+    fills = dict(re.findall(r"\.(cls-\d+)\s*\{\s*fill:\s*([^;]+);", raw))
+    paths = re.findall(r"<path\b[^>]*/>", raw)
+    paths = [re.sub(r'class="([^"]+)"', lambda m: 'fill="%s"' % fills.get(m.group(1), "#000"), x) for x in paths]
+    return vb[2], vb[3], "".join(paths)
+
+
+ICONS = {k: _icon(k) for k in ("build", "occupied", "villa")}
+
+
+def icon_mark(kind, cx, cy, label_lines, width):
+    """An icon centred a little above the lot centre with a small caps label under it, like the printed map."""
+    w, h, inner = ICONS[kind]
+    s = width / w
+    top = cy - 7.5 - h * s / 2
+    out = '<g transform="translate(%.2f %.2f) scale(%.4f)">%s</g>' % (cx - width / 2, top, s, inner)
+    y = top + h * s + 5.6
+    for line in label_lines:
+        out += '<text class="lm-lbl" x="%.2f" y="%.2f" fill="%s">%s</text>' % (cx, y, LABEL_BLUE, line)
+        y += 5.2
+    return out
 
 
 def listing_price_text(l):
@@ -52,6 +81,11 @@ def lot_listings(listings):
     return out
 
 
+def key_icon(kind):
+    w, h, inner = ICONS[kind]
+    return '<svg viewBox="0 0 %s %s" aria-hidden="true">%s</svg>' % (w, h, inner)
+
+
 def svg(plans=(), listings=()):
     data = load()
     homes = lot_listings(listings)
@@ -75,6 +109,10 @@ def svg(plans=(), listings=()):
         fill = None
         if st == "sold":
             fill = RED
+        elif st in ("build", "occupied"):
+            fill = WHITE
+        elif st == "villa":
+            fill = VILLA_GOLD
         elif plan_key:
             fill = colors[plan_key]["hex"]
         elif st in ("available", "upcoming"):
@@ -106,7 +144,13 @@ def svg(plans=(), listings=()):
         if "c" not in g:
             continue
         cx, cy = g["c"]
-        if st == "sold":
+        if st == "build":
+            marks.append(icon_mark("build", cx, cy, ["BUILD JOB"], 12))
+        elif st == "occupied":
+            marks.append(icon_mark("occupied", cx, cy, ["OCCUPIED"], 15))
+        elif st == "villa":
+            marks.append(icon_mark("villa", cx, cy + 1.5, ["DISCOVERY", "VILLA"], 11))
+        elif st == "sold":
             marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, WHITE))
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, RED, n))
             # no "SOLD" label: the red fill and the key already say it
@@ -128,8 +172,8 @@ def svg(plans=(), listings=()):
                                       "img": S(l["photo"], 640) if l.get("photo") else "", "url": "/homes-for-sale/%s" % l["slug"]}
     plan_json = json.dumps(cards, separators=(",", ":")).replace("</", "<\\/")
     avail = sum(1 for e in lots.values() if e.get("status") == "available")
-    sold = sum(1 for e in lots.values() if e.get("status") == "sold")
-    out = re.sub(r"<svg\b", '<svg class="lotmap-svg" role="group" aria-label="SunRiver Firelight lot map: %d homesites available, %d sold"' % (avail, sold), out, count=1)
+    taken = sum(1 for e in lots.values() if e.get("status") in ("sold", "build", "occupied"))
+    out = re.sub(r"<svg\b", '<svg class="lotmap-svg" role="group" aria-label="SunRiver Firelight lot map: %d homesites available, %d built or under construction"' % (avail, taken), out, count=1)
     out = re.sub(r"<\?xml[^>]*>", "", out)
     # lot card: Option 1 "Light" (chosen 2026-10-29); the "More info" style stays in site.js under .card-detail
     return '''<div class="lotmap card-light">
@@ -143,12 +187,14 @@ def svg(plans=(), listings=()):
     <p class="lotmap-hint">Drag to explore. Pinch or use + to zoom.</p>
     <ul class="lotmap-key" aria-label="Map key">
       <li><span class="sw sw-open"></span>Available</li>
-      <li><span class="sw sw-sold"></span>Sold</li>
+      <li><span class="sw sw-plan"></span>Plan selected</li>
+      <li><span class="sw sw-icon">%s</span>Build job</li>
+      <li><span class="sw sw-icon">%s</span>Occupied</li>
+      <li><span class="sw sw-villa"></span>Discovery Villa</li>
       <li><span class="sw sw-model"></span>Model home</li>
       <li><span class="sw sw-future"></span>Future model</li>
-      <li><span class="sw sw-plan"></span>Plan selected</li>
     </ul>
     <div class="lotmap-card" hidden></div>
     <script type="application/json" class="lotmap-plans">%s</script>
   </div>
-</div>''' % (out.strip(), plan_json)
+</div>''' % (out.strip(), key_icon("build"), key_icon("occupied"), plan_json)
