@@ -8,7 +8,7 @@ from .lib import (full_hero, PAGES, PHONE, PHONE_TEL, S, V, VP, FOUNDERS_BADGE, 
                   nice_date, sand_hero, simg, slugify, star_list)
 
 STATUS_ORDER = {"Move in Ready": 0, "For Sale": 1, "Under Contract": 2, "Sold": 3}
-COMMUNITIES = ["SunRiver Firelight", "SunRiver Villas", "SunRiver St George", "Sand Ridge"]
+COMMUNITIES = ["SunRiver Firelight", "SunRiver Villas", "SunRiver St George"]  # add "Sand Ridge" back when a Sand Ridge home is listed
 COMMUNITY_LABEL = {"SunRiver St George": "SunRiver St. George", "Sand Ridge": "Sand Ridge, St. George"}
 SQFT_RANGES = [(1250, 1400), (1450, 1700), (1750, 1900)]
 DISCLAIMER = ("Prices are subject to change without notice and reflect standard homesites. Dimensions and square footage are approximate. "
