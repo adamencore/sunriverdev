@@ -39,15 +39,17 @@ ICONS = {k: _icon(k) for k in ("build", "occupied", "villa")}
 
 
 def icon_mark(kind, cx, cy, label_lines, width):
-    """An icon centred a little above the lot centre with a small caps label under it, like the printed map."""
+    """An icon with a small caps label under it, the pair centred on the lot (cx, cy is the lot's area centroid)."""
     w, h, inner = ICONS[kind]
     s = width / w
-    top = cy - 7.5 - h * s / 2
+    ih, gap, cap, lead = h * s, 2.4, 3.1, 5.2  # icon height, icon to label, label cap height (4.3 font), line step
+    total = ih + gap + cap + lead * (len(label_lines) - 1)
+    top = cy - total / 2
     out = '<g transform="translate(%.2f %.2f) scale(%.4f)">%s</g>' % (cx - width / 2, top, s, inner)
-    y = top + h * s + 5.6
+    y = top + ih + gap + cap
     for line in label_lines:
         out += '<text class="lm-lbl" x="%.2f" y="%.2f" fill="%s">%s</text>' % (cx, y, LABEL_BLUE, line)
-        y += 5.2
+        y += lead
     return out
 
 
@@ -144,12 +146,13 @@ def svg(plans=(), listings=()):
         if "c" not in g:
             continue
         cx, cy = g["c"]
+        ix, iy = g.get("ic", g["c"])  # true centre of the lot shape, for the icons
         if st == "build":
-            marks.append(icon_mark("build", cx, cy, ["BUILD JOB"], 12))
+            marks.append(icon_mark("build", ix, iy, ["BUILD JOB"], 12))
         elif st == "occupied":
-            marks.append(icon_mark("occupied", cx, cy, ["OCCUPIED"], 15))
+            marks.append(icon_mark("occupied", ix, iy, ["OCCUPIED"], 15))
         elif st == "villa":
-            marks.append(icon_mark("villa", cx, cy + 1.5, ["DISCOVERY", "VILLA"], 11))
+            marks.append(icon_mark("villa", ix, iy, ["DISCOVERY", "VILLA"], 11))
         elif st == "sold":
             marks.append('<circle cx="%.2f" cy="%.2f" r="8.47" fill="%s"/>' % (cx, cy, WHITE))
             marks.append('<text x="%.2f" y="%.2f" fill="%s">%d</text>' % (cx, cy + 3.45, RED, n))

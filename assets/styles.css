@@ -2234,7 +2234,7 @@ details.faq.is-closing .answer > *, details.faq.is-opening-start .answer > * { o
 }
 
 /* Lot map: Build job / Occupied icons and Discovery Villa lots (Adam's map, Nov 2026) */
-.lm-marks text.lm-lbl { font-weight: 700; font-size: 4.3px; letter-spacing: .02em; }
+.lm-marks text.lm-lbl { font-weight: 700; font-size: 4.3px; letter-spacing: 0; }
 .lotmap-key .sw-icon { display: grid; place-items: center; background: #fff; }
 .lotmap-key .sw-icon svg { width: 13px; height: 13px; }
 .sw-villa { background: #E8A93A; }
