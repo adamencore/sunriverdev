@@ -302,13 +302,12 @@ def listing_card(l):
     return '''<a class="home-card" href="/homes-for-sale/%s" %s><span class="home-card-in">
   <span class="home-img">%s%s%s</span>
   <span class="home-body">
-    <span class="home-title"><strong>%s</strong><span class="home-sf">%s sf</span></span>
-    <span class="home-address">%s%s</span>
+    <span class="home-title"><span class="home-tl"><strong>%s</strong><span class="home-address">%s</span></span><span class="home-tr"><span class="home-sf">%s sf</span>%s</span></span>
     %s
     %s
   </span>
-</span></a>''' % (l["slug"], data, photo, badge, feat, esc(clean(l.get("title"))), l.get("squareFootage") or "",
-             esc(short_address(l)), home_no, '<span class="home-price">%s</span>' % price if price else "", spec_chips(l))
+</span></a>''' % (l["slug"], data, photo, badge, feat, esc(clean(l.get("title"))), esc(short_address(l)),
+             l.get("squareFootage") or "", home_no, '<span class="home-price">%s</span>' % price if price else "", spec_chips(l))
 
 
 def box(name, value, label, checked=False):

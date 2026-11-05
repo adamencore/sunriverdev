@@ -138,6 +138,8 @@ def inventory_listings(sanity, plans):
                      "upgrades": h["upgrades"], "squareFootage": spec["sqft"], "beds": spec["beds"], "baths": spec["baths"],
                      "garageSpaces": h.get("garage") or PLAN_GARAGE.get(h["plan"]), "hobbyRooms": spec["hobby"],
                      "community": "SunRiver Firelight", "mlsNumber": None, "statusDate": inv["asOf"], "asOf": inv["asOf"]})
+        if h.get("videos"):
+            base["youtubeShortIds"] = h["videos"]
         if not base.get("photo"):
             g = [x.get("asset") for x in plan.get("gallery") or [] if isinstance(x, dict) and x.get("asset")]
             base["photo"] = g[0] if g else None
