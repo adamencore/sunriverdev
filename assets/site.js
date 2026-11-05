@@ -345,7 +345,7 @@
     var data = {};
     try { data = JSON.parse(map.querySelector(".lotmap-plans").textContent); } catch (e) {}
     var hideTimer = null, current = null;
-    var LABEL = { available: "Available", sold: "Sold", model: "Model home", future: "Future model", sales: "Sales Center", upcoming: "Future release" };
+    var LABEL = { villa: "Discovery Villa", available: "Available", sold: "Sold", model: "Model home", future: "Future model", sales: "Sales Center", upcoming: "Future release" };
     var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
 
     function home(g) { var h = g.getAttribute("data-home"); return h ? data["home:" + h] : null; }
@@ -378,14 +378,18 @@
       }
       if (!detail) {
         var name = p ? p.name : (st === "available" ? "Choose your plan" : st === "sold" ? "Sold" : label);
-        var meta = "Lot " + n + (p ? " &middot; " + p.sqft + " ft&sup2;" : " &middot; " + label);
+        var meta = "Lot " + n + (st === "villa" ? " &middot; Stay a few nights" : p ? " &middot; " + p.sqft + " ft&sup2;" : " &middot; " + label);
         return "<" + tag + ' class="lmc-card is-' + st + '"' + href + ">" +
           (p && p.img ? '<span class="lmc-img"><img src="' + p.img + '" alt=""></span>' : "") +
           '<span class="lmc-bar"><span class="lmc-meta">' + meta + '</span><span class="lmc-name">' + esc(name) + "</span>" +
           (url ? '<span class="po-go" aria-hidden="true"></span>' : "") + "</span></" + tag + ">";
       }
       var body;
-      if (p) {
+      if (st === "villa") {
+        body = '<span class="lmc-eyebrow">Lot ' + n + '</span><span class="lmc-title">Discovery Villa</span>' +
+          '<span class="lmc-note">Stay a few nights in a furnished SunRiver Firelight home and see what living here is like.</span>' +
+          '<span class="lmc-cta">Plan your stay<span class="lmc-arrow" aria-hidden="true"></span></span>';
+      } else if (p) {
         body = '<span class="lmc-eyebrow">Lot ' + n + "</span>" +
           '<span class="lmc-title">The ' + esc(p.name) + "</span>" +
           '<span class="lmc-spec">' + p.sqft + " ft&sup2; | " + esc(p.spec) + "</span>" +

@@ -67,7 +67,7 @@ def load():
 FOR_SALE = ("For Sale", "Move in Ready", "Coming Soon")
 # only these lots react to the pointer: a homesite you can still buy. Sold lots, model homes, future models, the Sales
 # Center and future-release lots are part of the picture only (no hover, no card, not focusable).
-INTERACTIVE = ("available",)
+INTERACTIVE = ("available", "villa")  # villa lots link to the Discovery Villas page
 
 
 def lot_listings(listings):
@@ -127,7 +127,11 @@ def svg(plans=(), listings=()):
             attrs = ' data-tip="%s" data-status="%s" tabindex="0" role="link" aria-label="%s"' % (tip, st, tip)
         else:
             attrs = ' data-status="%s"' % st
-        if q:
+        if st == "villa":
+            tip = "Lot %d: Discovery Villa. Stay a few nights" % n
+            attrs = attrs.replace('data-tip="Lot %d: Discovery Villa"' % n, 'data-tip="%s"' % tip).replace('aria-label="Lot %d: Discovery Villa"' % n, 'aria-label="%s"' % tip)
+            attrs += ' data-plan="villa"'
+        elif q:
             attrs += ' data-plan="%s"' % q["slug"]
         if home:
             attrs += ' data-home="%s"' % home["slug"]
@@ -169,6 +173,8 @@ def svg(plans=(), listings=()):
         ref = q.get("gallery") and q["gallery"][0]["asset"]
         cards[q["slug"]] = {"name": q["name"], "sqft": "{:,}".format(q["squareFootage"]), "price": q.get("priceRange", ""),
                             "spec": q.get("specLine", ""), "img": S(ref, 640) if ref else "", "url": "/floor-plans/%s" % q["slug"]}
+    from .figma_assets import FG
+    cards["villa"] = {"name": "Discovery Villa", "sqft": "", "price": "", "spec": "", "img": FG("dv-living"), "url": "/discovery-villas"}
     for n, l in homes.items():
         cards["home:" + l["slug"]] = {"name": l.get("title") or "Home", "sqft": "{:,}".format(l.get("squareFootage") or 0),
                                       "price": listing_price_text(l), "spec": "%s bed | %s bath" % (l.get("beds") or "", l.get("baths") or ""),
