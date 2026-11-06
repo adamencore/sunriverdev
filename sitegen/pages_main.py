@@ -22,35 +22,45 @@ def build_main(plans, listings):
 
 
     # ============================================================== WHY SUNRIVER
+    # Clark, Nov 6 2026: far less on this page. A white title with the three communities as blurred photos and logos
+    # (St. George and Villas are a short blurb only, no links), clubs as a slide-through, amenity icons, no golf,
+    # a taller attractions map, no Adventure Storage.
     communities = [
-        ("SunRiver St. George", "/st-george", V("logo-stgeorge.1u9p9bnhl698p.png"), V("card-stgeorge.0a1o_5i7v8oqz.png"),
-         "SunRiver St. George is the original development in SunRiver Communities, with a 35,000+ sq ft community center and an 18-hole championship golf course."),
-        ("SunRiver Villas", "/villas", V("logo-villas.29yst90kwcult.png"), V("card-villas.16rkj-wtqpn-t.jpg"),
-         "The second development of SunRiver Communities, SunRiver Villas is luxury simplified: a smaller, more exclusive community of luxury patio homes."),
-        ("SunRiver Firelight", "/sunriver-firelight", V("logo-firelight.06pprl9ewa1sb.png"), V("card-firelight.3g4iz_6s823i2.jpg"),
-         "As the newest development of SunRiver Communities, SunRiver Firelight is an exciting new frontier: luxury single family homes and the perfect landing for all things adventure."),
+        ("SunRiver St. George", V("logo-stgeorge.1u9p9bnhl698p.png"), V("card-stgeorge.0a1o_5i7v8oqz.png"),
+         "Where it started in 1998. Thousands of members, more than 60 clubs and a community center at the heart of it all.", None),
+        ("SunRiver Villas", V("logo-villas.29yst90kwcult.png"), V("card-villas.16rkj-wtqpn-t.jpg"),
+         "Our second community: luxury patio homes in a smaller, more exclusive neighborhood with its own community center.", None),
+        ("SunRiver Firelight", V("logo-firelight.06pprl9ewa1sb.png"), V("card-firelight.3g4iz_6s823i2.jpg"),
+         "Our newest community, in Toquerville. New single family homes, red rock all around and Zion 31 minutes away.", "/sunriver-firelight"),
     ]
-    comm_html = "".join('''<a class="community-card" href="%s"><div class="community-img">%s</div><div class="community-body">%s<p>%s</p><span class="btn small">Explore Community</span></div></a>''' % (
-        h, img(card, "%s homes" % t), img(logo, t, "community-logo"), d) for t, h, logo, card, d in communities)
-    clubs = [("Pottery Club", "Have you ever tried pottery? You need the tools, we've got them.", V("club-pottery.3xzlhsr3zozdr.png")),
-             ("Pickleball Club", "Try the sport taking the world by storm. The Pickleball Club is one of SunRiver's most popular groups.", V("club-pickleball.2qlhwsq_t2gxw.jpg")),
-             ("Bicycle Club", "Get that helmet on and hit the road. Our bicycle club rides all over Southern Utah.", V("club-bicycle.1i1btbq14b2z4.png")),
-             ("Motorcycle Club", "Rev the engine and hit the highway with riders who know every back road in Southern Utah.", V("club-motorcycle.3fgfxbblc-re2.png")),
-             ("Woodworking Club", "There's something calming about turning organic wood into something you made.", V("club-woodworking.0nsogau55dg0-.png")),
-             ("Golf Club", "For gentlemen and ladies alike, golf is best as a social game. Hit the links at SunRiver St. George.", V("club-golf.0a1o_5i7v8oqz.png"))]
-    clubs_html = "".join('<div class="photo-card">%s<h3>%s</h3><p>%s</p></div>' % (photo(p, t), t, d) for t, d, p in clubs)
-    more_clubs = [("French Conversation Club", "Parlez-vous fran&ccedil;ais? Hone your language skills."), ("Ukulele Circle", "Ready to learn a new instrument? Try the ukulele on for size."),
-                  ("Dancin' to the Oldies", "Groove to the songs from back when music was its best."), ("Mahjong", "Sharpen your tactical and observation skills with this classic tile game."),
-                  ("Gardening", "Develop a green thumb with the Gardening group."), ("Creative Writing", "Turn your imagination into ideas on the page."),
-                  ("Bocce Ball", "Come learn the sport first played in ancient Rome."), ("Model Railroad Club", "Build and design your dream railroads.")]
-    more_html = "".join('<div class="amenity"><h3>%s</h3><p>%s</p></div>' % x for x in more_clubs)
-    amen = [("Club House", "At the center of the SunRiver community, the clubhouse is a meeting place for friends, neighbors and people you haven't met yet."),
-            ("Pickleball", "SunRiver is at the forefront of the pickleball craze, with fully outfitted courts and a thriving club."),
-            ("Golf Course", "SunRiver Golf Club, our 18-hole championship course at SunRiver St. George, is just a golf cart ride away."),
-            ("Outdoor Theater", "Perfect for dramatic plays and sidesplitting comedies, the outdoor theater makes room for the performing arts."),
-            ("Activities", "With countless clubs and social groups, there's always something happening at SunRiver."),
-            ("Cooking Classes", "Learn to cook your next favorite recipe with friends in the full-service test kitchen.")]
-    amen_html = "".join('<div class="card"><h3>%s</h3><hr class="rule short"><p>%s</p></div>' % x for x in amen)
+    comm_html = "".join(
+        '<%s class="ws-comm"%s><span class="ws-comm-photo">%s</span><span class="ws-comm-logo">%s</span>'
+        '<span class="ws-comm-text">%s%s</span></%s>' % (
+            "a" if h else "div", ' href="%s"' % h if h else "", img(card, ""), img(logo, t), d,
+            '<span class="ws-comm-cta">Explore our newest community</span>' if h else "", "a" if h else "div")
+        for t, logo, card, d, h in communities)
+    clubs = [("Pottery Club", V("club-pottery.3xzlhsr3zozdr.png")), ("Pickleball Club", V("club-pickleball.2qlhwsq_t2gxw.jpg")),
+             ("Bicycle Club", V("club-bicycle.1i1btbq14b2z4.png")), ("Motorcycle Club", V("club-motorcycle.3fgfxbblc-re2.png")),
+             ("Woodworking Club", V("club-woodworking.0nsogau55dg0-.png"))]
+    club_slides = "".join('<div class="lon-slide fl-slide">%s<span class="fl-slide-text"><strong>%s</strong></span></div>' % (
+        img(p, "Members at the SunRiver %s" % t, loading="lazy"), t) for t, p in clubs)
+    more_clubs = ["French Conversation", "Ukulele Circle", "Dancin' to the Oldies", "Mahjong", "Gardening", "Creative Writing", "Bocce Ball", "Model Railroad"]
+    more_html = "".join("<li>%s</li>" % c for c in more_clubs)
+    ICON = {
+        "clubhouse": '<path d="M4 11l8-6 8 6"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>',
+        "pickleball": '<circle cx="9" cy="9" r="5"/><path d="M12.5 12.5l6.5 6.5"/><circle cx="17.5" cy="6.5" r="2"/>',
+        "trails": '<path d="M5 20c2-4 4-5 7-5s5-1 7-5"/><path d="M8 7l3-3 3 3"/><path d="M11 4v6"/>',
+        "theater": '<path d="M4 6h16v8a8 8 0 0 1-16 0z"/><path d="M9 10h.01M15 10h.01"/><path d="M9 14c1.5 1.3 4.5 1.3 6 0"/>',
+        "activities": '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/><path d="M9 14h2v2H9z"/>',
+        "cooking": '<path d="M6 11h12v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M4 11h16"/><path d="M9 7c0-1 1-1 1-2M12 7c0-1 1-1 1-2M15 7c0-1 1-1 1-2"/>',
+    }
+    amen = [("clubhouse", "Clubhouse", "At the center of every SunRiver community, the Clubhouse is a meeting place for friends, neighbors and people you haven't met yet."),
+            ("pickleball", "Pickleball", "SunRiver is at the forefront of the pickleball craze, with fully outfitted courts and a thriving club."),
+            ("trails", "Trails", "Walking and biking trails run right outside your door, with red rock country beyond them."),
+            ("theater", "Outdoor Theater", "Perfect for dramatic plays and sidesplitting comedies, the outdoor theater makes room for the performing arts."),
+            ("activities", "Activities", "With countless clubs and social groups, there's always something happening at SunRiver."),
+            ("cooking", "Cooking Classes", "Learn to cook your next favorite recipe with friends in the full-service test kitchen.")]
+    amen_html = "".join('<div class="card ws-amen"><span class="ws-ico"><svg viewBox="0 0 24 24" aria-hidden="true">%s</svg></span><h3>%s</h3><hr class="rule short"><p>%s</p></div>' % (ICON[k], t, d) for k, t, d in amen)
     cities = [("Las Vegas", "1.5 hours"), ("Salt Lake", "4 hours"), ("Los Angeles", "6 hours"), ("Phoenix", "6 hours"), ("San Diego", "7 hours"), ("Denver", "8 hours")]
     parks = [("Snow Canyon", "15 min"), ("Zion", "45 min"), ("Lake Powell", "2.5 hours"), ("Grand Canyon", "3 hours"), ("Bryce Canyon", "3 hours"), ("W. Yellowstone", "9 hours")]
     dl = lambda rows: '<dl class="distances">%s</dl>' % "".join("<div><dt>%s</dt><dd>%s</dd></div>" % r for r in rows)
@@ -59,51 +69,31 @@ def build_main(plans, listings):
     quotes_html = "".join('<figure class="quote"><blockquote>%s</blockquote><figcaption><strong>%s</strong><span>%s</span></figcaption></figure>' % q for q in quotes)
     add("/why-sunriver", "Why SunRiver", "Why choose SunRiver Communities: three 55+ communities in Southern Utah, over 60 clubs and groups, and an amenity for everyone.", "life", '''
 %s
-<section class="section">
-  <div class="wrap split wide-text">
-    <div class="stack">
-      <h2 class="display">Why choose <span class="yellow">SunRiver Communities?</span></h2>
-      <hr class="rule">
-      <p class="lede">SunRiver Communities is dedicated to vibrant, active lifestyles across three distinctive communities: SunRiver St. George, SunRiver Villas and SunRiver Firelight. Each is designed around exceptional amenities and a strong sense of community.</p>
-    </div>
-    <div class="stack">
-      <div><h3 class="h3">SunRiver St. George</h3><p>The heart of the community is the 35,000+ sq ft community center, connected by walking and cart paths to open areas, a championship golf course, and tennis and pickleball courts.</p></div>
-      <div><h3 class="h3">SunRiver Villas</h3><p>Its own exclusive community center with a lap pool, fitness center, test kitchen and computer center, plus access to the SunRiver 18-hole championship golf course.</p></div>
-      <div><h3 class="h3">SunRiver Firelight</h3><p>In Toquerville, with innovative home designs, modern comforts and the natural beauty of red rock country. Peace and activity, in balance.</p></div>
-      <div>%s</div>
-    </div>
-  </div>
-</section>
-<section class="section deep-bg">
+<section class="section deep-bg ws-why">
   <div class="wrap stack-lg">
-    <div class="center stack"><h2 class="display">Find the home that <span class="yellow">suits you.</span></h2></div>
-    <div class="grid cols-3">%s</div>
+    <h2 class="display ws-why-title">Why choose SunRiver Communities?</h2>
+    <div class="ws-comms">%s</div>
   </div>
 </section>
 %s
 <section class="section">
   <div class="wrap stack-lg">
-    <div class="split"><h2 class="display">Clubs &amp; Groups <span class="yellow">at SunRiver</span></h2><p class="lede">SunRiver Communities is home to over 60 clubs and social groups, and new ones start all the time. Indoors, outdoors, physical or social, chances are there's something for you. Have an idea for a club that isn't listed? Start it.</p></div>
-    <div class="grid cols-3">%s</div>
-    <div class="stack"><h3 class="h3">More clubs at SunRiver</h3><div class="amenities">%s</div></div>
+    <div class="split"><h2 class="display">Clubs &amp; Groups <span class="yellow">at SunRiver</span></h2><p class="lede">SunRiver Communities is home to over 60 clubs and social groups, and new ones start all the time. Have an idea for a club that isn't listed? Start it.</p></div>
+    <div class="lon-carousel fl-carousel ws-clubs" data-carousel aria-roledescription="carousel" aria-label="Clubs at SunRiver">
+      <div class="lon-car-track" data-car-track>%s</div>
+      <div class="lon-car-nav"><button type="button" data-car-prev aria-label="Previous club"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button><button type="button" data-car-next aria-label="Next club"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="ws-more"><h3 class="h3">And many more</h3><ul>%s</ul></div>
   </div>
 </section>
 <section class="section sand">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">An amenity <span class="yellow">for everyone!</span></h2><hr class="rule center"></div>
-    <div class="grid cols-3">%s</div>
+    <div class="grid cols-3 ws-amens">%s</div>
   </div>
 </section>
 %s
 <section class="section">
-  <div class="wrap split">
-    <div class="stack"><p class="eyebrow">SunRiver St. George</p><h2 class="display">18 hole championship golf course</h2><hr class="rule">
-      <p class="lede">The crown jewel of golf in St. George. Challenging desert terrain, our own PGA golf pro, and a course that's just a golf cart ride from the front doors at SunRiver St. George.</p>
-      <div class="btn-row">%s</div></div>
-    <div class="photo ratio-43 shadow">%s</div>
-  </div>
-</section>
-<section class="section sand">
   <div class="wrap split wide-text">
     <div class="stack"><h2 class="display">Energy <span class="yellow">efficiency</span></h2><hr class="rule">
       <p class="lede">A comfortable home is a high performing home, and today that means being energy efficient. Since the early 2000s, SunRiver has made energy efficiency a top priority in every new home it builds.</p></div>
@@ -112,12 +102,12 @@ def build_main(plans, listings):
 </section>
 %s
 <section class="section">
-  <div class="wrap split">
-    <div class="photo ratio-43">%s</div>
+  <div class="wrap split ws-area">
+    <div class="ws-map">%s</div>
     <div class="stack"><h2 class="display">Area <span class="yellow">attractions</span></h2><hr class="rule">
-      <p>St. George is a gateway to superb national parks and natural wonders, and it's close to several major cities. Beach, mountains or the big city: your weekend destination is nearby.</p>
+      <p>Southern Utah is a gateway to superb national parks and natural wonders, and it's close to several major cities. Beach, mountains or the big city: your weekend destination is nearby.</p>
       <div class="grid cols-2"><div class="stack"><h3 class="h3">Close-by cities</h3>%s</div><div class="stack"><h3 class="h3">Close-by parks</h3>%s</div></div>
-      <p class="note">Drive times from SunRiver St. George. Zion National Park is 31 minutes from SunRiver Firelight.</p>
+      <p class="note">Drive times from St. George. Zion National Park is 31 minutes from SunRiver Firelight.</p>
     </div>
   </div>
 </section>
@@ -128,33 +118,24 @@ def build_main(plans, listings):
     <div class="grid cols-2">%s</div>
   </div>
 </section>
-<section class="section">
-  <div class="wrap split">
-    <div class="photo ratio-43 shadow">%s</div>
-    <div class="stack">%s<p class="lede">Need a place to store your RV and other vehicles between adventures? SunRiver has mini storage, covered RV storage and man caves right here in St. George.</p><div class="btn-row">%s</div></div>
-  </div>
-</section>
 %s''' % (photo_hero("", "Why choose SunRiver?", "Three communities. Over 60 clubs and groups. One way of living.", V("hero.1zxyn0xsm69_i.jpg"), "SunRiver members enjoying the outdoors"),
-         btn("Talk With A SunRiver Team Member", "/contact-us"), comm_html,
+         comm_html,
          banner("Beautiful homes, <strong>beautiful life at SunRiver.</strong>", V("beautiful-homes.3nspyj3umtcic.jpg"), btn("See Our Home Designs", "/floor-plans"), True),
-         clubs_html, more_html, amen_html, band(V("cc-exterior.0ufveyw_xw2e8.jpg"), "The SunRiver St. George community center"),
-         '<a class="btn" href="https://www.sunrivergolf.com/">Learn More</a>', img(V("golf-banner.154wsobedbefq.jpg"), "SunRiver Golf Club fairway"),
+         club_slides, more_html, amen_html, band(V("cc-exterior.0ufveyw_xw2e8.jpg"), "A SunRiver community center"),
          banner("Save <strong>while you save</strong>", V("energy-band.2om6a87nh9cox.png"), btn("Learn About Our Energy Efficient Homes", "/energy"), True),
-         img(V("area-attractions.27g-2mrv4a84e.png"), "Red rock landscape near St. George"), dl(cities), dl(parks),
+         img(V("area-attractions.27g-2mrv4a84e.png"), "Map of cities and national parks around Southern Utah"), dl(cities), dl(parks),
          banner("Beauty <strong>all around</strong>", V("beauty-band.1lup9pnv-v6wk.jpg"), btn("Learn About Southern Utah", "/southern-utah"), True),
-         quotes_html, img(V("storage-photo.2cjrewvecpfj2.jpg"), "Covered RV storage at Adventure Storage"),
-         img(V("adventure-storage-logo.2nuk60xxu39gw.png"), "Adventure Storage", "storage-logo"), '<a class="btn" href="https://www.adventurestorage.info/">Learn More</a>',
-         chat_section()))
+         quotes_html, chat_section()))
 
     # ============================================================== FIND A HOME
     find_comm = [
-        ("SunRiver Villas", "/villas", V("logo-villas.2spd35ri4p34_.png"), V("card-villas.3ij3vmkyez9ep.png"), "Our latest community featuring luxury patio homes", "", ("Homes for Sale", "/homes-for-sale")),
+        ("SunRiver Villas", None, V("logo-villas.2spd35ri4p34_.png"), V("card-villas.3ij3vmkyez9ep.png"), "Our second community: luxury patio homes in a smaller, more exclusive neighborhood.", "", None),
         ("SunRiver Firelight", "/sunriver-firelight", V("logo-firelight.3r9_zvrixrchn.png"), V("card-firelight.3s9-nzz50zfg3.jpg"), "Our newest community featuring new single family homes", start_price, ("Floor Plans", "/floor-plans")),
-        ("SunRiver St. George", "/st-george", V("logo-stgeorge.06euqq55p6vjl.png"), V("card-stgeorge.3v7aeoytroq-i.jpg"), "Our first community featuring beautifully designed homes", "", ("Homes for Sale", "/homes-for-sale")),
+        ("SunRiver St. George", None, V("logo-stgeorge.06euqq55p6vjl.png"), V("card-stgeorge.3v7aeoytroq-i.jpg"), "Where SunRiver started in 1998, with thousands of members and more than 60 clubs.", "", None),
     ]
-    fc_html = "".join('''<div class="community-card on-sand"><div class="community-img">%s</div><div class="community-body">%s<p>%s</p>%s<div class="btn-row">%s%s</div></div></div>''' % (
+    fc_html = "".join('''<div class="community-card on-sand"><div class="community-img">%s</div><div class="community-body">%s<p>%s</p>%s<div class="btn-row">%s</div></div></div>''' % (
         img(card, "%s homes" % t), img(logo, t, "community-logo"), d, '<p class="starting">Starting at <strong>%s</strong></p>' % sp if sp else "",
-        btn("Explore Community", h, "small"), btn(l2[0], l2[1], "small blue-btn")) for t, h, logo, card, d, sp, l2 in find_comm)
+        (btn("Explore Community", h, "small") + btn(l2[0], l2[1], "small blue-btn")) if h else "") for t, h, logo, card, d, sp, l2 in find_comm)
     # Figma OFFICIAL "Homes for Sale / Model Homes" (6:206): photo hero with the Founders tab, every floor plan as a
     # card, then the two big link cards. The sections after that are carried over from the Netlify build.
     hfs_pick = next((l for l in sorted(listings, key=lambda l: l.get("status") != "Move in Ready") if l.get("photo") and l.get("community") == "SunRiver Firelight"), None)
@@ -252,14 +233,16 @@ def build_main(plans, listings):
           ("2006", "1000th Home", "SunRiver sells its 1000th home to Craig and Deanna Hall, and the Reflections gated community opens.", V("2006-1000th-home.4258sbh8qzwn8.jpg")),
           ("2016", "SunRiver Villas", "SunRiver Villas begins: a new active adult resort community with its own community center.", V("2016-villas.0gwincf_04c2m.jpg")),
           ("2018", "Hampton Inn &amp; Suites", "Hampton Inn &amp; Suites at SunRiver opens with a well-attended Grand Opening.", V("2018-hampton-inn.16s935p4q0_01.jpg")),
-          ("2022", "SunRiver Firelight", "SunRiver announces plans for a 1,200+ home community in Toquerville, Utah, the gateway to Zion National Park.", V("2022-firelight.3c2h6miza7eiz.png"))]
+          ("2022", "SunRiver Firelight", "SunRiver announces plans for a 1,200+ home community in Toquerville, Utah, the gateway to Zion National Park.", V("2022-firelight.3c2h6miza7eiz.png")),
+          ("Mar 2026", "First Homeowners Move In", "The first members move into their new homes at SunRiver Firelight in Toquerville.", None),
+          ("Jul 2026", "Clubhouse Construction Begins", "Construction begins on the SunRiver Firelight Clubhouse, the future heart of our newest community.", None)]
     # A centered line that fills with yellow as you scroll; each year gets a round photo on the line, and its card
     # slides in from alternating sides as the line reaches it (same scroll logic as the Design Center timeline)
-    tl_html = "".join('''<li class="ht-item %s">
+    tl_html = "".join('''<li class="ht-item %s%s">
       <div class="ht-node%s">%s</div>
       <div class="ht-card"><span class="ht-year">%s</span><h3>%s</h3><p>%s</p></div>
-    </li>''' % ("ht-left" if i % 2 == 0 else "ht-right", "" if p else " ht-node-year",
-                img(p, "%s, %s" % (t, y)) if p else "<span>%s</span>" % y, y, t, d) for i, (y, t, d, p) in enumerate(tl))
+    </li>''' % ("ht-left" if i % 2 == 0 else "ht-right", " ht-fl" if y >= "2022" else "", "" if p else " ht-node-year",
+                img(p, "%s, %s" % (t, y)) if p else "<span>%s</span>" % ("<small>%s</small>%s" % tuple(y.split(" ")) if " " in y else y), y, t, d) for i, (y, t, d, p) in enumerate(tl))
     add("/history", "History", "The history of SunRiver Communities, from the first homes in 1998 to SunRiver Firelight in Toquerville.", "about", '''
 %s
 <section class="section">
@@ -275,6 +258,7 @@ def build_main(plans, listings):
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Our <span class="yellow">History</span></h2><hr class="rule center"></div>
     <ol class="ht" data-htl><span class="ht-line" aria-hidden="true"><span class="ht-fill"></span></span>%s</ol>
+    <a class="ht-next" href="/sunriver-firelight"><span class="ht-next-eyebrow">The next chapter</span><strong>SunRiver Firelight</strong><span class="ht-next-text">Our newest community, in Toquerville. New homes, the Clubhouse on the way and Zion 31 minutes from your front door.</span><span class="ht-next-cta">Explore our newest community</span></a>
   </div>
 </section>
 %s''' % (yellow_hero("A team with <strong>experience</strong>", "/history", V("cc-exterior.0ufveyw_xw2e8.jpg"), "The SunRiver St. George community center"), tl_html, chat_section()))
@@ -295,63 +279,64 @@ def build_main(plans, listings):
 <section class="section">
   <div class="wrap split wide-text">
     <h2 class="display">North of the border, south of heaven, <span class="yellow">right where you belong.</span></h2>
-    <p class="lede">Known for near year-round sunshine, Washington County sits in the heart of Southern Utah's Color Country. Red rock vistas, warm desert temperatures and open space make SunRiver an ideal basecamp. SunRiver St. George hosts an annual art festival, golf tournaments throughout the year and portions of the Huntsman World Senior Games.</p>
+    <p class="lede">Known for near year-round sunshine, Washington County sits in the heart of Southern Utah's Color Country. Red rock vistas, warm desert temperatures and open space make SunRiver an ideal basecamp. The area hosts art festivals, concerts under the cliffs and portions of the Huntsman World Senior Games.</p>
   </div>
 </section>
 <section class="section sand" id="destinations">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Beauty as far as <span class="yellow">the eye can see.</span></h2><hr class="rule center"></div>
-    <div class="grid cols-3">%s</div>
+    <div class="grid cols-3 su-tiles">%s</div>
   </div>
 </section>
 %s
-%s''' % (yellow_hero("Explore <strong>Southern Utah</strong>", "/southern-utah", V("beauty-band.1lup9pnv-v6wk.jpg"), "Red rock country in Southern Utah"), dest_html,
+%s''' % (yellow_hero("Explore <strong>Southern Utah</strong>", "/southern-utah", FG("lo-hero"), "Red rock country in Southern Utah", "50% 60%"), dest_html,
          banner("Have more questions? <strong>Let's talk!</strong>", V("aerial.3dl3zwtjejebp.jpg"), btn("Contact Us", "/contact-us")), chat_section()))
 
     # ============================================================== FAQ
     local = [
-        ("What is the weather like in Southern Utah?", "<p>Washington County has mild, low humidity winters and over 300 sunny days a year. The desert climate and 2,760 foot elevation support year-round recreation, including golf, tennis, fishing, water sports, hiking and bicycling.</p>"),
+        ("What is the weather like in Southern Utah?", "<p>Washington County has mild, low humidity winters and over 300 sunny days a year. The desert climate supports year-round recreation, including pickleball, fishing, water sports, hiking and bicycling.</p>"),
         ("What is the population of Washington County?", "<p>Washington County, including St. George, Hurricane, Santa Clara and Ivins, had a population of 197,680 in 2022.</p>"),
         ("What is the cost of living in Washington County?", "<p>The cost of living in Washington County is generally lower than the national average, with housing, utilities and health care standing out.</p>"),
-        ("What outdoor activities are there in Washington County?", "<p>Washington County is a gateway to Arches, Bryce Canyon, Capitol Reef, Canyonlands, Grand Canyon, Zion and Lake Powell, plus many state parks. Red rock trails, three reservoirs, parks, sports complexes, indoor and outdoor pools and 13 public and private golf courses make it easy to stay active all year.</p>"),
-        ("What is the predominant religion among SunRiver members and in Washington County?", "<p>About half of SunRiver members come from 20 different states outside the West, so religious affiliations are more diverse than in much of Southern Utah. The Church of Jesus Christ of Latter-day Saints is the predominant religion in Washington County, and other faiths are well represented.</p>"),
+        ("What outdoor activities are there in Washington County?", "<p>Washington County is a gateway to Arches, Bryce Canyon, Capitol Reef, Canyonlands, Grand Canyon, Zion and Lake Powell, plus many state parks. Red rock trails, reservoirs, parks, sports complexes and pools make it easy to stay active all year.</p>"),
+        ("What is the predominant religion in Washington County?", "<p>The Church of Jesus Christ of Latter-day Saints is the predominant religion in Washington County, and other faiths are well represented.</p>"),
         ("What is the crime rate in Washington County?", "<p>Crime is generally very low in St. George, with violent and property crime rates in Washington County well below the national average.</p>"),
         ("What is there to do for evening entertainment?", "<p>St. George offers more entertainment than many larger cities. Tuacahn Center for the Arts stages Broadway in the Desert each summer and concerts year-round. The Tony Award-winning Utah Shakespeare Festival runs June into October in Cedar City. The O.C. Tanner Amphitheater hosts a summer concert series against red canyon walls, and local theater companies, Utah Tech University's fine arts center and area high schools stage strong productions.</p><p>St. George also has multi-screen movie theaters, bowling and miniature golf. Las Vegas is about 90 minutes away and Mesquite, Nevada about 30.</p>"),
     ]
-    clubs_list = "American Legion, Auxiliary, Bingo, Bridge, Canasta, Chess, Hand and Foot, Mexican Train, Dominoes, Pinochle, Texas Cards, Computer Club, Arts and Crafts, Beading, Carving, Dance, Casual Dining, Dog Park, Genealogy, Couples Golf, Ladies Golf, Investment, Library, Meditation, Jam Sessions, SunRiver Singers, Photography, Red Hatters, Science, Singles, Social, Bicycle, Bocce Ball, Bowling, Hiking, Horseshoes, Lawn Bowling, Pickleball, Table Tennis, Theater, RV Club".split(", ")
-    facilities = "Ballroom, Billiard Room, Community Center, Computer Lab, Fitness Room, Game Room, Horseshoe Pits, Lapidary Center, Lawn Bowling, Library, Multi-Purpose Room, Pickleball Courts, Pools, Pottery Studio, Tennis Courts, Woodworking Shop".split(", ")
-    tags = lambda xs: '<ul class="tag-list">' + "".join("<li>%s</li>" % c for c in xs) + "</ul>"
-    stg = [
-        ("What clubs and activities are available at SunRiver St. George?", "<p>There's a club for virtually every interest, and new clubs keep forming.</p>" + tags(clubs_list)),
-        ("Are pets allowed?", "<p>Yes. Domestic animals are welcome, and SunRiver St. George even has a dog park.</p>"),
-        ("Does SunRiver St. George have a homeowners association?", "<p>Yes. SunRiver St. George HOA dues are $172 per month. Homes in the Reflections gated community have additional private amenities, with an additional $70 per month in dues.</p><p>SunRiver St. George HOA, 4275 Country Club Drive, St. George, UT 84790. Phone (435) 287-3061. <a href=\"https://pmprollc.com\">pmprollc.com</a></p>"),
-        ("What do the HOA dues cover at SunRiver St. George?", "<p>Dues cover maintenance of all front yards, common areas, the community center, pool, sports courts and other amenities, plus association staffing and management.</p><p>Members may add rear yard maintenance for $54 per month or request walking mowers instead of riding mowers for $10 per month. Plant maintenance, irrigation repairs and rock refresh are available as needed for one-time fees.</p>"),
-        ("What are the CC&amp;Rs?", "<p>SunRiver St. George is subject to Covenants, Conditions and Restrictions that are actively enforced to keep a happy, healthy, beautiful environment for every SunRiver member.</p>"),
-        ("What facilities are at the SunRiver St. George Community Center?", "<p>A full array of amenities:</p>" + tags(facilities)),
-        ("Is the SunRiver Golf Club a public course?", "<p>Yes. The SunRiver Golf Course at SunRiver St. George is public, with preferential rates and tee times for SunRiver members. The SunRiver Men's and Ladies' Golf Associations are active and always welcome new players. Call the Pro Shop at (435) 986-1000 for information or a tee time.</p>"),
-        ("What are the green fees at the SunRiver Golf Club?", "<p>St. George is known for affordable golf, and SunRiver Golf Course is no exception. Call the Pro Shop at (435) 986-1000 for current fees.</p>"),
+    toq = [
+        ("Where is Toquerville?", "<p>Toquerville is a small town in Washington County, about 24 minutes north of St. George on the way to Zion National Park. SunRiver Firelight sits right where the red rock starts, with Zion 31 minutes away.</p>"),
+        ("Is there shopping nearby?", "<p>Groceries are about 5 minutes away in La Verkin, and the shopping and dining of St. George are about 24 minutes south.</p>"),
+        ("Is there a hospital nearby?", "<p>Urgent care is about 13 minutes from SunRiver Firelight, and St. George Regional Hospital is a short drive south in St. George.</p>"),
+        ("What is the weather like in Toquerville?", "<p>Toquerville sits a little higher than St. George, so summers run a few degrees cooler, without the hassle of snow in the winter.</p>"),
     ]
-    add("/faq", "FAQ", "Answers about SunRiver Communities, Washington County, HOA dues, clubs and the SunRiver Golf Club.", "about", '''
+    fl_faq = [
+        ("Is SunRiver Firelight a 55+ community?", "<p>Yes. SunRiver Firelight is an active adult community for people 55 and better, built by SunRiver Communities, Utah's 55+ community builder since 1998.</p>"),
+        ("What homes can I buy at SunRiver Firelight?", "<p>There are seven floor plans to choose from, and move-in ready homes are available now. See the <a href=\"/floor-plans\">floor plans</a> and the <a href=\"/homes-for-sale\">homes for sale</a>.</p>"),
+        ("When will the Clubhouse open?", "<p>Construction on the SunRiver Firelight Clubhouse began in July 2026. It will be the heart of the community, with space for fitness, events, clubs and hobbies.</p>"),
+        ("Can I try living there before I buy?", "<p>Yes. Stay a few nights in a furnished home at the <a href=\"/discovery-villas\">Discovery Villas</a> and see what life at SunRiver Firelight is like.</p>"),
+        ("How do I visit?", "<p>Stop by the Sales Center at SunRiver Firelight or call (435) 688-1000 to set up a tour of the model homes.</p>"),
+    ]
+    add("/faq", "FAQ", "Answers about Southern Utah, Toquerville and SunRiver Firelight.", "about", '''
 %s
 <section class="section">
   <div class="wrap split wide-text">
     <h2 class="display">You've got questions? <span class="yellow">We've got answers.</span></h2>
-    <p class="lede">SunRiver is a hub of activity for the greater St. George area, from the annual kite festival and art festival to golf tournaments and portions of the Huntsman World Senior Games.</p>
+    <p class="lede">Everything you want to know about Southern Utah, the town of Toquerville and life at SunRiver Firelight. Don't see your question? Give us a call at (435) 688-1000.</p>
   </div>
 </section>
 <section class="section sand">
   <div class="wrap narrow stack-lg">
-    <div class="faq-group"><h2 class="h2">Local area</h2>%s</div>
-    <div class="faq-group"><h2 class="h2">SunRiver St. George</h2>%s</div>
+    <div class="faq-group"><h2 class="h2">Southern Utah</h2>%s</div>
+    <div class="faq-group"><h2 class="h2">Toquerville</h2>%s</div>
+    <div class="faq-group"><h2 class="h2">SunRiver Firelight</h2>%s</div>
   </div>
 </section>
-%s''' % (yellow_hero("A team with <strong>answers</strong>", "/faq", V("neighborhood-walk.2u4xr239zlka_.jpg"), "SunRiver members walking through the neighborhood"), "".join(faq(q, a) for q, a in local), "".join(faq(q, a) for q, a in stg), chat_section()))
+%s''' % (yellow_hero("A team with <strong>answers</strong>", "/faq", V("neighborhood-walk.2u4xr239zlka_.jpg"), "SunRiver members walking through the neighborhood"), "".join(faq(q, a) for q, a in local), "".join(faq(q, a) for q, a in toq), "".join(faq(q, a) for q, a in fl_faq), chat_section()))
 
     # ============================================================== SUNRIVER FIRELIGHT
     mix = [("Brand New Homes", "Customize the location and design of your dream home."),
            ("Outdoor Living", "In the heart of Southwest Utah, SunRiver Firelight puts the region's natural wonders at your doorstep."),
-           ("Prime Location", "Just 15 minutes from downtown St. George, with easy access to the city when you want it."),
-           ("Designed For You", "Spacious homes with three and four car garages, with room for the bikes, kayaks and gear you love."),
+           ("Prime Location", "About 24 minutes from St. George, with easy access to the city when you want it."),
+           ("Designed For You", "Spacious homes with two and three car garages, with room for the bikes, kayaks and gear you love."),
            ("Mild Seasons", "Cooler temperatures than St. George, without the hassle of snow."),
            ("Community", "SunRiver is more than a place to live. It's a community of people who refuse to slow down.")]
     mix_html = "".join('<div class="star-item"><h3>%s</h3><p>%s</p></div>' % x for x in mix)
@@ -359,7 +344,7 @@ def build_main(plans, listings):
                 ("Bicycle Club", V("club-bicycle.1i1btbq14b2z4.png")), ("Pickleball Club", V("club-pickleball.3iqae91xix18y.jpg"))]
     fl_clubs_html = "".join('<div class="photo-card">%s<h3>%s</h3></div>' % (photo(p, "SunRiver members, %s" % t, "ratio-34"), t) for t, p in fl_clubs)
     week = [("Monday", "Chair Yoga", V("week-yoga.2bdtfft43esgw.jpg")), ("Tuesday", "Outdoor Concert", V("week-concert.2_hct2pei-rk2.jpg")),
-            ("Wednesday", "Pickleball Club", V("week-pickleball.3iqae91xix18y.jpg")), ("Thursday", "Club Pool Party", V("week-pool.405xnpp6542w2.jpg")),
+            ("Wednesday", "Pickleball Club", V("week-pickleball.3iqae91xix18y.jpg")), ("Thursday", "Social Hour", V("week-pool.405xnpp6542w2.jpg")),
             ("Friday", "Zion Tour", V("week-hike.13z6azl5t3od2.jpg"))]
     week_html = "".join('<div class="day">%s<span class="dname">%s</span><span class="act">%s</span></div>' % (photo(p, t, ""), d, t) for d, t, p in week)
     fl_amen = [("The Clubhouse", "At the heart of SunRiver Firelight will be the 17,000+ sq ft Clubhouse, the hub for social, recreational and wellness activities. Fitness rooms, event spaces and dedicated areas for hobbies and clubs give members a place to stay active, meet new friends and join community events.", V("amenity-clubhouse.1s09xtqihpiiw.jpg")),
@@ -368,7 +353,8 @@ def build_main(plans, listings):
     fl_amen_html = "".join('<div class="split amen-row%s"><div class="photo ratio-32 shadow">%s</div><div class="stack"><h3 class="h2">%s</h3><hr class="rule short"><p class="serif big-serif">%s</p></div></div>' % (
         " flip" if i % 2 else "", img(p, t), t, d) for i, (t, d, p) in enumerate(fl_amen))
     ev = by_slug.get("evergreen") or plans[0]
-    add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life", '''
+    # Version 2 (Clark, Nov 2026): the live sunriver.com Firelight page, cleaned up, to compare with the prototype
+    add("/sunriver-firelight-v2", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life", '''
 %s
 <section class="section">
   <div class="wrap split wide-text">
@@ -395,8 +381,8 @@ def build_main(plans, listings):
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="h2">Live a little closer</h2><hr class="rule center"></div>
     <div class="drive-times">
-      <div><strong>15</strong><span>Minutes to St. George</span></div>
-      <div><strong>20</strong><span>Minutes to Cedar City</span></div>
+      <div><strong>5</strong><span>Minutes to groceries</span></div>
+      <div><strong>24</strong><span>Minutes to St. George</span></div>
       <div><strong>31</strong><span>Minutes to Zion National Park</span></div>
     </div>
     <p class="center lede" style="margin-inline:auto">Flowing through SunRiver Firelight is the new Toquerville Parkway, with direct access to I-15 and Zion National Park, and a beautiful new Clubhouse just for SunRiver members.</p>
@@ -440,7 +426,7 @@ def build_main(plans, listings):
   </div>
 </section>
 %s
-%s''' % (photo_hero("", "SunRiver's newest community puts Zion in your backyard.", "", V("hero.2h_vl62bxoy8t.jpg"), "SunRiver Firelight homes with red rock mountains behind", btn("Talk with an Agent", "/contact-us")),
+%s''' % (photo_hero("Explore our newest community", "SunRiver's newest community puts Zion in your backyard.", "", V("hero.2h_vl62bxoy8t.jpg"), "SunRiver Firelight homes with red rock mountains behind", btn("Talk with an Agent", "/contact-us")),
          img(V("badge.3uv840yemxfy7.png"), "SunRiver Firelight badge"),
          band(V("clubhouse-rendering.1ka003naw87xl.jpg"), "Rendering of the SunRiver Firelight Clubhouse"), mix_html, btn("Contact Sales Today", "/contact-us"),
          band(V("grand-view.0qm1t8yvr616g.png"), "Grand view of SunRiver Firelight and the surrounding red rock country"),
@@ -561,8 +547,7 @@ def build_main(plans, listings):
             ("Andrea Nicely", "REALTOR&reg;", "andrea@sunriver.com", "(435) 668-8212", V("andrea.36c3xzauk54-3.jpg")),
             ("Marlo Rossner", "REALTOR&reg;", "leimomir@hotmail.com", "(435) 669-2667", V("marlo.2iuy1abjtkppc.jpg")),
             ("Paul Warburton", "REALTOR&reg;", "paulw@sunriver.com", "(435) 669-5939", V("paul.2wxmecg-jx8o7.jpg")),
-            ("Margaret Anderson", "REALTOR&reg;", "margaret@sunriver.com", "(435) 668-0905", V("margaret.2hiia2zwqqlxn.jpg")),
-            ("Carol Boisvert", "REALTOR&reg;", "carolb@sunriver.com", "(435) 467-9401", V("carol.3nqxgved6-8wd.jpg"))]
+            ("Margaret Anderson", "REALTOR&reg;", "margaret@sunriver.com", "(435) 668-0905", V("margaret.2hiia2zwqqlxn.jpg"))]
     tel = lambda t: "tel:+1" + "".join(ch for ch in t if ch.isdigit())
     team_html = "".join('<div class="person">%s<p class="role">%s</p><h3>%s</h3><p><a href="mailto:%s">%s</a><br>M: <a href="%s">%s</a></p></div>' % (
         photo(p, "Portrait of %s" % n, ""), r, n, e, e, tel(t), t) for n, r, e, t, p in team)
@@ -601,7 +586,7 @@ def build_main(plans, listings):
     <div class="center stack"><h2 class="display">Meet the <span class="yellow">team</span></h2><hr class="rule center"></div>
     <div class="team-grid">%s</div>
   </div>
-</section>''' % (full_hero("Contact Us", "Have questions? We've got answers.", src=V("hero.2wct_5z-9ksc6.jpg"), alt="",
+</section>''' % (full_hero("Contact Us", "", src=V("hero.2wct_5z-9ksc6.jpg"), alt="",
                    cta='<a class="hero-phone" href="%s">Sales Office %s</a>' % (PHONE_TEL, PHONE)), PHONE_TEL, PHONE, team_html))
 
     # ============================================================== FOUNDERS CLUB
@@ -653,11 +638,22 @@ def build_main(plans, listings):
          btn("Let's Talk", "/contact-us"), band(V("neighborhood-walk.2u4xr239zlka_.jpg"), "SunRiver members walking through the neighborhood"), chat_section()))
 
     # ============================================================== DISCOVERY VILLAS
+    # Clark, Nov 2026: header says just Discovery Villas over a calmer photo, the Discovery Villas logo on the page,
+    # and the drive times as real cards instead of images.
+    from .lotmap import ICONS as _LM_ICONS
+    _w, _h, _dv = _LM_ICONS["villa"]
+    dv_logo = '<div class="dv-logo"><span class="dv-logo-mark"><svg viewBox="0 0 %s %s" aria-hidden="true">%s</svg></span><span class="dv-logo-word">Discovery<br>Villas</span></div>' % (_w, _h, _dv)
+    near = [("5 min", "Groceries", "Stock the kitchen in La Verkin, just down the road."),
+            ("13 min", "Urgent care", "Care close by, whenever you need it."),
+            ("24 min", "St. George", "Shopping, dining and the rest of the city."),
+            ("31 min", "Zion National Park", "The Springdale entrance, red rock and all.")]
+    near_html = "".join('<div class="dv-near-card"><strong>%s</strong><h3>%s</h3><p>%s</p></div>' % x for x in near)
     add("/discovery-villas", "Discovery Villas", "Spend three days and two nights in a designer-furnished villa at SunRiver Firelight. Tour the homes for $399.", "visit", '''
 %s
 <section class="section">
   <div class="wrap split">
     <div class="stack">
+      %s
       <h2 class="display">See SunRiver Firelight the way <span class="yellow">you'll live it.</span></h2><hr class="rule">
       <p class="lede">Spend three days and two nights in a designer-furnished villa and make this community your basecamp while you explore. Tour the homes, walk the neighborhood and picture your greatest chapter, at your own pace, with no compromises.</p>
       <p class="serif price-callout">3 days, 2 nights <span class="yellow">$399</span></p>
@@ -669,17 +665,13 @@ def build_main(plans, listings):
 <section class="section sand">
   <div class="wrap stack-lg">
     <div class="center stack"><h2 class="display">Close to everything that makes <span class="yellow">Southern Utah special</span></h2><hr class="rule center"></div>
-    <div class="grid cols-3 dv-near">%s%s%s</div>
+    <div class="dv-near-grid">%s</div>
     <div class="center btn-row" style="justify-content:center"><a class="btn" href="/discovery-villas/book">Request your stay</a><a class="btn blue-btn" href="%s">Call to book your stay</a></div>
   </div>
 </section>
-%s''' % (full_hero("Consider it undercover research.", "Three days and two nights at SunRiver Firelight, for $399.", "Discovery Villas",
-                     FG("dv-living"), "Inside a designer-furnished Discovery Villa"),
-         PHONE_TEL, PHONE, img(FG("dv-firepit"), "SunRiver members around the fire pit at the Discovery Villas", "dv-photo"),
-         '<div class="photo">%s</div>' % simg("ff6cad819fb35b52154d3d5e8b3644f73c0d438f-992x698.png", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
-         '<div class="photo">%s</div>' % simg("01f99f1f0973eab00b77baec91841deb780f8ca9-992x698.webp", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
-         '<div class="photo">%s</div>' % simg("05d265df0de538b14de74d884253e01c596a2490-992x698.png", "Nearby Southern Utah destination and drive time", 600, sizes="33vw"),
-         PHONE_TEL, chat_section("Plan your stay", "Questions about the Discovery Villas? Send us a note and we'll help you pick your dates.")))
+%s''' % (full_hero("Discovery Villas", src=FG("fl-trails"), alt="Red rock and trail country around SunRiver Firelight", pos="50% 55%"),
+         dv_logo, PHONE_TEL, PHONE, img(FG("dv-firepit"), "SunRiver members around the fire pit at the Discovery Villas", "dv-photo"),
+         near_html, PHONE_TEL, chat_section("Plan your stay", "Questions about the Discovery Villas? Send us a note and we'll help you pick your dates.")))
 
     # ============================================================== MORTGAGE
     loans = [("The HECM for Purchase", "The Home Equity Conversion Mortgage for Purchase uses a one-time down payment to buy a home, with no required monthly mortgage payments for as long as you live in the home. HUD insured."),
@@ -703,10 +695,10 @@ def build_main(plans, listings):
     </div>
   </div>
 </section>
-<section class="section sand">
+<section class="section mt-loans">
   <div class="wrap split" style="align-items:start">
     <div class="stack"><h2 class="display">Five ways to <span class="yellow">arrive.</span></h2><hr class="rule"><div class="loans-card"><p>Loans built just<br> for seniors</p></div></div>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">%s</div>
+    <div class="grid mt-cards" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">%s</div>
   </div>
 </section>
 %s''' % (full_hero("Mortgage options for seniors", eyebrow="Mortgage Options", src=V("hero.2y-1-elem3cii.jpg")), img(V("brandon-hansen.0156dosmff1qe.jpg"), "Portrait of Brandon Hansen"),

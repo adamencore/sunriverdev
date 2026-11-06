@@ -94,6 +94,9 @@ def main():
 
     print("Rendering pages")
     build_main(plans, listings)
+    # Clark, Nov 2026: no pages for SunRiver St. George or SunRiver Villas; they appear by name with a short blurb only
+    for gone in ("/st-george", "/villas"):
+        lib.PAGES.pop(gone, None)
     build_floor_plans(plans)
     build_homes(listings, plans)
     build_live_in(plans, listings)  # replaces the older Live In page with the Figma version

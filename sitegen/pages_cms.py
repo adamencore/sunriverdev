@@ -1,5 +1,8 @@
 """Pages driven by the Sanity CMS: floor plans, homes for sale, Bucketlist Living blog."""
 from . import lotmap
+import json
+from pathlib import Path
+ROOT = Path(__file__).resolve().parent.parent
 import math
 import re
 
@@ -85,8 +88,7 @@ def build_floor_plans(plans):
 <section class="fah-hero fp-banner">
   %s
   <div class="wrap fah-hero-inner">
-    <h1>Floor Plans</h1>
-    <p>Find your home at SunRiver Firelight</p>
+    <h1>Floor Plans: <span class="yellow">SunRiver Firelight</span></h1>
   </div>
 </section>
 <section class="mh-section">
@@ -153,6 +155,28 @@ def thumbs_html(refs, alt, contain=()):
         '<button type="button" class="see-more" aria-expanded="false">See more</button>' if len(refs) > 4 else "")
 
 
+PLAN_MEDIA = json.loads((ROOT / "data" / "plan_media.json").read_text(encoding="utf-8"))
+
+
+def plan_thumbs(p, refs, alt):
+    """Thumbnail strip under a floor plan's main image: every rendering with its caption (garage option and so on),
+    plus a Virtual Tour thumbnail that plays the 3D tour in the main viewer."""
+    media = PLAN_MEDIA.get(p["name"], {})
+    labels = media.get("labels") or []
+    items = [(r, labels[k] if k < len(labels) else "") for k, r in enumerate(refs)] + [tuple(x) for x in media.get("extra") or []]
+    out = []
+    for k, (r, lab) in enumerate(items):
+        out.append('<button type="button" class="thumb pd-thumb%s" data-src="%s" aria-label="Show %s"><span class="pd-thumb-img">%s</span>%s</button>' % (
+            " is-active" if k == 0 else "", S(r, 1600), esc(lab or "image %d" % (k + 1)), img(S(r, 320), "%s %s" % (alt, lab or k + 1)),
+            '<span class="pd-thumb-cap">%s</span>' % esc(lab) if lab else ""))
+    if p.get("matterportId"):
+        out.append('<button type="button" class="thumb pd-thumb pd-thumb-tour" data-tour="https://my.matterport.com/show/?m=%s&amp;play=1" aria-label="Play the %s virtual tour">'
+                   '<span class="pd-thumb-img"><span class="pd-tour-ico" aria-hidden="true"></span>Virtual tour</span><span class="pd-thumb-cap">3D virtual tour</span></button>' % (p["matterportId"], esc(p["name"])))
+    if len(out) < 2:
+        return ""
+    return '<div class="hd-thumbs pd-thumbs">%s</div>' % "".join(out)
+
+
 ICON_HOBBY = '<svg class="chip-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l5-12 4 7 2-3 5 8z" fill="none" stroke="#335A97" stroke-width="1.8" stroke-linejoin="round"/><circle cx="17" cy="6" r="2" fill="none" stroke="#335A97" stroke-width="1.8"/></svg>'
 
 
@@ -201,7 +225,7 @@ def build_plan(p, i, plans):
     if diagram.get("asset"):
         drawing = '''<div class="pd-plan">
       <h2>The %s Floor Plan</h2>
-      <a class="pd-plan-img" href="%s" data-lightbox>%s</a>
+      <a class="pd-plan-img" href="%s" data-lightbox data-zoom>%s<span class="pd-zoom-hint">Click to zoom in and explore</span></a>
     </div>''' % (name, S(diagram["asset"], 2400), simg(diagram["asset"], diagram.get("alt") or "%s floor plan drawing" % p["name"], 940, sizes="(max-width: 860px) 100vw, 470px"))
     tour = ""
     if p.get("matterportId"):
@@ -236,7 +260,7 @@ def build_plan(p, i, plans):
     </div>
     %s
   </div>
-</section>''' % (p["squareFootage"], name, main, thumbs_html(refs, alt), esc(p.get("priceRange", "")), sqft, esc(story),
+</section>''' % (p["squareFootage"], name, main, plan_thumbs(p, refs, alt), esc(p.get("priceRange", "")), sqft, esc(story),
                  plan_chips(p), features, drawing, tour, "".join(plan_link_card(q) for q in others), contact_row()), body_class="sand-page")
 
 
@@ -537,7 +561,7 @@ def post_card(p):
 def story_card(p, sizes="(max-width: 860px) 100vw, 320px"):
     """Story card in the Live On 04 style: rounded photo, bold title, date."""
     cover = simg(p["cover"], p["title"], 700, sizes=sizes) if p.get("cover") else ""
-    return '<a class="lon-post" href="/bucketlistliving/%s"><span class="lon-post-img">%s</span><strong>%s</strong><time datetime="%s">%s</time></a>' % (
+    return '<a class="lon-post" href="/bucketlistliving/%s"><span class="lon-post-img">%s</span><strong>%s</strong><time datetime="%s">%s</time><span class="lon-post-more">Read more<span class="lon-post-arrow" aria-hidden="true"></span></span></a>' % (
         p["slug"], cover, esc(clean(p["title"])), esc((p.get("publishDate") or "")[:10]), nice_date(p.get("publishDate")))
 
 
@@ -983,7 +1007,7 @@ def build_firelight(plans):
     add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life-overlay", '''
 <section class="fah-hero li-hero fl-hero no-wash">
   %s
-  <div class="wrap fah-hero-inner"><h1>SunRiver Firelight</h1><p class="fl-hero-sub">Toquerville, UT</p></div>
+  <div class="wrap fah-hero-inner"><p class="fl-hero-eyebrow">Explore our newest community</p><h1>SunRiver Firelight</h1><p class="fl-hero-sub">Toquerville, UT</p></div>
 </section>
 <section class="li-intro fl-intro">
   <div class="wrap li-in">

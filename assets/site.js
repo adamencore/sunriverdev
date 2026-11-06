@@ -205,23 +205,73 @@
     });
   });
 
-  // ---------- Lightbox
-  function openLightbox(src, alt) {
+  // ---------- Lightbox. Images opened with data-zoom (floor plan drawings) can be zoomed and moved around like a map:
+  // scroll or pinch to zoom, drag to move, double-click to zoom in, + and - buttons, Escape or the X to close.
+  function openLightbox(src, alt, zoomable) {
     var box = document.createElement('div');
-    box.className = 'lightbox';
+    box.className = 'lightbox' + (zoomable ? ' is-zoom' : '');
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', alt || 'Enlarged image');
+    var stage = document.createElement('div'); stage.className = 'lb-stage';
     var im = document.createElement('img');
-    im.src = src; im.alt = alt || '';
+    im.src = src; im.alt = alt || ''; im.draggable = false;
+    stage.appendChild(im);
     var close = document.createElement('button');
-    close.type = 'button'; close.setAttribute('aria-label', 'Close'); close.innerHTML = '&times;';
-    box.appendChild(im); box.appendChild(close);
+    close.type = 'button'; close.className = 'lb-close'; close.setAttribute('aria-label', 'Close'); close.innerHTML = '&times;';
+    box.appendChild(stage); box.appendChild(close);
+    var scale = 1, tx = 0, ty = 0;
+    function apply() { im.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')'; }
+    function zoomAt(f, cx, cy) {
+      var r = stage.getBoundingClientRect(), ox = (cx === undefined ? r.width / 2 : cx - r.left) - r.width / 2, oy = (cy === undefined ? r.height / 2 : cy - r.top) - r.height / 2;
+      var ns = Math.max(1, Math.min(6, scale * f)); f = ns / scale;
+      tx = ox - (ox - tx) * f; ty = oy - (oy - ty) * f; scale = ns;
+      if (scale === 1) { tx = 0; ty = 0; }
+      apply();
+    }
+    if (zoomable) {
+      var ctl = document.createElement('div'); ctl.className = 'lb-ctl';
+      ctl.innerHTML = '<button type="button" data-z="in" aria-label="Zoom in">+</button><button type="button" data-z="out" aria-label="Zoom out">&minus;</button><button type="button" data-z="fit" aria-label="Fit to screen">Fit</button>';
+      box.appendChild(ctl);
+      var hint = document.createElement('p'); hint.className = 'lb-hint'; hint.textContent = 'Scroll or pinch to zoom. Drag to move around.';
+      box.appendChild(hint);
+      ctl.addEventListener('click', function (e) {
+        var z = e.target.getAttribute('data-z'); if (!z) return;
+        e.stopPropagation();
+        if (z === 'in') zoomAt(1.5); else if (z === 'out') zoomAt(1 / 1.5); else { scale = 1; tx = 0; ty = 0; apply(); }
+      });
+      stage.addEventListener('wheel', function (e) { e.preventDefault(); zoomAt(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY); }, { passive: false });
+      stage.addEventListener('dblclick', function (e) { zoomAt(scale > 2.5 ? 1 / scale : 2, e.clientX, e.clientY); });
+      var pts = {}, last = null, pinch = null, moved = false;
+      stage.addEventListener('pointerdown', function (e) { pts[e.pointerId] = e; stage.setPointerCapture(e.pointerId); moved = false; last = { x: e.clientX, y: e.clientY }; });
+      stage.addEventListener('pointermove', function (e) {
+        if (!pts[e.pointerId]) return;
+        pts[e.pointerId] = e;
+        var ids = Object.keys(pts);
+        if (ids.length === 2) {
+          var a = pts[ids[0]], b = pts[ids[1]], d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+          if (pinch) zoomAt(d / pinch, (a.clientX + b.clientX) / 2, (a.clientY + b.clientY) / 2);
+          pinch = d; moved = true; return;
+        }
+        if (last && scale > 1) { tx += e.clientX - last.x; ty += e.clientY - last.y; apply(); }
+        if (last && Math.abs(e.clientX - last.x) + Math.abs(e.clientY - last.y) > 2) moved = true;
+        last = { x: e.clientX, y: e.clientY };
+      });
+      function up(e) { delete pts[e.pointerId]; if (Object.keys(pts).length < 2) pinch = null; if (!Object.keys(pts).length) last = null; }
+      stage.addEventListener('pointerup', up); stage.addEventListener('pointercancel', up);
+      stage.addEventListener('click', function (e) { e.stopPropagation(); });
+    }
     var prev = document.activeElement;
-    function onKey(e) { if (e.key === 'Escape') done(); }
-    function done() { box.remove(); document.removeEventListener('keydown', onKey); if (prev && prev.focus) prev.focus(); }
-    box.addEventListener('click', done);
+    function onKey(e) {
+      if (e.key === 'Escape') done();
+      if (zoomable && (e.key === '+' || e.key === '=')) zoomAt(1.5);
+      if (zoomable && e.key === '-') zoomAt(1 / 1.5);
+    }
+    function done() { box.remove(); document.removeEventListener('keydown', onKey); document.documentElement.style.overflow = ''; if (prev && prev.focus) prev.focus(); }
+    box.addEventListener('click', function (e) { if (!zoomable || e.target === box) done(); });
+    close.addEventListener('click', function (e) { e.stopPropagation(); done(); });
     document.addEventListener('keydown', onKey);
+    if (zoomable) document.documentElement.style.overflow = 'hidden';
     document.body.appendChild(box);
     close.focus();
   }
@@ -229,16 +279,26 @@
     a.addEventListener('click', function (e) {
       e.preventDefault();
       var im = a.querySelector('img');
-      openLightbox(a.getAttribute('href'), im ? im.alt : '');
+      openLightbox(a.getAttribute('href'), im ? im.alt : '', a.hasAttribute('data-zoom'));
     });
   });
 
   // ---------- Gallery viewer (main image + thumbnails)
   document.querySelectorAll('.viewer').forEach(function (viewer) {
     var main = viewer.querySelector('.viewer-main img');
+    var box = viewer.querySelector('.viewer-main');
     viewer.querySelectorAll('.thumb').forEach(function (th) {
       th.addEventListener('click', function () {
         if (!main) return;
+        var tour = th.getAttribute('data-tour'), fr = box.querySelector('iframe');
+        if (tour) {
+          if (!fr) { fr = document.createElement('iframe'); fr.src = tour; fr.title = '3D virtual tour'; fr.allow = 'xr-spatial-tracking; fullscreen'; fr.setAttribute('allowfullscreen', ''); box.appendChild(fr); }
+          box.classList.add('is-tour');
+          viewer.querySelectorAll('.thumb').forEach(function (o) { o.classList.toggle('is-active', o === th); });
+          return;
+        }
+        box.classList.remove('is-tour');
+        if (fr) fr.remove();
         main.removeAttribute('srcset');
         main.src = th.getAttribute('data-src');
         main.classList.toggle('is-drawing', th.getAttribute('data-fit') === 'contain');
@@ -734,7 +794,8 @@
     };
     var defs = ensureDefs(), ims = defs.querySelectorAll("image");
     ims[0].setAttribute("href", soft(mw)); ims[1].setAttribute("href", soft(ma));
-    header.style.setProperty("--logo-word", "url(#lg-map-word)");
+    // Clark, Nov 2026: the wordmark is always one solid color (blue or white), never part of each, so it never looks burnt
+    header.style.setProperty("--logo-word", hex(whiteParts > rows * cols * 0.4 ? WHITE : BLUE));
     header.style.setProperty("--logo-accent", "url(#lg-map-accent)");
     header.setAttribute("data-logo", "map-" + Math.round(100 * whiteParts / (rows * cols)));
   }

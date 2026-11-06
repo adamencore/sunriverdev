@@ -237,7 +237,8 @@ SOCIAL = '''<div class="social">
 FOOTER_COLS = [
     ("Company", [("Why SunRiver?", "/why-sunriver"), ("About", "/about"), ("Southern Utah", "/southern-utah"), ("FAQ", "/faq"), ("History", "/history")]),
     ("Find a Home", [("Homes for Sale", "/homes-for-sale"), ("Mortgage Options", "/no-mortgage-payments-for-life"), ("Energy Efficient Homes", "/energy")]),
-    ("Communities", [("SunRiver St.George", "/st-george"), ("SunRiver Firelight", "/sunriver-firelight"), ("SunRiver Villas", "/villas")]),
+    # Clark, Nov 2026: St. George and Villas are shown by name only (no link, no page); SunRiver Firelight is the one to explore
+    ("Communities", [("SunRiver St. George", None), ("SunRiver Firelight", "/sunriver-firelight"), ("SunRiver Villas", None)]),
     ("Get in Touch", [("Contact Us", "/contact-us"), ("Bucketlistliving Blog", "/bucketlistliving"), ("SunRiverToday.com", "https://www.sunrivertoday.com/"),
                       ("SRvillasToday.com", "https://www.srvillastoday.com/"), ("Privacy Policy", "/privacy-policy")]),
 ]
@@ -248,7 +249,7 @@ def footer():
     centered, the logo with address and phone on the left, four link columns."""
     from .figma_assets import FG
     cols = "".join('<div class="footer-col"><h2>%s</h2><ul>%s</ul></div>' % (
-        t, "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' class="italic"' if l == "Privacy Policy" else "", l) for l, h in links))
+        t, "".join(('<li><a href="%s"%s>%s</a></li>' % (h, ' class="italic"' if l == "Privacy Policy" else "", l)) if h else '<li><span class="footer-name">%s</span></li>' % l for l, h in links))
         for t, links in FOOTER_COLS)
     return '''<footer class="site-footer">
   %s
@@ -356,7 +357,7 @@ def sand_hero(eyebrow, title, sub="", tag="h1", src=None, alt="", pos="50% 40%")
     return full_hero(title, sub, eyebrow, src, alt, tag=tag, pos=pos)
 
 
-ABOUT_TABS = [("About Us", "/about"), ("History", "/history"), ("FAQ", "/faq"), ("Southern Utah", "/southern-utah")]
+ABOUT_TABS = [("About Us", "/about"), ("Southern Utah", "/southern-utah"), ("FAQ", "/faq"), ("History", "/history")]  # same order as the footer
 
 
 def yellow_hero(title_html, current, src=None, alt="", pos="50% 40%"):

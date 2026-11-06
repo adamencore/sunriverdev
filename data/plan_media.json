@@ -1,0 +1,10 @@
+{
+ "_readme": "Floor plan page thumbnails. 'labels' puts a caption under each gallery image (same order as the plan's gallery in Sanity); use it for garage options like '2 car garage' or '3 car option shown'. 'extra' adds images not in Sanity: each item is [image url or Sanity image id, caption]. 'main' (optional) is the gallery position to show first. The virtual tour thumbnail is added automatically for plans with a Matterport tour.",
+ "Hamlet": {"labels": ["2 car garage (base model)"]},
+ "August": {"labels": ["3 car garage option shown"]},
+ "Tara": {"labels": ["Front, 3 car garage", "Perspective"]},
+ "Evergreen": {"labels": ["Front, extended 3 car garage", "Perspective"]},
+ "Astoria": {"labels": ["Front, 3 car garage", "Perspective", "Model home exterior", "Living room", "Kitchen", "Dining", "Bedroom"]},
+ "Elmwood": {"labels": ["Front, 3 car garage", "Perspective"]},
+ "Amberly": {"labels": ["Front, 3 car garage"]}
+}
