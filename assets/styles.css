@@ -2404,3 +2404,4 @@ a.ws-comm:hover .ws-comm-photo img { transform: scale(1.18); transition: transfo
 .fl-hero-eyebrow { margin: 0 0 12px; color: #FAF5EF; font-weight: 900; font-size: 14px; letter-spacing: .1em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(20, 50, 80, .4); }
 .footer-col .footer-name { color: #143250; font-weight: 500; font-size: 16px; line-height: 25px; }
 .section .stack p a { overflow-wrap: anywhere; }
+.pd-thumbs .thumb.pd-thumb { overflow: visible; height: auto; }

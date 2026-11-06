@@ -118,7 +118,7 @@ def build_main(plans, listings):
     <div class="grid cols-2">%s</div>
   </div>
 </section>
-%s''' % (photo_hero("", "Why choose SunRiver?", "Three communities. Over 60 clubs and groups. One way of living.", V("hero.1zxyn0xsm69_i.jpg"), "SunRiver members enjoying the outdoors"),
+%s''' % (photo_hero("Why SunRiver", "Three communities. One way of living.", "", V("hero.1zxyn0xsm69_i.jpg"), "SunRiver members enjoying the outdoors"),
          comm_html,
          banner("Beautiful homes, <strong>beautiful life at SunRiver.</strong>", V("beautiful-homes.3nspyj3umtcic.jpg"), btn("See Our Home Designs", "/floor-plans"), True),
          club_slides, more_html, amen_html, band(V("cc-exterior.0ufveyw_xw2e8.jpg"), "A SunRiver community center"),
