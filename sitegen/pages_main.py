@@ -640,9 +640,7 @@ def build_main(plans, listings):
     # ============================================================== DISCOVERY VILLAS
     # Clark, Nov 2026: header says just Discovery Villas over a calmer photo, the Discovery Villas logo on the page,
     # and the drive times as real cards instead of images.
-    from .lotmap import ICONS as _LM_ICONS
-    _w, _h, _dv = _LM_ICONS["villa"]
-    dv_logo = '<div class="dv-logo"><span class="dv-logo-mark"><svg viewBox="0 0 %s %s" aria-hidden="true">%s</svg></span><span class="dv-logo-word">Discovery<br>Villas</span></div>' % (_w, _h, _dv)
+    dv_logo = '<img class="dv-logo" src="/assets/img/discovery-villas-logo.svg" alt="Discovery Villa" width="1148" height="451">'
     near = [("5 min", "Groceries", "Stock the kitchen in La Verkin, just down the road."),
             ("13 min", "Urgent care", "Care close by, whenever you need it."),
             ("24 min", "St. George", "Shopping, dining and the rest of the city."),
