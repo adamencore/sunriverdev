@@ -823,7 +823,6 @@ def build_live_out():
 <section class="li-ready lo-trails" id="trails">
   <div class="wrap li-in">
     <h2 class="li-title">The trails start where<br> the driveway ends.</h2>
-    <p class="li-copy">Twenty-two miles of trail run through and around SunRiver Firelight. Not a paved loop around a retention pond. Real desert trail, with the kind of grade and view that makes you want to go again tomorrow.</p>
     <div class="lo-cols">%s</div>
   </div>
   <div class="lo-trail-img">%s</div>
@@ -936,7 +935,6 @@ def build_live_on(posts):
 <section class="li-lots lon-coming" id="coming">
   <div class="wrap li-in">
     <h2 class="li-title">What is built, what is under construction,<br> and when the rest arrives.</h2>
-    <p class="li-copy">We build in phases. That means parts of this community are a construction site right now, and we would rather show you the schedule than talk around it.</p>
     <div class="lon-built">
       <h3 class="lon-sub">Built and open<br> today</h3>
       <div class="lon-built-grid">%s</div>
@@ -953,7 +951,6 @@ def build_live_on(posts):
 <section class="li-ready lon-blog" id="bucketlist">
   <div class="wrap li-in">
     <h2 class="li-title">Stories from the people<br> who live here.</h2>
-    <p class="li-copy">The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Bucketlist Living is where SunRiver Members tell their stories, along with guides to the trails, parks and towns around us.</p>
     %s
     <div class="li-btns center lon-blog-more"><a class="li-btn blue" href="/bucketlistliving">Read Bucketlist Living</a></div>
   </div>
