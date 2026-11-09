@@ -1133,7 +1133,7 @@ def build_design():
           ("Can I see finished homes first?", "Yes. Five of the seven floor plans are open as model homes, and move-in ready homes are available to walk through.")]
     faq_html = "".join('<details class="faq dz-faq"><summary>%s</summary><div class="answer"><p>%s</p></div></details>' % x for x in qa)
     add("/design", "The Design Center", "The SunRiver Design Center: choose finishes with a designer beside you, see full-size samples, and leave knowing what each selection costs.", "life-overlay", """
-<section class="fah-hero li-hero dz-hero">
+<section class="fah-hero li-hero dz-hero no-wash">
   %s
   <div class="wrap fah-hero-inner"><h1>The Design Center</h1></div>
 </section>

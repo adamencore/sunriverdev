@@ -2408,3 +2408,9 @@ a.ws-comm:hover .ws-comm-photo img { transform: scale(1.18); transition: transfo
 /* Official Discovery Villas logo (Discovery_Villas_Logo_A.svg) */
 img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margin-bottom: 18px; }
 @media (max-width: 860px) { img.dv-logo { width: 230px; } }
+
+/* Design Center banners: dark overlay so the header text reads clearly */
+.dz-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(14, 30, 55, .55) 0%, rgba(14, 30, 55, .38) 45%, rgba(14, 30, 55, .55) 100%); pointer-events: none; }
+.dz-hero .fah-hero-inner { position: relative; z-index: 2; }
+.dz-hero h1 { text-shadow: 0 2px 20px rgba(10, 25, 45, .35); }
+.dz-cta::before { background: linear-gradient(0deg, rgba(14, 30, 55, .7), rgba(14, 30, 55, .45)); }
