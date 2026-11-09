@@ -1145,7 +1145,6 @@ def build_design():
 </section>
 <section class="dz-process" id="process">
   <div class="wrap">
-    <p class="li-eyebrow center">01 / How it works</p>
     <h2 class="dz-h2">Five steps from floor plan<br> to finished home.</h2>
     <ol class="dz-timeline" data-timeline><li class="dz-line" aria-hidden="true"><span class="dz-line-fill"></span></li>%s</ol>
   </div>
@@ -1159,7 +1158,6 @@ def build_design():
 <div class="dz-wide">%s</div>
 <section class="dz-style">
   <div class="wrap">
-    <p class="li-eyebrow center">02 / Your style, your choice</p>
     <h2 class="dz-h2 light">Every finish, full size.</h2>
     <p class="dz-sub">Browse the categories you will choose from at the Design Center, then come in and see them in person.</p>
     <div class="dz-tabs" role="tablist" aria-label="Finish categories">%s</div>
@@ -1169,7 +1167,6 @@ def build_design():
 <section class="dz-standard">
   <div class="wrap dz-split">
     <div class="dz-split-text">
-      <p class="li-eyebrow">03 / Standard, not upgrades</p>
       <h2 class="dz-h2 left">The good stuff<br> comes included.</h2>
       <p>Every SunRiver Firelight plan starts with a list most builders call upgrades. Your Design Center appointment builds from there.</p>
       <ul class="dz-std">%s</ul>
