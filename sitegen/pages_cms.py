@@ -703,14 +703,13 @@ def build_live_in(plans, listings):
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>A new home for exactly this stage.</h2>
-    <p class="li-serif"><strong><mark>Live In</mark> is the home itself.</strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
+    <h2>Live In is the home itself.</h2>
+    <p class="li-serif"><strong><mark>A new home for exactly this stage.</mark></strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
     <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See floor plans</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
 <section class="li-plans">
   <div class="wrap li-in">
-    <p class="li-eyebrow">01 / Floor plans</p>
     <h2 class="li-title">Seven floor plans. Every one built<br> for how you actually live.</h2>
     <p class="li-copy">{:,} to {:,} square feet, two to three bedrooms. Custom cabinetry, Moen fixtures and GE appliances come standard, not as upgrades.</p>
   </div>
@@ -728,7 +727,6 @@ def build_live_in(plans, listings):
 </section>
 <section class="li-ready">
   <div class="wrap li-in">
-    <p class="li-eyebrow">02 / Homes for sale</p>
     <h2 class="li-title">Homes ready now.</h2>
     <p class="li-copy">Some people want to choose every finish. Some people are ready to move. See the actual house instead of a rendering, and begin living here in weeks rather than months.</p>
     <div class="li-home-grid">%s</div>
@@ -741,7 +739,6 @@ def build_live_in(plans, listings):
 </section>
 <section class="li-lots" id="lots">
   <div class="wrap li-in">
-    <p class="li-eyebrow">03 / Available lots</p>
     <h2 class="li-title">Pick your spot.</h2>
     <p class="li-copy">Some homesites back to open desert, some sit higher for the view, and others put you closer to the community center and trailheads. What you can build on each one varies.</p>
   </div>
@@ -751,7 +748,6 @@ def build_live_in(plans, listings):
 </section>
 <section class="li-dc" id="design-center">
   <div class="wrap li-in">
-    <p class="li-eyebrow">04 / The Design Center</p>
     <h2 class="li-title">You are not buying the home.<br> You are building it.</h2>
     <p class="li-copy">Most builders hand you three packages and call it a choice. We hand you a room.</p>
     <div class="li-dc-feature">
@@ -794,14 +790,13 @@ def build_live_out():
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Zion is 31 minutes away. That is the point.</h2>
-    <p class="li-serif"><strong><mark>Live Out</mark> is everything past the front door.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
+    <h2>Live Out is everything past the front door.</h2>
+    <p class="li-serif"><strong><mark>Zion is 31 minutes away.</mark> That is the point.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
     <div class="li-btns"><a class="li-btn solid" href="#nearby">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
 <section class="li-plans lo-region">
   <div class="wrap li-in">
-    <p class="li-eyebrow">01 / Southern Utah</p>
     <h2 class="li-title">The landscape is the daily backdrop,<br> not the weekend plan.</h2>
     <p class="li-copy">That is the reason to be on this side of Southern Utah. SunRiver Firelight sits on the Zion side, north of Hurricane, where red rock and open desert are part of every day instead of an occasional outing.</p>
     <div class="lo-photos">%s</div>
@@ -827,7 +822,6 @@ def build_live_out():
 </section>
 <section class="li-ready lo-trails" id="trails">
   <div class="wrap li-in">
-    <p class="li-eyebrow">02 / Trails and adventure</p>
     <h2 class="li-title">The trails start where<br> the driveway ends.</h2>
     <p class="li-copy">Twenty-two miles of trail run through and around SunRiver Firelight. Not a paved loop around a retention pond. Real desert trail, with the kind of grade and view that makes you want to go again tomorrow.</p>
     <div class="lo-cols">%s</div>
@@ -836,7 +830,6 @@ def build_live_out():
 </section>
 <section class="li-lots lo-nearby" id="nearby">
   <div class="wrap li-in">
-    <p class="li-eyebrow">03 / What is nearby</p>
     <h2 class="li-title">Live a little closer.</h2>
     <p class="li-copy">Groceries, healthcare and a good cup of coffee are a short drive from your front door.</p>
     <div class="lo-near-grid">%s</div>
@@ -893,14 +886,13 @@ def build_live_on(posts):
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Nobody acts their age here.</h2>
-    <p class="li-serif"><strong><mark>Live On</mark> is everyone you have not met yet.</strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
+    <h2>Live On is everyone you have not met yet.</h2>
+    <p class="li-serif"><strong><mark>Nobody acts their age here.</mark></strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
     <div class="li-btns"><a class="li-btn solid" href="#calendar">See the calendar</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
 <section class="li-plans lon-clubs" id="clubs">
   <div class="wrap li-in">
-    <p class="li-eyebrow">01 / Clubs and activities</p>
     <h2 class="li-title">Real friendships do not<br> happen by accident.</h2>
     <p class="li-copy">They happen when people keep bumping into each other on purpose, which is what a good calendar is actually for.</p>
     <svg class="lon-defs" width="0" height="0" aria-hidden="true" focusable="false"><clipPath id="lon-paddle-clip" clipPathUnits="objectBoundingBox"><path d="M.04566 0H.43836A.04566 .10989 0 0 1 .48402 .10989V.52015H.95434A.04566 .10989 0 0 1 1 .63004V.89011A.04566 .10989 0 0 1 .95434 1H.04566A.04566 .10989 0 0 1 0 .89011V.10989A.04566 .10989 0 0 1 .04566 0Z"/></clipPath></svg>
@@ -920,7 +912,6 @@ def build_live_on(posts):
 </section>
 <section class="li-ready lon-cal" id="calendar">
   <div class="wrap li-in">
-    <p class="li-eyebrow">02 / Events calendar</p>
     <h2 class="li-title">What is happening this month.</h2>
     <div class="lon-calendar" data-cal>
       <div class="lon-cal-bar">
@@ -944,7 +935,6 @@ def build_live_on(posts):
 </section>
 <section class="li-lots lon-coming" id="coming">
   <div class="wrap li-in">
-    <p class="li-eyebrow">03 / What is coming and when</p>
     <h2 class="li-title">What is built, what is under construction,<br> and when the rest arrives.</h2>
     <p class="li-copy">We build in phases. That means parts of this community are a construction site right now, and we would rather show you the schedule than talk around it.</p>
     <div class="lon-built">
@@ -962,7 +952,6 @@ def build_live_on(posts):
 </section>
 <section class="li-ready lon-blog" id="bucketlist">
   <div class="wrap li-in">
-    <p class="li-eyebrow">04 / Bucketlist Living</p>
     <h2 class="li-title">Stories from the people<br> who live here.</h2>
     <p class="li-copy">The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Bucketlist Living is where SunRiver Members tell their stories, along with guides to the trails, parks and towns around us.</p>
     %s
