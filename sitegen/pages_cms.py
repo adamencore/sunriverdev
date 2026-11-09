@@ -1004,7 +1004,6 @@ def build_firelight(plans):
 </section>
 <section class="li-plans fl-mix">
   <div class="wrap li-in">
-    <p class="li-eyebrow">01 / Just the right mix</p>
     <h2 class="li-title">Everything you came to<br> Southern Utah for.</h2>
     <div class="lon-carousel fl-carousel" data-carousel aria-roledescription="carousel" aria-label="Just the right mix">
       <div class="lon-car-track" data-car-track>%s</div>
@@ -1030,7 +1029,6 @@ def build_firelight(plans):
 </section>
 <section class="li-ready fl-amen" id="clubhouse">
   <div class="wrap li-in">
-    <p class="li-eyebrow">02 / The Clubhouse</p>
     <h2 class="li-title">The future heart of<br> SunRiver Firelight.</h2>
     <p class="li-copy">Phase 1 of the Clubhouse is under construction now. When it opens, this is where SunRiver members will work out, gather, take a class and start the next club.</p>
     <div class="fl-amen-grid">%s</div>
@@ -1039,7 +1037,6 @@ def build_firelight(plans):
 </section>
 <section class="li-plans fl-clubs">
   <div class="wrap li-in">
-    <p class="li-eyebrow">03 / Clubs and activities</p>
     <h2 class="li-title">So much time.<br> So much to do.</h2>
     <p class="li-copy">Clubs are already meeting at SunRiver Firelight, from the Breakfast Social to Pilates workshops and drop-in games, and every new club starts because a Member asks for it.</p>
     <div class="lo-cards lon-shots">%s</div>
@@ -1048,7 +1045,6 @@ def build_firelight(plans):
 </section>
 <section class="li-ready fl-homes">
   <div class="wrap li-in">
-    <p class="li-eyebrow">04 / Homes</p>
     <h2 class="li-title">Seven floor plans.<br> Your choice of homesite.</h2>
     <p class="li-copy">Pick the plan, pick the lot, then finish it your way at the Design Center. Looking for something sooner? Move-in ready homes are available now.</p>
   </div>
