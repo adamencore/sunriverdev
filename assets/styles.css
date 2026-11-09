@@ -2414,3 +2414,12 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .dz-hero .fah-hero-inner { position: relative; z-index: 2; }
 .dz-hero h1 { text-shadow: 0 2px 20px rgba(10, 25, 45, .35); }
 .dz-cta::before { background: linear-gradient(0deg, rgba(14, 30, 55, .7), rgba(14, 30, 55, .45)); }
+
+/* Design Center "The good stuff comes included": more breathing room */
+.dz-standard { padding: 170px 0 180px; }
+.dz-standard .dz-split { gap: 80px; }
+.dz-standard .dz-h2 + * { margin-top: 22px; }
+.dz-standard .dz-std { margin-top: 36px; }
+.dz-standard .dz-std li { padding-top: 15px; padding-bottom: 15px; }
+.dz-standard .dz-std li::before { top: 21px; }
+@media (max-width: 860px) { .dz-standard { padding: 104px 0 112px; } .dz-standard .dz-split { gap: 44px; } }
