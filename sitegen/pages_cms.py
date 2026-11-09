@@ -586,7 +586,7 @@ def blog_listing(posts, base, title_html, intro_html, page_title, description, c
 <section class="li-intro li-lead">
   <div class="wrap li-in">
     <h2>Stories from the people who live here.</h2>
-    <p class="li-serif"><strong><mark>Bucketlist Living</mark> is where SunRiver Members tell their stories.</strong> The Member who learned to throw pottery at 71. The couple who did all five Utah national parks in a year. Along with guides to the trails, parks and towns around us.</p>
+    <p class="li-serif"><strong><mark>Bucketlist Living</mark> is where SunRiver Members tell their stories.</strong></p>
   </div>
 </section>
 <section class="fl-promo-wrap bl-feature">
