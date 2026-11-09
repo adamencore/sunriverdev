@@ -2423,3 +2423,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .dz-standard .dz-std li { padding-top: 15px; padding-bottom: 15px; }
 .dz-standard .dz-std li::before { top: 21px; }
 @media (max-width: 860px) { .dz-standard { padding: 104px 0 112px; } .dz-standard .dz-split { gap: 44px; } }
+
+/* SunRiver Firelight "So much time. So much to do.": more vertical room */
+.li-plans.fl-clubs { padding-top: 200px; padding-bottom: 210px; }
+@media (max-width: 860px) { .li-plans.fl-clubs { padding-top: 120px; padding-bottom: 128px; } }
