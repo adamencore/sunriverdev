@@ -1,6 +1,6 @@
 {
  "_readme": "SunRiver Firelight homes for sale. Source of truth: the 'New & Upgraded Move-In Ready Homes' sheet from the sales team (not the MLS). To update, send Claude a screenshot of the latest sheet: it rewrites 'asOf' and 'homes' to match the sheet exactly, then builds and pushes. One entry per home on the sheet, sold ones included (status 'Sold' keeps them off the site). Fields: lot, plan (must match a floor plan name), address (street only, Toquerville is added), base (the plan price on the sheet), options (each add-on line with its amount: garage extension, B elevation, tub option, lot premium), upgrades (design upgrades), price (the big total on the sheet, used as the price on the site), garage (only when the sheet says it, like '3.5 Gar'; otherwise the floor plan's garage is used), featured (the sheet's 'Featured Home / Ask for pricing!'), status ('Move in Ready' or 'Sold'). Bed, bath, sqft and hobby room come from 'plans' below, copied from the plan bars on the sheet. Homes in other communities still come from data/mls_listings.json. 'videos' lists the YouTube Shorts (IDs from youtube.com/@sunriver_communities, titled like 'Tara | Home 59') embedded on that home's page; it replaces any videos set in Sanity.",
- "asOf": "2026-10-01",
+ "asOf": "2026-11-02",
  "city": "Toquerville, UT",
  "plans": {
   "Hamlet": {
@@ -52,43 +52,6 @@
    "status": "Move in Ready"
   },
   {
-   "lot": 56,
-   "plan": "Hamlet",
-   "address": "963 W Davis Ave",
-   "base": 489900,
-   "options": [
-    [
-     "Garage extension and B elevation",
-     21800
-    ]
-   ],
-   "upgrades": 85073,
-   "price": 596773,
-   "status": "Move in Ready",
-   "videos": [
-    "h-DuFIvQ5D8"
-   ]
-  },
-  {
-   "lot": 27,
-   "plan": "Hamlet",
-   "address": "1014 W Frank Ave",
-   "base": 489900,
-   "options": [
-    [
-     "Garage extension",
-     18000
-    ]
-   ],
-   "upgrades": 75733,
-   "price": 583634,
-   "status": "Sold",
-   "featured": true,
-   "videos": [
-    "18EubqqPI44"
-   ]
-  },
-  {
    "lot": 1,
    "plan": "August",
    "address": "262 S Cottonwood Dr",
@@ -102,7 +65,6 @@
    "upgrades": 84350,
    "price": 618250,
    "status": "Move in Ready",
-   "featured": true,
    "videos": [
     "zvsjlQiM5O0"
    ]
@@ -121,7 +83,6 @@
    "upgrades": 89651,
    "price": 623552,
    "status": "Move in Ready",
-   "featured": true,
    "videos": [
     "eamwT3BVMrs",
     "B2p5kTUMxks"
@@ -195,66 +156,6 @@
    "status": "Move in Ready"
   },
   {
-   "lot": 14,
-   "plan": "Evergreen",
-   "address": "948 W Mesa Ave",
-   "base": 599900,
-   "garage": 3.5,
-   "options": [],
-   "upgrades": 112444,
-   "price": 712344,
-   "status": "Sold"
-  },
-  {
-   "lot": 15,
-   "plan": "Evergreen",
-   "address": "1001 W Mesa Ave",
-   "base": 599900,
-   "options": [
-    [
-     "Tub option",
-     9000
-    ]
-   ],
-   "upgrades": 127574,
-   "price": 736374,
-   "status": "Sold"
-  },
-  {
-   "lot": 2,
-   "plan": "Evergreen",
-   "address": "252 S Cottonwood Dr",
-   "base": 599900,
-   "options": [
-    [
-     "Tub option",
-     9000
-    ]
-   ],
-   "upgrades": 115996,
-   "price": 724896,
-   "status": "Sold"
-  },
-  {
-   "lot": 72,
-   "plan": "Evergreen",
-   "address": "124 S Cottonwood Dr",
-   "base": 599900,
-   "options": [
-    [
-     "Lot premium, views",
-     35000
-    ],
-    [
-     "Tub option",
-     9000
-    ]
-   ],
-   "upgrades": 123467,
-   "price": 767367,
-   "status": "Sold"
-  },
-  {
    "lot": 46,
    "plan": "Astoria",
    "address": "1898 S Taylor Dr",
@@ -268,7 +169,6 @@
    "upgrades": 110366,
    "price": 759266,
    "status": "Move in Ready",
-   "featured": true,
    "videos": [
     "Fp6ru4PMd_k"
    ]
