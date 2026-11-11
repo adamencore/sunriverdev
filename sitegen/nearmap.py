@@ -60,11 +60,48 @@ PINS = [  # (x, y of the pin tip, label, label x, label y, anchor, lines)
 TOWNS = [("Anderson Junction", 690, 82, ["Anderson", "Junction"]), ("Toquerville", 900, 300, None), ("Leeds", 450, 456, None),
          ("LaVerkin", 860, 590, None), ("Hurricane", 895, 938, None), ("Quail Creek State Park", 380, 742, ["Quail Creek", "State Park"])]
 
-WITHIN_5 = ["Chief Toquer Reservoir", "Sapp Bros Travel Center", "Davis Food & Drug", "True Value Hardware",
-            "Hurricane Valley Fire Station 43", "Family Dollar", "Maverick", "Red Fort Cuisine of India",
-            "Zion Canyon Hot Springs", "El Rancho", "Stage Coach Grille", "River Rock Roasting", "Yu Kitchen 3"]
-WITHIN_10 = ["Balcony One", "Bonrue Bakery", "Las Lupitas Mexican Grille", "Applebee's", "Lonny Boy's BBQ", "Rooster Run Cafe",
-             "Coral Cliffs Cinema", "Lin's Market", "Mainly Pizza", "Casa Tequilana", "Zion Vineyards", "Red Cliffs Reserve"]
+
+# Driving miles and minutes from the Sales Center (182 Cottonwood Dr, Toquerville). Routed with OpenStreetMap
+# (OSRM), Nov 11 2026. Zion National Park uses the 31 minutes the brand quotes. Approximate spots (no exact address
+# found): Chief Toquer Reservoir, Mainly Pizza, Yu Kitchen 3, Cafe Rio.
+DIST = {
+    "Kolob Canyon Visitors Center": ("16.1", 20),
+    "Sapp Bros Travel Center": ("3.2", 8),
+    "Chief Toquer Reservoir": ("2.8", 6),
+    "Zion Vineyards": ("8.8", 16),
+    "Casa Tequilana": ("7.3", 12),
+    "Mainly Pizza": ("7.3", 12),
+    "Red Cliffs Reserve": ("12.2", 26),
+    "Zion National Park": ("24", 31),
+    "Balcony One": ("9", 15),
+    "Davis Food & Drug": ("3.6", 8),
+    "True Value Hardware": ("3.6", 8),
+    "Maverick": ("3.5", 7),
+    "Family Dollar": ("3.6", 7),
+    "El Rancho": ("3.7", 7),
+    "Stage Coach Grille": ("4", 8),
+    "Hurricane Valley Fire Station 43": ("3.8", 8),
+    "Red Fort Cuisine of India": ("3.9", 8),
+    "River Rock Roasting": ("3.6", 7),
+    "Zion Canyon Hot Springs": ("4.7", 10),
+    "Yu Kitchen 3": ("6", 12),
+    "Las Lupitas Mexican Grille": ("6.6", 13),
+    "Applebee's": ("7.1", 14),
+    "Lonny Boy's BBQ": ("7.1", 15),
+    "Lin's Market": ("7.2", 15),
+    "Arby's": ("7.2", 15),
+    "McDonald's": ("7.4", 15),
+    "Bonrue Bakery": ("6.2", 12),
+    "Main Street Cafe": ("6.3", 13),
+    "Pizza Wagon": ("6.4", 13),
+    "Taco Bell": ("6.5", 13),
+    "Rooster Run Cafe": ("6.8", 14),
+    "Cafe Rio": ("7", 15),
+    "Coral Cliffs Cinema": ("7.2", 15),
+    "Walgreens": ("7.5", 16),
+    "Jimmy John's": ("7.5", 16),
+    "Bucks Ace Hardware": ("6.7", 14),
+}
 
 
 def _text(x, y, anchor, lines, cls):
@@ -82,8 +119,6 @@ def svg():
            '<path id="nm-pin" d="%s"/></defs>' % pin,
            '<g clip-path="url(#nm-clip)">',
            '<rect x="60" y="30" width="1340" height="945" class="nm-bg"/>',
-           '<circle cx="790" cy="520" r="650" class="nm-r10"/>',
-           '<circle cx="835" cy="500" r="385" class="nm-r5"/>',
            '<path class="nm-lake" d="M 302 690 C 330 708 340 728 368 742 C 382 768 368 798 358 828 C 350 856 338 884 323 902 C 308 907 294 893 297 864 C 301 826 289 796 294 766 C 297 736 289 708 302 690 Z"/>']
     out += ['<path class="nm-road-casing" d="%s"/><path class="nm-road" d="%s"/>' % (d, d) for d in ROADS]
     out.append('<path class="nm-arrow" d="M 880 92 C 855 92 845 80 842 64 M 832 74 L 842 62 L 852 74"/>')
@@ -91,22 +126,40 @@ def svg():
     for name, x, y, lines in TOWNS:
         out.append(_text(x, y, "start" if name not in ("Toquerville", "LaVerkin", "Hurricane") else "start", lines or [name], "nm-town"))
     for x, y, name, lx, ly, anchor, lines in PINS:
-        out.append('<g class="nm-place" data-place="%s"><use href="#nm-pin" x="%s" y="%s" class="nm-pin"/><circle cx="%s" cy="%s" r="4.2" class="nm-pin-dot"/>%s</g>' % (
-            esc(name), x, y, x, y - 22, _text(lx, ly, anchor, lines or [name], "nm-label")))
-    out.append('<g class="nm-home"><path d="M755 318 L766 345 L795 347 L772 365 L780 393 L755 377 L730 393 L738 365 L715 347 L744 345 Z"/></g>')
+        d = DIST.get(name)
+        dist = ' data-mi="%s" data-min="%s"' % d if d else ""
+        aria = "%s, %s miles away" % (name, d[0]) if d else name
+        out.append('<g class="nm-place" data-place="%s"%s tabindex="0" role="button" aria-label="%s">'
+                   '<g transform="translate(%s %s)"><g class="nm-pin-g"><circle r="15" cy="-20" class="nm-hit"/><use href="#nm-pin" class="nm-pin"/>'
+                   '<circle cy="-22" r="4.2" class="nm-pin-dot"/></g></g>%s</g>' % (
+            esc(name), dist, esc(aria), x, y, _text(lx, ly, anchor, lines or [name], "nm-label")))
+    out.append('<g class="nm-home" data-home="755 360"><path d="M755 318 L766 345 L795 347 L772 365 L780 393 L755 377 L730 393 L738 365 L715 347 L744 345 Z"/></g>')
     out.append(_text(731, 402, "start", ["SunRiver", "Firelight"], "nm-home-label"))
     out.append('</g></svg>')
     return "".join(out)
 
 
 def section():
-    li = lambda xs: "".join('<li data-place="%s">%s</li>' % (esc(x), esc(x)) for x in xs)
+    names = [p[2] for p in PINS]
+    names.sort(key=lambda n: (float(DIST[n][0]), n) if n in DIST else (99, n))
+    groups = [("Under 5 miles", [n for n in names if n in DIST and float(DIST[n][0]) < 5]),
+              ("5 to 10 miles", [n for n in names if n in DIST and 5 <= float(DIST[n][0]) <= 10]),
+              ("Worth the drive", [n for n in names if n not in DIST or float(DIST[n][0]) > 10])]
+    li = lambda xs: "".join('<li data-place="%s"><span>%s</span><small>%s</small></li>' % (
+        esc(x), esc(x), ("%s mi" % DIST[x][0]) if x in DIST else "") for x in xs)
+    lists = "".join('<div><h4>%s</h4><ul>%s</ul></div>' % (h, li(xs)) for h, xs in groups if xs)
     return '''
     <div class="nm">
-      <div class="nm-head"><h3>What's near SunRiver Firelight</h3><p>Everything on the map is within 10 miles of home.</p></div>
-      <div class="nm-map" tabindex="0" aria-label="Map, scroll sideways on small screens">%s</div>
-      <div class="nm-lists">
-        <div><h4><span class="nm-key nm-key-5"></span>5 miles or less</h4><ul>%s</ul></div>
-        <div><h4><span class="nm-key nm-key-10"></span>10 miles or less</h4><ul>%s</ul></div>
+      <div class="nm-head"><h3>What's near SunRiver Firelight</h3><p>Groceries, coffee, dinner and Zion, all a short drive from home. Distances are driving miles from the Sales Center.</p></div>
+      <div class="nm-map" data-nm-window>
+        <div class="nm-stage">%s</div>
+        <div class="nm-tip" role="status" aria-live="polite" hidden><strong></strong><span></span></div>
+        <div class="nm-ctrl" role="group" aria-label="Map zoom">
+          <button type="button" data-nm="in" aria-label="Zoom in">+</button>
+          <button type="button" data-nm="out" aria-label="Zoom out">&minus;</button>
+          <button type="button" data-nm="fit" class="nm-fit">Fit</button>
+        </div>
+        <p class="nm-hint"><span class="nm-hint-lg">Drag to move. Double-click or use + and &minus; to zoom. Hover a pin for distance.</span><span class="nm-hint-sm">Drag to move, pinch to zoom, tap a pin</span></p>
       </div>
-    </div>''' % (svg(), li(WITHIN_5), li(WITHIN_10))
+      <div class="nm-lists">%s</div>
+    </div>''' % (svg(), lists)

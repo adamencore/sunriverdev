@@ -1082,14 +1082,114 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
   update();
 });
 
-// Live Out map: hovering a place in the lists highlights its pin
+// Live Out map: zoom and drag window, pin tooltips with distance, list hover highlights its pin
 (function () {
   var nm = document.querySelector('.nm');
   if (!nm) return;
+  var win = nm.querySelector('[data-nm-window]'), stage = nm.querySelector('.nm-stage'), tip = nm.querySelector('.nm-tip');
+  if (!win || !stage) return;
+  var W0 = 1340, H0 = 945, OX = 60, OY = 30; // svg viewBox origin
+  var s = 1, tx = 0, ty = 0, fit = 1, pts = {}, last = null, pinch = null, moved = 0, tipFor = null;
+  function box() { return win.getBoundingClientRect(); }
+  function clamp() {
+    var b = box(), w = W0 * s, h = H0 * s, pad = 40;
+    tx = w <= b.width ? (b.width - w) / 2 : Math.min(pad, Math.max(b.width - w - pad, tx));
+    ty = h <= b.height ? (b.height - h) / 2 : Math.min(pad, Math.max(b.height - h - pad, ty));
+  }
+  function apply(anim) {
+    clamp();
+    win.classList.toggle('is-anim', !!anim);
+    stage.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+    stage.style.setProperty('--nm-pk', Math.max(0.45, Math.min(1, 1.15 / Math.sqrt(s / fit))).toFixed(3));
+    if (tipFor) place(tipFor);
+  }
+  function zoomAt(ns, px, py, anim) {
+    ns = Math.max(fit, Math.min(fit * 6, ns));
+    tx = px - (px - tx) * ns / s; ty = py - (py - ty) * ns / s; s = ns; apply(anim);
+  }
+  function center(mx, my, ns) { var b = box(); s = ns; tx = b.width / 2 - (mx - OX) * s; ty = b.height / 2 - (my - OY) * s; }
+  function reset(anim) {
+    var b = box(); fit = Math.min((b.width - 32) / W0, (b.height - 32) / H0);
+    if (b.width < 700) center(820, 560, Math.max(fit, 0.72)); else { s = fit; tx = ty = 0; }
+    apply(anim);
+  }
+  function used() { win.classList.add('is-used'); }
+  win.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('.nm-ctrl')) return;
+    pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+    var ids = Object.keys(pts);
+    if (ids.length === 1) { last = { x: e.clientX, y: e.clientY }; moved = 0; }
+    if (ids.length === 2) { var a = pts[ids[0]], c = pts[ids[1]]; pinch = { d: Math.hypot(a.x - c.x, a.y - c.y), s: s }; }
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (!pts[e.pointerId]) return;
+    pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+    var ids = Object.keys(pts), b = box();
+    if (ids.length >= 2 && pinch) {
+      var a = pts[ids[0]], c = pts[ids[1]], d = Math.hypot(a.x - c.x, a.y - c.y);
+      zoomAt(pinch.s * d / pinch.d, (a.x + c.x) / 2 - b.left, (a.y + c.y) / 2 - b.top); moved = 99; used(); return;
+    }
+    if (!last) return;
+    var dx = e.clientX - last.x, dy = e.clientY - last.y; moved += Math.abs(dx) + Math.abs(dy);
+    if (moved > 4) { win.classList.add('is-drag'); try { win.setPointerCapture(e.pointerId); } catch (_) {} tx += dx; ty += dy; apply(); used(); }
+    last = { x: e.clientX, y: e.clientY };
+  });
+  function up(e) {
+    delete pts[e.pointerId];
+    if (Object.keys(pts).length < 2) pinch = null;
+    if (!Object.keys(pts).length) { last = null; win.classList.remove('is-drag'); }
+  }
+  window.addEventListener('pointerup', up); window.addEventListener('pointercancel', up);
+  win.addEventListener('wheel', function (e) {
+    if (!(e.ctrlKey || e.metaKey)) return; // plain scrolling keeps scrolling the page
+    e.preventDefault(); var b = box();
+    zoomAt(s * Math.exp(-e.deltaY * 0.0025), e.clientX - b.left, e.clientY - b.top); used();
+  }, { passive: false });
+  win.addEventListener('dblclick', function (e) {
+    if (e.target.closest('.nm-ctrl')) return;
+    var b = box(); zoomAt(s * 1.8, e.clientX - b.left, e.clientY - b.top, true); used();
+  });
+  nm.querySelectorAll('[data-nm]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var b = box(), k = btn.getAttribute('data-nm'); used();
+      if (k === 'fit') { s = fit; apply(true); hide(); return; }
+      zoomAt(s * (k === 'in' ? 1.5 : 1 / 1.5), b.width / 2, b.height / 2, true);
+    });
+  });
+  // tooltips
+  function place(g) {
+    var pin = g.querySelector('.nm-pin'), r = pin.getBoundingClientRect(), b = box();
+    var x = r.left + r.width / 2 - b.left, y = r.top - b.top;
+    var below = y < 90;
+    tip.classList.toggle('is-below', below);
+    tip.style.left = Math.max(90, Math.min(b.width - 90, x)) + 'px';
+    tip.style.top = (below ? r.bottom - b.top : y) + 'px';
+  }
+  function show(g) {
+    tipFor = g; tip.hidden = false;
+    tip.querySelector('strong').textContent = g.getAttribute('data-place');
+    var mi = g.getAttribute('data-mi'), mn = g.getAttribute('data-min');
+    tip.querySelector('span').textContent = mi ? mi + ' miles away' + (mn ? ', about ' + mn + ' min' : '') : '';
+    nm.querySelectorAll('.nm-place.is-on').forEach(function (o) { if (o !== g) o.classList.remove('is-on'); });
+    g.classList.add('is-on'); place(g);
+  }
+  function hide() { tipFor = null; tip.hidden = true; nm.querySelectorAll('.nm-place.is-on').forEach(function (o) { o.classList.remove('is-on'); }); }
+  nm.querySelectorAll('.nm-place').forEach(function (g) {
+    g.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse' && !last) show(g); });
+    g.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse' && tipFor === g) hide(); });
+    g.addEventListener('focus', function () { show(g); });
+    g.addEventListener('blur', function () { if (tipFor === g) hide(); });
+    g.addEventListener('click', function () { if (moved < 5) show(g); });
+    g.addEventListener('keydown', function (e) { if (e.key === 'Escape') { g.blur(); hide(); } });
+  });
+  win.addEventListener('click', function (e) { if (moved < 5 && !e.target.closest('.nm-place, .nm-ctrl')) hide(); });
   nm.querySelectorAll('.nm-lists li').forEach(function (li) {
     var g = nm.querySelector('.nm-place[data-place="' + li.getAttribute('data-place').replace(/"/g, '\\"') + '"]');
     if (!g) return;
-    li.addEventListener('mouseenter', function () { nm.classList.add('is-focus'); g.classList.add('is-on'); });
-    li.addEventListener('mouseleave', function () { nm.classList.remove('is-focus'); g.classList.remove('is-on'); });
+    li.addEventListener('mouseenter', function () { nm.classList.add('is-focus'); show(g); });
+    li.addEventListener('mouseleave', function () { nm.classList.remove('is-focus'); hide(); });
   });
+  var rw = 0;
+  window.addEventListener('resize', function () { var w = box().width; if (w !== rw) { rw = w; reset(); } });
+  rw = box().width; reset();
 })();

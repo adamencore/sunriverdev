@@ -2434,45 +2434,64 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .bl-chips a[aria-current="page"] { background: rgba(245, 175, 28, .16); border-color: rgba(245, 175, 28, .5); color: #143250; font-weight: 700; }
 .pill-cta { border-radius: 999px; }
 
-/* Live Out: What's near SunRiver Firelight map (redrawn from the sales flier) */
+/* Live Out: What's near SunRiver Firelight map (redrawn from the sales flier, zoom and drag window) */
 .nm { margin-top: 80px; }
 .nm-head h3 { margin: 0; color: #335A97; font-weight: 900; font-size: 32px; line-height: 36px; letter-spacing: -0.02em; }
 .nm-head p { margin: 8px 0 0; color: #335A97; font-family: var(--font-serif); font-size: 17px; }
-.nm-map { margin-top: 28px; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-card); background: #FAF5F0; }
-.nm-svg { display: block; width: 100%; height: auto; font-family: var(--font-sans); }
-.nm-bg { fill: #FBF8F3; }
-.nm-r10 { fill: #E4EEF7; }
-.nm-r5 { fill: #D2E2F1; }
-.nm-lake { fill: #2F6FB0; }
-.nm-road-casing { fill: none; stroke: #FFFFFF; stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
-.nm-road { fill: none; stroke: #1E2E44; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-.nm-arrow { fill: none; stroke: #1E2E44; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.nm-town { fill: #143250; font-weight: 900; font-size: 17px; }
-.nm-label { fill: #143250; font-weight: 600; font-size: 13.5px; paint-order: stroke; stroke: rgba(251, 248, 243, .85); stroke-width: 3px; }
-.nm-pin { fill: #C8423A; stroke: #fff; stroke-width: 1.5; }
-.nm-pin-dot { fill: #fff; }
-.nm-home path { fill: #F5AF1C; stroke: #fff; stroke-width: 2; }
-.nm-home-label { fill: #143250; font-weight: 900; font-size: 17px; }
-.nm-place { transition: opacity .2s; }
-.nm.is-focus .nm-place { opacity: .25; }
+.nm-map { position: relative; margin-top: 28px; aspect-ratio: 1340 / 945; max-height: 78vh; width: 100%; border-radius: 28px; overflow: hidden; background: #FAF5F0; border: 1px solid rgba(51, 90, 151, .16); box-shadow: var(--shadow-card); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none; }
+.nm-map.is-drag { cursor: grabbing; }
+.nm-stage { position: absolute; left: 0; top: 0; width: 1340px; height: 945px; transform-origin: 0 0; will-change: transform; }
+.nm-map.is-anim .nm-stage { transition: transform .28s cubic-bezier(.2, .7, .2, 1); }
+.nm-svg { display: block; width: 1340px; height: 945px; max-width: none; font-family: var(--font-sans); }
+.nm-bg { fill: #FAF5F0; }
+.nm-lake { fill: #335A97; fill-opacity: .22; stroke: #335A97; stroke-opacity: .35; stroke-width: 1.5; }
+.nm-road-casing { fill: none; stroke: #FFFFFF; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+.nm-road { fill: none; stroke: #143250; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; opacity: .82; }
+.nm-arrow { fill: none; stroke: #143250; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: .82; }
+.nm-town { fill: #335A97; font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 19px; }
+.nm-label { fill: #143250; font-weight: 600; font-size: 13.5px; paint-order: stroke; stroke: rgba(250, 245, 240, .9); stroke-width: 3.5px; pointer-events: none; }
+.nm-pin-g { transform: scale(var(--nm-pk, 1)); transition: transform .18s; }
+.nm-hit { fill: transparent; }
+.nm-pin { fill: #335A97; stroke: #FAF5F0; stroke-width: 1.8; transition: fill .18s; }
+.nm-pin-dot { fill: #FAF5F0; }
+.nm-place { cursor: pointer; outline: none; transition: opacity .2s; }
+.nm-place:hover .nm-pin, .nm-place:focus-visible .nm-pin, .nm-place.is-on .nm-pin { fill: #F5AF1C; }
+.nm-place:hover .nm-pin-dot, .nm-place:focus-visible .nm-pin-dot, .nm-place.is-on .nm-pin-dot { fill: #143250; }
+.nm-place:hover .nm-pin-g, .nm-place:focus-visible .nm-pin-g, .nm-place.is-on .nm-pin-g { transform: scale(calc(var(--nm-pk, 1) * 1.25)); }
+.nm-place:hover .nm-label, .nm-place:focus-visible .nm-label, .nm-place.is-on .nm-label { fill: #335A97; font-weight: 800; }
+.nm.is-focus .nm-place { opacity: .3; }
 .nm.is-focus .nm-place.is-on { opacity: 1; }
-.nm-place.is-on .nm-pin { fill: #F5AF1C; }
-.nm-lists { display: grid; grid-template-columns: 1fr 2fr; gap: 28px 48px; margin-top: 36px; }
-.nm-lists h4 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: #335A97; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: .04em; }
-.nm-key { width: 16px; height: 16px; border-radius: 50%; }
-.nm-key-5 { background: #D2E2F1; border: 2px solid #9DBBDB; }
-.nm-key-10 { background: #E4EEF7; border: 2px solid #C3D6EA; }
-.nm-lists ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 32px; }
-.nm-lists > div:first-child ul { columns: 1; }
-.nm-lists li { break-inside: avoid; padding: 7px 0; border-bottom: 1px solid rgba(51, 90, 151, .14); color: #143250; font-size: 15px; cursor: default; }
-.nm-lists li:hover { color: #E39C0A; }
+.nm-home path { fill: #F5AF1C; stroke: #FFFFFF; stroke-width: 2.5; }
+.nm-home-label { fill: #143250; font-weight: 900; font-size: 17px; paint-order: stroke; stroke: rgba(250, 245, 240, .9); stroke-width: 4px; }
+.nm-tip { position: absolute; z-index: 3; left: 0; top: 0; transform: translate(-50%, calc(-100% - 14px)); padding: 10px 14px 11px; border-radius: 12px; background: #143250; color: #FFFFFF; box-shadow: 0 10px 24px rgba(20, 50, 80, .25); pointer-events: none; white-space: nowrap; text-align: center; }
+.nm-tip::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 12px; background: #143250; transform: translateX(-50%) rotate(45deg); }
+.nm-tip strong { display: block; font-size: 15px; font-weight: 800; line-height: 1.2; }
+.nm-tip span { display: block; margin-top: 3px; color: #F5AF1C; font-size: 13px; font-weight: 700; letter-spacing: .02em; }
+.nm-tip.is-below { transform: translate(-50%, 18px); }
+.nm-tip.is-below::after { bottom: auto; top: -6px; }
+.nm-ctrl { position: absolute; z-index: 2; right: 18px; bottom: 18px; display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; background: #FFFFFF; box-shadow: 0 6px 18px rgba(20, 50, 80, .16); }
+.nm-ctrl button { width: 44px; height: 44px; border: 0; background: #FFFFFF; color: #335A97; font: 800 22px/1 var(--font-sans); cursor: pointer; }
+.nm-ctrl button + button { border-top: 1px solid rgba(51, 90, 151, .14); }
+.nm-ctrl button:hover, .nm-ctrl button:focus-visible { background: #F5AF1C; color: #143250; outline: none; }
+.nm-ctrl .nm-fit { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.nm-hint { position: absolute; z-index: 2; left: 18px; top: 18px; margin: 0; padding: 7px 12px; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #335A97; font-size: 12.5px; font-weight: 600; pointer-events: none; transition: opacity .3s; }
+.nm-map.is-used .nm-hint { opacity: 0; }
+.nm-hint-sm { display: none; }
+.nm-lists { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 28px 40px; margin-top: 36px; }
+.nm-lists h4 { margin: 0 0 12px; color: #335A97; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: .04em; }
+.nm-lists ul { margin: 0; padding: 0; list-style: none; }
+.nm-lists > div:nth-child(2) ul { columns: 2; column-gap: 32px; }
+.nm-lists li { display: flex; justify-content: space-between; gap: 12px; break-inside: avoid; padding: 7px 0; border-bottom: 1px solid rgba(51, 90, 151, .14); color: #143250; font-size: 15px; cursor: default; }
+.nm-lists li small { flex: none; color: #335A97; font-size: 13px; font-weight: 700; opacity: .75; }
+.nm-lists li:hover, .nm-lists li.is-on { color: #335A97; }
+.nm-lists li:hover small { color: #E39C0A; opacity: 1; }
 @media (max-width: 860px) {
   .nm { margin-top: 56px; }
-  .nm-map { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .nm-svg { width: 900px; max-width: none; }
+  .nm-map { aspect-ratio: auto; height: min(72vh, 520px); border-radius: 22px; }
   .nm-lists { grid-template-columns: 1fr; }
-  .nm-lists > div ul { columns: 1; }
+  .nm-lists > div:nth-child(2) ul { columns: 1; }
+  .nm-hint { left: 12px; top: 12px; font-size: 12px; }
+  .nm-hint-lg { display: none; }
+  .nm-hint-sm { display: inline; }
+  .nm-ctrl { right: 12px; bottom: 12px; }
 }
-.nm-lists { grid-template-columns: 1fr 1fr; }
-.nm-lists > div:first-child ul { columns: 2; }
-@media (max-width: 860px) { .nm-lists > div:first-child ul, .nm-lists > div ul { columns: 1; } }
