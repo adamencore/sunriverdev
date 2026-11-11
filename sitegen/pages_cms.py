@@ -2,6 +2,7 @@
 from . import lotmap
 import json
 from pathlib import Path
+from . import nearmap
 ROOT = Path(__file__).resolve().parent.parent
 import math
 import re
@@ -832,10 +833,11 @@ def build_live_out():
     <h2 class="li-title">Live a little closer.</h2>
     <p class="li-copy">Groceries, healthcare and a good cup of coffee are a short drive from your front door.</p>
     <div class="lo-near-grid">%s</div>
+    %s
   </div>
 </section>''' % (img(FG("lo-hero"), "A SunRiver couple outdoors on a sunny Southern Utah day", "fah-hero-img", "eager"),
                  cards, img(FG("lo-couple"), "A SunRiver couple out on their bikes"), trail_cols,
-                 img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html))
+                 img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html, nearmap.section()))
 
 
 # ================================================================== LIVE ON (patterned on the Figma "Live In" page, like Live Out)

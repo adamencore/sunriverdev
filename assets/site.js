@@ -1081,3 +1081,15 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
   window.addEventListener("resize", update);
   update();
 });
+
+// Live Out map: hovering a place in the lists highlights its pin
+(function () {
+  var nm = document.querySelector('.nm');
+  if (!nm) return;
+  nm.querySelectorAll('.nm-lists li').forEach(function (li) {
+    var g = nm.querySelector('.nm-place[data-place="' + li.getAttribute('data-place').replace(/"/g, '\\"') + '"]');
+    if (!g) return;
+    li.addEventListener('mouseenter', function () { nm.classList.add('is-focus'); g.classList.add('is-on'); });
+    li.addEventListener('mouseleave', function () { nm.classList.remove('is-focus'); g.classList.remove('is-on'); });
+  });
+})();

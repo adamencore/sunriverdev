@@ -2433,3 +2433,46 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .bl-chips a:hover { background: rgba(51, 90, 151, .05); color: #335A97; border-color: rgba(51, 90, 151, .24); }
 .bl-chips a[aria-current="page"] { background: rgba(245, 175, 28, .16); border-color: rgba(245, 175, 28, .5); color: #143250; font-weight: 700; }
 .pill-cta { border-radius: 999px; }
+
+/* Live Out: What's near SunRiver Firelight map (redrawn from the sales flier) */
+.nm { margin-top: 80px; }
+.nm-head h3 { margin: 0; color: #335A97; font-weight: 900; font-size: 32px; line-height: 36px; letter-spacing: -0.02em; }
+.nm-head p { margin: 8px 0 0; color: #335A97; font-family: var(--font-serif); font-size: 17px; }
+.nm-map { margin-top: 28px; border-radius: 28px; overflow: hidden; box-shadow: var(--shadow-card); background: #FAF5F0; }
+.nm-svg { display: block; width: 100%; height: auto; font-family: var(--font-sans); }
+.nm-bg { fill: #FBF8F3; }
+.nm-r10 { fill: #E4EEF7; }
+.nm-r5 { fill: #D2E2F1; }
+.nm-lake { fill: #2F6FB0; }
+.nm-road-casing { fill: none; stroke: #FFFFFF; stroke-width: 11; stroke-linecap: round; stroke-linejoin: round; }
+.nm-road { fill: none; stroke: #1E2E44; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.nm-arrow { fill: none; stroke: #1E2E44; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.nm-town { fill: #143250; font-weight: 900; font-size: 17px; }
+.nm-label { fill: #143250; font-weight: 600; font-size: 13.5px; paint-order: stroke; stroke: rgba(251, 248, 243, .85); stroke-width: 3px; }
+.nm-pin { fill: #C8423A; stroke: #fff; stroke-width: 1.5; }
+.nm-pin-dot { fill: #fff; }
+.nm-home path { fill: #F5AF1C; stroke: #fff; stroke-width: 2; }
+.nm-home-label { fill: #143250; font-weight: 900; font-size: 17px; }
+.nm-place { transition: opacity .2s; }
+.nm.is-focus .nm-place { opacity: .25; }
+.nm.is-focus .nm-place.is-on { opacity: 1; }
+.nm-place.is-on .nm-pin { fill: #F5AF1C; }
+.nm-lists { display: grid; grid-template-columns: 1fr 2fr; gap: 28px 48px; margin-top: 36px; }
+.nm-lists h4 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; color: #335A97; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: .04em; }
+.nm-key { width: 16px; height: 16px; border-radius: 50%; }
+.nm-key-5 { background: #D2E2F1; border: 2px solid #9DBBDB; }
+.nm-key-10 { background: #E4EEF7; border: 2px solid #C3D6EA; }
+.nm-lists ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 32px; }
+.nm-lists > div:first-child ul { columns: 1; }
+.nm-lists li { break-inside: avoid; padding: 7px 0; border-bottom: 1px solid rgba(51, 90, 151, .14); color: #143250; font-size: 15px; cursor: default; }
+.nm-lists li:hover { color: #E39C0A; }
+@media (max-width: 860px) {
+  .nm { margin-top: 56px; }
+  .nm-map { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .nm-svg { width: 900px; max-width: none; }
+  .nm-lists { grid-template-columns: 1fr; }
+  .nm-lists > div ul { columns: 1; }
+}
+.nm-lists { grid-template-columns: 1fr 1fr; }
+.nm-lists > div:first-child ul { columns: 2; }
+@media (max-width: 860px) { .nm-lists > div:first-child ul, .nm-lists > div ul { columns: 1; } }
