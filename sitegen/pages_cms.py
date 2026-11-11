@@ -793,8 +793,11 @@ def build_live_out():
   <div class="wrap li-in">
     <h2>Live Out is everything past the front door.</h2>
     <p class="li-serif"><strong><mark>Zion is 31 minutes away.</mark> That is the point.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
-    <div class="li-btns"><a class="li-btn solid" href="#nearby">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
+    <div class="li-btns"><a class="li-btn solid" href="#map">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
+</section>
+<section class="lo-map-sec" id="map">
+  <div class="wrap li-in">%s</div>
 </section>
 <section class="li-plans lo-region">
   <div class="wrap li-in">
@@ -833,11 +836,10 @@ def build_live_out():
     <h2 class="li-title">Live a little closer.</h2>
     <p class="li-copy">Groceries, healthcare and a good cup of coffee are a short drive from your front door.</p>
     <div class="lo-near-grid">%s</div>
-    %s
   </div>
 </section>''' % (img(FG("lo-hero"), "A SunRiver couple outdoors on a sunny Southern Utah day", "fah-hero-img", "eager"),
-                 cards, img(FG("lo-couple"), "A SunRiver couple out on their bikes"), trail_cols,
-                 img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html, nearmap.section()))
+                 nearmap.section(), cards, img(FG("lo-couple"), "A SunRiver couple out on their bikes"), trail_cols,
+                 img(FG("fl-trails"), "Trails and red rock mountains around SunRiver Firelight"), near_html))
 
 
 # ================================================================== LIVE ON (patterned on the Figma "Live In" page, like Live Out)

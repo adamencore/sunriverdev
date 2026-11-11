@@ -2485,3 +2485,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
   .nm-hint-sm { display: inline; }
   .nm-ctrl { right: 12px; bottom: 12px; }
 }
+
+.lo-map-sec { padding-block: 8px 72px; }
+.lo-map-sec .nm { margin-top: 0; }
+@media (max-width: 860px) { .lo-map-sec { padding-bottom: 48px; } }
