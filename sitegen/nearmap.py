@@ -140,14 +140,6 @@ def svg():
 
 
 def section():
-    names = [p[2] for p in PINS]
-    names.sort(key=lambda n: (float(DIST[n][0]), n) if n in DIST else (99, n))
-    groups = [("Under 5 miles", [n for n in names if n in DIST and float(DIST[n][0]) < 5]),
-              ("5 to 10 miles", [n for n in names if n in DIST and 5 <= float(DIST[n][0]) <= 10]),
-              ("Worth the drive", [n for n in names if n not in DIST or float(DIST[n][0]) > 10])]
-    li = lambda xs: "".join('<li data-place="%s"><span>%s</span><small>%s</small></li>' % (
-        esc(x), esc(x), ("%s mi" % DIST[x][0]) if x in DIST else "") for x in xs)
-    lists = "".join('<div><h4>%s</h4><ul>%s</ul></div>' % (h, li(xs)) for h, xs in groups if xs)
     return '''
     <div class="nm">
       <div class="nm-head"><h3>What's near SunRiver Firelight</h3><p>Groceries, coffee, dinner and Zion, all a short drive from home. Distances are driving miles from the Sales Center.</p></div>
@@ -161,5 +153,4 @@ def section():
         </div>
         <p class="nm-hint"><span class="nm-hint-lg">Drag to move. Double-click or use + and &minus; to zoom. Hover a pin for distance.</span><span class="nm-hint-sm">Drag to move, pinch to zoom, tap a pin</span></p>
       </div>
-      <div class="nm-lists">%s</div>
-    </div>''' % (svg(), lists)
+    </div>''' % svg()

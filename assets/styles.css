@@ -2477,19 +2477,9 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .nm-hint { position: absolute; z-index: 2; left: 18px; top: 18px; margin: 0; padding: 7px 12px; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #335A97; font-size: 12.5px; font-weight: 600; pointer-events: none; transition: opacity .3s; }
 .nm-map.is-used .nm-hint { opacity: 0; }
 .nm-hint-sm { display: none; }
-.nm-lists { display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 28px 40px; margin-top: 36px; }
-.nm-lists h4 { margin: 0 0 12px; color: #335A97; font-weight: 900; font-size: 16px; text-transform: uppercase; letter-spacing: .04em; }
-.nm-lists ul { margin: 0; padding: 0; list-style: none; }
-.nm-lists > div:nth-child(2) ul { columns: 2; column-gap: 32px; }
-.nm-lists li { display: flex; justify-content: space-between; gap: 12px; break-inside: avoid; padding: 7px 0; border-bottom: 1px solid rgba(51, 90, 151, .14); color: #143250; font-size: 15px; cursor: default; }
-.nm-lists li small { flex: none; color: #335A97; font-size: 13px; font-weight: 700; opacity: .75; }
-.nm-lists li:hover, .nm-lists li.is-on { color: #335A97; }
-.nm-lists li:hover small { color: #E39C0A; opacity: 1; }
 @media (max-width: 860px) {
   .nm { margin-top: 56px; }
   .nm-map { aspect-ratio: auto; height: min(72vh, 520px); border-radius: 22px; }
-  .nm-lists { grid-template-columns: 1fr; }
-  .nm-lists > div:nth-child(2) ul { columns: 1; }
   .nm-hint { left: 12px; top: 12px; font-size: 12px; }
   .nm-hint-lg { display: none; }
   .nm-hint-sm { display: inline; }
