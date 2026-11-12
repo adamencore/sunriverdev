@@ -16,9 +16,9 @@ WAVE_SAND = ('<svg class="live-wave" viewBox="0 0 1713 421" preserveAspectRatio=
 
 def build_home(plans):
     lives = [
-        ("Live In", VP("/images/home-v2/icon-home.svg"), "Open kitchens built for gathering. Hobby rooms, because people at this stage are picking things back up, not putting them down. Extended three-car garages, because you have bikes, kayaks, and gear. Customization throughout, so you're building the home instead of just buying it.", "See All Floor Plans", "/floor-plans"),
-        ("Live Out", VP("/images/home-v2/icon-nature.svg"), "Zion 31 minutes away. Snow Canyon closer. Six national parks within a few hours. And Costco, banking, doctors, and restaurants all within reach. You aren't trading convenience for the view. You get both.", "Explore Southern Utah", "/southern-utah"),
-        ("Live On", VP("/images/home-v2/icon-users.svg"), "Move. Connect. Grow. Real friendships don't happen by accident, so we build the conditions for them. Most people arrive planning to do one thing and end up doing five.", "Clubs &amp; Groups", "/why-sunriver"),
+        ("Live In", VP("/images/home-v2/icon-home.svg"), "Floor Plans. Homes for Sale. Available Lots. The Design Center. How We Build. Mortgage Options.", "See All Floor Plans", "/floor-plans"),
+        ("Live Out", VP("/images/home-v2/icon-nature.svg"), "Southern Utah. Trails and Adventure. What is Nearby. The Reservoir and more.", "Explore Southern Utah", "/southern-utah"),
+        ("Live On", VP("/images/home-v2/icon-users.svg"), "Clubs and Activities. Events Calendar. What is Coming and When. Bucketlist Living.", "Clubs &amp; Groups", "/why-sunriver"),
     ]
     live_cards = "".join('''<div class="lv-card"><span class="lv-icon">%s</span><h3>%s</h3><hr><p>%s</p><a class="lv-btn" href="%s">%s</a></div>''' % (
         img(icon, ""), t.upper(), d, href, label) for t, icon, d, label, href in lives)
