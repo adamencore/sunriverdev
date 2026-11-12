@@ -2493,16 +2493,16 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .lb-card { padding: 12px; border-radius: 20px; background: #FFFFFF; overflow: hidden; }
 .lb-stage { display: grid; place-items: center; overflow: hidden; border-radius: 10px; touch-action: none; }
 .lb-stage img { display: block; width: auto; height: auto; max-width: calc(min(96vw, 1200px, 100vw - 48px) - 24px); max-height: 88vh; object-fit: contain; transform-origin: center center; user-select: none; -webkit-user-select: none; }
-.lightbox.is-zoom .lb-stage img { max-height: calc(100vh - 140px); }
+.lightbox.is-zoom .lb-stage img { max-height: calc(100vh - 180px); }
 .lightbox.is-zoom .lb-stage { cursor: grab; }
 .lightbox.is-zoom .lb-stage:active { cursor: grabbing; }
 .lightbox .lb-close { position: absolute; top: -8px; right: -8px; z-index: 2; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 50%; background: #FFFFFF; color: #143250; box-shadow: 0 35px 60px -15px rgba(0, 0, 0, .3), 0 4px 12px rgba(20, 50, 80, .18); cursor: pointer; transition: background-color .2s; }
 .lightbox .lb-close svg { width: 16px; height: 16px; }
 .lightbox .lb-close:hover, .lightbox .lb-close:focus-visible { background: var(--sun-yellow); outline: none; }
-.lb-ctl { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); display: flex; overflow: hidden; border-radius: 999px; background: #FFFFFF; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); }
+.lb-ctl { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; overflow: hidden; border-radius: 999px; background: #FFFFFF; box-shadow: 0 10px 30px rgba(0, 0, 0, .25); }
 .lightbox .lb-ctl button { width: 48px; height: 40px; padding: 0; border: 0; background: #FFFFFF; color: #143250; font: 800 20px/1 var(--font-sans); cursor: pointer; }
 .lightbox .lb-ctl button + button { border-left: 1px solid rgba(20, 50, 80, .12); }
 .lightbox .lb-ctl button[data-z="fit"] { width: 60px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
 .lightbox .lb-ctl button:hover { background: var(--sun-yellow); }
 .lb-hint { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); margin: 0; color: rgba(255, 255, 255, .75); font-size: 13px; white-space: nowrap; }
-@media (max-width: 600px) { .lightbox.is-zoom .lb-stage img { max-height: calc(100vh - 150px); } .lb-hint { display: none; } }
+@media (max-width: 600px) { .lightbox.is-zoom .lb-stage img { max-height: calc(100vh - 180px); } .lb-hint { display: none; } }
