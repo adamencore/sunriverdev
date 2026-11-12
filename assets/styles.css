@@ -2448,7 +2448,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .nm-road-casing { fill: none; stroke: #FFFFFF; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
 .nm-road { fill: none; stroke: #143250; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; opacity: .82; }
 .nm-arrow { fill: none; stroke: #143250; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; opacity: .82; }
-.nm-town { fill: #335A97; font-family: var(--font-serif); font-style: italic; font-weight: 700; font-size: 19px; }
+.nm-town { fill: #335A97; font-family: var(--font-serif); font-style: normal; font-weight: 700; font-size: 19px; }
 .nm-label { fill: #143250; font-weight: 600; font-size: 13.5px; paint-order: stroke; stroke: rgba(250, 245, 240, .9); stroke-width: 3.5px; pointer-events: none; }
 .nm-pin-g { transform: scale(var(--nm-pk, 1)); transition: transform .18s; }
 .nm-hit { fill: transparent; }
@@ -2461,14 +2461,21 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .nm-place:hover .nm-label, .nm-place:focus-visible .nm-label, .nm-place.is-on .nm-label { fill: #335A97; font-weight: 800; }
 .nm.is-focus .nm-place { opacity: .3; }
 .nm.is-focus .nm-place.is-on { opacity: 1; }
-.nm-home path { fill: #F5AF1C; stroke: #FFFFFF; stroke-width: 2.5; }
-.nm-home-label { fill: #143250; font-weight: 900; font-size: 17px; paint-order: stroke; stroke: rgba(250, 245, 240, .9); stroke-width: 4px; }
-.nm-tip { position: absolute; z-index: 3; left: 0; top: 0; transform: translate(-50%, calc(-100% - 14px)); padding: 10px 14px 11px; border-radius: 12px; background: #143250; color: #FFFFFF; box-shadow: 0 10px 24px rgba(20, 50, 80, .25); pointer-events: none; white-space: nowrap; text-align: center; }
-.nm-tip::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 12px; background: #143250; transform: translateX(-50%) rotate(45deg); }
-.nm-tip strong { display: block; font-size: 15px; font-weight: 800; line-height: 1.2; }
-.nm-tip span { display: block; margin-top: 3px; color: #F5AF1C; font-size: 13px; font-weight: 700; letter-spacing: .02em; }
-.nm-tip.is-below { transform: translate(-50%, 18px); }
-.nm-tip.is-below::after { bottom: auto; top: -6px; }
+.nm-home-plate { fill: #FFFFFF; fill-opacity: .92; filter: drop-shadow(0 4px 10px rgba(20, 50, 80, .14)); }
+.nm-tip { position: absolute; z-index: 3; left: 0; top: 0; width: 290px; transform: translate(-50%, calc(-100% - 16px)); padding: 14px 16px 14px 14px; border-radius: 16px; background: #FFFFFF; color: #143250; box-shadow: 0 14px 34px rgba(20, 50, 80, .22); border: 1px solid rgba(51, 90, 151, .12); pointer-events: none; text-align: left; display: grid; grid-template-columns: 52px 1fr; gap: 0 12px; align-items: start; }
+.nm-tip[hidden] { display: none; }
+.nm-tip::after { content: ""; position: absolute; left: var(--nm-tip-x, 50%); bottom: -7px; width: 14px; height: 14px; background: #FFFFFF; border-right: 1px solid rgba(51, 90, 151, .12); border-bottom: 1px solid rgba(51, 90, 151, .12); transform: translateX(-50%) rotate(45deg); }
+.nm-tip-logo { grid-row: 1 / span 4; width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; border: 1px solid rgba(51, 90, 151, .16); overflow: hidden; display: grid; place-items: center; }
+.nm-tip-logo img { width: 40px; height: 40px; object-fit: contain; }
+.nm-tip-logo.is-icon { background: #FAF5F0; border-color: transparent; color: #335A97; }
+.nm-tip-logo svg { width: 26px; height: 26px; }
+.nm-tip-cat { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #335A97; opacity: .8; }
+.nm-tip strong { display: block; margin-top: 2px; font-size: 16px; font-weight: 800; line-height: 1.2; color: #143250; }
+.nm-tip-about { margin: 5px 0 0; font-size: 13px; line-height: 1.4; color: #143250; opacity: .82; }
+.nm-tip-dist { margin-top: 8px; display: inline-flex; align-items: center; gap: 6px; justify-self: start; padding: 4px 10px; border-radius: 999px; background: #F5AF1C; color: #143250; font-size: 12.5px; font-weight: 800; }
+.nm-tip.is-below { transform: translate(-50%, 20px); }
+.nm-tip.is-below::after { bottom: auto; top: -7px; transform: translateX(-50%) rotate(225deg); }
+@media (max-width: 860px) { .nm-tip { width: 250px; } }
 .nm-ctrl { position: absolute; z-index: 2; right: 18px; bottom: 18px; display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; background: #FFFFFF; box-shadow: 0 6px 18px rgba(20, 50, 80, .16); }
 .nm-ctrl button { width: 44px; height: 44px; border: 0; background: #FFFFFF; color: #335A97; font: 800 22px/1 var(--font-sans); cursor: pointer; }
 .nm-ctrl button + button { border-top: 1px solid rgba(51, 90, 151, .14); }

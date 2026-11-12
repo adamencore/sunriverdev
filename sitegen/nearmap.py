@@ -2,7 +2,7 @@
 (Adam's photo of it, Nov 11 2026). Coordinates are in the flier's own space (1400 x 1050). Places and spellings
 follow the flier, with typos fixed. Sky Mountain Golf Course is left off (no golf at SunRiver Firelight)."""
 
-from .lib import esc
+from .lib import esc, V
 
 ROADS = [
     # I-15
@@ -30,7 +30,7 @@ PINS = [  # (x, y of the pin tip, label, label x, label y, anchor, lines)
     (1324, 600, "Balcony One", 1272, 614, "start", None),
     (945, 628, "Davis Food & Drug", 928, 624, "end", None),
     (948, 655, "True Value Hardware", 940, 651, "end", None),
-    (997, 650, "Maverick", 1010, 654, "start", None),
+    (997, 650, "Maverik", 1010, 654, "start", None),
     (1001, 680, "Family Dollar", 1013, 684, "start", None),
     (937, 702, "El Rancho", 920, 688, "end", None),
     (922, 770, "Stage Coach Grille", 906, 746, "end", None),
@@ -76,7 +76,7 @@ DIST = {
     "Balcony One": ("9", 15),
     "Davis Food & Drug": ("3.6", 8),
     "True Value Hardware": ("3.6", 8),
-    "Maverick": ("3.5", 7),
+    "Maverik": ("3.5", 7),
     "Family Dollar": ("3.6", 7),
     "El Rancho": ("3.7", 7),
     "Stage Coach Grille": ("4", 8),
@@ -103,6 +103,50 @@ DIST = {
     "Bucks Ace Hardware": ("6.7", 14),
 }
 
+# Hover card content: (category, one line about the place, logo file in /assets/img/nearby or None).
+# Logos are the businesses' own site icons; places without a clear one get a category icon instead.
+INFO = {
+    "Kolob Canyon Visitors Center": ("Zion National Park", "The quiet northwest door to Zion, with a five mile scenic drive into red rock finger canyons.", "nps"),
+    "Sapp Bros Travel Center": ("Fuel and travel", "Fuel, snacks and road trip supplies just off I-15.", "sappbros"),
+    "Chief Toquer Reservoir": ("Outdoors", "A small reservoir in Toquerville for an easy walk and a quiet view.", None),
+    "Zion Vineyards": ("Winery", "Vineyard and tasting room in Leeds, a stop on the Utah Wine Trail.", None),
+    "Casa Tequilana": ("Mexican", "Mexican restaurant on Main Street in Leeds.", None),
+    "Mainly Pizza": ("Pizza", "Pizza on Main Street in Leeds.", None),
+    "Red Cliffs Reserve": ("Outdoors", "Red Cliffs Recreation Area near Leeds: a campground, short slot canyon hikes and shaded pools on Quail Creek.", "blm"),
+    "Zion National Park": ("National park", "Zion Canyon, the Narrows and Angels Landing. The main entrance is in Springdale.", "nps"),
+    "Balcony One": ("Dining", "Santa Fe inspired restaurant in Virgin with panoramic views toward Zion.", None),
+    "Davis Food & Drug": ("Groceries", "Grocery store and pharmacy on State Street in LaVerkin.", None),
+    "True Value Hardware": ("Hardware", "Hardware and garden supplies, inside Davis Food & Drug in LaVerkin.", "truevalue"),
+    "Maverik": ("Fuel", "Fuel and grab and go food on State Street in LaVerkin.", "maverik"),
+    "Family Dollar": ("Shopping", "Household basics on State Street in LaVerkin.", None),
+    "El Rancho": ("Mexican", "Mexican restaurant on State Street in LaVerkin.", None),
+    "Stage Coach Grille": ("American", "Hearty American grill in a classic western setting in LaVerkin.", "stagecoach"),
+    "Hurricane Valley Fire Station 43": ("Fire and EMS", "The Hurricane Valley Fire District station that serves LaVerkin.", None),
+    "Red Fort Cuisine of India": ("Indian", "Indian restaurant on State Street in LaVerkin.", "redfort"),
+    "River Rock Roasting": ("Coffee", "Coffee roastery, bakery and cafe with a patio overlooking the Virgin River.", None),
+    "Zion Canyon Hot Springs": ("Hot springs", "About 50 geothermal mineral pools in LaVerkin, open for day soaks and evening stargazing.", None),
+    "Yu Kitchen 3": ("Asian", "Asian kitchen in Hurricane.", None),
+    "Las Lupitas Mexican Grille": ("Mexican", "Mexican grill on State Street in Hurricane.", None),
+    "Applebee's": ("American", "Neighborhood grill and bar on State Street in Hurricane.", None),
+    "Lonny Boy's BBQ": ("Barbecue", "Smoked barbecue on State Street in Hurricane.", "lonnyboys"),
+    "Lin's Market": ("Groceries", "Full service grocery store on State Street in Hurricane.", "lins"),
+    "Arby's": ("Quick bite", "Roast beef sandwiches on State Street in Hurricane.", "arbys"),
+    "McDonald's": ("Quick bite", "On State Street in Hurricane.", "mcdonalds"),
+    "Bonrue Bakery": ("Bakery", "Artisan bakery on Main Street in Hurricane, with pastries, bread and breakfast.", None),
+    "Main Street Cafe": ("Cafe", "Coffee and breakfast on Main Street in Hurricane.", None),
+    "Pizza Wagon": ("Pizza", "Dixie Pizza Wagon, oven fired pizza in Hurricane.", "pizzawagon"),
+    "Taco Bell": ("Quick bite", "On State Street in Hurricane.", None),
+    "Rooster Run Cafe": ("Cafe", "Hometown cafe on State Street in Hurricane.", "roosterrun"),
+    "Cafe Rio": ("Mexican", "Fresh Mexican grill, a Utah favorite, in Hurricane.", None),
+    "Coral Cliffs Cinema": ("Movies", "Eight screen movie theater on State Street in Hurricane.", "coralcliffs"),
+    "Walgreens": ("Pharmacy", "Pharmacy and everyday essentials on State Street in Hurricane.", "walgreens"),
+    "Jimmy John's": ("Quick bite", "Sandwiches on State Street in Hurricane.", "jimmyjohns"),
+    "Bucks Ace Hardware": ("Hardware", "Hardware, paint and garden supplies on State Street in Hurricane.", None),
+}
+ICON_OF = {"Zion National Park": "park", "National park": "park", "Outdoors": "park", "Fuel and travel": "fuel", "Fuel": "fuel",
+           "Winery": "wine", "Groceries": "cart", "Shopping": "bag", "Pharmacy": "bag", "Hardware": "tool", "Fire and EMS": "shield",
+           "Coffee": "cup", "Cafe": "cup", "Bakery": "cup", "Hot springs": "spa", "Movies": "film"}
+
 
 def _text(x, y, anchor, lines, cls):
     if len(lines) == 1:
@@ -128,13 +172,19 @@ def svg():
     for x, y, name, lx, ly, anchor, lines in PINS:
         d = DIST.get(name)
         dist = ' data-mi="%s" data-min="%s"' % d if d else ""
+        cat, about, logo = INFO.get(name, ("", "", None))
+        dist += ' data-cat="%s" data-about="%s" data-icon="%s"' % (esc(cat), esc(about), ICON_OF.get(cat, "dine"))
+        if logo:
+            dist += ' data-logo="/assets/img/nearby/%s.webp"' % logo
         aria = "%s, %s miles away" % (name, d[0]) if d else name
         out.append('<g class="nm-place" data-place="%s"%s tabindex="0" role="button" aria-label="%s">'
                    '<g transform="translate(%s %s)"><g class="nm-pin-g"><circle r="15" cy="-20" class="nm-hit"/><use href="#nm-pin" class="nm-pin"/>'
                    '<circle cy="-22" r="4.2" class="nm-pin-dot"/></g></g>%s</g>' % (
             esc(name), dist, esc(aria), x, y, _text(lx, ly, anchor, lines or [name], "nm-label")))
-    out.append('<g class="nm-home" data-home="755 360"><path d="M755 318 L766 345 L795 347 L772 365 L780 393 L755 377 L730 393 L738 365 L715 347 L744 345 Z"/></g>')
-    out.append(_text(731, 402, "start", ["SunRiver", "Firelight"], "nm-home-label"))
+    # SunRiver Firelight logo where the star was (art sits in the middle of a 750 x 350 transparent png)
+    out.append('<g class="nm-home"><rect x="672" y="322" width="186" height="80" rx="16" class="nm-home-plate"/>'
+               '<image href="%s" x="628" y="297" width="274" height="128" preserveAspectRatio="xMidYMid meet"/>'
+               '<title>SunRiver Firelight</title></g>' % V("logo-firelight.3r9_zvrixrchn.png"))
     out.append('</g></svg>')
     return "".join(out)
 
@@ -145,7 +195,7 @@ def section():
       <div class="nm-head"><h3>What's near SunRiver Firelight</h3><p>Groceries, coffee, dinner and Zion, all a short drive from home. Distances are driving miles from the Sales Center.</p></div>
       <div class="nm-map" data-nm-window>
         <div class="nm-stage">%s</div>
-        <div class="nm-tip" role="status" aria-live="polite" hidden><strong></strong><span></span></div>
+        <div class="nm-tip" role="status" aria-live="polite" hidden><span class="nm-tip-logo"></span><span class="nm-tip-cat"></span><strong></strong><p class="nm-tip-about"></p><span class="nm-tip-dist"></span></div>
         <div class="nm-ctrl" role="group" aria-label="Map zoom">
           <button type="button" data-nm="in" aria-label="Zoom in">+</button>
           <button type="button" data-nm="out" aria-label="Zoom out">&minus;</button>

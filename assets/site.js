@@ -1157,19 +1157,42 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
     });
   });
   // tooltips
+  var ICONS = {
+    dine: '<path d="M7 3v8a2 2 0 0 0 4 0V3M9 3v18M17 3c-1.7 0-3 2.2-3 5v5h3v8"/>',
+    cup: '<path d="M4 8h13v5a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V8ZM17 10h1.5a2.5 2.5 0 0 1 0 5H17M8 2.5c0 1.5 1.5 1.5 1.5 3M12 2.5c0 1.5 1.5 1.5 1.5 3"/>',
+    park: '<path d="M2 20 9 7l4 7 2-3 7 9H2ZM9 7l2.2 4"/>',
+    fuel: '<path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3 21h12M6 9h6M14 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V8l-3-3"/>',
+    wine: '<path d="M8 3h8l-.5 6a3.5 3.5 0 0 1-7 0L8 3ZM12 12.5V20M8.5 21h7"/>',
+    cart: '<path d="M3 4h2.5l2.2 11h10.6L20.5 7H6.4M9.5 20a1 1 0 1 0 0-.1M17 20a1 1 0 1 0 0-.1"/>',
+    bag: '<path d="M5 8h14l-1 13H6L5 8ZM9 8V6a3 3 0 0 1 6 0v2"/>',
+    tool: '<path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5ZM14.5 6.5 17 4l3 3-2.5 2.5"/>',
+    shield: '<path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6l-7-3ZM12 9v6M9 12h6"/>',
+    spa: '<path d="M3 17c2 0 2-1.5 4.5-1.5S9.5 17 12 17s2.5-1.5 4.5-1.5S19 17 21 17M3 21c2 0 2-1.5 4.5-1.5S9.5 21 12 21s2.5-1.5 4.5-1.5S19 21 21 21M8 12c0-2 2-2.5 2-4.5S8 5 8 3M14 12c0-2 2-2.5 2-4.5S14 5 14 3"/>',
+    film: '<path d="M4 5h16v14H4zM8 5v14M16 5v14M4 9h4M4 15h4M16 9h4M16 15h4"/>'
+  };
   function place(g) {
-    var pin = g.querySelector('.nm-pin'), r = pin.getBoundingClientRect(), b = box();
+    var pin = g.querySelector('.nm-pin'), r = pin.getBoundingClientRect(), b = box(), tw = tip.offsetWidth / 2;
     var x = r.left + r.width / 2 - b.left, y = r.top - b.top;
-    var below = y < 90;
+    var below = y < tip.offsetHeight + 24;
+    var cx = Math.max(tw + 8, Math.min(b.width - tw - 8, x));
     tip.classList.toggle('is-below', below);
-    tip.style.left = Math.max(90, Math.min(b.width - 90, x)) + 'px';
+    tip.style.left = cx + 'px';
+    tip.style.setProperty('--nm-tip-x', Math.max(18, Math.min(tw * 2 - 18, tw + x - cx)) + 'px');
     tip.style.top = (below ? r.bottom - b.top : y) + 'px';
   }
   function show(g) {
     tipFor = g; tip.hidden = false;
+    var lg = tip.querySelector('.nm-tip-logo'), logo = g.getAttribute('data-logo');
+    lg.className = 'nm-tip-logo' + (logo ? '' : ' is-icon');
+    lg.innerHTML = logo ? '<img alt="" src="' + logo + '">' :
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[g.getAttribute('data-icon')] || ICONS.dine) + '</svg>';
+    tip.querySelector('.nm-tip-cat').textContent = g.getAttribute('data-cat') || '';
     tip.querySelector('strong').textContent = g.getAttribute('data-place');
+    tip.querySelector('.nm-tip-about').textContent = g.getAttribute('data-about') || '';
     var mi = g.getAttribute('data-mi'), mn = g.getAttribute('data-min');
-    tip.querySelector('span').textContent = mi ? mi + ' miles away' + (mn ? ', about ' + mn + ' min' : '') : '';
+    var dist = tip.querySelector('.nm-tip-dist');
+    dist.textContent = mi ? mi + ' mi away' + (mn ? ', about ' + mn + ' min' : '') : '';
+    dist.hidden = !mi;
     nm.querySelectorAll('.nm-place.is-on').forEach(function (o) { if (o !== g) o.classList.remove('is-on'); });
     g.classList.add('is-on'); place(g);
   }
