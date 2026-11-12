@@ -1098,7 +1098,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
 .pd-num { margin-top: 56px; color: var(--sun-yellow); font-weight: 900; font-size: 16px; line-height: 18px; letter-spacing: -0.02em; }
 .pd-title { margin-top: 2px; color: #335A97; font-weight: 900; font-size: 88px; line-height: 0.9; letter-spacing: -0.03em; }
 .pd-top { display: grid; grid-template-columns: minmax(0, 667fr) minmax(0, 540fr); gap: 23px; margin-top: 30px; align-items: start; }
-.pd .hd-media .viewer-main { aspect-ratio: 667 / 525; }
+.pd .hd-media .viewer-main { aspect-ratio: 667 / 346; border-radius: 21px; }
 .pd-card { padding: 30px 37px 37px; background: var(--white); border-radius: 20px; color: #153250; }
 .pd-card p { max-width: none; }
 .pd-price { color: #335A97; font-weight: 900; font-size: 40px; line-height: 48px; letter-spacing: -0.03em; }
