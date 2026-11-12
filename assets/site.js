@@ -218,8 +218,12 @@
     im.src = src; im.alt = alt || ''; im.draggable = false;
     stage.appendChild(im);
     var close = document.createElement('button');
-    close.type = 'button'; close.className = 'lb-close'; close.setAttribute('aria-label', 'Close'); close.innerHTML = '&times;';
-    box.appendChild(stage); box.appendChild(close);
+    close.type = 'button'; close.className = 'lb-close'; close.setAttribute('aria-label', 'Close');
+    close.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>';
+    var frame = document.createElement('div'); frame.className = 'lb-frame';
+    var card = document.createElement('div'); card.className = 'lb-card';
+    card.appendChild(stage); frame.appendChild(card); frame.appendChild(close);
+    box.appendChild(frame);
     var scale = 1, tx = 0, ty = 0;
     function apply() { im.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')'; }
     function zoomAt(f, cx, cy) {
@@ -268,7 +272,7 @@
       if (zoomable && e.key === '-') zoomAt(1 / 1.5);
     }
     function done() { box.remove(); document.removeEventListener('keydown', onKey); document.documentElement.style.overflow = ''; if (prev && prev.focus) prev.focus(); }
-    box.addEventListener('click', function (e) { if (!zoomable || e.target === box) done(); });
+    box.addEventListener('click', function (e) { if (e.target === box || (!zoomable && !frame.contains(e.target))) done(); });
     close.addEventListener('click', function (e) { e.stopPropagation(); done(); });
     document.addEventListener('keydown', onKey);
     if (zoomable) document.documentElement.style.overflow = 'hidden';
