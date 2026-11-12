@@ -995,7 +995,7 @@ def build_firelight(plans):
         img(p, "SunRiver members, %s" % t.lower()), t, w) for t, w, p in clubs)
     rows = plan_belt(plans)
     add("/sunriver-firelight", "SunRiver Firelight", "SunRiver Firelight in Toquerville, Utah: SunRiver's newest 55+ community puts Zion National Park in your backyard.", "life-overlay", '''
-<section class="fah-hero li-hero fl-hero no-wash">
+<section class="fah-hero li-hero fl-hero no-wash dz-hero">
   %s
   <div class="wrap fah-hero-inner"><p class="fl-hero-eyebrow">Explore our newest community</p><h1>SunRiver Firelight</h1><p class="fl-hero-sub">Toquerville, UT</p></div>
 </section>
