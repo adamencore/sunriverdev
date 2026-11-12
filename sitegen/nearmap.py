@@ -182,7 +182,7 @@ def svg():
                    '<circle cy="-22" r="4.2" class="nm-pin-dot"/></g></g>%s</g>' % (
             esc(name), dist, esc(aria), x, y, _text(lx, ly, anchor, lines or [name], "nm-label")))
     # SunRiver Firelight logo where the star was (art sits in the middle of a 750 x 350 transparent png)
-    out.append('<g class="nm-home"><rect x="672" y="322" width="186" height="80" rx="16" class="nm-home-plate"/>'
+    out.append('<g class="nm-home"><rect x="646" y="304" width="238" height="116" rx="22" class="nm-home-plate"/>'
                '<image href="%s" x="628" y="297" width="274" height="128" preserveAspectRatio="xMidYMid meet"/>'
                '<title>SunRiver Firelight</title></g>' % V("logo-firelight.3r9_zvrixrchn.png"))
     out.append('</g></svg>')
