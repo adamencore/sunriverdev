@@ -89,7 +89,7 @@ def build_floor_plans(plans):
 <section class="fah-hero fp-banner">
   %s
   <div class="wrap fah-hero-inner">
-    <h1>Floor Plans: <span class="yellow">SunRiver Firelight</span></h1>
+    <h1>Floor Plans</h1>
   </div>
 </section>
 <section class="mh-section">
