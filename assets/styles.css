@@ -2540,10 +2540,27 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
   .gal-arrow { width: 40px; height: 40px; }
 }
 
-/* Listing detail: info card a third smaller on desktop, the photo takes the space it gives up */
+/* Listing detail on desktop: a slimmer info card that runs the full height of the photo and thumbnails,
+   readable text at the site's usual sizes, and the two buttons stacked full width at the bottom */
 @media (min-width: 1101px) {
-  .hd-top { grid-template-columns: minmax(0, 877fr) minmax(0, 363fr); }
-  .hd-card { zoom: 0.667; }
+  .hd-top { grid-template-columns: minmax(0, 1fr) minmax(0, 430px); gap: 24px; align-items: stretch; }
+  .hd-media.viewer { display: flex; flex-direction: column; gap: 18px; }
+  .hd-media .viewer-main { flex: 1 1 auto; min-height: 0; }
+  .hd-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 0; padding: 28px 32px 30px; }
+  .hd-card > * { max-width: 100%; }
+  .hd-price { font-size: 40px; line-height: 46px; }
+  .hd-name { margin-top: 8px; font-size: 18px; line-height: 26px; }
+  .hd-site { margin-top: 12px; }
+  .hd-address { font-size: 22px; line-height: 28px; }
+  .hd-comm { font-size: 17px; line-height: 24px; }
+  .hd-chips { margin-top: 18px; }
+  .hd-chips .chip { height: 36px; padding: 0 12px; gap: 7px; font-size: 15px; }
+  .hd-chips { flex-wrap: nowrap; }
+  .hd-status { margin-top: 16px; font-size: 17px; line-height: 24px; }
+  .hd-break { align-self: stretch; margin-top: 16px; font-size: 15px; line-height: 22px; }
+  .hd-break .hd-break-total { font-size: 17px; }
+  .hd-actions { align-self: stretch; flex-direction: column; flex-wrap: nowrap; gap: 12px; margin-top: auto; padding-top: 22px; }
+  .hd-btn { width: 100%; height: 52px; font-size: 17px; font-weight: 600; }
 }
 
 /* Live In / Out / On lead headings: the page name gets a yellow underline */
