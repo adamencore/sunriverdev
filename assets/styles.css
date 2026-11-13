@@ -2573,7 +2573,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 /* Banner preview (?bnr=1|2|3): white wash over the photo, SunRiver waves on top, navy type */
 .bnr .fah-hero::before, .bnr .fah-hero::after { display: none !important; }
 .bnr-wash, .bnr-waves { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.bnr-waves { background: url(/assets/img/sr-waves-full.svg) no-repeat center bottom / 115% auto; }
+.bnr-waves { background: url(/assets/img/sr-waves-full.svg) no-repeat center bottom / 100% 100%; }
 .bnr .fah-hero-inner { z-index: 2; }
 .bnr .fah-hero h1, .bnr .fah-hero p, .bnr .fah-hero .fh-eyebrow, .bnr .fah-hero .fl-hero-sub { color: #143250 !important; text-shadow: none !important; }
 .bnr .fah-hero h1 { color: #335A97 !important; }
