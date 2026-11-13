@@ -357,13 +357,15 @@ def build_homes(listings, plans=()):
   <div class="wrap hfs-grid">
     <aside class="filters" aria-label="Filter homes">
       <form id="home-filters">
-        <p class="filters-title">Filter</p>
+        <button type="button" class="filters-title" aria-expanded="false" aria-controls="filters-body">Filter<svg class="filters-chev" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg></button>
+        <div class="filters-body" id="filters-body">
         <fieldset><legend>Community</legend><div class="opts">%s</div></fieldset>
         <fieldset><legend>Status</legend><div class="opts">%s</div></fieldset>
         <fieldset><legend>SQFT</legend><div class="opts">%s</div></fieldset>
         %s%s%s%s
         <button type="submit" class="filter-btn">Filter</button>
         <a class="filter-btn filter-map" href="#map">View map</a>
+        </div>
       </form>
     </aside>
     <div class="hfs-results">

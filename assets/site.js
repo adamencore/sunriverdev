@@ -1316,3 +1316,14 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
     var u = new URL(a.href); u.searchParams.set('bnr', m[1]); a.href = u.pathname + u.search + u.hash;
   });
 })();
+
+// Homes for sale filter: tap "Filter" to open and close it on phones and tablets
+(function () {
+  var t = document.querySelector('.filters button.filters-title');
+  if (!t) return;
+  var box = t.closest('.filters');
+  t.addEventListener('click', function () {
+    var open = box.classList.toggle('is-open');
+    t.setAttribute('aria-expanded', String(open));
+  });
+})();

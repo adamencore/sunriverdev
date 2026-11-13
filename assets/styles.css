@@ -1021,7 +1021,7 @@ details.faq .answer { padding-bottom: 24px; display: grid; gap: 12px; font-famil
   .fah-hero p { font-size: 19px; line-height: 23px; }
   .fah-links-grid { grid-template-columns: minmax(0, 499px); }
   .hfs-grid { grid-template-columns: minmax(0, 1fr); }
-  .filters form { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+  .filters-body { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
   .filters-title, .filter-btn { grid-column: 1 / -1; }
   .hd-sales { grid-template-columns: minmax(0, 1fr); }
   .hd-team { height: 260px; overflow: hidden; border-radius: 0 0 20px 20px; }
@@ -2590,3 +2590,16 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 
 /* Nov 13: waves off for now, lighter wash */
 .bnr-waves { display: none; }
+
+/* Homes for sale filter: a collapsible dropdown on phones and tablets (like the Vercel build), always open on desktop */
+.filters-body { display: grid; gap: 8px; }
+button.filters-title { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; border-bottom: 1px solid #D9D9D9; background: none; color: #153250; font-family: inherit; text-align: left; cursor: default; pointer-events: none; }
+.filters-chev { display: none; width: 16px; height: 16px; transition: transform .25s ease; }
+@media (max-width: 860px) {
+  .filters { padding: 18px 22px; }
+  button.filters-title { margin: 0; padding: 4px 0; border-bottom: 0; font-size: 15px; cursor: pointer; pointer-events: auto; }
+  .filters-chev { display: block; }
+  .filters-body { display: none; padding-top: 12px; margin-top: 8px; border-top: 1px solid #D9D9D9; }
+  .filters.is-open .filters-body { display: grid; }
+  .filters.is-open .filters-chev { transform: rotate(180deg); }
+}
