@@ -140,6 +140,9 @@ def inventory_listings(sanity, plans):
                      "community": "SunRiver Firelight", "mlsNumber": None, "statusDate": inv["asOf"], "asOf": inv["asOf"]})
         if h.get("videos"):
             base["youtubeShortIds"] = h["videos"]
+        if h.get("photos"):  # the home's own photos (assets/img/homes/<lot>/), first one leads
+            pics = ["/assets/img/homes/%d/%s" % (h["lot"], f) for f in h["photos"]]
+            base["photo"], base["photoAlt"], base["gallery"] = pics[0], "Homesite %d, %s" % (h["lot"], h["plan"]), pics[1:]
         if not base.get("photo"):
             g = [x.get("asset") for x in plan.get("gallery") or [] if isinstance(x, dict) and x.get("asset")]
             base["photo"] = g[0] if g else None
