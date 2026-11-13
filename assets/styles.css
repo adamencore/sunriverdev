@@ -2569,3 +2569,20 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 /* Live In, Homes ready now: cards carry a drop shadow by default, a little deeper on hover */
 .li-ready .home-card { box-shadow: 0 10px 28px rgba(20, 50, 80, .12); }
 .li-ready .home-card:hover { box-shadow: 0 16px 38px rgba(20, 50, 80, .2); }
+
+/* Banner preview (?bnr=1|2|3): white wash over the photo, SunRiver waves on top, navy type */
+.bnr .fah-hero::before, .bnr .fah-hero::after { display: none !important; }
+.bnr-wash, .bnr-waves { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.bnr-waves { background: url(/assets/img/sr-waves.svg) no-repeat center bottom / 115% auto; }
+.bnr .fah-hero-inner { z-index: 2; }
+.bnr .fah-hero h1, .bnr .fah-hero p, .bnr .fah-hero .fh-eyebrow, .bnr .fah-hero .fl-hero-sub { color: #143250 !important; text-shadow: none !important; }
+.bnr .fah-hero h1 { color: #335A97 !important; }
+/* 1: soft haze, waves at half strength */
+.bnr-1 .bnr-wash { background: rgba(255, 255, 255, .55); }
+.bnr-1 .bnr-waves { opacity: .5; }
+/* 2: bright wash, the photo becomes a whisper, waves lighter still */
+.bnr-2 .bnr-wash { background: rgba(250, 245, 240, .78); }
+.bnr-2 .bnr-waves { opacity: .35; filter: brightness(0) saturate(100%) invert(30%) sepia(40%) saturate(900%) hue-rotate(185deg); }
+/* 3: graded wash, heavy behind the type and lighter toward the bottom so the photo shows through */
+.bnr-3 .bnr-wash { background: linear-gradient(180deg, rgba(255, 255, 255, .82) 0%, rgba(255, 255, 255, .62) 55%, rgba(255, 255, 255, .3) 100%); }
+.bnr-3 .bnr-waves { opacity: .7; }

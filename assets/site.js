@@ -1297,3 +1297,22 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
     });
   });
 })();
+
+// Banner preview (Nov 13): add ?bnr=1, 2 or 3 to any page with a photo banner to try a white wash plus the SunRiver waves.
+// Nothing changes without the parameter.
+(function () {
+  var m = /[?&]bnr=([123])/.exec(location.search);
+  if (!m) return;
+  document.documentElement.classList.add('bnr', 'bnr-' + m[1]);
+  document.querySelectorAll('.fah-hero').forEach(function (h) {
+    var w = document.createElement('div'); w.className = 'bnr-wash';
+    var v = document.createElement('div'); v.className = 'bnr-waves';
+    h.insertBefore(v, h.querySelector('.fah-hero-inner')); h.insertBefore(w, v);
+  });
+  var hd = document.querySelector('.site-header.overlay'); if (hd) hd.classList.add('on-light');
+  // keep the parameter on links so the sample carries across pages
+  document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+    if (a.getAttribute('href').indexOf('#') === 1 || /\.(pdf|png|jpe?g|webp)$/.test(a.getAttribute('href'))) return;
+    var u = new URL(a.href); u.searchParams.set('bnr', m[1]); a.href = u.pathname + u.search + u.hash;
+  });
+})();
