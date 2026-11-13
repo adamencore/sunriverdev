@@ -387,6 +387,9 @@ def build_homes(listings, plans=()):
 
     for l in ls:
         build_listing(l)
+        if l.get("lot") == 58:  # gallery previews for review (Nov 13): two arrow styles on Homesite 58
+            build_listing(l, "/preview/gallery-a", "a")
+            build_listing(l, "/preview/gallery-b", "b")
 
 
 def listing_story(l):
@@ -424,7 +427,30 @@ def listing_story(l):
         plan, comm, "{:,} sq ft".format(l.get("squareFootage") or 0), (" with " + spec) if spec else "", status, extra)
 
 
-def build_listing(l):
+GAL_CHEV = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="%s"/></svg>'
+
+
+def gallery(pics, alt, variant):
+    """Listing gallery with arrows: large photo with prev/next and a count, then a strip of 4 thumbnails with its own arrows."""
+    L, R = GAL_CHEV % "M15 5l-7 7 7 7", GAL_CHEV % "M9 5l7 7-7 7"
+    main = simg(pics[0], alt, 1400, loading="eager", sizes="(max-width: 860px) 100vw, 667px")
+    thumbs = "".join('<button type="button" class="thumb%s" data-src="%s" aria-label="Show photo %d of %d">%s</button>' % (
+        " is-active" if k == 0 else "", S(r, 1600), k + 1, len(pics), img(S(r, 320), "%s photo %d" % (alt, k + 1))) for k, r in enumerate(pics))
+    return '''<div class="hd-media viewer gal gal-%s" data-gal>
+        <div class="viewer-main">%s
+          <button type="button" class="gal-arrow gal-prev" aria-label="Previous photo">%s</button>
+          <button type="button" class="gal-arrow gal-next" aria-label="Next photo">%s</button>
+          <span class="gal-count" aria-live="polite"><b>1</b> / %d</span>
+        </div>
+        <div class="gal-strip">
+          <button type="button" class="gal-sarrow gal-sprev" aria-label="Earlier photos">%s</button>
+          <div class="gal-track">%s</div>
+          <button type="button" class="gal-sarrow gal-snext" aria-label="More photos">%s</button>
+        </div>
+      </div>''' % (variant, main, L, R, len(pics), L, thumbs, R)
+
+
+def build_listing(l, path=None, gal=None):
     """Listing page, OFFICIAL Figma "Homes for Sale Home Detail" (6:503)."""
     pics = ([l["photo"]] if l.get("photo") else []) + [g for g in (l.get("gallery") or []) if g != l.get("photo")]
     alt = l.get("photoAlt") or l.get("title")
@@ -457,13 +483,14 @@ def build_listing(l):
     head, story = listing_story(l)
     comm = COMMUNITY_LABEL.get(l.get("community"), l.get("community", ""))
     mls = ""
-    add("/homes-for-sale/%s" % l["slug"], "%s, %s" % (title, addr),
+    media = gallery(pics, alt, gal) if gal and len(pics) > 1 else '<div class="hd-media viewer"><div class="viewer-main">%s</div>%s</div>' % (main, thumbs)
+    add(path or "/homes-for-sale/%s" % l["slug"], ("Gallery preview %s: " % gal.upper() if gal else "") + "%s, %s" % (title, addr),
         "%s at %s: %s sq ft, %s bed, %s bath. %s." % (title, l.get("address") or "", "{:,}".format(l.get("squareFootage") or 0), num(l.get("beds")), num(l.get("baths")), l.get("status", "")), "homes", '''
 <section class="hd">
   <div class="wrap">
     <a class="hd-back" href="/homes-for-sale">See all homes for sale</a>
     <div class="hd-top">
-      <div class="hd-media viewer"><div class="viewer-main">%s</div>%s</div>
+      %s
       <div class="hd-card">
         <p class="hd-price">%s</p>
         <p class="hd-name"><strong>%s</strong><span aria-hidden="true">|</span>%s sqft</p>
@@ -484,7 +511,7 @@ def build_listing(l):
     %s
   </div>
 </section>
-%s''' % (main, thumbs, listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), site, esc(addr),
+%s''' % (media, listing_price(l), esc(title), "{:,}".format(l.get("squareFootage") or 0), site, esc(addr),
          esc(comm), spec_chips(l, "chips hd-chips"), esc(BADGE_LABEL.get(l.get("status"), l.get("status") or "")), feat, breakdown, mls,
          esc(head), esc(story), esc(addr).replace(" ", "+"), esc(addr),
          contact_row(l.get("community") == "SunRiver Firelight"), videos), body_class="sand-page")

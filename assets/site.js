@@ -1255,3 +1255,45 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
   window.addEventListener('resize', onScroll);
   run();
 })();
+
+// Listing gallery with arrows (.gal): prev/next on the big photo, a 4-up thumbnail strip with its own arrows
+(function () {
+  document.querySelectorAll('[data-gal]').forEach(function (g) {
+    var thumbs = [].slice.call(g.querySelectorAll('.gal-track .thumb')), track = g.querySelector('.gal-track');
+    var count = g.querySelector('.gal-count b'), sp = g.querySelector('.gal-sprev'), sn = g.querySelector('.gal-snext');
+    if (!thumbs.length) return;
+    var cur = 0;
+    function syncStrip() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      sp.disabled = track.scrollLeft <= 2; sn.disabled = track.scrollLeft >= max;
+    }
+    function go(i) {
+      cur = (i + thumbs.length) % thumbs.length;
+      thumbs[cur].click();
+      count.textContent = cur + 1;
+      var t = thumbs[cur], l = t.offsetLeft - track.offsetLeft, r = l + t.offsetWidth;
+      if (l < track.scrollLeft) track.scrollLeft = l;
+      else if (r > track.scrollLeft + track.clientWidth) track.scrollLeft = r - track.clientWidth;
+    }
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { cur = i; count.textContent = i + 1; }); });
+    g.querySelector('.gal-prev').addEventListener('click', function () { go(cur - 1); });
+    g.querySelector('.gal-next').addEventListener('click', function () { go(cur + 1); });
+    function page(dir) { track.scrollLeft += dir * (track.clientWidth + 10); }
+    sp.addEventListener('click', function () { page(-1); });
+    sn.addEventListener('click', function () { page(1); });
+    track.addEventListener('scroll', syncStrip, { passive: true });
+    window.addEventListener('resize', syncStrip);
+    syncStrip();
+    g.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { go(cur + 1); e.preventDefault(); }
+    });
+    // swipe the big photo on touch screens
+    var main = g.querySelector('.viewer-main'), x0 = null;
+    main.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    main.addEventListener('touchend', function (e) {
+      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+    });
+  });
+})();
