@@ -728,8 +728,8 @@ def build_live_in(plans, listings):
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Live In is the home itself.</h2>
-    <p class="li-serif"><strong><mark>A new home for exactly this stage.</mark></strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
+    <h2><span class="li-u">Live In</span> is the home itself.</h2>
+    <p class="li-serif"><strong>A new home for exactly this stage.</strong> Not a smaller version of the house you are leaving. A better fit for the chapter you are starting. Open kitchens, hobby rooms, extended garages, customization throughout. Quality that refuses compromise. Twenty-five years and 2,600 homes taught us what holds up, and everything below is the result.</p>
     <div class="li-btns"><a class="li-btn solid" href="/floor-plans">See floor plans</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
@@ -815,8 +815,8 @@ def build_live_out():
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Live Out is everything past the front door.</h2>
-    <p class="li-serif"><strong><mark>Zion is 31 minutes away.</mark> That is the point.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
+    <h2><span class="li-u">Live Out</span> is everything past the front door.</h2>
+    <p class="li-serif"><strong>Zion is 31 minutes away. That is the point.</strong> We built on the Zion side of Southern Utah so the parks, the trails, and the reservoirs are the daily backdrop, not the weekend plan. Three hundred days of sun, a few degrees cooler than St. George, and the trailheads start where the driveway ends. Everything below is within a half hour.</p>
     <div class="li-btns"><a class="li-btn solid" href="#map">See what is nearby</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>
@@ -913,8 +913,8 @@ def build_live_on(posts):
 </section>
 <section class="li-intro li-lead">
   <div class="wrap li-in">
-    <h2>Live On is everyone you have not met yet.</h2>
-    <p class="li-serif"><strong><mark>Nobody acts their age here.</mark></strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
+    <h2><span class="li-u">Live On</span> is everyone you have not met yet.</h2>
+    <p class="li-serif"><strong>Nobody acts their age here.</strong> People move here for the hiking and end up running a club they never meant to join. That is not an accident. We build the calendar, the Clubhouse, and the trails so you keep running into the same people on purpose, until they are your people. Move, connect, grow. The home gets you here. This is why you stay.</p>
     <div class="li-btns"><a class="li-btn solid" href="#calendar">See the calendar</a><a class="li-btn" href="/contact-us">Schedule a visit</a></div>
   </div>
 </section>

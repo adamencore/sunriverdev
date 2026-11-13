@@ -1,5 +1,5 @@
 {
- "_readme": "SunRiver Firelight homes for sale. Source of truth: the 'New & Upgraded Move-In Ready Homes' sheet from the sales team (not the MLS). To update, send Claude a screenshot of the latest sheet: it rewrites 'asOf' and 'homes' to match the sheet exactly, then builds and pushes. One entry per home on the sheet, sold ones included (status 'Sold' keeps them off the site). Fields: lot, plan (must match a floor plan name), address (street only, Toquerville is added), base (the plan price on the sheet), options (each add-on line with its amount: garage extension, B elevation, tub option, lot premium), upgrades (design upgrades), price (the big total on the sheet, used as the price on the site), garage (only when the sheet says it, like '3.5 Gar'; otherwise the floor plan's garage is used), featured (the sheet's 'Featured Home / Ask for pricing!'), status ('Move in Ready' or 'Sold'). Bed, bath, sqft and hobby room come from 'plans' below, copied from the plan bars on the sheet. Homes in other communities still come from data/mls_listings.json. 'videos' lists the YouTube Shorts (IDs from youtube.com/@sunriver_communities, titled like 'Tara | Home 59') embedded on that home's page; it replaces any videos set in Sanity. 'photos' lists the home's own photos in assets/img/homes/<lot>/ (WebP, 1600px, location data stripped, each with a -t.webp thumbnail); the first one leads the listing card and page.",
+ "_readme": "SunRiver Firelight homes for sale. Source of truth: the 'New & Upgraded Move-In Ready Homes' sheet from the sales team (not the MLS). To update, send Claude a screenshot of the latest sheet: it rewrites 'asOf' and 'homes' to match the sheet exactly, then builds and pushes. One entry per home on the sheet, sold ones included (status 'Sold' keeps them off the site). Fields: lot, plan (must match a floor plan name), address (street only, Toquerville is added), base (the plan price on the sheet), options (each add-on line with its amount: garage extension, B elevation, tub option, lot premium), upgrades (design upgrades), price (the big total on the sheet, used as the price on the site), garage (only when the sheet says it, like '3.5 Gar'; otherwise the floor plan's garage is used), featured (the sheet's 'Featured Home / Ask for pricing!'), status ('Move in Ready' or 'Sold'). Bed, bath, sqft and hobby room come from 'plans' below, copied from the plan bars on the sheet. Homes in other communities still come from data/mls_listings.json. 'videos' lists the YouTube Shorts (IDs from youtube.com/@sunriver_communities, titled like 'Tara | Home 59') embedded on that home's page; it replaces any videos set in Sanity. 'photos' lists the home's own photos in assets/img/homes/<lot>/ (WebP, 1600px, location data stripped, each with a -t.webp thumbnail); the first one leads the listing card and page. The first photo must be the front of the house; when a home has no exterior photo yet, 'exterior': false puts the plan's front rendering first.",
  "asOf": "2026-11-02",
  "city": "Toquerville, UT",
  "plans": {
@@ -149,7 +149,8 @@
     "16.webp",
     "17.webp",
     "18.webp"
-   ]
+   ],
+   "exterior": false
   },
   {
    "lot": 59,
@@ -278,7 +279,8 @@
     "17.webp",
     "18.webp",
     "19.webp"
-   ]
+   ],
+   "exterior": false
   },
   {
    "lot": 60,
