@@ -387,9 +387,6 @@ def build_homes(listings, plans=()):
 
     for l in ls:
         build_listing(l)
-        if l.get("lot") == 58:  # gallery previews for review (Nov 13): two arrow styles on Homesite 58
-            build_listing(l, "/preview/gallery-a", "a")
-            build_listing(l, "/preview/gallery-b", "b")
 
 
 def listing_story(l):
@@ -450,7 +447,7 @@ def gallery(pics, alt, variant):
       </div>''' % (variant, main, L, R, len(pics), L, thumbs, R)
 
 
-def build_listing(l, path=None, gal=None):
+def build_listing(l, path=None, gal="a"):
     """Listing page, OFFICIAL Figma "Homes for Sale Home Detail" (6:503)."""
     pics = ([l["photo"]] if l.get("photo") else []) + [g for g in (l.get("gallery") or []) if g != l.get("photo")]
     alt = l.get("photoAlt") or l.get("title")
@@ -484,7 +481,7 @@ def build_listing(l, path=None, gal=None):
     comm = COMMUNITY_LABEL.get(l.get("community"), l.get("community", ""))
     mls = ""
     media = gallery(pics, alt, gal) if gal and len(pics) > 1 else '<div class="hd-media viewer"><div class="viewer-main">%s</div>%s</div>' % (main, thumbs)
-    add(path or "/homes-for-sale/%s" % l["slug"], ("Gallery preview %s: " % gal.upper() if gal else "") + "%s, %s" % (title, addr),
+    add(path or "/homes-for-sale/%s" % l["slug"], "%s, %s" % (title, addr),
         "%s at %s: %s sq ft, %s bed, %s bath. %s." % (title, l.get("address") or "", "{:,}".format(l.get("squareFootage") or 0), num(l.get("beds")), num(l.get("baths")), l.get("status", "")), "homes", '''
 <section class="hd">
   <div class="wrap">

@@ -2511,7 +2511,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .plx { transform: translate3d(0, var(--plx, 0px), 0) scale(var(--plx-s, 1)); will-change: transform; }
 @media (prefers-reduced-motion: reduce) { .plx { transform: none; } }
 
-/* Listing gallery with arrows (preview A and B): big photo with prev/next and a count, a strip of 4 thumbnails with its own arrows */
+/* Listing gallery with arrows (version A, picked Nov 13): big photo with prev/next and a count, a strip of 4 thumbnails with its own arrows */
 .gal .viewer-main { position: relative; }
 .gal-arrow, .gal-sarrow { display: grid; place-items: center; padding: 0; border: 0; cursor: pointer; transition: background-color .2s, color .2s, opacity .2s, transform .2s; }
 .gal-arrow svg, .gal-sarrow svg { width: 20px; height: 20px; }
@@ -2536,22 +2536,6 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .gal-a .gal-snext { right: 8px; }
 .gal-a .gal-sarrow:hover, .gal-a .gal-sarrow:focus-visible { background: var(--sun-yellow); outline: none; }
 
-/* B: solid navy arrows straddling the edges, thumbnail arrows in their own lane */
-.gal-b .viewer-main { overflow: visible; }
-.gal-b .viewer-main > img { border-radius: 21px; }
-.gal-b .gal-arrow { background: #335A97; color: #FFFFFF; box-shadow: 0 8px 20px rgba(20, 50, 80, .28); border: 3px solid #FAF5F0; }
-.gal-b .gal-prev { left: 0; transform: translate(-40%, -50%); }
-.gal-b .gal-next { right: 0; transform: translate(40%, -50%); }
-.gal-b .gal-arrow:hover, .gal-b .gal-arrow:focus-visible { background: var(--sun-yellow); color: #143250; outline: none; }
-.gal-b .gal-strip { display: grid; grid-template-columns: 38px minmax(0, 1fr) 38px; gap: 10px; align-items: center; }
-.gal-b .gal-sarrow { width: 38px; height: 38px; border-radius: 50%; background: transparent; color: #335A97; border: 2px solid #335A97; }
-.gal-b .gal-sarrow svg { width: 16px; height: 16px; }
-.gal-b .gal-sarrow:hover, .gal-b .gal-sarrow:focus-visible { background: #335A97; color: #FFFFFF; outline: none; }
-.gal-b .gal-sarrow[disabled] { opacity: .25; }
 @media (max-width: 860px) {
   .gal-arrow { width: 40px; height: 40px; }
-  .gal-b .gal-prev { left: 10px; transform: translateY(-50%); }
-  .gal-b .gal-next { right: 10px; transform: translateY(-50%); }
-  .gal-b .gal-strip { grid-template-columns: 32px minmax(0, 1fr) 32px; gap: 8px; }
-  .gal-b .gal-sarrow { width: 32px; height: 32px; }
 }
