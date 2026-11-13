@@ -2585,5 +2585,5 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .bnr-2 .bnr-waves { opacity: .14; filter: brightness(0) saturate(100%) invert(30%) sepia(40%) saturate(900%) hue-rotate(185deg); }
 /* 3: graded wash, heavy behind the type and lighter toward the bottom so the photo shows through, sun yellow waves */
 .bnr-3 .bnr-wash { background: linear-gradient(180deg, rgba(255, 255, 255, .82) 0%, rgba(255, 255, 255, .62) 55%, rgba(255, 255, 255, .3) 100%); }
-.bnr-3 .bnr-waves { opacity: .3; filter: brightness(0) saturate(100%) invert(73%) sepia(58%) saturate(1200%) hue-rotate(358deg) brightness(101%); }
+.bnr-3 .bnr-waves { opacity: .13; filter: brightness(0) saturate(100%) invert(73%) sepia(58%) saturate(1200%) hue-rotate(358deg) brightness(101%); }
 .bnr .site-header { --logo-word: #325A96 !important; --logo-accent: #F5AF1C !important; }
