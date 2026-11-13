@@ -2578,7 +2578,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .bnr .fah-hero h1, .bnr .fah-hero p, .bnr .fah-hero .fh-eyebrow, .bnr .fah-hero .fl-hero-sub { color: #143250 !important; text-shadow: none !important; }
 .bnr .fah-hero h1 { color: #335A97 !important; }
 /* 1: soft haze, white waves at their own strength */
-.bnr-1 .bnr-wash { background: rgba(255, 255, 255, .5); }
+.bnr-1 .bnr-wash { background: rgba(255, 255, 255, .7); }
 .bnr-1 .bnr-waves { opacity: .38; }
 /* 2: bright cream wash, the photo becomes a whisper, navy waves */
 .bnr-2 .bnr-wash { background: rgba(250, 245, 240, .72); }
