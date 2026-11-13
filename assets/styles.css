@@ -2506,3 +2506,7 @@ img.dv-logo { display: block; width: 300px; max-width: 100%; height: auto; margi
 .lightbox .lb-ctl button:hover { background: var(--sun-yellow); }
 .lb-hint { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); margin: 0; color: rgba(255, 255, 255, .75); font-size: 13px; white-space: nowrap; }
 @media (max-width: 600px) { .lightbox.is-zoom .lb-stage img { max-height: calc(100vh - 180px); } .lb-hint { display: none; } }
+
+/* Homepage parallax (site.js): images drift slightly within their frames */
+.plx { transform: translate3d(0, var(--plx, 0px), 0) scale(var(--plx-s, 1)); will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .plx { transform: none; } }

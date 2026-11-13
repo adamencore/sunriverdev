@@ -1220,3 +1220,38 @@ document.querySelectorAll("[data-htl]").forEach(function (tl) {
   window.addEventListener('resize', function () { var w = box().width; if (w !== rw) { rw = w; reset(); } });
   rw = box().width; reset();
 })();
+
+// Homepage: subtle parallax on the big photos. Each image drifts a little slower than the page
+// and is scaled up just enough that its edges never show. Off for reduced motion.
+(function () {
+  if (!document.querySelector('.h4-hero')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var specs = [['.h4-hero-img', 0.08, 1.12], ['.h4-sky > img', 0.07, 1.32], ['.hy-img img', 0.07, 1.14], ['.h4-begin-bg', 0.07, 1.16]];
+  var items = [];
+  specs.forEach(function (sp) {
+    document.querySelectorAll(sp[0]).forEach(function (el) {
+      el.classList.add('plx');
+      el.style.setProperty('--plx-s', sp[2]);
+      items.push({ el: el, box: el.closest('.hy-img, section') || el.parentElement, k: sp[1] });
+    });
+  });
+  if (!items.length) return;
+  var ticking = false;
+  function run() {
+    ticking = false;
+    var vh = window.innerHeight;
+    items.forEach(function (it) {
+      var r = it.box.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      // 0 when the box is centered in the viewport, positive above, negative below
+      var off = (r.top + r.height / 2) - vh / 2;
+      var max = r.height * (it.el.style.getPropertyValue('--plx-s') - 1) / 2;
+      var y = Math.max(-max, Math.min(max, -off * it.k));
+      it.el.style.setProperty('--plx', y.toFixed(1) + 'px');
+    });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(run); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  run();
+})();
